@@ -26,5 +26,5 @@ class App extends React.Component {
     )
   }
 }
-
+Æ
 ReactDOM.render(<App />, document.getElementById('app'));
