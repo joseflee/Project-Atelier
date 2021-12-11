@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+
 // import ProductOverview from './components/ProductOverview.jsx'
 // import RelProducts from './components/RelProducts.jsx'
 // import QnA from './components/QnA.jsx'
@@ -22,9 +24,10 @@ class App extends React.Component {
         <RelProducts />
         <QnA />
         <RatingsNReviews /> */}
+        <h1>hello</h1>
       </div>
     )
   }
 }
-Æ
+
 ReactDOM.render(<App />, document.getElementById('app'));
