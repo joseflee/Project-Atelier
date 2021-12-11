@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App should display 1`] = `
+<div>
+  <div>
+    <div
+      className="qna-component-name"
+    >
+      Questions and Answers
+    </div>
+    <div>
+      Seach quastions
+    </div>
+    <div>
+      Questions list
+    </div>
+    <div>
+      More answered questions
+    </div>
+    <div>
+      Add a new question
+    </div>
+  </div>
+</div>
+`;
