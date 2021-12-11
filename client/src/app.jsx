@@ -1,16 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 // import ProductOverview from './components/ProductOverview.jsx'
 // import RelProducts from './components/RelProducts.jsx'
-// import QnA from './components/QnA.jsx'
+// import QnA from './components/QnAcomponents/mainQnA.jsx';
 // import RatingsNReviews from './components/RatingsNReviews.jsx'
-
-
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {};
   }
 
   componentDidMount() {
@@ -26,8 +23,8 @@ class App extends React.Component {
         <RatingsNReviews /> */}
         <h1>hello</h1>
       </div>
-    )
+    );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+export default App;
