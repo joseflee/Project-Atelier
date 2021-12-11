@@ -1,7 +1,8 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 // import ProductOverview from './components/ProductOverview.jsx'
 // import RelProducts from './components/RelProducts.jsx'
-// import QnA from './components/QnA.jsx'
+// import QnA from './components/QnAcomponents/mainQnA.jsx';
 // import RatingsNReviews from './components/RatingsNReviews.jsx'
 
 
@@ -26,5 +27,5 @@ class App extends React.Component {
     )
   }
 }
-Æ
-ReactDOM.render(<App />, document.getElementById('app'));
+
+export default App;
