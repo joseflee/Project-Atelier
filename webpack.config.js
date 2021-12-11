@@ -1,11 +1,11 @@
 module.exports = {
-  entry: __dirname + '/client/src/app.jsx',
+  entry: __dirname + '/client/src/index.js',
   mode: 'development',
   devtool: 'source-map',
   module: {
     rules: [
       {
-        test: [/\.jsx$/],
+        test:/\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
