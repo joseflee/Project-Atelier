@@ -9,6 +9,10 @@ module.exports = {
       'jsx': true
     }
   },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+]
   rules: {
     /* Indentation */
     'no-mixed-spaces-and-tabs': 2,

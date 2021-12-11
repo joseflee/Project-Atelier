@@ -4,12 +4,10 @@ import ReactDOM from 'react-dom';
 // import RelProducts from './components/RelProducts.jsx'
 // import QnA from './components/QnAcomponents/mainQnA.jsx';
 // import RatingsNReviews from './components/RatingsNReviews.jsx'
-
-
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {};
   }
 
   componentDidMount() {
@@ -23,8 +21,9 @@ class App extends React.Component {
         <RelProducts />
         <QnA />
         <RatingsNReviews /> */}
+        <h1>hello</h1>
       </div>
-    )
+    );
   }
 }
 
