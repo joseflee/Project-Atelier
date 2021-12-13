@@ -1,13 +1,16 @@
-/*GET /qa/questions Retrieves a list of questions for a particular product. This list does not include any reported questions.
+/*
+List of questions without reported
+
+GET /qa/questions Retrieves a list of questions for a particular product. This list does not include any reported questions.
 Params:
-- product_id (int) - Specifies the product for which to retrieve questions.
-- page (int) - Selects the page of results to return. Default 1.
-- count (int) - Specifies how many results per page to return. Default 5.
+- product_id (int): Specifies the product for which to retrieve questions.
+- page (int): Selects the page of results to return. Default 1.
+- count (int): Specifies how many results per page to return. Default 5.
 Response:
 Status: 200 OK
 */
 
-{
+let questions = {
   "product_id": "5",
   "results": [{
         "question_id": 37,
@@ -54,4 +57,115 @@ Status: 200 OK
         }
       }
   ]
+}
+
+/*
+Answers list
+
+GET /qa/questions/:question_id/answers
+Params:
+- question_id (int): Required ID of the question for wich answers are needed
+Query params:
+- page (int): Selects the page of results to return. Default 1.
+- count (int): Specifies how many results per page to return. Default 5.
+Response:
+Status 200 OK
+*/
+
+let answers = {
+  "question": "1",
+  "page": 0,
+  "count": 5,
+  "results": [
+    {
+      "answer_id": 8,
+      "body": "What a great question!",
+      "date": "2018-01-04T00:00:00.000Z",
+      "answerer_name": "metslover",
+      "helpfulness": 8,
+      "photos": [],
+    },
+    {
+      "answer_id": 5,
+      "body": "Something pretty durable but I can't be sure",
+      "date": "2018-01-04T00:00:00.000Z",
+      "answerer_name": "metslover",
+      "helpfulness": 5,
+      "photos": [{
+          "id": 1,
+          "url": "urlplaceholder/answer_5_photo_number_1.jpg"
+        },
+        {
+          "id": 2,
+          "url": "urlplaceholder/answer_5_photo_number_2.jpg"
+        }
+      ]
+    }
+  ]
+}
+
+/*
+Add a question
+
+POST /qa/questions
+Body params:
+- body (text): Text of question being asked
+- name (text): Username for question asker
+- email (text): Email address for question asker
+- product_id (int): Required ID of the Product for which the question is posted
+Response:
+Status: 201 CREATED
+
+Add an answer
+
+POST /qa/questions/:question_id/answers
+Params:
+- question_id	(int): Required ID of the question to post the answer for
+Body params:
+- body (text) :
+- name (text) :
+- email (text) :
+- photos([text]) : An array of urls corresponding to images to display
+Response:
+Status: 201 CREATED
+
+Mark Question as Helpful
+
+PUT /qa/questions/:question_id/helpful
+Params:
+- question_id (int) : Required ID of the question to update
+Response:
+Status: 204 NO CONTENT
+
+Report Question
+
+PUT /qa/questions/:question_id/report
+Params:
+- question_id (int) : Required ID of the question to update
+Response:
+Status: 204 NO CONTENT
+
+Mark Answer as Helpful
+
+Updates an answer to show it was found helpful.
+PUT /qa/answers/:answer_id/helpful
+Params:
+- answer_id (int) : Required ID of the answer to update
+Response:
+Status: 204 NO CONTENT
+
+Report Answer
+
+Updates an answer to show it has been reported. Note, this action does not delete the answer, but the answer will not be returned in the above GET request.
+PUT /qa/answers/:answer_id/report
+Params:
+- answer_id	(int) : Required ID of the answer to update
+Response:
+Status: 204 NO CONTENT
+
+*/
+
+module.exports = {
+  questions,
+  answers
 }
