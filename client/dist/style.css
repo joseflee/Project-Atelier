@@ -1,0 +1,9 @@
+body {
+  background-color: whitesmoke;
+}
+.reviewCell {
+  border: 2px solid black;
+}
+.reviewTop {
+  padding-left: 50px;
+}
