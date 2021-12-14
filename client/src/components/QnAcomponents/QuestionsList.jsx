@@ -9,7 +9,11 @@ class QuestionsList extends React.Component {
   render(){
     return(
       <div>
-      <QuestionsListItem />
+        {console.log(this.props.data.questions.results)}
+        {this.props.data.questions.results.map((question, key) =>{
+         return <QuestionsListItem question={question} key={key} />
+        })}
+
       <button className='load-more-answers-button'>Load more answers</button>
      </div>
     )
