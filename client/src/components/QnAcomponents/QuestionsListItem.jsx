@@ -4,6 +4,18 @@ import QuestionsListItemAnswer from './QuestionsListItemAnswer.jsx';
 class QuestionsListItem extends React.Component {
   constructor(props){
     super(props);
+    this.state = {
+      answers: {}
+    }
+  }
+
+  componentDidMount(){
+    let answersToShow = Object.values(this.props.question.answers);
+    answersToShow = answersToShow.slice(0, 2);
+    console.log('should be only 2 answers', answersToShow);
+    this.setState({
+      answers: answersToShow
+    })
   }
 
   render(){
@@ -29,7 +41,7 @@ class QuestionsListItem extends React.Component {
         </div>
        {/* end of question item */}
        {
-         Object.values(this.props.question.answers).map((answer, key) => {
+         Object.values(this.state.answers).map((answer, key) => {
            return <QuestionsListItemAnswer answer={answer} key={key}/>
          })
        }
