@@ -7,12 +7,19 @@ class QuestionsListItem extends React.Component {
     this.state = {
       answers: {}
     }
+    this.clickOnMoreAnswers = this.clickOnMoreAnswers.bind(this);
   }
 
   componentDidMount(){
     let answersToShow = Object.values(this.props.question.answers);
     answersToShow = answersToShow.slice(0, 2);
-    console.log('should be only 2 answers', answersToShow);
+    this.setState({
+      answers: answersToShow
+    })
+  }
+
+  clickOnMoreAnswers(){
+    let answersToShow = Object.values(this.props.question.answers);
     this.setState({
       answers: answersToShow
     })
@@ -23,7 +30,7 @@ class QuestionsListItem extends React.Component {
     console.log('this is length', Object.keys(this.props.question.answers).length);
     let length = Object.keys(this.props.question.answers).length;
     if(length > 2){
-      moreAnswers = <button>Load more answers</button>
+      moreAnswers = <button onClick={()=>{this.clickOnMoreAnswers()}}>Load more answers</button>
     } else {
       moreAnswers = <div></div>
     }
