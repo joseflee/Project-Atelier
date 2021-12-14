@@ -1,9 +1,31 @@
 body {
-  background-color: whitesmoke;
+  background-color: white;
 }
 .reviewCell {
-  border: 2px solid black;
+  width: 640px;
+  height: 240px;
+  border-bottom: 2px solid black;
 }
 .reviewTop {
   padding-left: 50px;
+}
+.review-Response {
+  background-color: #ebebeb;
+}
+.helpful-1 {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.review-body {
+  max-width:750px;
+  word-wrap:break-word;
+}
+
+.reviewList {
+  height: 540px;
+  overflow-y: scroll;
+}
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
 }

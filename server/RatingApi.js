@@ -6,7 +6,7 @@ const getReviewsAPI = () => {
   let productID = 0;
   let options = {
     method: 'GET',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews?product_id=${productID}&count=100&sort=helpful&page=1`,
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp32/reviews?product_id=${productID}&count=50&sort=helpful&page=1`,
     headers: { Authorization: gitToken.Token },
   };
   return axios(options)
