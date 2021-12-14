@@ -1,4 +1,5 @@
 import React from 'react';
+import QuestionsListItem from './QuestionsListItem.jsx';
 
 class QuestionsList extends React.Component {
   constructor(props){
@@ -7,7 +8,7 @@ class QuestionsList extends React.Component {
 
   render(){
     return(
-      <div>This is question list (as a class component)</div>
+     <QuestionsListItem />
     )
   }
 }
