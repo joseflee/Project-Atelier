@@ -7,6 +7,15 @@ class QuestionsListItem extends React.Component {
   }
 
   render(){
+    let moreAnswers;
+    console.log('this is length', Object.keys(this.props.question.answers).length);
+    let length = Object.keys(this.props.question.answers).length;
+    if(length > 2){
+      moreAnswers = <button>Load more answers</button>
+    } else {
+      moreAnswers = <div></div>
+    }
+
     return(
       <div>
 
@@ -24,6 +33,8 @@ class QuestionsListItem extends React.Component {
            return <QuestionsListItemAnswer answer={answer} key={key}/>
          })
        }
+       {moreAnswers}
+
 
       </div>
       )

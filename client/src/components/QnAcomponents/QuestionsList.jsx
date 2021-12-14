@@ -14,7 +14,7 @@ class QuestionsList extends React.Component {
          return <QuestionsListItem question={question} key={key} />
         })}
 
-      <button className='load-more-answers-button'>Load more answers</button>
+      
      </div>
     )
   }
