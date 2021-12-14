@@ -8,7 +8,10 @@ class QuestionsList extends React.Component {
 
   render(){
     return(
-     <QuestionsListItem />
+      <div>
+      <QuestionsListItem />
+      <button className='load-more-answers-button'>Load more answers</button>
+     </div>
     )
   }
 }
