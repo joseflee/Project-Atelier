@@ -40,7 +40,7 @@ class QuestionsListItem extends React.Component {
         {/* beginning of question item */}
 
         <div className='question-item'>
-          <div className='question-item-q-letter'><h2>Q:</h2></div><div className='question-item-body'><h3>{this.props.question.question_body}</h3></div>
+          <div className='question-item-q-letter'><h2>Q:{this.props.question.question_body}</h2></div>
           <div className='question-item-helpful-keyword'>Helpful?</div>
           <div className='question-item-yes-button'>Yes({this.props.question.question_helpfulness})</div>
           <div className='question-item-add-answer-link'>Add answer</div>
