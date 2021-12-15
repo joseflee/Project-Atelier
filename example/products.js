@@ -86,7 +86,7 @@ var style = {
         },
         "39": {
           "quantity": 17,
-          "size": "M"
+          "size": "L"
         },
       }
     },
