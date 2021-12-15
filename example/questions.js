@@ -52,7 +52,15 @@ let questions = {
             "date": "2019-11-12T00:00:00.000Z",
             "answerer_name": "iluvdogz",
             "helpfulness": 31,
-            "photos": [],
+            "photos": []
+          },
+          79: {
+            "id": 79,
+            "body": "42 months",
+            "date": "2019-11-12T00:00:00.000Z",
+            "answerer_name": "dolphin",
+            "helpfulness": 99,
+            "photos": []
           }
         }
       }
