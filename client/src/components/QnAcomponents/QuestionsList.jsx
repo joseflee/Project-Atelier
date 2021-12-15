@@ -12,8 +12,6 @@ class QuestionsList extends React.Component {
          {this.props.data.map((question, key) =>{
          return <QuestionsListItem question={question} key={key} />
         })}
-
-
      </div>
     )
   }
