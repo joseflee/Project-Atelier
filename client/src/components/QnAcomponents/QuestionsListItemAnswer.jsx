@@ -2,7 +2,6 @@ import React from 'react';
 
 const QuestionsListItemAnswer = (props) => (
   <div className='answer-item'>
-    {console.log(props.answer)}
     <div className='answer-item-a-letter'><h2>A:</h2></div>
     <div className='answer-item-body'><h3>{props.answer.body}</h3></div>
     <div className='answer-item-username'>By user {props.answer.answerer_name}</div><div className='answer-item-date'>{props.answer.date}</div>

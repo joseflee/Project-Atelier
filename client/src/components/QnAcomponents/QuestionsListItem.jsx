@@ -27,7 +27,6 @@ class QuestionsListItem extends React.Component {
 
   render(){
     let moreAnswers;
-    console.log('this is length', Object.keys(this.props.question.answers).length);
     let length = Object.keys(this.props.question.answers).length;
     if(length > 2){
       moreAnswers = <button onClick={()=>{this.clickOnMoreAnswers()}}>Load more answers</button>
