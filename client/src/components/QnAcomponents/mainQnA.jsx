@@ -9,13 +9,19 @@ class QnA extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      questions: []
+      questions: [],
+      isMoreQuestionsButtonShown: false
     }
     this.showMoreQuestions = this.showMoreQuestions.bind(this);
   }
 
   componentDidMount(){
     var questionsToShow = sampleData.questions.results;
+    if (questionsToShow.length > 2){
+      this.setState({
+        isMoreQuestionsButtonShown: true
+      })
+    }
     questionsToShow = questionsToShow.slice(0, 2);
     this.setState({
       questions: questionsToShow
@@ -24,16 +30,17 @@ class QnA extends React.Component {
 
   showMoreQuestions(){
     this.setState({
-      questions: sampleData.questions.results
+      questions: sampleData.questions.results,
+      isMoreQuestionsButtonShown: false
     })
   }
 
   render(){
     let moreAnsweredQuestions;
-    if(sampleData.questions.results.length > 2){
+    if(this.state.isMoreQuestionsButtonShown){
       moreAnsweredQuestions = <MoreAnsweredQuestions click={this.showMoreQuestions}/>
     } else {
-      moreAnsweredQuestions = <div>No button here</div>
+      moreAnsweredQuestions = <div></div>
     }
     return(
       <div>
