@@ -1,7 +1,10 @@
 import React from 'react';
 
-const MoreAnsweredQuestions = (props) => (
-<div>More answered questions</div>
-)
+const MoreAnsweredQuestions = (props) => {
+
+  return(
+    <button className='more-answered-questions-button' onClick = {() => props.click()}>More answered questions</button>
+  )
+}
 
 export default MoreAnsweredQuestions;

@@ -9,11 +9,9 @@ class QuestionsList extends React.Component {
   render(){
     return(
       <div>
-         {this.props.data.questions.results.map((question, key) =>{
+         {this.props.data.map((question, key) =>{
          return <QuestionsListItem question={question} key={key} />
         })}
-
-
      </div>
     )
   }
