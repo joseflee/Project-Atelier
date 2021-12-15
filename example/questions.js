@@ -63,7 +63,25 @@ let questions = {
             "photos": []
           }
         }
-      }
+      },
+      {
+        "question_id": 40,
+        "question_body": "Will it changes after washing?",
+        "question_date": "2018-10-18T00:00:00.000Z",
+        "asker_name": "albusDumbledore",
+        "question_helpfulness": 146,
+        "reported": false,
+        "answers": {
+          1: {
+            "id": 1,
+            "body": "I don't know, I never wash my clothes!",
+            "date": "2018-08-18T00:00:00.000Z",
+            "answerer_name": "Seller",
+            "helpfulness": 4,
+            "photos": []
+          }
+        }
+      },
   ]
 }
 
