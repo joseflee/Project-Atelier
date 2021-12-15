@@ -10,6 +10,7 @@ class Overview extends React.Component{
     this.state = {};
   }
 
+  componentDidMount(){};
 
   render () {
     return (
