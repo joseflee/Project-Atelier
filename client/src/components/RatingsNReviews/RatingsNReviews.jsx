@@ -5,7 +5,7 @@ import BreakDownStar from './BreakDownStar.jsx';
 import NewReview from './NewReview.jsx';
 const RatingsNReviews = () =>{
   return (
-    <div>
+    <div className= "RatingsNReviewsSection">
      <ReviewList />
      <AverageStar />
      <BreakDownStar />

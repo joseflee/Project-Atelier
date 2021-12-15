@@ -15,9 +15,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/getReviews', async (req, res) => {
 
-  let result = await api.getReviewsAPI()
-  // console.log(req);
-  res.status(200).send(result);
+  let totalReviews = await api.getTotalReviews()
+  // console.log("totalreviews:",totalReviews);
+  res.status(200).send(totalReviews);
+})
+app.post('/updateHelpfulness', async (req, res) => {
+  // console.log("receive review ID:", req.body.reviewId);
+  const reviewId = req.body.reviewId
+  let totalReviews = await api.updateHelpfulness(reviewId)
+  res.status(204).end();
 })
 
 app.listen(port, () => console.log('Listening on:', port));
