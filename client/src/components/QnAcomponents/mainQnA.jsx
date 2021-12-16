@@ -10,7 +10,8 @@ class QnA extends React.Component {
     super(props);
     this.state = {
       questions: [],
-      isMoreQuestionsButtonShown: false
+      isMoreQuestionsButtonShown: false,
+      product_name:'Blue jeans'
     }
     this.showMoreQuestions = this.showMoreQuestions.bind(this);
   }
@@ -50,7 +51,7 @@ class QnA extends React.Component {
       <QuestionsList data={this.state.questions}/>
       <br />
       {moreAnsweredQuestions}
-      <AddQuestion />
+      <AddQuestion name = {this.state.product_name}/>
       </div>
 
     )
