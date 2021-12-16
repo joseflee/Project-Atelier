@@ -1,18 +1,21 @@
+/**
+ * These rules enforce Hack Reactor's style guide.
+ * Visit this repo for more information:
+ *   https://github.com/hackreactor-labs/eslint-config-hackreactor
+ */
+
 module.exports = {
   env: {
     'es6': true
   },
   parserOptions: {
     sourceType: 'module',
-    ecmaVersion: 6,
+    ecmaVersion: 2021,
     ecmaFeatures: {
       'jsx': true
     }
+    "parser": "@babel/eslint-parser",
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended"
-]
   rules: {
     /* Indentation */
     'no-mixed-spaces-and-tabs': 2,
@@ -22,7 +25,7 @@ module.exports = {
     /* Language constructs */
     'curly': 2,
     'eqeqeq': [2, 'smart'],
-    'func-style': [1, 'expression'],
+    'func-style': [2, 'expression'],
     /* Semicolons */
     'semi': 2,
     'no-extra-semi': 2,
@@ -37,8 +40,7 @@ module.exports = {
     'keyword-spacing': [1, { 'before': true, 'after': true }],
     'space-infix-ops': 1,
     /* Variable declaration */
-    'one-var': [1, { 'uninitialized': 'never', 'initialized': 'never' }],
-    'no-use-before-define': [2, { 'functions': false }],
+    'one-var': [1, { 'uninitialized': 'always', 'initialized': 'never' }],
     /* Minuta */
     'comma-style': [2, 'last'],
     'quotes': [1, 'single']
