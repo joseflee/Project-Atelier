@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from 'axios';
-import Sample from '/home/yanlin/hackreactor/Project-Atelier/example/reviews.js'
+import Sample from '../../../../example/reviews.js'
 const ReviewList = ()=>{
-
   let result = Sample.reviews.results;
   const [isOpen, setIsOpen] = useState(false);
   const [isTruncated, setIsTruncated] = useState(true)
@@ -12,14 +11,12 @@ const ReviewList = ()=>{
   // const [totalReviewArray, setTotalReviewArray] = useState(result);
   // const [onScreenReviewArray, setOnScreenReviewArray] = useState(totalReviewArray.slice(0,2))
 
-  console.log(totalReviewArray)
-  console.log(onScreenReviewArray.length)
   useEffect(() => {
     axios.get('http://localhost:3000/getReviews')
     .then((response)=>{
-      console.log(response.data.results);
-      setTotalReviewArray(response.data.results.slice(0))
-      setOnScreenReviewArray(response.data.results.slice(0,2))
+      console.log(response.data);
+      setTotalReviewArray(response.data.slice(0))
+      setOnScreenReviewArray(response.data.slice(0,2))
     })
     .catch((err) => {
       console.log("this is the react getreviews err",err);
@@ -33,17 +30,13 @@ const ReviewList = ()=>{
   }
 
   function toggleIsTruncated () {
-    console.log("toggling");
     setIsTruncated(isTruncated === true ? false : true);
     setExtended (isExtended === "Show Less" ? "Show More" : "Show Less")
   }
   function loadReviews() {
-    console.log("loading more reviews")
     let startIndex = onScreenReviewArray.length;
-    console.log("start:", startIndex)
     for(let i = startIndex; i <= startIndex+1; i++) {
       if(i === totalReviewArray.length) {
-        console.log("break")
         break;
       } else {
         setOnScreenReviewArray((prev) => {
@@ -52,7 +45,6 @@ const ReviewList = ()=>{
       }
 
     }
-    console.log("currentOnscreen",onScreenReviewArray)
   }
   function openModal(e) {
     var modal = document.getElementById('myModal');
@@ -69,13 +61,10 @@ const ReviewList = ()=>{
   function starWidth (rating) {
     const starsTotal = 5
     const starPercentage = (rating/starsTotal) * 100;
-    // const starPercentageRounded = Math.round(starPercentage / 10) * 10 + "%"
     const starPercentageRounded = (starPercentage / 10) * 10 + "%"
-    // console.log(starPercentageRounded);
     return starPercentageRounded;
   }
   function helpfulButton (e) {
-    console.log("review ID on clicked:", e.target)
     e.target.className += " onClicked"
     const voteCount = document.getElementById(e.target.id-1);
     // console.log(voteCount.innerText);
