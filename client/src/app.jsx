@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ProductOverview from './components/ProdOverview/OverView.jsx'
-import RelProducts from './components/RelProducts.jsx'
+import RelProducts from './components/RelProductsComponents/RelProducts.jsx'
 import QnA from './components/QnAcomponents/mainQnA.jsx';
 import RatingsNReviews from './components/RatingsNReviews/RatingsNReviews.jsx'
 class App extends React.Component {
