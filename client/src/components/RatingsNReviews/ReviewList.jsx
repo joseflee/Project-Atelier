@@ -47,15 +47,15 @@ const ReviewList = ()=>{
     }
   }
   function openModal(e) {
-    var modal = document.getElementById('myModal');
-    var img = document.getElementById('myImg');
-    var modalImg = document.getElementById("img01");
+    var modal = document.getElementById('review-Modal');
+    var img = document.getElementById('review-Images');
+    var modalImg = document.getElementById("review-Modal-Content");
     modal.style.display = "block";
     modalImg.src = e.target.src;
     modalImg.alt = e.target.alt;
   }
   function closeModal(e) {
-    var modal = document.getElementById('myModal');
+    var modal = document.getElementById('review-Modal');
     modal.style.display = "none";
   }
   function starWidth (rating) {
@@ -103,10 +103,10 @@ const ReviewList = ()=>{
             {user.photos.map((img, index)=>{
               return (
               <div key = {index} className="Imageblock">
-                <img onClick={openModal} id="myImg" alt = "user's review image" className = "review-Images" src= {img.url} />
-                <div id="myModal" className="modal">
-                  <span className="close" onClick= {closeModal}>&times;</span>
-                  <img className="modal-content" id="img01" />
+                <img onClick={openModal} id="review-Images" alt = "user's review image" className = "review-Images" src= {img.url} />
+                <div id="review-Modal" className="review-Modal">
+                  <span className="review-Modal-Close" onClick= {closeModal}>&times;</span>
+                  <img className="review-Modal-Content" id="review-Modal-Content" />
                 </div>
               </div>)
             })}
