@@ -8,7 +8,7 @@ const StyleSelector = (props) => {
   return (
     <div className='styleSelector'>
       {props.data.results.map((element) => {
-        return <StyleBubble style={element} updater={props.changeStyle}/>;
+        return <StyleBubble style={element} updater={props.changeStyle} />;
       })}
       <StyleDropdown displayedStyle={props.displayedStyle}/>
     </div>

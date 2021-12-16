@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ProductOverview from './components/ProdOverview/OverView.jsx'
-// import RelProducts from './components/RelProducts.jsx'
-// import QnA from './components/QnAcomponents/mainQnA.jsx';
-// import RatingsNReviews from './components/RatingsNReviews/RatingsNReviews.jsx'
+import RelProducts from './components/RelProducts.jsx'
+import QnA from './components/QnAcomponents/mainQnA.jsx';
+import RatingsNReviews from './components/RatingsNReviews/RatingsNReviews.jsx'
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -18,9 +18,9 @@ class App extends React.Component {
     return (
       <div>
         <ProductOverview />
-        {/* <RelProducts />
+        <RelProducts />
         <QnA />
-        <RatingsNReviews /> */}
+        <RatingsNReviews />
       </div>
     );
   }
