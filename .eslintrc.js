@@ -14,6 +14,7 @@ module.exports = {
     ecmaFeatures: {
       'jsx': true
     }
+    "parser": "@babel/eslint-parser",
   },
   rules: {
     /* Indentation */
