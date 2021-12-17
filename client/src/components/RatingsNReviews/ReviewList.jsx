@@ -13,40 +13,47 @@ const ReviewList = ( {productId} )=>{
   const [newestReviewArray, setNewestReviewArray] = useState([]);
   const [onScreenReviewArray, setOnScreenReviewArray] = useState([]);
   const [clickedList, setClickedList] = useState(new Map());
+  const [isLoading, setIsLoading] = useState(false);
   const arrayMap =
    { totalReviewArray: totalReviewArray,
      helpfulReviewArray: helpfulReviewArray,
      newestReviewArray: newestReviewArray
    };
   useEffect(() => {
-    // console.log('trigger effect:', clickedList);
+    setIsLoading(true);
+    console.log('trigger effect isLoading:', isLoading);
     axios.get('http://localhost:3000/getReviews', { params: { Id: productId } })
       .then((response)=>{
         // let onSelect = arrayMap2[selectedArray];
         const sortByRevelant = response.data.slice(0).sort((x, y) => { return y.helpfulness - x.helpfulness || y.review_id - x.review_id; });
         const firstTwo = sortByRevelant.slice(0, 2);
-        // console.log('onSelected:', selectedArray);
+        console.log('onSelected:', selectedArray);
         if ( selectedArray === 'totalReviewArray') {
           setOnScreenReviewArray(firstTwo);
-        } else if (setSelectedArray === 'newestReviewArray') {
-          setOnScreenReviewArray(response.data.slice(0, 2).sort((x, y)=>{ return y.review_id - x.review_id; }));
-        } else if ( setSelectedArray === 'helpfulReviewArray') {
-          setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }));
+          console.log('trigger totalReviewArray:');
+        } else if (selectedArray === 'newestReviewArray') {
+          setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }).slice(0, 2));
+          console.log('trigger  newestReviewArray:');
+        } else if ( selectedArray === 'helpfulReviewArray') {
+          setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }).slice(0, 2));
+          console.log('trigger helpfulReviewArray:');
         }
         setTotalReviewArray(sortByRevelant);
         setNewestReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }));
         setHelpfulReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }));
+        setIsLoading(false);
+        console.log('trigger effect isLoading2:', isLoading);
       })
       .catch((err) => {
         // console.log('this is the react getreviews err', err);
       });
+
   }, [productId, selectedArray]);
 
   const convertDate = function (dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
-
   const toggleIsTruncated = function () {
     setIsTruncated(isTruncated === true ? false : true);
     setExtended (isExtended === 'Show Less' ? 'Show More' : 'Show Less');
@@ -62,7 +69,6 @@ const ReviewList = ( {productId} )=>{
           return prevState.concat(selectedArray[i]);
         });
       }
-
     }
   };
   const openModal = function (e) {
@@ -83,15 +89,12 @@ const ReviewList = ( {productId} )=>{
     const starPercentageRounded = (starPercentage / 10) * 10 + '%';
     return starPercentageRounded;
   };
-
   const dropDownMenu = function (e) {
-
     setSelectedArray(e.target.value);
     if (e.target.value === 'newestReviewArray') {
       setOnScreenReviewArray(newestReviewArray.slice(0, 2));
     } else if (e.target.value === 'totalReviewArray') {
       setOnScreenReviewArray(totalReviewArray.slice(0, 2));
-
     } else if (e.target.value === 'helpfulReviewArray') {
       setOnScreenReviewArray(helpfulReviewArray.slice(0, 2));
     }
@@ -99,7 +102,6 @@ const ReviewList = ( {productId} )=>{
   const markClicked = function (id, helpfulness) {
     setClickedList(prevState => prevState.set( id, helpfulness ));
   };
-
   return (
     <div className="reviewSection">
       <h1>This is the reviewList</h1>
@@ -111,7 +113,7 @@ const ReviewList = ( {productId} )=>{
           <option value="helpfulReviewArray">Helpful</option>
         </select>
       </div>
-      <div className="reviewList">{onScreenReviewArray.length === 0 ? <h1 style = {{color: 'red'}}>No reviews yet</h1> : onScreenReviewArray.map((user, index)=>{
+      <div className="reviewList">{isLoading === true ? <h1 style = {{color: 'red'}}>Loading</h1> : onScreenReviewArray.map((user, index)=>{
         return (
           <div key={index} className="reviewCell">
             <div className="reviewTop">
