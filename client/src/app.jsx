@@ -7,7 +7,9 @@ import RatingsNReviews from './components/RatingsNReviews/RatingsNReviews.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      productId: 59553,
+    };
   }
 
   componentDidMount() {
@@ -17,10 +19,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <ProductOverview />
+        {/* <ProductOverview />
         <RelProducts />
-        <QnA />
-        <RatingsNReviews />
+        <QnA /> */}
+        <RatingsNReviews productId={this.state.productId} />
       </div>
     );
   }

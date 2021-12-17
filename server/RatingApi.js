@@ -6,7 +6,7 @@ const getTotalReviews = (productId, page) => {
   productId = 59553;
   let options = {
     method: 'GET',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews?product_id=${productId}&count=50&sort=newest&page=${page}`,
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews?product_id=${productId}&count=5&sort=relevant&page=${page}`,
     headers: { Authorization: gitToken.Token },
   };
   return axios(options)
@@ -26,7 +26,7 @@ const updateHelpfulness = (reviewId) => {
   };
   return axios(options)
     .then(response => {
-      console.log('updatehelpful response:', response);
+      // console.log('updatehelpful response:', response);
       return response;
     })
     .catch((err) => {
