@@ -29,7 +29,7 @@ class AddQuestionForm extends React.Component {
     var nickname = this.state.nickname;
     var email = this.state.email;
     var validationResult = this.handleValidation(body, nickname, email);
-   console.log(validationResult);
+
     if(validationResult){
       this.setState({
         isValid: true
@@ -66,6 +66,7 @@ class AddQuestionForm extends React.Component {
                 onChange={this.handleInputChange}
               />
             </label>
+            <br />
             <label>
               What's your nickname?*
               <input
@@ -76,7 +77,10 @@ class AddQuestionForm extends React.Component {
                 value={this.state.nickname}
                 onChange={this.handleInputChange}
               />
+              <br />
+              <i>For privacy reasons, do not use your full name or email address</i>
             </label>
+            <br />
             <label>
               Your email?*
               <input
@@ -87,7 +91,10 @@ class AddQuestionForm extends React.Component {
                 value={this.state.email}
                 onChange={this.handleInputChange}
               />
+              <br />
+              <i>For authentication reasons, you will not be emailed</i>
             </label>
+            <br />
             <input type="submit" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
           </form>
       </div>
