@@ -13,11 +13,18 @@ class AddAnswerForm extends React.Component {
   }
 
   handleInputChange(event){
-
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value
+    })
   }
 
   handleSubmit(){
-
+    event.preventDefault();
+    console.log('pressed submit');
+    console.log(this.state);
   }
 
   render(){
