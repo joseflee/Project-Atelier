@@ -5,10 +5,12 @@ class QuestionsListItem extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      isAddAnswerClicked: false,
       answers: {},
       isMoreAnswersShown: false
     }
     this.clickOnMoreAnswers = this.clickOnMoreAnswers.bind(this);
+    this.addAnswerHandleClick = this.addAnswerHandleClick.bind(this);
   }
 
   componentDidMount(){
@@ -32,6 +34,10 @@ class QuestionsListItem extends React.Component {
     })
   }
 
+  addAnswerHandleClick(){
+    console.log('click');
+  }
+
   render(){
     let moreAnswers;
     //let length = Object.keys(this.props.question.answers).length;
@@ -50,7 +56,7 @@ class QuestionsListItem extends React.Component {
           <div className='question-item-q-letter'><h2>Q:{this.props.question.question_body}</h2></div>
           <div className='question-item-helpful-keyword'>Helpful?</div>
           <div className='question-item-yes-button'>Yes({this.props.question.question_helpfulness})</div>
-          <div className='question-item-add-answer-link'>Add answer</div>
+          <div className='question-item-add-answer-link' onClick={()=>this.addAnswerHandleClick()}><u>Add answer</u></div>
         </div>
        {/* end of question item */}
        {
