@@ -33,7 +33,20 @@ const HelpfulButton = ({reviewId, helpfulness, markClicked, clickedList})=>{
   };
   return (
     <div>
-      {clicked ? <div><span>HelpFul ?</span> <span id={reviewId} className= { 'helpful-1 onClicked ' + reviewId} onClick ={ helpfulnessonClicked }>Yes (<span>{helpfulnessCount}</span>)</span> <span> | Report</span> </div> : <div><span>HelpFul ?</span> <span id={reviewId} className= { 'helpful-1 ' + reviewId} onClick ={ helpfulnessonClicked }>Yes (<span>{helpfulnessCount}</span>)</span> <span> | Report</span> </div>}
+      {clicked ?
+        <div>
+          <span>HelpFul ?</span>
+          <span id={reviewId} className= { 'helpful-1 onClicked ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
+          <span>({helpfulnessCount})</span>
+          <span> | Report</span>
+        </div>
+        :
+        <div>
+          <span>HelpFul ?</span>
+          <span id={reviewId} className= { 'helpful-1 ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
+          <span>({helpfulnessCount})</span>
+          <span> | Report</span>
+        </div>}
     </div>
   );
 };
