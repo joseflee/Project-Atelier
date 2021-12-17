@@ -1,5 +1,6 @@
 import React from 'react';
 import QuestionsListItemAnswer from './QuestionsListItemAnswer.jsx';
+import AddAnswerForm from './AddAnswerForm.jsx';
 
 class QuestionsListItem extends React.Component {
   constructor(props){
@@ -36,15 +37,25 @@ class QuestionsListItem extends React.Component {
 
   addAnswerHandleClick(){
     console.log('click');
+    this.setState({
+      isAddAnswerClicked: true
+    })
   }
 
   render(){
     let moreAnswers;
+    let addAnswer;
     //let length = Object.keys(this.props.question.answers).length;
     if(this.state.isMoreAnswersShown){
       moreAnswers = <button onClick={()=>{this.clickOnMoreAnswers()}}>Load more answers</button>
     } else {
       moreAnswers = <div></div>
+    }
+
+    if(this.state.isAddAnswerClicked){
+      addAnswer = <AddAnswerForm />
+    } else {
+      addAnswer = <u>Add answer</u>
     }
 
     return(
@@ -56,7 +67,7 @@ class QuestionsListItem extends React.Component {
           <div className='question-item-q-letter'><h2>Q:{this.props.question.question_body}</h2></div>
           <div className='question-item-helpful-keyword'>Helpful?</div>
           <div className='question-item-yes-button'>Yes({this.props.question.question_helpfulness})</div>
-          <div className='question-item-add-answer-link' onClick={()=>this.addAnswerHandleClick()}><u>Add answer</u></div>
+          <div className='question-item-add-answer-link' onClick={()=>this.addAnswerHandleClick()}>{addAnswer}</div>
         </div>
        {/* end of question item */}
        {
