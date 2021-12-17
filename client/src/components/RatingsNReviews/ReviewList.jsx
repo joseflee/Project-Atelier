@@ -26,12 +26,15 @@ const ReviewList = ( {productId} )=>{
         const sortByRevelant = response.data.slice(0).sort((x, y) => { return y.helpfulness - x.helpfulness || y.review_id - x.review_id; });
         const firstTwo = sortByRevelant.slice(0, 2);
         // console.log('onSelected:', selectedArray);
-        if ( selectedArray === 'totalReviewArray') {
+       if ( selectedArray === 'totalReviewArray') {
           setOnScreenReviewArray(firstTwo);
-        } else if (setSelectedArray === 'newestReviewArray') {
-          setOnScreenReviewArray(response.data.slice(0, 2).sort((x, y)=>{ return y.review_id - x.review_id; }));
-        } else if ( setSelectedArray === 'helpfulReviewArray') {
-          setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }));
+//           console.log('trigger totalReviewArray:');
+        } else if (selectedArray === 'newestReviewArray') {
+          setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }).slice(0, 2));
+//           console.log('trigger  newestReviewArray:');
+        } else if ( selectedArray === 'helpfulReviewArray') {
+          setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }).slice(0, 2));
+//           console.log('trigger helpfulReviewArray:');
         }
         setTotalReviewArray(sortByRevelant);
         setNewestReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }));
