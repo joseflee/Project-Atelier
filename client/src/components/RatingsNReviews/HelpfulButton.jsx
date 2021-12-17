@@ -21,7 +21,6 @@ const HelpfulButton = ({reviewId, helpfulness, markClicked, clickedList})=>{
     if (!clickedList.has(Id)) {
       markClicked(Id, helpfulness);
       setHelpfulnessCount(helpfulnessCount + 1);
-      setClicked(true);
       e.target.className += ' onClicked';
       axios.post('/updateHelpfulness', {Id: Id})
         .catch((err) => {
