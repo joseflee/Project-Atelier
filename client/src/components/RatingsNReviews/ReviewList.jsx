@@ -3,7 +3,7 @@ import axios from 'axios';
 // import Sample from '../../../../example/reviews.js';
 import HelpfulButton from './HelpfulButton.jsx';
 const ReviewList = ( {productId} )=>{
-  let result = Sample.reviews.results;
+  // let result = Sample.reviews.results;
   const [selectedArray, setSelectedArray] = useState('totalReviewArray');
   const [isOpen, setIsOpen] = useState(false);
   const [isTruncated, setIsTruncated] = useState(true);
@@ -12,18 +12,14 @@ const ReviewList = ( {productId} )=>{
   const [helpfulReviewArray, setHelpfulReviewArray] = useState([]);
   const [newestReviewArray, setNewestReviewArray] = useState([]);
   const [onScreenReviewArray, setOnScreenReviewArray] = useState([]);
+  const [clickedList, setClickedList] = useState(new Map());
   const arrayMap =
    { totalReviewArray: totalReviewArray,
      helpfulReviewArray: helpfulReviewArray,
      newestReviewArray: newestReviewArray
    };
-  const arrayMap2 =
-   { totalReviewArray: totalReviewArray,
-     helpfulReviewArray: helpfulReviewArray,
-     newestReviewArray: newestReviewArray
-   };
   useEffect(() => {
-    // console.log('trigger effect');
+    // console.log('trigger effect:', clickedList);
     axios.get('http://localhost:3000/getReviews', { params: { Id: productId } })
       .then((response)=>{
         // let onSelect = arrayMap2[selectedArray];
@@ -62,8 +58,8 @@ const ReviewList = ( {productId} )=>{
       if (i === totalReviewArray.length) {
         break;
       } else {
-        setOnScreenReviewArray((prev) => {
-          return prev.concat(selectedArray[i]);
+        setOnScreenReviewArray((prevState) => {
+          return prevState.concat(selectedArray[i]);
         });
       }
 
@@ -100,6 +96,10 @@ const ReviewList = ( {productId} )=>{
       setOnScreenReviewArray(helpfulReviewArray.slice(0, 2));
     }
   };
+  const markClicked = function (id, helpfulness) {
+    setClickedList(prevState => prevState.set( id, helpfulness ));
+  };
+
   return (
     <div className="reviewSection">
       <h1>This is the reviewList</h1>
@@ -142,7 +142,7 @@ const ReviewList = ( {productId} )=>{
               </div> : null}
             {user.recommend ? <div><span>✔</span><span>I recommend this product</span></div> : null}
             {user.response ? (<div className="review-Response"><div className="seller-Response">Response from seller:</div> <div className="seller-Response2">{user.response}</div> </div>) : null}
-            <HelpfulButton helpfulness={user.helpfulness} reviewId = {user.review_id}/>
+            <HelpfulButton clickedList={clickedList} markClicked={markClicked} helpfulness={user.helpfulness} reviewId = {user.review_id}/>
           </div>
         );
       })}
