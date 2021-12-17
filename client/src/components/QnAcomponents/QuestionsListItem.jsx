@@ -53,7 +53,7 @@ class QuestionsListItem extends React.Component {
     }
 
     if(this.state.isAddAnswerClicked){
-      addAnswer = <AddAnswerForm name={this.props.name}/>
+      addAnswer = <AddAnswerForm name={this.props.name} question_body={this.props.question.question_body}/>
     } else {
       addAnswer = <u>Add answer</u>
     }

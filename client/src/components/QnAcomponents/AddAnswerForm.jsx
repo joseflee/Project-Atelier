@@ -10,7 +10,7 @@ class AddAnswerForm extends React.Component {
     return(
       <div>
         <div>Submit your answer</div>
-        <div>here name:{this.props.name}</div>
+        <div>{this.props.name}: {this.props.question_body}</div>
       </div>
     )
   }
