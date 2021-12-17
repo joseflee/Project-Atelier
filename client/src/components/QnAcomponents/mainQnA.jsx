@@ -48,7 +48,7 @@ class QnA extends React.Component {
         {console.log(sampleData.questions.results)}
       <div className='qna-component-name'>Questions and Answers</div>
       <SearchQuestions />
-      <QuestionsList data={this.state.questions}/>
+      <QuestionsList data={this.state.questions} name={this.state.product_name}/>
       <br />
       {moreAnsweredQuestions}
       <AddQuestion name = {this.state.product_name}/>
