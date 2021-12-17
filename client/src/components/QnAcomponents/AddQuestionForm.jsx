@@ -4,12 +4,14 @@ class AddQuestionForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      isValid: true,
       questionBody:'',
       nickname:'',
       email:''
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleValidation = this.handleValidation.bind(this);
   }
 
   handleInputChange(event){
@@ -23,8 +25,28 @@ class AddQuestionForm extends React.Component {
 
   handleSubmit(event){
     event.preventDefault();
-    console.log('pressed submit');
-    console.log(this.state);
+    var body = this.state.questionBody;
+    var nickname = this.state.nickname;
+    var email = this.state.email;
+    var validationResult = this.handleValidation(body, nickname, email);
+
+    if(validationResult){
+      this.setState({
+        isValid: true
+      })
+    }
+  }
+
+  handleValidation(question, nick, email){
+    if (question.length === 0){
+      return false;
+    } else if (nick.length === 0) {
+      return false;
+    } else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))){
+      return false;
+    } else {
+      return true;
+    }
   }
 
 
@@ -44,6 +66,7 @@ class AddQuestionForm extends React.Component {
                 onChange={this.handleInputChange}
               />
             </label>
+            <br />
             <label>
               What's your nickname?*
               <input
@@ -54,7 +77,10 @@ class AddQuestionForm extends React.Component {
                 value={this.state.nickname}
                 onChange={this.handleInputChange}
               />
+              <br />
+              <i>For privacy reasons, do not use your full name or email address</i>
             </label>
+            <br />
             <label>
               Your email?*
               <input
@@ -65,7 +91,10 @@ class AddQuestionForm extends React.Component {
                 value={this.state.email}
                 onChange={this.handleInputChange}
               />
+              <br />
+              <i>For authentication reasons, you will not be emailed</i>
             </label>
+            <br />
             <input type="submit" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
           </form>
       </div>
