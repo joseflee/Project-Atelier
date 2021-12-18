@@ -3,10 +3,7 @@ import React from 'react';
 class SearchQuestions extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isSearchTriggered: false
-    };
-
+    
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
