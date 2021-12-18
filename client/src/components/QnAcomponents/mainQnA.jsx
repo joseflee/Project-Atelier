@@ -14,6 +14,7 @@ class QnA extends React.Component {
       product_name:'Blue jeans'
     }
     this.showMoreQuestions = this.showMoreQuestions.bind(this);
+    this.search = this.search.bind(this);
   }
 
   componentDidMount(){
@@ -36,6 +37,10 @@ class QnA extends React.Component {
     })
   }
 
+  search(query){
+    console.log('received query', query);
+  }
+
   render(){
     let moreAnsweredQuestions;
     if(this.state.isMoreQuestionsButtonShown){
@@ -47,7 +52,7 @@ class QnA extends React.Component {
       <div>
         {console.log(sampleData.questions.results)}
       <div className='qna-component-name'>Questions and Answers</div>
-      <SearchQuestions />
+      <SearchQuestions search={this.search}/>
       <QuestionsList data={this.state.questions}/>
       <br />
       {moreAnsweredQuestions}

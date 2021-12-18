@@ -7,8 +7,11 @@ class SearchQuestions extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  handleInputChange() {
-    
+  handleInputChange(event) {
+    let query = event.target.value;
+    if (query.length >= 3) {
+      this.props.search(query);
+    }
   }
 
   render() {
@@ -18,7 +21,7 @@ class SearchQuestions extends React.Component {
           type='text'
           placeholder='Have a question? Search for answers…'
           size='50'
-          onChange={this.handleInputChange} />
+          onChange={(e)=>this.handleInputChange(e)} />
       </form>
     );
   }
