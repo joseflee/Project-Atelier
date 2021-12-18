@@ -116,10 +116,10 @@ const ReviewList = ( {productId} )=>{
           </div>
           {isLoading === true ? <h1 style = {{color: 'red'}}>Loading</h1> : onScreenReviewArray.map((user, index)=>{
             return (
-              <div key={index} className="reviewCell">
-                <div className="reviewTop">
-                  <div className="stars-outer">
-                    <div className="stars-inner" style={{width: starWidth(user.rating)}}></div>
+              <div key={index} className="review-Cell">
+                <div className="review-Top">
+                  <div className="review-stars-outer">
+                    <div className="review-stars-inner" style={{width: starWidth(user.rating)}}></div>
                   </div>
                   <span className="number-Rating" style= {{color: 'red'}}>{user.rating}</span>
                   <span className="nameAndDate">{user.reviewer_name}, {convertDate(user.date)}</span>
@@ -134,7 +134,7 @@ const ReviewList = ( {productId} )=>{
                   <div className="review-ImageSection">
                     {user.photos.map((img, index)=>{
                       return (
-                        <div key = {index} className="Imageblock">
+                        <div key = {index} className="review-Imageblock">
                           <img onClick={openModal} id="review-Images" alt = "user's review image" className = "review-Images" src= {img.url} />
                           <div id="review-Modal" className="review-Modal">
                             <span className="review-Modal-Close" onClick= {closeModal}>&times;</span>

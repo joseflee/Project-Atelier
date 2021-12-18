@@ -21,7 +21,7 @@ const HelpfulButton = ({reviewId, helpfulness, markClicked, clickedList})=>{
     if (!clickedList.has(Id)) {
       markClicked(Id, helpfulness);
       setHelpfulnessCount(helpfulnessCount + 1);
-      e.target.className += ' onClicked';
+      e.target.className += ' helpfulness-onClicked';
       axios.post('http://localhost:3000/ratings/updateHelpfulness', {Id: Id})
         .catch((err) => {
           console.log('This is updatehelfulness amount err:', err);
@@ -36,14 +36,14 @@ const HelpfulButton = ({reviewId, helpfulness, markClicked, clickedList})=>{
       {clicked ?
         <div>
           <span>HelpFul ?</span>
-          <span id={reviewId} className= { 'helpful-1 onClicked ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
+          <span id={reviewId} className= { 'review-helpful-1 helpfulness-onClicked ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
           <span>({helpfulnessCount})</span>
           <span> | Report</span>
         </div>
         :
         <div>
           <span>HelpFul ?</span>
-          <span id={reviewId} className= { 'helpful-1 ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
+          <span id={reviewId} className= { 'review-helpful-1 ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
           <span>({helpfulnessCount})</span>
           <span> | Report</span>
         </div>}
