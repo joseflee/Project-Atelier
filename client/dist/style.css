@@ -1,8 +1,7 @@
 /* Rating Section Start ------------------------------------------------------------------------------------------------*/
 
 .reviewCell {
-  width: 640px;
-
+  width: 750px;
   border-bottom: 2px solid black;
 }
 .reviewTop {
@@ -19,10 +18,14 @@
   max-width:750px;
   word-wrap:break-word;
 }
-
-.reviewList {
-  height: 500px;
+.review-List {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 750px;
+  height: 600px;
   overflow-y: scroll;
+  border: brown solid 2px;
 }
 ::-webkit-scrollbar {
   width: 0px;
@@ -73,7 +76,6 @@
   width: 80%;
   max-width: 700px;
 }
-
 
 /*  Animation - Modal */
 .review-Modal-Content {
