@@ -4,6 +4,8 @@ import QuestionsList from './QuestionsList.jsx';
 import MoreAnsweredQuestions from './MoreAnsweredQuestions.jsx';
 import AddQuestion from './AddQuestion.jsx';
 import sampleData from '../../../../example/questions.js';
+import axios from 'axios';
+//import qnaRouter from '../../../../server/routes/qna.js';
 
 class QnA extends React.Component {
   constructor(props) {
@@ -28,6 +30,17 @@ class QnA extends React.Component {
     this.setState({
       questions: questionsToShow
     });
+    //get product name by its id
+    let productId = this.props.productId;
+    
+    var url = 'http://localhost:3000/qna/getProductById';
+    axios.get(url)
+      .then(function (response) {
+        console.log('this is id', response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   showMoreQuestions() {
