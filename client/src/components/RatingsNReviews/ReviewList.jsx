@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import RatingBreakDown from './RatingBreakDown.jsx';
+import ProductBreakDown from './ProductBreakDown.jsx';
 import axios from 'axios';
 // import Sample from '../../../../example/reviews.js';
 import HelpfulButton from './HelpfulButton.jsx';
@@ -21,31 +23,25 @@ const ReviewList = ( {productId} )=>{
    };
   useEffect(() => {
     setIsLoading(true);
-    console.log('trigger effect isLoading:', isLoading);
-    axios.get('http://localhost:3000/getReviews', { params: { Id: productId } })
+    axios.get('http://localhost:3000/ratings/getReviews', { params: { Id: productId } })
       .then((response)=>{
         // let onSelect = arrayMap2[selectedArray];
         const sortByRevelant = response.data.slice(0).sort((x, y) => { return y.helpfulness - x.helpfulness || y.review_id - x.review_id; });
         const firstTwo = sortByRevelant.slice(0, 2);
-        console.log('onSelected:', selectedArray);
         if ( selectedArray === 'totalReviewArray') {
           setOnScreenReviewArray(firstTwo);
-          console.log('trigger totalReviewArray:');
         } else if (selectedArray === 'newestReviewArray') {
           setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }).slice(0, 2));
-          console.log('trigger  newestReviewArray:');
         } else if ( selectedArray === 'helpfulReviewArray') {
           setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }).slice(0, 2));
-          console.log('trigger helpfulReviewArray:');
         }
         setTotalReviewArray(sortByRevelant);
         setNewestReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }));
         setHelpfulReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }));
         setIsLoading(false);
-        console.log('trigger effect isLoading2:', isLoading);
       })
       .catch((err) => {
-        // console.log('this is the react getreviews err', err);
+        console.log('this is the react reviewlist get reviews err', err);
       });
 
   }, [productId, selectedArray]);
@@ -103,54 +99,61 @@ const ReviewList = ( {productId} )=>{
     setClickedList(prevState => prevState.set( id, helpfulness ));
   };
   return (
-    <div className="reviewSection">
-      <h1>This is the reviewList</h1>
-      <div className="review-DropDown">
-        <h2 style= {{display: 'inline'}}>{totalReviewArray.length} reviews, sorted by </h2>
-        <select onChange={dropDownMenu} id="review-sort-select">
-          <option value="totalReviewArray">Relevant</option>
-          <option value="newestReviewArray">Newest</option>
-          <option value="helpfulReviewArray">Helpful</option>
-        </select>
+    <div>
+      <div className= 'review-starSection'>
+        <RatingBreakDown productId= {productId}/>
+        <ProductBreakDown />
       </div>
-      <div className="reviewList">{isLoading === true ? <h1 style = {{color: 'red'}}>Loading</h1> : onScreenReviewArray.map((user, index)=>{
-        return (
-          <div key={index} className="reviewCell">
-            <div className="reviewTop">
-              <div className="stars-outer">
-                <div className="stars-inner" style={{width: starWidth(user.rating)}}></div>
-              </div>
-              <span className="number-Rating" style= {{color: 'red'}}>{user.rating}</span>
-              <span className="nameAndDate">{user.reviewer_name}, {convertDate(user.date)}</span>
-            </div>
-            <h2 className="Summary">{user.summary.slice(0, 60)}</h2>
-            <div className="review-Body"> {user.summary.length > 60 ?
-              <div className="extended-Summary">{user.summary.slice(60)}</div> : null} <br></br>{user.body.length > 250 ?
-              <div>{isTruncated ? <div >{user.body.substring(0, 250)}.........................</div> : <div>{user.body}</div>}
-                <div><button onClick = {()=>{ toggleIsTruncated(); }}>{isExtended}</button></div> </div> : <div>{user.body}</div>}
-            </div>
-            {user.photos.length > 0 ?
-              <div className="review-ImageSection">
-                {user.photos.map((img, index)=>{
-                  return (
-                    <div key = {index} className="Imageblock">
-                      <img onClick={openModal} id="review-Images" alt = "user's review image" className = "review-Images" src= {img.url} />
-                      <div id="review-Modal" className="review-Modal">
-                        <span className="review-Modal-Close" onClick= {closeModal}>&times;</span>
-                        <img className="review-Modal-Content" id="review-Modal-Content" />
-                      </div>
-                    </div>);
-                })}
-              </div> : null}
-            {user.recommend ? <div><span>✔</span><span>I recommend this product</span></div> : null}
-            {user.response ? (<div className="review-Response"><div className="seller-Response">Response from seller:</div> <div className="seller-Response2">{user.response}</div> </div>) : null}
-            <HelpfulButton clickedList={clickedList} markClicked={markClicked} helpfulness={user.helpfulness} reviewId = {user.review_id}/>
+      <div className="reviewSection">
+        <div className= "review-List">
+          <div className="review-DropDown">
+            <h2 style= {{display: 'inline'}}>{totalReviewArray.length} reviews, sorted by </h2>
+            <select onChange={dropDownMenu} id="review-sort-select">
+              <option value="totalReviewArray">Relevant</option>
+              <option value="newestReviewArray">Newest</option>
+              <option value="helpfulReviewArray">Helpful</option>
+            </select>
           </div>
-        );
-      })}
-      </div>
+          {isLoading === true ? <h1 style = {{color: 'red'}}>Loading</h1> : onScreenReviewArray.map((user, index)=>{
+            return (
+              <div key={index} className="review-Cell">
+                <div className="review-Top">
+                  <div className="review-stars-outer">
+                    <div className="review-stars-inner" style={{width: starWidth(user.rating)}}></div>
+                  </div>
+                  <span className="number-Rating" style= {{color: 'red'}}>{user.rating}</span>
+                  <span className="nameAndDate">{user.reviewer_name}, {convertDate(user.date)}</span>
+                </div>
+                <h2 className="Summary">{user.summary.slice(0, 60)}</h2>
+                <div className="review-Body"> {user.summary.length > 60 ?
+                  <div className="extended-Summary">{user.summary.slice(60)}</div> : null} <br></br>{user.body.length > 250 ?
+                  <div>{isTruncated ? <div >{user.body.substring(0, 250)}.........................</div> : <div>{user.body}</div>}
+                    <div><button onClick = {()=>{ toggleIsTruncated(); }}>{isExtended}</button></div> </div> : <div>{user.body}</div>}
+                </div>
+                {user.photos.length > 0 ?
+                  <div className="review-ImageSection">
+                    {user.photos.map((img, index)=>{
+                      return (
+                        <div key = {index} className="review-Imageblock">
+                          <img onClick={openModal} id="review-Images" alt = "user's review image" className = "review-Images" src= {img.url} />
+                          <div id="review-Modal" className="review-Modal">
+                            <span className="review-Modal-Close" onClick= {closeModal}>&times;</span>
+                            <img className="review-Modal-Content" id="review-Modal-Content" />
+                          </div>
+                        </div>);
+                    })}
+                  </div> : null}
+                {user.recommend ? <div><span>✔</span><span>I recommend this product</span></div> : null}
+                {user.response ? (<div className="review-Response"><div className="seller-Response">Response from seller:</div> <div className="seller-Response2">{user.response}</div> </div>) : null}
+                <HelpfulButton clickedList={clickedList} markClicked={markClicked} helpfulness={user.helpfulness} reviewId = {user.review_id}/>
+              </div>
+            );
+          })}
 
-      {onScreenReviewArray.length === totalReviewArray.length || totalReviewArray.length < 2 ? null : <div><button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button></div>}
+
+          { isLoading ? null : onScreenReviewArray.length === totalReviewArray.length || totalReviewArray.length < 2 ? null : <div><button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button></div>}
+        </div>
+      </div>
     </div>
   );
 };
