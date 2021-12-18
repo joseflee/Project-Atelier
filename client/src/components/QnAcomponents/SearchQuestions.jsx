@@ -1,7 +1,16 @@
 import React from 'react';
 
-const SearchQuestions = (props) => (
-<div>Seach quastions</div>
-)
+class SearchQuestions extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>Search here</div>
+    );
+  }
+
+}
 
 export default SearchQuestions;
