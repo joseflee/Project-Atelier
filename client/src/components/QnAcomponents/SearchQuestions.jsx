@@ -3,6 +3,9 @@ import React from 'react';
 class SearchQuestions extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isSearchTriggered: false
+    };
 
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -10,8 +13,12 @@ class SearchQuestions extends React.Component {
   handleInputChange(event) {
     let query = event.target.value;
     if (query.length >= 3) {
-      this.props.search(query);
+      this.props.search(query, true);
+    } else {
+      this.props.search(query, false);
     }
+
+
   }
 
   render() {
