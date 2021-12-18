@@ -41,17 +41,26 @@ class QnA extends React.Component {
     if(isSearchTriggered){
       query = query.toLowerCase();
       console.log('received query', query);
-      console.log(this.state.questions);
+      //console.log(this.state.questions);
       let questions =  sampleData.questions.results;
       const filtered = questions.filter(item => item.question_body.toLowerCase().includes(query));
       console.log('filtered', filtered);
-      this.setState({
-        questions: filtered
-      })
+     //do not hiding questions if more than 2
+     this.setState({
+       questions: filtered
+     })
     } else {
       console.log('search stopped');
+      //render all the questions and hide the rest if more than 2
+      var questionsToShow = sampleData.questions.results;
+      if (questionsToShow.length > 2){
+        this.setState({
+          isMoreQuestionsButtonShown: true
+        })
+      }
+      questionsToShow = questionsToShow.slice(0, 2);
       this.setState({
-        questions: sampleData.questions.results
+        questions: questionsToShow
       })
     }
 
