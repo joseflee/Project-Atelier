@@ -39,6 +39,11 @@ class QnA extends React.Component {
 
   search(query){
     console.log('received query', query);
+    console.log(this.state.questions);
+    let questions = [...this.state.questions];
+    const filtered = questions.filter(item => item.question_body.includes(query));
+    console.log('filtered', filtered);
+    
   }
 
   render(){
