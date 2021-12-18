@@ -23,7 +23,7 @@ const ReviewList = ( {productId} )=>{
    };
   useEffect(() => {
     setIsLoading(true);
-    axios.get('http://localhost:3000/getReviews', { params: { Id: productId } })
+    axios.get('http://localhost:3000/ratings/getReviews', { params: { Id: productId } })
       .then((response)=>{
         // let onSelect = arrayMap2[selectedArray];
         const sortByRevelant = response.data.slice(0).sort((x, y) => { return y.helpfulness - x.helpfulness || y.review_id - x.review_id; });

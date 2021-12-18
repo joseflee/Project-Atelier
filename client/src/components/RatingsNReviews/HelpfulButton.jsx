@@ -22,7 +22,7 @@ const HelpfulButton = ({reviewId, helpfulness, markClicked, clickedList})=>{
       markClicked(Id, helpfulness);
       setHelpfulnessCount(helpfulnessCount + 1);
       e.target.className += ' onClicked';
-      axios.post('/updateHelpfulness', {Id: Id})
+      axios.post('http://localhost:3000/ratings/updateHelpfulness', {Id: Id})
         .catch((err) => {
           console.log('This is updatehelfulness amount err:', err);
         });
