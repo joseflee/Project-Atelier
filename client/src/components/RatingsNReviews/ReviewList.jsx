@@ -1,49 +1,74 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import Sample from '../../../../example/reviews.js';
-const ReviewList = ()=>{
-  let result = Sample.reviews.results;
+// import Sample from '../../../../example/reviews.js';
+import HelpfulButton from './HelpfulButton.jsx';
+const ReviewList = ( {productId} )=>{
+  // let result = Sample.reviews.results;
+  const [selectedArray, setSelectedArray] = useState('totalReviewArray');
   const [isOpen, setIsOpen] = useState(false);
   const [isTruncated, setIsTruncated] = useState(true);
   const [isExtended, setExtended] = useState('Show More');
   const [totalReviewArray, setTotalReviewArray] = useState([]);
+  const [helpfulReviewArray, setHelpfulReviewArray] = useState([]);
+  const [newestReviewArray, setNewestReviewArray] = useState([]);
   const [onScreenReviewArray, setOnScreenReviewArray] = useState([]);
-  // const [totalReviewArray, setTotalReviewArray] = useState(result);
-  // const [onScreenReviewArray, setOnScreenReviewArray] = useState(totalReviewArray.slice(0,2))
-
+  const [clickedList, setClickedList] = useState(new Map());
+  const [isLoading, setIsLoading] = useState(false);
+  const arrayMap =
+   { totalReviewArray: totalReviewArray,
+     helpfulReviewArray: helpfulReviewArray,
+     newestReviewArray: newestReviewArray
+   };
   useEffect(() => {
-    axios.get('http://localhost:3000/getReviews')
+    setIsLoading(true);
+    console.log('trigger effect isLoading:', isLoading);
+    axios.get('http://localhost:3000/getReviews', { params: { Id: productId } })
       .then((response)=>{
-        console.log(response.data);
-        setTotalReviewArray(response.data.slice(0));
-        setOnScreenReviewArray(response.data.slice(0, 2));
+        // let onSelect = arrayMap2[selectedArray];
+        const sortByRevelant = response.data.slice(0).sort((x, y) => { return y.helpfulness - x.helpfulness || y.review_id - x.review_id; });
+        const firstTwo = sortByRevelant.slice(0, 2);
+        console.log('onSelected:', selectedArray);
+        if ( selectedArray === 'totalReviewArray') {
+          setOnScreenReviewArray(firstTwo);
+          console.log('trigger totalReviewArray:');
+        } else if (selectedArray === 'newestReviewArray') {
+          setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }).slice(0, 2));
+          console.log('trigger  newestReviewArray:');
+        } else if ( selectedArray === 'helpfulReviewArray') {
+          setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }).slice(0, 2));
+          console.log('trigger helpfulReviewArray:');
+        }
+        setTotalReviewArray(sortByRevelant);
+        setNewestReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }));
+        setHelpfulReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }));
+        setIsLoading(false);
+        console.log('trigger effect isLoading2:', isLoading);
       })
       .catch((err) => {
-        console.log('this is the react getreviews err', err);
+        // console.log('this is the react getreviews err', err);
       });
-  }, []);
 
+  }, [productId, selectedArray]);
 
   const convertDate = function (dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
-
   const toggleIsTruncated = function () {
     setIsTruncated(isTruncated === true ? false : true);
     setExtended (isExtended === 'Show Less' ? 'Show More' : 'Show Less');
   };
-  const loadReviews = function () {
+  const loadReviews = function (selectedArray) {
+    selectedArray = arrayMap[selectedArray];
     let startIndex = onScreenReviewArray.length;
     for (let i = startIndex; i <= startIndex + 1; i++) {
       if (i === totalReviewArray.length) {
         break;
       } else {
-        setOnScreenReviewArray((prev) => {
-          return prev.concat(totalReviewArray[i]);
+        setOnScreenReviewArray((prevState) => {
+          return prevState.concat(selectedArray[i]);
         });
       }
-
     }
   };
   const openModal = function (e) {
@@ -64,25 +89,31 @@ const ReviewList = ()=>{
     const starPercentageRounded = (starPercentage / 10) * 10 + '%';
     return starPercentageRounded;
   };
-  const helpfulButton = function (e) {
-    e.target.className += ' onClicked';
-    const voteCount = document.getElementById(e.target.id - 1);
-    // console.log(voteCount.innerText);
-    const voteIncrement = parseInt(voteCount.innerText[1]) + 1;
-    // console.log(voteIncrement)
-    voteCount.innerText = '(' + voteIncrement + ')';
-    axios.post('http://localhost:3000/updateHelpfulness', {reviewId: e.target.id})
-      .then((response)=>{
-        console.log('helpfulButton response:', response);
-      })
-      .catch((err) => {
-        console.log('this is the react updateHelpfulness err', err);
-      });
+  const dropDownMenu = function (e) {
+    setSelectedArray(e.target.value);
+    if (e.target.value === 'newestReviewArray') {
+      setOnScreenReviewArray(newestReviewArray.slice(0, 2));
+    } else if (e.target.value === 'totalReviewArray') {
+      setOnScreenReviewArray(totalReviewArray.slice(0, 2));
+    } else if (e.target.value === 'helpfulReviewArray') {
+      setOnScreenReviewArray(helpfulReviewArray.slice(0, 2));
+    }
+  };
+  const markClicked = function (id, helpfulness) {
+    setClickedList(prevState => prevState.set( id, helpfulness ));
   };
   return (
     <div className="reviewSection">
       <h1>This is the reviewList</h1>
-      <div className="reviewList">{onScreenReviewArray.length === 0 ? <h1 style = {{color: 'red'}}>No reviews yet</h1> : onScreenReviewArray.map((user, index)=>{
+      <div className="review-DropDown">
+        <h2 style= {{display: 'inline'}}>{totalReviewArray.length} reviews, sorted by </h2>
+        <select onChange={dropDownMenu} id="review-sort-select">
+          <option value="totalReviewArray">Relevant</option>
+          <option value="newestReviewArray">Newest</option>
+          <option value="helpfulReviewArray">Helpful</option>
+        </select>
+      </div>
+      <div className="reviewList">{isLoading === true ? <h1 style = {{color: 'red'}}>Loading</h1> : onScreenReviewArray.map((user, index)=>{
         return (
           <div key={index} className="reviewCell">
             <div className="reviewTop">
@@ -113,13 +144,13 @@ const ReviewList = ()=>{
               </div> : null}
             {user.recommend ? <div><span>✔</span><span>I recommend this product</span></div> : null}
             {user.response ? (<div className="review-Response"><div className="seller-Response">Response from seller:</div> <div className="seller-Response2">{user.response}</div> </div>) : null}
-            <div><span>Helpful? </span><span onClick={helpfulButton} className="helpful-1" id= {user.review_id}>Yes</span><span className="helpful-2" id={user.review_id - 1}>({user.helpfulness}) </span><span> | Report</span></div>
+            <HelpfulButton clickedList={clickedList} markClicked={markClicked} helpfulness={user.helpfulness} reviewId = {user.review_id}/>
           </div>
         );
       })}
       </div>
 
-      {onScreenReviewArray.length === totalReviewArray.length || totalReviewArray.length < 2 ? null : <div><button onClick= {()=>{ loadReviews(); }}>More reviews</button></div>}
+      {onScreenReviewArray.length === totalReviewArray.length || totalReviewArray.length < 2 ? null : <div><button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button></div>}
     </div>
   );
 };

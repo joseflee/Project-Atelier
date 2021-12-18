@@ -14,7 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.get('/getReviews', async (req, res) => {
-  let productId = 59553;
+  let productId = req.query.Id;
+  // console.log("server receive ID:", req.query.Id);
   let totalReviews = await api.getTotalReviews(productId, 1);
   let prevReviews = totalReviews.results.slice();
   var newReviews = [];
@@ -34,8 +35,8 @@ app.get('/getReviews', async (req, res) => {
 
 app.post('/updateHelpfulness', async (req, res) => {
   // console.log("receive review ID:", req.body.reviewId);
-  const reviewId = req.body.reviewId;
-  let totalReviews = await api.updateHelpfulness(reviewId);
+  const Id = req.body.Id;
+  let totalReviews = await api.updateHelpfulness(Id);
   res.status(204).end();
 });
 
