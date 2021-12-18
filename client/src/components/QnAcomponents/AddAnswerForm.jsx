@@ -23,8 +23,24 @@ class AddAnswerForm extends React.Component {
 
   handleSubmit(){
     event.preventDefault();
-    console.log('pressed submit');
-    console.log(this.state);
+    //console.log('pressed submit');
+    var body = this.state.answerBody;
+    var nickname = this.state.nickname;
+    var email = this.state.email;
+    var validationResult = this.handleValidation(body, nickname, email);
+    
+  }
+
+  handleValidation(answer, nickname, email){
+    if (answer.length === 0){
+      return false;
+    } else if (nickname.length === 0) {
+      return false;
+    } else if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))){
+      return false;
+    } else {
+      return true;
+    }
   }
 
   render(){
