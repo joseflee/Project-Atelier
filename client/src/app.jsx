@@ -4,6 +4,7 @@ import ProductOverview from './components/ProdOverview/OverView.jsx';
 import RelProducts from './components/RelProductsComponents/RelProducts.jsx';
 import QnA from './components/QnAcomponents/mainQnA.jsx';
 import RatingsNReviews from './components/RatingsNReviews/RatingsNReviews.jsx';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -19,9 +20,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {/* <ProductOverview />
+        <ProductOverview />
         <RelProducts />
-        <QnA /> */}
+        <QnA />
         <RatingsNReviews productId={this.state.productId} />
       </div>
     );

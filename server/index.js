@@ -2,16 +2,22 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const gitToken = require('../config.js');
-const axios = require('axios');
 const port = 3000;
-const api = require('./RatingApi.js');
+
+const productRouter = require('./routes/product.js');
+const ratingsRouter = require('./routes/ratings.js');
+const qnaRouter = require('./routes/qna.js');
+const cartRouter = require('./routes/cart.js');
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/product', productRouter);
+app.use('/ratings', ratingsRouter);
+app.use('/qna', qnaRouter);
+app.use('/cart', cartRouter);
 
 app.get('/getReviews', async (req, res) => {
   let productId = req.query.Id;
