@@ -17,7 +17,6 @@ const ReviewList = ( {productId} )=>{
   const [isLoading, setIsLoading] = useState(false);
   const [averageRate, setAverageRate] = useState(0);
   const [recommended, setRecommended] = useState(0);
-  const [ratingIsLoading, setRatingIsLoading] = useState(false);
   const arrayMap =
    { totalReviewArray: totalReviewArray,
      helpfulReviewArray: helpfulReviewArray,
@@ -114,7 +113,7 @@ const ReviewList = ( {productId} )=>{
   return (
     <div>
       <div className= 'review-starSection'>
-        <RatingBreakDown recommended={recommended} starWidth={starWidth} ratingIsLoading={ratingIsLoading} averageRate={averageRate} productId= {productId}/>
+        <RatingBreakDown recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
         <ProductBreakDown />
       </div>
       <div className="reviewSection">
