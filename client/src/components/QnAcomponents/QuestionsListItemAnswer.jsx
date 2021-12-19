@@ -10,6 +10,6 @@ const QuestionsListItemAnswer = (props) => (
     <div className='answer-item-yes-button'>Yes({props.answer.helpfulness})</div>
     <div className='answer-item-report-button'>Report</div>
   </div>
-)
+);
 
 export default QuestionsListItemAnswer;
