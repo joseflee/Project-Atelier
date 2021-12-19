@@ -32,10 +32,10 @@ qnaRouter.get('/getProductById', (req, res) => {
 });
 
 qnaRouter.get('/getQuestionsList', (req, res) =>{
-
-  var receiveQuestionList = function receiveQuestionList() {
+  let id = req.query.id;
+  var receiveQuestionList = function receiveQuestionList(id) {
     return new Promise((resolve, reject)=> {
-      api.getQuestionsFromHR((err, result) => {
+      api.getQuestionsFromHR(id, (err, result) => {
         if (err) {
           reject(err);
         } else {
@@ -45,12 +45,12 @@ qnaRouter.get('/getQuestionsList', (req, res) =>{
     });
   };
 
-  receiveQuestionList().
+  receiveQuestionList(id).
     then(data => {
       res.send(data);
     })
     .catch(err => {
-      console.log(err);
+      //console.log(err);
       res.sendStatus(400);
     });
 
