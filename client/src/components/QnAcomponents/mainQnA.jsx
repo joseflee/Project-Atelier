@@ -5,7 +5,6 @@ import MoreAnsweredQuestions from './MoreAnsweredQuestions.jsx';
 import AddQuestion from './AddQuestion.jsx';
 import sampleData from '../../../../example/questions.js';
 import axios from 'axios';
-//import qnaRouter from '../../../../server/routes/qna.js';
 
 class QnA extends React.Component {
   constructor(props) {
@@ -35,12 +34,16 @@ class QnA extends React.Component {
 
     var url = 'http://localhost:3000/qna/getProductById';
     axios.get(url, {params: {id: productId}})
-      .then(function (response) {
-        console.log('this is name', response.data.name);
+      .then((response) => {
+        //console.log('this is name', response.data.name);
+        this.setState({
+          productName: response.data.name
+        });
       })
       .catch(function (error) {
         console.log(error);
       });
+
   }
 
   showMoreQuestions() {
@@ -57,13 +60,13 @@ class QnA extends React.Component {
       //console.log(this.state.questions);
       let questions = sampleData.questions.results;
       const filtered = questions.filter(item => item.question_body.toLowerCase().includes(query));
-      console.log('filtered', filtered);
+      //console.log('filtered', filtered);
       //do not hiding questions if more than 2
       this.setState({
         questions: filtered
       });
     } else {
-      console.log('search stopped');
+      //console.log('search stopped');
       //render all the questions and hide the rest if more than 2
       var questionsToShow = sampleData.questions.results;
       if (questionsToShow.length > 2) {
@@ -88,7 +91,7 @@ class QnA extends React.Component {
     }
     return (
       <div>
-        {console.log(sampleData.questions.results)}
+        {/* {console.log(sampleData.questions.results)} */}
         <div className='qna-component-name'>Questions and Answers</div>
         <SearchQuestions search={this.search}/>
         <QuestionsList data={this.state.questions}/>
