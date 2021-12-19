@@ -29,7 +29,7 @@ var getQuestionsFromHR = function getQuestionsFromHR(id, callback) {
   };
   axios.get(options.url, options)
     .then(function (response) {
-      //console.log(response);
+      //console.log('hi from api', response.data);
       callback(null, response.data);
     })
     .catch(function (error) {
@@ -39,13 +39,13 @@ var getQuestionsFromHR = function getQuestionsFromHR(id, callback) {
 };
 
 var addHelpfullnessAtHR = function addHelpfullnessAtHR(id, callback) {
-  console.log('id from api', id);
+  //console.log('id from api', id);
   let options = {
     method: 'PUT',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions/${id}/helpful`,
     headers: { Authorization: gitToken.Token }
   };
-  console.log('options', options);
+  //console.log('options', options);
   axios.put(options.url, '', options)
     .then(function (response) {
       //console.log(response);

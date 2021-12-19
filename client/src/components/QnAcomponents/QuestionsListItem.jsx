@@ -47,13 +47,16 @@ class QuestionsListItem extends React.Component {
 
   clickOnHelpful() {
     console.log('clicked on helpful');
-    let productId = this.props.question.question_id;
-    console.log(productId);
+    let questionId = this.props.question.question_id;
+    let productId = this.props.productId;
+    console.log('product id', productId);
+
     //ADD HELPFULLNESS FOR THIS QUESTION
     var url = 'http://localhost:3000/qna/addHelpfullness';
-    axios.put(url, {params: {id: productId}})
+    axios.put(url, {params: {questionId: questionId, productId: productId}})
       .then((response) => {
         console.log('added helpfullness');
+        console.log('response 57', response.data.results);
       })
       .catch(function (error) {
         console.log(error);

@@ -24,22 +24,37 @@ qnaRouter.get('/getQuestionsList', (req, res) =>{
       res.send(data);
     })
     .catch(err => {
-      //console.log(err);
       res.sendStatus(400);
     });
 
 });
 
 qnaRouter.put('/addHelpfullness', (req, res) => {
-  let id = req.body.params.id;
+  let questionId = req.body.params.questionId;
+  let productId = req.body.params.productId;
+  console.log('question id', questionId);
+  console.log('product id', productId);
 
-  qnaController.increaseHelpfullness(id)
-    .then(result => {
-      console.log('qna router 75', result);
+  qnaController.increaseHelpfullness(questionId)
+    .then(data => {
+      qnaController.receiveQuestionList(productId)
+        .then(result => {
+          console.log('questions', result);
+          res.send(result);
+        });
     })
+
+
     .catch(err => {
       console.log(err);
     });
+
+  // qnaController.receiveQuestionList(productId)
+  // .then(data => {
+  //   console.log('50', data);
+  // }).catch(err => {
+  //   console.log(err);
+  // })
 
 });
 
