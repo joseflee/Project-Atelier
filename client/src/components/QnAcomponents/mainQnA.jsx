@@ -16,7 +16,7 @@ class QnA extends React.Component {
     };
     this.showMoreQuestions = this.showMoreQuestions.bind(this);
     this.search = this.search.bind(this);
-    this.getQuestionsList = this.getQuestionsList.bind(this);
+    //this.getQuestionsList = this.getQuestionsList.bind(this);
   }
 
   componentDidMount() {
@@ -37,33 +37,35 @@ class QnA extends React.Component {
     axios.get(url, {params: {id: productId}})
       .then((response) => {
         console.log('should be question list', response.data.results);
+        var questionsToShow = response.data.results;
+        if (questionsToShow.length > 2) {
+          this.setState({
+            isMoreQuestionsButtonShown: true
+          });
+        }
+        questionsToShow = questionsToShow.slice(0, 2);
+        this.setState({
+          questions: questionsToShow
+        });
       })
       .catch(function (error) {
         console.log(error);
       });
-
-    var questionsToShow = sampleData.questions.results;
-    if (questionsToShow.length > 2) {
-      this.setState({
-        isMoreQuestionsButtonShown: true
-      });
-    }
-    questionsToShow = questionsToShow.slice(0, 2);
-    this.setState({
-      questions: questionsToShow
-    });
-
-  }
-
-  getQuestionsList() {
-
   }
 
   showMoreQuestions() {
-    this.setState({
-      questions: sampleData.questions.results,
-      isMoreQuestionsButtonShown: false
-    });
+    //GET ALL QUESTIONS BY PRODUCT ID
+    var url = 'http://localhost:3000/qna/getQuestionsList';
+    axios.get(url, {params: {id: productId}})
+      .then((response) => {
+        this.setState({
+          questions: response.data.results,
+          isMoreQuestionsButtonShown: false
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   search(query, isSearchTriggered) {
@@ -92,7 +94,6 @@ class QnA extends React.Component {
         questions: questionsToShow
       });
     }
-
   }
 
   render() {
