@@ -1,6 +1,7 @@
 import React from 'react';
 import QuestionsListItemAnswer from './QuestionsListItemAnswer.jsx';
 import AddAnswerForm from './AddAnswerForm.jsx';
+import axios from 'axios';
 
 class QuestionsListItem extends React.Component {
   constructor(props) {
@@ -46,6 +47,17 @@ class QuestionsListItem extends React.Component {
 
   clickOnHelpful() {
     console.log('clicked on helpful');
+    let productId = this.props.question.question_id;
+    console.log(productId);
+    //ADD HELPFULLNESS FOR THIS QUESTION
+    var url = 'http://localhost:3000/qna/addHelpfullness';
+    axios.put(url, {params: {id: productId}})
+      .then((response) => {
+        console.log('added helpfullness');
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   render() {

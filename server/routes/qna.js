@@ -56,6 +56,31 @@ qnaRouter.get('/getQuestionsList', (req, res) =>{
 
 });
 
+qnaRouter.put('/addHelpfullness', (req, res) => {
+  let id = req.body.params.id;
+  var increaseHelpfullness = function increaseHelpfullness(id) {
+    return new Promise((resolve, reject) => {
+      api.addHelpfullnessAtHR(id, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  };
+
+  increaseHelpfullness(id)
+    .then(result => {
+      console.log('qna router 75', result);
+      res.sendStatus(200);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+});
+
 
 
 module.exports = qnaRouter;
