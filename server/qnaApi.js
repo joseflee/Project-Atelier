@@ -20,7 +20,7 @@ var getProductFromHR = function getProductFromHR(id, callback) {
 };
 
 var getQuestionsFromHR = function getQuestionsFromHR(id, callback) {
-  console.log('api 23 id', id);
+  
   let options = {
     method: 'GET',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions?product_id=${id}`,
