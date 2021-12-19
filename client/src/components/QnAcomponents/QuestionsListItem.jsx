@@ -57,6 +57,7 @@ class QuestionsListItem extends React.Component {
       .then((response) => {
         console.log('added helpfullness');
         console.log('response 57', response.data.results);
+        this.props.update(response.data.results);
       })
       .catch(function (error) {
         console.log(error);
