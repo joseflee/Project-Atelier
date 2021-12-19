@@ -15,6 +15,7 @@ class QuestionsListItem extends React.Component {
   }
 
   componentDidMount() {
+
     let answersToShow = Object.values(this.props.question.answers);
     if (answersToShow.length > 2) {
       this.setState({
@@ -62,7 +63,6 @@ class QuestionsListItem extends React.Component {
       <div>
 
         {/* beginning of question item */}
-
         <div className='question-item'>
           <div className='question-item-q-letter'><h2>Q:{this.props.question.question_body}</h2></div>
           <div className='question-item-helpful-keyword'>Helpful?</div>
