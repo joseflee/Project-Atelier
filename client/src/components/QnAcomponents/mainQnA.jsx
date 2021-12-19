@@ -32,11 +32,11 @@ class QnA extends React.Component {
     });
     //get product name by its id
     let productId = this.props.productId;
-    
+
     var url = 'http://localhost:3000/qna/getProductById';
-    axios.get(url)
+    axios.get(url, {params: {id: productId}})
       .then(function (response) {
-        console.log('this is id', response.data);
+        console.log('this is name', response.data.name);
       })
       .catch(function (error) {
         console.log(error);
