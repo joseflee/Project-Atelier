@@ -3,62 +3,62 @@ import QuestionsListItemAnswer from './QuestionsListItemAnswer.jsx';
 import AddAnswerForm from './AddAnswerForm.jsx';
 
 class QuestionsListItem extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       isAddAnswerClicked: false,
       answers: {},
       isMoreAnswersShown: false
-    }
+    };
     this.clickOnMoreAnswers = this.clickOnMoreAnswers.bind(this);
     this.addAnswerHandleClick = this.addAnswerHandleClick.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     let answersToShow = Object.values(this.props.question.answers);
-    if(answersToShow.length > 2){
+    if (answersToShow.length > 2) {
       this.setState({
         isMoreAnswersShown: true
-      })
+      });
     }
     answersToShow = answersToShow.slice(0, 2);
     this.setState({
       answers: answersToShow
-    })
+    });
   }
 
-  clickOnMoreAnswers(){
+  clickOnMoreAnswers() {
     let answersToShow = Object.values(this.props.question.answers);
     this.setState({
       answers: answersToShow,
       isMoreAnswersShown: false
-    })
+    });
   }
 
-  addAnswerHandleClick(){
+  addAnswerHandleClick() {
     console.log('click');
     this.setState({
       isAddAnswerClicked: true
-    })
+    });
   }
 
-  render(){
-    let moreAnswers;
-    let addAnswer;
+  render() {
+    let moreAnswers,
+      addAnswer;
     //let length = Object.keys(this.props.question.answers).length;
-    if(this.state.isMoreAnswersShown){
-      moreAnswers = <button onClick={()=>{this.clickOnMoreAnswers()}}>Load more answers</button>
+    if (this.state.isMoreAnswersShown) {
+      moreAnswers = <button onClick={()=>{ this.clickOnMoreAnswers(); }}>Load more answers</button>;
     } else {
-      moreAnswers = <div></div>
+      moreAnswers = <div></div>;
     }
 
-    if(this.state.isAddAnswerClicked){
-      addAnswer = <AddAnswerForm name={this.props.name} question_body={this.props.question.question_body}/>
+    if (this.state.isAddAnswerClicked) {
+      addAnswer = <AddAnswerForm name={this.props.name} question_body={this.props.question.question_body}/>;
     } else {
-      addAnswer = <u>Add answer</u>
+      addAnswer = <u>Add answer</u>;
     }
 
-    return(
+    return (
       <div>
 
         {/* beginning of question item */}
@@ -69,17 +69,17 @@ class QuestionsListItem extends React.Component {
           <div className='question-item-yes-button'>Yes({this.props.question.question_helpfulness})</div>
           <div className='question-item-add-answer-link' onClick={()=>this.addAnswerHandleClick()}>{addAnswer}</div>
         </div>
-       {/* end of question item */}
-       {
-         Object.values(this.state.answers).map((answer, key) => {
-           return <QuestionsListItemAnswer answer={answer} key={key}/>
-         })
-       }
-       {moreAnswers}
+        {/* end of question item */}
+        {
+          Object.values(this.state.answers).map((answer, key) => {
+            return <QuestionsListItemAnswer answer={answer} key={key}/>;
+          })
+        }
+        {moreAnswers}
 
 
       </div>
-      )
+    );
 
 
   }
