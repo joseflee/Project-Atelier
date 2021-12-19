@@ -2,10 +2,9 @@ import React, {useState, useEffect} from 'react';
 import RatingBreakDown from './RatingBreakDown.jsx';
 import ProductBreakDown from './ProductBreakDown.jsx';
 import axios from 'axios';
-// import Sample from '../../../../example/reviews.js';
 import HelpfulButton from './HelpfulButton.jsx';
+
 const ReviewList = ( {productId} )=>{
-  // let result = Sample.reviews.results;
   const [selectedArray, setSelectedArray] = useState('totalReviewArray');
   const [isOpen, setIsOpen] = useState(false);
   const [isTruncated, setIsTruncated] = useState(true);
@@ -16,6 +15,13 @@ const ReviewList = ( {productId} )=>{
   const [onScreenReviewArray, setOnScreenReviewArray] = useState([]);
   const [clickedList, setClickedList] = useState(new Map());
   const [isLoading, setIsLoading] = useState(false);
+  const [averageRate, setAverageRate] = useState(0);
+  const [recommended, setRecommended] = useState(0);
+  const [oneStar, setOneStar] = useState(0);
+  const [twoStar, setTwoStar] = useState(0);
+  const [threeStar, setThreeStar] = useState(0);
+  const [fourStar, setFourStar] = useState(0);
+  const [fiveStar, setFiveStar] = useState(0);
   const arrayMap =
    { totalReviewArray: totalReviewArray,
      helpfulReviewArray: helpfulReviewArray,
@@ -30,15 +36,27 @@ const ReviewList = ( {productId} )=>{
         const firstTwo = sortByRevelant.slice(0, 2);
         if ( selectedArray === 'totalReviewArray') {
           setOnScreenReviewArray(firstTwo);
+          setIsLoading(false);
         } else if (selectedArray === 'newestReviewArray') {
           setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }).slice(0, 2));
+          setIsLoading(false);
         } else if ( selectedArray === 'helpfulReviewArray') {
           setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }).slice(0, 2));
+          setIsLoading(false);
         }
         setTotalReviewArray(sortByRevelant);
         setNewestReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }));
         setHelpfulReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }));
-        setIsLoading(false);
+        axios.get('http://localhost:3000/ratings/ratingOverview', { params: { Id: productId } })
+          .then((response)=>{
+            setAverageRate(response.data.ratings.average);
+            setRecommended(response.data.recommended);
+            setOneStar(response.data.ratings['1']);
+            setTwoStar(response.data.ratings['2']);
+            setThreeStar(response.data.ratings['3']);
+            setFourStar(response.data.ratings['4']);
+            setFiveStar(response.data.ratings['5']);
+          });
       })
       .catch((err) => {
         console.log('this is the react reviewlist get reviews err', err);
@@ -101,7 +119,7 @@ const ReviewList = ( {productId} )=>{
   return (
     <div>
       <div className= 'review-starSection'>
-        <RatingBreakDown productId= {productId}/>
+        <RatingBreakDown oneStar={oneStar} twoStar={twoStar} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
         <ProductBreakDown />
       </div>
       <div className="reviewSection">
@@ -149,8 +167,6 @@ const ReviewList = ( {productId} )=>{
               </div>
             );
           })}
-
-
           { isLoading ? null : onScreenReviewArray.length === totalReviewArray.length || totalReviewArray.length < 2 ? null : <div><button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button></div>}
         </div>
       </div>
