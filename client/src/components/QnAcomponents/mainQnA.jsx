@@ -20,20 +20,8 @@ class QnA extends React.Component {
   }
 
   componentDidMount() {
-    this.getQuestionsList()
-    var questionsToShow = sampleData.questions.results;
-    if (questionsToShow.length > 2) {
-      this.setState({
-        isMoreQuestionsButtonShown: true
-      });
-    }
-    questionsToShow = questionsToShow.slice(0, 2);
-    this.setState({
-      questions: questionsToShow
-    });
-    //get product name by its id
     let productId = this.props.productId;
-
+    //GET PRODUCT NAME BY ITS ID
     var url = 'http://localhost:3000/qna/getProductById';
     axios.get(url, {params: {id: productId}})
       .then((response) => {
@@ -44,18 +32,31 @@ class QnA extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-
-  }
-
-  getQuestionsList() {
-    var url = 'http://localhost:3000/qna//getQuestionsList';
-    axios.get(url)
+    //GET QUESTIONS LIST BY PRODUCT ID
+    var url = 'http://localhost:3000/qna/getQuestionsList';
+    axios.get(url, {params: {id: productId}})
       .then((response) => {
-        console.log('should be question list', response.data);
+        console.log('should be question list', response.data.results);
       })
       .catch(function (error) {
         console.log(error);
       });
+
+    var questionsToShow = sampleData.questions.results;
+    if (questionsToShow.length > 2) {
+      this.setState({
+        isMoreQuestionsButtonShown: true
+      });
+    }
+    questionsToShow = questionsToShow.slice(0, 2);
+    this.setState({
+      questions: questionsToShow
+    });
+
+  }
+
+  getQuestionsList() {
+
   }
 
   showMoreQuestions() {

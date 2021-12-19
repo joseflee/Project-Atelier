@@ -19,11 +19,13 @@ var getProductFromHR = function getProductFromHR(id, callback) {
 
 };
 
-var getQuestionsFromHR = function getQuestionsFromHR(callback) {
+var getQuestionsFromHR = function getQuestionsFromHR(id, callback) {
+  console.log('api 23 id', id);
   let options = {
     method: 'GET',
-    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/',
-    headers: { Authorization: gitToken.Token },
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions?product_id=${id}`,
+    headers: { Authorization: gitToken.Token }
+
   };
   axios.get(options.url, options)
     .then(function (response) {
@@ -32,7 +34,7 @@ var getQuestionsFromHR = function getQuestionsFromHR(callback) {
     })
     .catch(function (error) {
       console.log(error);
-      callback(err, null);
+      callback(error, null);
     });
 };
 
