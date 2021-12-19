@@ -17,6 +17,11 @@ const ReviewList = ( {productId} )=>{
   const [isLoading, setIsLoading] = useState(false);
   const [averageRate, setAverageRate] = useState(0);
   const [recommended, setRecommended] = useState(0);
+  const [oneStar, setOneStar] = useState(0);
+  const [twoStar, setTwoStar] = useState(0);
+  const [threeStar, setThreeStar] = useState(0);
+  const [fourStar, setFourStar] = useState(0);
+  const [fiveStar, setFiveStar] = useState(0);
   const arrayMap =
    { totalReviewArray: totalReviewArray,
      helpfulReviewArray: helpfulReviewArray,
@@ -44,8 +49,13 @@ const ReviewList = ( {productId} )=>{
         setHelpfulReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }));
         axios.get('http://localhost:3000/ratings/ratingOverview', { params: { Id: productId } })
           .then((response)=>{
-            setAverageRate(response.data.ratings);
+            setAverageRate(response.data.ratings.average);
             setRecommended(response.data.recommended);
+            setOneStar(response.data.ratings['1']);
+            setTwoStar(response.data.ratings['2']);
+            setThreeStar(response.data.ratings['3']);
+            setFourStar(response.data.ratings['4']);
+            setFiveStar(response.data.ratings['5']);
           });
       })
       .catch((err) => {
@@ -53,10 +63,6 @@ const ReviewList = ( {productId} )=>{
       });
 
   }, [productId, selectedArray]);
-
-  // useEffect(() => {
-
-  // }, [productId]);
 
   const convertDate = function (dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -113,7 +119,7 @@ const ReviewList = ( {productId} )=>{
   return (
     <div>
       <div className= 'review-starSection'>
-        <RatingBreakDown recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
+        <RatingBreakDown oneStar={oneStar} twoStar={twoStar} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
         <ProductBreakDown />
       </div>
       <div className="reviewSection">
@@ -161,8 +167,6 @@ const ReviewList = ( {productId} )=>{
               </div>
             );
           })}
-
-
           { isLoading ? null : onScreenReviewArray.length === totalReviewArray.length || totalReviewArray.length < 2 ? null : <div><button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button></div>}
         </div>
       </div>

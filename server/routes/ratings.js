@@ -36,8 +36,14 @@ ratingsRouter.get('/ratingOverview', async (req, res) => {
   let productId = req.query.Id;
   let ratingOverview = await RatingApi.ratingOverview(productId);
   let ratingAverage = await averageRate(ratingOverview.ratings, ratingOverview.recommended);
-  ratingOverview.ratings = ratingAverage[0];
+  ratingOverview.ratings.average = ratingAverage[0];
   ratingOverview.recommended = ratingAverage[1];
+  ratingOverview.ratings['1'] = ratingAverage[2];
+  ratingOverview.ratings['2'] = ratingAverage[3];
+  ratingOverview.ratings['3'] = ratingAverage[4];
+  ratingOverview.ratings['4'] = ratingAverage[5];
+  ratingOverview.ratings['5'] = ratingAverage[6];
+  console.log('overview:', ratingOverview);
   res.status(200).send(ratingOverview);
 });
 
@@ -50,12 +56,18 @@ const averageRate = function(ratings, recommended) {
       totalRatePoint += a[i] * b[i];
     }
   }
+
   const totalRatings = Object.values(ratings).reduce((a, b) => Number(a) + Number(b));
+  const fiveStar = Math.round((b[4] / totalRatings) * 100);
+  const fourStar = Math.round((b[3] / totalRatings) * 100);
+  const threeStar = Math.round((b[2] / totalRatings) * 100);
+  const twoStar = Math.round((b[1] / totalRatings) * 100);
+  const oneStar = Math.round((b[0] / totalRatings) * 100);
   const averageValues = totalRatePoint / totalRatings;
   let numOfFalse = Number(recommended.false);
   let numOfTrue = Number(recommended.true);
   let percentageOfRecommended = Math.round((numOfTrue / (numOfTrue + numOfFalse)) * 100);
-  return [averageValues.toFixed(1), percentageOfRecommended];
+  return [averageValues.toFixed(1), percentageOfRecommended, oneStar, twoStar, threeStar, fourStar, fiveStar];
 };
 
 module.exports = ratingsRouter;
