@@ -12,13 +12,15 @@ class QnA extends React.Component {
     this.state = {
       questions: [],
       isMoreQuestionsButtonShown: false,
-      productName: 'Blue jeans'
+      productName: 'This is not a name'
     };
     this.showMoreQuestions = this.showMoreQuestions.bind(this);
     this.search = this.search.bind(this);
+    this.getQuestionsList = this.getQuestionsList.bind(this);
   }
 
   componentDidMount() {
+    this.getQuestionsList()
     var questionsToShow = sampleData.questions.results;
     if (questionsToShow.length > 2) {
       this.setState({
@@ -35,7 +37,6 @@ class QnA extends React.Component {
     var url = 'http://localhost:3000/qna/getProductById';
     axios.get(url, {params: {id: productId}})
       .then((response) => {
-        //console.log('this is name', response.data.name);
         this.setState({
           productName: response.data.name
         });
@@ -44,6 +45,17 @@ class QnA extends React.Component {
         console.log(error);
       });
 
+  }
+
+  getQuestionsList() {
+    var url = 'http://localhost:3000/qna//getQuestionsList';
+    axios.get(url)
+      .then((response) => {
+        console.log('should be question list', response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   showMoreQuestions() {
@@ -97,7 +109,7 @@ class QnA extends React.Component {
         <QuestionsList data={this.state.questions}/>
         <br />
         {moreAnsweredQuestions}
-        <AddQuestion name = {this.state.product_name}/>
+        <AddQuestion name = {this.state.productName}/>
       </div>
 
     );
