@@ -20,7 +20,6 @@ qnaRouter.get('/getProductById', (req, res) => {
       });
     });
   };
-
   receiveProductInfoById(id)
     .then(data => {
       //console.log('data', data);
@@ -30,10 +29,33 @@ qnaRouter.get('/getProductById', (req, res) => {
       console.log(err);
       res.sendStatus(400);
     });
+});
 
+qnaRouter.get('/getQuestionsList', (req, res) =>{
 
+  var receiveQuestionList = function receiveQuestionList() {
+    return new Promise((resolve, reject)=> {
+      api.getQuestionsFromHR((err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  };
+
+  receiveQuestionList().
+    then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(400);
+    });
 
 });
+
 
 
 module.exports = qnaRouter;
