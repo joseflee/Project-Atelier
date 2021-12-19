@@ -55,8 +55,8 @@ class QuestionsListItem extends React.Component {
     var url = 'http://localhost:3000/qna/addHelpfullness';
     axios.put(url, {params: {questionId: questionId, productId: productId}})
       .then((response) => {
-        console.log('added helpfullness');
-        console.log('response 57', response.data.results);
+        //console.log('added helpfullness');
+        //console.log('response 57', response.data.results);
         this.props.update(response.data.results);
       })
       .catch(function (error) {
