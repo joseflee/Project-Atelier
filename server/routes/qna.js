@@ -35,7 +35,7 @@ qnaRouter.put('/updateQuestionHelp', (req, res) => {
   console.log('question id', questionId);
   console.log('product id', productId);
 
-  qnaController.increaseHelpfullness(questionId)
+  qnaController.increaseQuestionHelp(questionId)
     .then(data => {
       qnaController.receiveQuestionList(productId)
         .then(result => {
@@ -43,8 +43,6 @@ qnaRouter.put('/updateQuestionHelp', (req, res) => {
           res.send(result);
         });
     })
-
-
     .catch(err => {
       console.log(err);
     });
@@ -56,7 +54,7 @@ qnaRouter.put('/updateAnswerHelp', (req, res) => {
   console.log('answer id', answerId);
   console.log('product id', productId);
 
-  qnaController.increaseAnswerHelpfullness(answerId)
+  qnaController.increaseAnswerHelp(answerId)
     .then(data => {
       console.log('increased id');
     })
@@ -64,7 +62,6 @@ qnaRouter.put('/updateAnswerHelp', (req, res) => {
       res.sendStatus(400);
     });
 
-  // }
 });
 
 

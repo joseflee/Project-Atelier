@@ -38,7 +38,7 @@ var getQuestionsFromHR = function getQuestionsFromHR(id, callback) {
     });
 };
 
-var addHelpfullnessAtHR = function addHelpfullnessAtHR(id, callback) {
+var addQuestionHelpHR = function addQuestionHelpHR(id, callback) {
   //console.log('id from api', id);
   let options = {
     method: 'PUT',
@@ -58,7 +58,7 @@ var addHelpfullnessAtHR = function addHelpfullnessAtHR(id, callback) {
     });
 };
 
-var addAnswerHelp = function addAnswerHelp(id, callback) {
+var addAnswerHelpHR = function addAnswerHelpHR(id, callback) {
   let options = {
     method: 'PUT',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/answers/${id}/helpful`,
@@ -80,5 +80,5 @@ var addAnswerHelp = function addAnswerHelp(id, callback) {
 
 module.exports.getProductFromHR = getProductFromHR;
 module.exports.getQuestionsFromHR = getQuestionsFromHR;
-module.exports.addHelpfullnessAtHR = addHelpfullnessAtHR;
-module.exports.addAnswerHelp = addAnswerHelp;
+module.exports.addQuestionHelpHR = addQuestionHelpHR;
+module.exports.addAnswerHelpHR = addAnswerHelpHR;
