@@ -17,7 +17,6 @@ class QuestionsListItem extends React.Component {
   }
 
   componentDidMount() {
-
     let answersToShow = Object.values(this.props.question.answers);
     if (answersToShow.length > 2) {
       this.setState({
@@ -52,11 +51,9 @@ class QuestionsListItem extends React.Component {
     console.log('product id', productId);
 
     //ADD HELPFULLNESS FOR THIS QUESTION
-    var url = 'http://localhost:3000/qna/addHelpfullness';
+    var url = 'http://localhost:3000/qna/updateQuestionHelp';
     axios.put(url, {params: {questionId: questionId, productId: productId}})
       .then((response) => {
-        //console.log('added helpfullness');
-        //console.log('response 57', response.data.results);
         this.props.update(response.data.results);
       })
       .catch(function (error) {
@@ -67,7 +64,7 @@ class QuestionsListItem extends React.Component {
   render() {
     let moreAnswers,
       addAnswer;
-    //let length = Object.keys(this.props.question.answers).length;
+
     if (this.state.isMoreAnswersShown) {
       moreAnswers = <button onClick={()=>{ this.clickOnMoreAnswers(); }}>Load more answers</button>;
     } else {
@@ -86,19 +83,21 @@ class QuestionsListItem extends React.Component {
         {/* beginning of question item */}
         <div className='question-item'>
           <div className='question-item-q-letter'><h2>Q:{this.props.question.question_body}</h2></div>
-          <div className='question-item-helpful-keyword' onClick={()=>{this.clickOnHelpful(); }}>Helpful?</div>
+          <div className='question-item-helpful-keyword' onClick={()=>{ this.clickOnHelpful(); }}>Helpful?</div>
           <div className='question-item-yes-button'>Yes({this.props.question.question_helpfulness})</div>
           <div className='question-item-add-answer-link' onClick={()=>this.addAnswerHandleClick()}>{addAnswer}</div>
         </div>
         {/* end of question item */}
         {
-          Object.values(this.state.answers).map((answer, key) => {
-            return <QuestionsListItemAnswer answer={answer} key={key}/>;
+          Object.values(this.props.question.answers).map((answer, key) => {
+            return <QuestionsListItemAnswer answer={answer}
+              key={key}
+              questionId={this.props.question.question_id}
+              productId={this.props.productId}
+              update={this.props.update} />;
           })
         }
         {moreAnswers}
-
-
       </div>
     );
 

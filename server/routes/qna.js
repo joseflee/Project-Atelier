@@ -29,13 +29,11 @@ qnaRouter.get('/getQuestionsList', (req, res) =>{
 
 });
 
-qnaRouter.put('/addHelpfullness', (req, res) => {
+qnaRouter.put('/updateQuestionHelp', (req, res) => {
   let questionId = req.body.params.questionId;
   let productId = req.body.params.productId;
-  console.log('question id', questionId);
-  console.log('product id', productId);
 
-  qnaController.increaseHelpfullness(questionId)
+  qnaController.increaseQuestionHelp(questionId)
     .then(data => {
       qnaController.receiveQuestionList(productId)
         .then(result => {
@@ -43,21 +41,26 @@ qnaRouter.put('/addHelpfullness', (req, res) => {
           res.send(result);
         });
     })
-
-
     .catch(err => {
       console.log(err);
     });
-
-  // qnaController.receiveQuestionList(productId)
-  // .then(data => {
-  //   console.log('50', data);
-  // }).catch(err => {
-  //   console.log(err);
-  // })
-
 });
 
+qnaRouter.put('/updateAnswerHelp', (req, res) => {
+  let answerId = req.body.params.answerId;
+  let productId = req.body.params.productId;
 
+  qnaController.increaseAnswerHelp(answerId)
+    .then(data => {
+      qnaController.receiveQuestionList(productId)
+        .then(result => {
+          res.send(result);
+        });
+    })
+    .catch(error => {
+      res.sendStatus(400);
+    });
+
+});
 
 module.exports = qnaRouter;

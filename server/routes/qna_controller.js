@@ -24,9 +24,9 @@ var receiveQuestionList = function receiveQuestionList(id) {
   });
 };
 
-var increaseHelpfullness = function increaseHelpfullness(id) {
+var increaseQuestionHelp = function increaseQuestionHelp(id) {
   return new Promise((resolve, reject) => {
-    api.addHelpfullnessAtHR(id, (err, result) => {
+    api.addQuestionHelpHR(id, (err, result) => {
       if (err) {
         reject(err);
       } else {
@@ -36,7 +36,19 @@ var increaseHelpfullness = function increaseHelpfullness(id) {
   });
 };
 
+var increaseAnswerHelp = function increaseAnswerHelp(id) {
+  return new Promise((resolve, reject) => {
+    api.addAnswerHelpHR(id, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
 
 module.exports.receiveProductInfoById = receiveProductInfoById;
 module.exports.receiveQuestionList = receiveQuestionList;
-module.exports.increaseHelpfullness = increaseHelpfullness;
+module.exports.increaseQuestionHelp = increaseQuestionHelp;
+module.exports.increaseAnswerHelp = increaseAnswerHelp;
