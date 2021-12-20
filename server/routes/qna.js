@@ -32,8 +32,6 @@ qnaRouter.get('/getQuestionsList', (req, res) =>{
 qnaRouter.put('/updateQuestionHelp', (req, res) => {
   let questionId = req.body.params.questionId;
   let productId = req.body.params.productId;
-  console.log('question id', questionId);
-  console.log('product id', productId);
 
   qnaController.increaseQuestionHelp(questionId)
     .then(data => {
@@ -51,8 +49,6 @@ qnaRouter.put('/updateQuestionHelp', (req, res) => {
 qnaRouter.put('/updateAnswerHelp', (req, res) => {
   let answerId = req.body.params.answerId;
   let productId = req.body.params.productId;
-  console.log('answer id', answerId);
-  console.log('product id', productId);
 
   qnaController.increaseAnswerHelp(answerId)
     .then(data => {
@@ -63,8 +59,5 @@ qnaRouter.put('/updateAnswerHelp', (req, res) => {
     });
 
 });
-
-
-
 
 module.exports = qnaRouter;
