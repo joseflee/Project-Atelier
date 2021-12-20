@@ -16,6 +16,7 @@ class QnA extends React.Component {
     };
     this.showMoreQuestions = this.showMoreQuestions.bind(this);
     this.search = this.search.bind(this);
+    this.updateQuestionList = this.updateQuestionList.bind(this);
   }
 
   componentDidMount() {
@@ -67,6 +68,13 @@ class QnA extends React.Component {
       });
   }
 
+  updateQuestionList(questions) {
+    console.log('received questions', questions);
+    this.setState({
+      questions: questions
+    });
+  }
+
   search(query, isSearchTriggered) {
     let productId = this.props.productId;
 
@@ -113,9 +121,10 @@ class QnA extends React.Component {
     }
     return (
       <div>
+
         <div className='qna-component-name'><h1>Questions and Answers</h1></div>
         <SearchQuestions search={this.search}/>
-        <QuestionsList data={this.state.questions}/>
+        <QuestionsList data={this.state.questions} productId ={this.props.productId} update={this.updateQuestionList}/>
         <br />
         {moreAnsweredQuestions}
         <AddQuestion name = {this.state.productName}/>
