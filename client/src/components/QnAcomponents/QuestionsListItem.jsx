@@ -86,14 +86,17 @@ class QuestionsListItem extends React.Component {
         {/* beginning of question item */}
         <div className='question-item'>
           <div className='question-item-q-letter'><h2>Q:{this.props.question.question_body}</h2></div>
-          <div className='question-item-helpful-keyword' onClick={()=>{this.clickOnHelpful(); }}>Helpful?</div>
+          <div className='question-item-helpful-keyword' onClick={()=>{ this.clickOnHelpful(); }}>Helpful?</div>
           <div className='question-item-yes-button'>Yes({this.props.question.question_helpfulness})</div>
           <div className='question-item-add-answer-link' onClick={()=>this.addAnswerHandleClick()}>{addAnswer}</div>
         </div>
         {/* end of question item */}
         {
           Object.values(this.state.answers).map((answer, key) => {
-            return <QuestionsListItemAnswer answer={answer} key={key}/>;
+            return <QuestionsListItemAnswer answer={answer}
+              key={key}
+              questionId={this.props.question.question_id}
+              productId={this.props.productId}/>;
           })
         }
         {moreAnswers}

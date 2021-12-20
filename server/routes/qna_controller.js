@@ -36,7 +36,20 @@ var increaseHelpfullness = function increaseHelpfullness(id) {
   });
 };
 
+var increaseAnswerHelpfullness = function increaseHelpfullness(id) {
+  return new Promise((resolve, reject) => {
+    api.addAnswerHelp(id, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
 
 module.exports.receiveProductInfoById = receiveProductInfoById;
 module.exports.receiveQuestionList = receiveQuestionList;
 module.exports.increaseHelpfullness = increaseHelpfullness;
+module.exports.increaseAnswerHelpfullness = increaseAnswerHelpfullness;
