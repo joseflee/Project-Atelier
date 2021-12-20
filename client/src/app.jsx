@@ -22,7 +22,7 @@ class App extends React.Component {
       <div>
         <ProductOverview />
         <RelProducts />
-        <QnA />
+        <QnA productId={this.state.productId} />
         <RatingsNReviews productId={this.state.productId} />
       </div>
     );
