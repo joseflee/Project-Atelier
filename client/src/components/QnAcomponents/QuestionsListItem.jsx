@@ -17,7 +17,6 @@ class QuestionsListItem extends React.Component {
   }
 
   componentDidMount() {
-
     let answersToShow = Object.values(this.props.question.answers);
     if (answersToShow.length > 2) {
       this.setState({
@@ -52,11 +51,9 @@ class QuestionsListItem extends React.Component {
     console.log('product id', productId);
 
     //ADD HELPFULLNESS FOR THIS QUESTION
-    var url = 'http://localhost:3000/qna/addHelpfullness';
+    var url = 'http://localhost:3000/qna/updateQuestionHelp';
     axios.put(url, {params: {questionId: questionId, productId: productId}})
       .then((response) => {
-        //console.log('added helpfullness');
-        //console.log('response 57', response.data.results);
         this.props.update(response.data.results);
       })
       .catch(function (error) {
@@ -67,7 +64,7 @@ class QuestionsListItem extends React.Component {
   render() {
     let moreAnswers,
       addAnswer;
-    //let length = Object.keys(this.props.question.answers).length;
+
     if (this.state.isMoreAnswersShown) {
       moreAnswers = <button onClick={()=>{ this.clickOnMoreAnswers(); }}>Load more answers</button>;
     } else {
@@ -100,8 +97,6 @@ class QuestionsListItem extends React.Component {
           })
         }
         {moreAnswers}
-
-
       </div>
     );
 
