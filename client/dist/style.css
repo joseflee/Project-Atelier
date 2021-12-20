@@ -3,7 +3,7 @@
   position: relative;
   border: red 3px solid;
   width: 1100px;
-  height: 700px;
+  height: 800px;
 }
 .review-starBreakDown {
   position: relative;
@@ -46,7 +46,6 @@
   width: 750px;
   height: 600px;
   overflow-y: scroll;
-  border: brown solid 2px;
 }
 .review-starBreakDown-rating-percentage {
   background-color: #d8d8d8;
@@ -57,6 +56,17 @@
 	width: 150px;
   display: inline-block;
   cursor: pointer;
+}
+.review-Section {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 750px;
+  height: 700px;
+}
+.review-Button {
+  position: absolute;
+  bottom: 0;
 }
 .review-starSection {
   width: 330px;
