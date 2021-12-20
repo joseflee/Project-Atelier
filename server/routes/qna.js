@@ -52,7 +52,10 @@ qnaRouter.put('/updateAnswerHelp', (req, res) => {
 
   qnaController.increaseAnswerHelp(answerId)
     .then(data => {
-      console.log('increased id');
+      qnaController.receiveQuestionList(productId)
+        .then(result => {
+          res.send(result);
+        });
     })
     .catch(error => {
       res.sendStatus(400);

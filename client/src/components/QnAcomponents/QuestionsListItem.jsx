@@ -89,11 +89,12 @@ class QuestionsListItem extends React.Component {
         </div>
         {/* end of question item */}
         {
-          Object.values(this.state.answers).map((answer, key) => {
+          Object.values(this.props.question.answers).map((answer, key) => {
             return <QuestionsListItemAnswer answer={answer}
               key={key}
               questionId={this.props.question.question_id}
-              productId={this.props.productId}/>;
+              productId={this.props.productId}
+              update={this.props.update} />;
           })
         }
         {moreAnswers}
