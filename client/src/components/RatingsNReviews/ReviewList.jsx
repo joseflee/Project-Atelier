@@ -240,16 +240,16 @@ const ReviewList = ( {productId} )=>{
         <RatingBreakDown resetFilter={resetFilter} filter={filter} filterOnClicked={filterOnClicked} oneStar={oneStar} twoStar={twoStar} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
         <ProductBreakDown />
       </div>
-      <div className="reviewSection">
+      <div className="review-Section">
+        <div className="review-DropDown">
+          <h2 style= {{display: 'inline'}}>{sortedArray.length ? sortedArray.length : totalReviewArray.length} reviews, sorted by </h2>
+          <select onChange={dropDownMenu} id="review-sort-select">
+            <option value="totalReviewArray">Relevant</option>
+            <option value="newestReviewArray">Newest</option>
+            <option value="helpfulReviewArray">Helpful</option>
+          </select>
+        </div>
         <div className= "review-List">
-          <div className="review-DropDown">
-            <h2 style= {{display: 'inline'}}>{sortedArray.length ? sortedArray.length : totalReviewArray.length} reviews, sorted by </h2>
-            <select onChange={dropDownMenu} id="review-sort-select">
-              <option value="totalReviewArray">Relevant</option>
-              <option value="newestReviewArray">Newest</option>
-              <option value="helpfulReviewArray">Helpful</option>
-            </select>
-          </div>
           {isLoading === true ? <h1 style = {{color: 'red'}}>Loading</h1> : onScreenReviewArray.map((user, index)=>{
             return (
               <div key={index} className="review-Cell">
@@ -285,8 +285,8 @@ const ReviewList = ( {productId} )=>{
               </div>
             );
           })}
-          { isLoading ? null : onScreenReviewArray.length === (sortedArray.length ? sortedArray.length : totalReviewArray.length) || totalReviewArray.length < 2 ? null : <div><button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button></div>}
         </div>
+        <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === (sortedArray.length ? sortedArray.length : totalReviewArray.length) || totalReviewArray.length < 2 ? null : <div><button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button></div>}</div>
       </div>
     </div>
   );
