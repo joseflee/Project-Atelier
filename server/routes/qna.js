@@ -29,7 +29,7 @@ qnaRouter.get('/getQuestionsList', (req, res) =>{
 
 });
 
-qnaRouter.put('/addHelpfullness', (req, res) => {
+qnaRouter.put('/updateQuestionHelp', (req, res) => {
   let questionId = req.body.params.questionId;
   let productId = req.body.params.productId;
   console.log('question id', questionId);
