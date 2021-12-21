@@ -49,9 +49,34 @@ const ratingOverview = (productId) => {
     });
 };
 
+const postReview = async (productId) => {
+  productId = 59553;
+  let params = {
+    'product_id': 59553,
+    'rating': 5,
+    'summary': '789',
+    'body': 'zxczxczxz',
+    'recommend': true,
+    'name': 'kitty',
+    'email': 'asdsdsa@qq.com',
+    'photos': [],
+    'characteristics': { '15': 1, '16': 2}
+  };
+  let options = {
+    method: 'post',
+    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
+    headers: { Authorization: gitToken.Token },
+    data: params
+  };
+  return axios(options)
+    .catch((err) => {
+      console.log('This is the post review error: ', err);
+    });
+
+};
 module.exports = {
   getTotalReviews,
   updateHelpfulness,
-  ratingOverview
-
+  ratingOverview,
+  postReview
 };

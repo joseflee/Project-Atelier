@@ -47,6 +47,13 @@ ratingsRouter.get('/ratingOverview', async (req, res) => {
   res.status(200).send(ratingOverview);
 });
 
+ratingsRouter.post('/postReview', async(req, res) => {
+  await RatingApi.postReview(59553);
+  res.status(200).end();
+});
+
+
+
 const averageRate = function(ratings, recommended) {
   let a = Object.keys(ratings);
   let b = Object.values(ratings);
