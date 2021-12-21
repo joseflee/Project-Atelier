@@ -38,17 +38,14 @@ class QuestionsListItem extends React.Component {
   }
 
   addAnswerHandleClick() {
-    console.log('click');
     this.setState({
       isAddAnswerClicked: true
     });
   }
 
   clickOnHelpful() {
-    console.log('clicked on helpful');
     let questionId = this.props.question.question_id;
     let productId = this.props.productId;
-    console.log('product id', productId);
 
     //ADD HELPFULLNESS FOR THIS QUESTION
     var url = 'http://localhost:3000/qna/updateQuestionHelp';
@@ -83,8 +80,8 @@ class QuestionsListItem extends React.Component {
         {/* beginning of question item */}
         <div className='question-item'>
           <div className='question-item-q-letter'><h2>Q:{this.props.question.question_body}</h2></div>
-          <div className='question-item-helpful-keyword' onClick={()=>{ this.clickOnHelpful(); }}>Helpful?</div>
-          <div className='question-item-yes-button'>Yes({this.props.question.question_helpfulness})</div>
+          <div className='question-item-helpful-keyword' >Helpful?</div>
+          <div className='question-item-yes-button' onClick={()=>{ this.clickOnHelpful(); }}><u>Yes</u>({this.props.question.question_helpfulness})</div>
           <div className='question-item-add-answer-link' onClick={()=>this.addAnswerHandleClick()}>{addAnswer}</div>
         </div>
         {/* end of question item */}

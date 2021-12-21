@@ -63,4 +63,24 @@ qnaRouter.put('/updateAnswerHelp', (req, res) => {
 
 });
 
+qnaRouter.post('/addNewQuestion', (req, res) => {
+  //console.log(req.body);
+  let productId = req.body.params.id;
+  let body = req.body.params.body;
+  let name = req.body.params.name;
+  let email = req.body.params.email;
+
+  qnaController.addQuestionToServer(productId, body, name, email)
+    .then(data => {
+      //console.log('server 75');
+      qnaController.receiveQuestionList(productId)
+        .then(result => {
+          res.send(result);
+        });
+    })
+    .catch(error => {
+      res.sendStatus(400);
+    });
+});
+
 module.exports = qnaRouter;
