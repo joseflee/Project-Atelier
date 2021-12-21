@@ -7,9 +7,10 @@ class AddQuestion extends React.Component {
     this.state = {
       isModalShown: false,
       isAddButtonShown: true,
-      product_id: 1
+      productId: this.props.productId
     };
     this.clickOnAddQuestion = this.clickOnAddQuestion.bind(this);
+
   }
 
   clickOnAddQuestion() {
@@ -24,7 +25,7 @@ class AddQuestion extends React.Component {
     let modal,
       questionButton;
     if (this.state.isModalShown) {
-      modal = <div><AddQuestionForm name={this.props.name}/></div>;
+      modal = <div><AddQuestionForm name={this.props.name} productId={this.props.productId} update={this.props.update}/></div>;
     } else {
       modal = <div></div>;
     }
