@@ -48,7 +48,20 @@ var increaseAnswerHelp = function increaseAnswerHelp(id) {
   });
 };
 
+var addQuestionToServer = function addQuestionToServer(productId, body, name, email) {
+  return new Promise((resolve, reject) => {
+    api.addNewQuestionToHR(productId, body, name, email, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
 module.exports.receiveProductInfoById = receiveProductInfoById;
 module.exports.receiveQuestionList = receiveQuestionList;
 module.exports.increaseQuestionHelp = increaseQuestionHelp;
 module.exports.increaseAnswerHelp = increaseAnswerHelp;
+module.exports.addQuestionToServer = addQuestionToServer;

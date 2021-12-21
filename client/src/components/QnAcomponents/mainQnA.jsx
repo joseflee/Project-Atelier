@@ -69,7 +69,6 @@ class QnA extends React.Component {
   }
 
   updateQuestionList(questions) {
-    console.log('received questions', questions);
     this.setState({
       questions: questions
     });
@@ -127,7 +126,7 @@ class QnA extends React.Component {
         <QuestionsList data={this.state.questions} productId ={this.props.productId} update={this.updateQuestionList}/>
         <br />
         {moreAnsweredQuestions}
-        <AddQuestion name = {this.state.productName}/>
+        <AddQuestion name={this.state.productName} productId={this.props.productId} update={this.updateQuestionList}/>
       </div>
 
     );

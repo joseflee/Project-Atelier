@@ -12,7 +12,7 @@ var getProductFromHR = function getProductFromHR(id, callback) {
       callback(null, response.data);
     })
     .catch(function (error) {
-      callback(err, null);
+      callback(error, null);
     });
 
 };
@@ -63,7 +63,28 @@ var addAnswerHelpHR = function addAnswerHelpHR(id, callback) {
     });
 };
 
+var addNewQuestionToHR = function addNewQuestionToHR(productId, body, nick, email, callback) {
+  let options = {
+    method: 'POST',
+    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions',
+    headers: { Authorization: gitToken.Token },
+    body: { body: body, name: nick, email: email, product_id: productId }
+  };
+  //console.log('post options', options);
+  axios.post(options.url, options.body, options)
+    .then(function (response) {
+      //console.log('got response creating new question', response);
+      callback(null, response.data);
+    })
+    .catch(function (error) {
+      //console.log(error);
+      console.log('error creating new question');
+      callback(error, null);
+    });
+};
+
 module.exports.getProductFromHR = getProductFromHR;
 module.exports.getQuestionsFromHR = getQuestionsFromHR;
 module.exports.addQuestionHelpHR = addQuestionHelpHR;
 module.exports.addAnswerHelpHR = addAnswerHelpHR;
+module.exports.addNewQuestionToHR = addNewQuestionToHR;
