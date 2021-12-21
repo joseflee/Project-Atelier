@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 class AddQuestionForm extends React.Component {
   constructor(props) {
@@ -25,6 +26,7 @@ class AddQuestionForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    var productId = this.props.productId;
     var body = this.state.questionBody;
     var nickname = this.state.nickname;
     var email = this.state.email;
@@ -34,7 +36,17 @@ class AddQuestionForm extends React.Component {
       this.setState({
         isValid: true
       });
-    }
+      //SEND REQUEST TO SERVER TO ADD A NEW QUESTION
+      var url = 'http://localhost:3000/qna/addNewQuestion';
+      axios.post(url, {params: {id: productId, body: body, name: nickname, email: email}})
+        .then((response) => {
+          //console.log('added new question', response.data.results);
+          this.props.update (response.data.results);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } // else show warning to user
   }
 
   handleValidation(question, nick, email) {
