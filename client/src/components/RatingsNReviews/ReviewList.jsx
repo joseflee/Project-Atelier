@@ -22,19 +22,30 @@ const ReviewList = ( {productId} )=>{
   const [threeStar, setThreeStar] = useState(0);
   const [fourStar, setFourStar] = useState(0);
   const [fiveStar, setFiveStar] = useState(0);
+  const [filter, setFilter] = useState(new Array(5).fill(null));
+  const [sortedArray, setSortedArray] = useState([]);
+  const [reset, setReset] = useState(false);
+  const [count, setCount] = useState(0);
   const arrayMap =
    { totalReviewArray: totalReviewArray,
      helpfulReviewArray: helpfulReviewArray,
-     newestReviewArray: newestReviewArray
+     newestReviewArray: newestReviewArray,
+     sortedArray: sortedArray,
+     resetArray: totalReviewArray
    };
   useEffect(() => {
     setIsLoading(true);
+    setSortedArray([]);
+    setFilter(new Array(5).fill(null));
     axios.get('http://localhost:3000/ratings/getReviews', { params: { Id: productId } })
       .then((response)=>{
-        // let onSelect = arrayMap2[selectedArray];
         const sortByRevelant = response.data.slice(0).sort((x, y) => { return y.helpfulness - x.helpfulness || y.review_id - x.review_id; });
         const firstTwo = sortByRevelant.slice(0, 2);
-        if ( selectedArray === 'totalReviewArray') {
+        if (selectedArray === 'resetArray') {
+          setOnScreenReviewArray(sortByRevelant);
+          setIsLoading(false);
+        }
+        if (selectedArray === 'totalReviewArray') {
           setOnScreenReviewArray(firstTwo);
           setIsLoading(false);
         } else if (selectedArray === 'newestReviewArray') {
@@ -61,9 +72,113 @@ const ReviewList = ( {productId} )=>{
       .catch((err) => {
         console.log('this is the react reviewlist get reviews err', err);
       });
-
   }, [productId, selectedArray]);
-
+  useEffect(() => {
+    let currentFiler = sortFilter();
+    if (currentFiler.length) {
+      setOnScreenReviewArray(currentFiler.slice(0));
+      setSortedArray(currentFiler.slice());
+    } else if (reset) {
+      setSortedArray([]);
+      setOnScreenReviewArray(totalReviewArray.slice(0, 2));
+    } else {
+      setSortedArray([]);
+      setOnScreenReviewArray(totalReviewArray.slice(0));
+    }
+  }, [filter]);
+  const resetFilter = function () {
+    if (sortedArray.length) {
+      setReset(true);
+      setFilter(new Array(5).fill(null));
+      let dropDownList = document.getElementById('review-sort-select');
+      setSelectedArray('totalReviewArray');
+      dropDownList.value = 'totalReviewArray';
+    }
+    return;
+  };
+  const sortFilter = function () {
+    let currentFiler = [];
+    let count = 0;
+    for (let i = filter.length - 1; i >= 0; i--) {
+      if (filter[i] !== null) {
+        count++;
+        currentFiler = currentFiler.concat(filter[i]);
+      }
+    }
+    setCount(count);
+    return currentFiler;
+  };
+  const filterOnClicked = function (e) {
+    console.log('filterOnClicked');
+    let onClickedFilter = e.target.id;
+    let updatedFilter = [...filter];
+    if (onClickedFilter === 'fiveStar') {
+      if (filter[4] !== null) {
+        if (count === 1) {
+          let dropDownList = document.getElementById('review-sort-select');
+          setSelectedArray('resetArray');
+          dropDownList.value = 'totalReviewArray';
+        }
+        updatedFilter[4] = null;
+      } else {
+        let fiveStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 5; });
+        updatedFilter[4] = fiveStarOnly;
+      }
+      setFilter(updatedFilter);
+    } else if (onClickedFilter === 'fourStar') {
+      if (filter[3] !== null) {
+        if (count === 1) {
+          let dropDownList = document.getElementById('review-sort-select');
+          setSelectedArray('resetArray');
+          dropDownList.value = 'totalReviewArray';
+        }
+        updatedFilter[3] = null;
+      } else {
+        let fourStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 4; });
+        updatedFilter[3] = fourStarOnly;
+      }
+      setFilter(updatedFilter);
+    } else if (onClickedFilter === 'threeStar') {
+      if (filter[2] !== null) {
+        if (count === 1) {
+          let dropDownList = document.getElementById('review-sort-select');
+          setSelectedArray('resetArray');
+          dropDownList.value = 'totalReviewArray';
+        }
+        updatedFilter[2] = null;
+      } else {
+        let threeStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 3; });
+        updatedFilter[2] = threeStarOnly;
+      }
+      setFilter(updatedFilter);
+    } else if (onClickedFilter === 'twoStar') {
+      if (filter[1] !== null) {
+        if (count === 1) {
+          let dropDownList = document.getElementById('review-sort-select');
+          setSelectedArray('resetArray');
+          dropDownList.value = 'totalReviewArray';
+        }
+        updatedFilter[1] = null;
+      } else {
+        let twoStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 2; });
+        updatedFilter[1] = twoStarOnly;
+      }
+      setFilter(updatedFilter);
+    } else if (onClickedFilter === 'oneStar') {
+      if (filter[0] !== null) {
+        if (count === 1) {
+          let dropDownList = document.getElementById('review-sort-select');
+          setSelectedArray('resetArray');
+          dropDownList.value = 'totalReviewArray';
+        }
+        updatedFilter[0] = null;
+      } else {
+        let oneStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 1; });
+        updatedFilter[0] = oneStarOnly;
+      }
+      setFilter(updatedFilter);
+    }
+  };
   const convertDate = function (dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -73,10 +188,10 @@ const ReviewList = ( {productId} )=>{
     setExtended (isExtended === 'Show Less' ? 'Show More' : 'Show Less');
   };
   const loadReviews = function (selectedArray) {
-    selectedArray = arrayMap[selectedArray];
+    selectedArray = (sortedArray.length ? sortedArray : arrayMap[selectedArray]);
     let startIndex = onScreenReviewArray.length;
     for (let i = startIndex; i <= startIndex + 1; i++) {
-      if (i === totalReviewArray.length) {
+      if (i === selectedArray.length) {
         break;
       } else {
         setOnScreenReviewArray((prevState) => {
@@ -119,19 +234,19 @@ const ReviewList = ( {productId} )=>{
   return (
     <div>
       <div className= 'review-starSection'>
-        <RatingBreakDown oneStar={oneStar} twoStar={twoStar} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
+        <RatingBreakDown resetFilter={resetFilter} filter={filter} filterOnClicked={filterOnClicked} oneStar={oneStar} twoStar={twoStar} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
         <ProductBreakDown />
       </div>
-      <div className="reviewSection">
+      <div className="review-Section">
+        <div className="review-DropDown">
+          <h2 style= {{display: 'inline'}}>{sortedArray.length ? sortedArray.length : totalReviewArray.length} reviews, sorted by </h2>
+          <select onChange={dropDownMenu} id="review-sort-select">
+            <option value="totalReviewArray">Relevant</option>
+            <option value="newestReviewArray">Newest</option>
+            <option value="helpfulReviewArray">Helpful</option>
+          </select>
+        </div>
         <div className= "review-List">
-          <div className="review-DropDown">
-            <h2 style= {{display: 'inline'}}>{totalReviewArray.length} reviews, sorted by </h2>
-            <select onChange={dropDownMenu} id="review-sort-select">
-              <option value="totalReviewArray">Relevant</option>
-              <option value="newestReviewArray">Newest</option>
-              <option value="helpfulReviewArray">Helpful</option>
-            </select>
-          </div>
           {isLoading === true ? <h1 style = {{color: 'red'}}>Loading</h1> : onScreenReviewArray.map((user, index)=>{
             return (
               <div key={index} className="review-Cell">
@@ -167,8 +282,8 @@ const ReviewList = ( {productId} )=>{
               </div>
             );
           })}
-          { isLoading ? null : onScreenReviewArray.length === totalReviewArray.length || totalReviewArray.length < 2 ? null : <div><button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button></div>}
         </div>
+        <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === (sortedArray.length ? sortedArray.length : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <div><button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button></div>}</div>
       </div>
     </div>
   );

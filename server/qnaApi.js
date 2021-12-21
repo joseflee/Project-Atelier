@@ -9,27 +9,22 @@ var getProductFromHR = function getProductFromHR(id, callback) {
   };
   axios.get(options.url, options)
     .then(function (response) {
-      //console.log(response);
       callback(null, response.data);
     })
     .catch(function (error) {
-      console.log(error);
-      callback(err, null);
+      callback(error, null);
     });
 
 };
 
 var getQuestionsFromHR = function getQuestionsFromHR(id, callback) {
-
   let options = {
     method: 'GET',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions?product_id=${id}`,
     headers: { Authorization: gitToken.Token }
-
   };
   axios.get(options.url, options)
     .then(function (response) {
-      //console.log('hi from api', response.data);
       callback(null, response.data);
     })
     .catch(function (error) {
@@ -38,26 +33,58 @@ var getQuestionsFromHR = function getQuestionsFromHR(id, callback) {
     });
 };
 
-var addHelpfullnessAtHR = function addHelpfullnessAtHR(id, callback) {
-  //console.log('id from api', id);
+var addQuestionHelpHR = function addQuestionHelpHR(id, callback) {
   let options = {
     method: 'PUT',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions/${id}/helpful`,
     headers: { Authorization: gitToken.Token }
   };
-  //console.log('options', options);
   axios.put(options.url, '', options)
     .then(function (response) {
-      //console.log(response);
       callback(null, response.data);
     })
     .catch(function (error) {
-      //console.log(options.url);
-      console.log(error);
+      callback(error, null);
+    });
+};
+
+var addAnswerHelpHR = function addAnswerHelpHR(id, callback) {
+  let options = {
+    method: 'PUT',
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/answers/${id}/helpful`,
+    headers: { Authorization: gitToken.Token }
+  };
+  axios.put(options.url, '', options)
+    .then(function (response) {
+      callback(null, response.data);
+    })
+    .catch(function (error) {
+      callback(error, null);
+    });
+};
+
+var addNewQuestionToHR = function addNewQuestionToHR(productId, body, nick, email, callback) {
+  let options = {
+    method: 'POST',
+    url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions',
+    headers: { Authorization: gitToken.Token },
+    body: { body: body, name: nick, email: email, product_id: productId }
+  };
+  //console.log('post options', options);
+  axios.post(options.url, options.body, options)
+    .then(function (response) {
+      //console.log('got response creating new question', response);
+      callback(null, response.data);
+    })
+    .catch(function (error) {
+      //console.log(error);
+      console.log('error creating new question');
       callback(error, null);
     });
 };
 
 module.exports.getProductFromHR = getProductFromHR;
 module.exports.getQuestionsFromHR = getQuestionsFromHR;
-module.exports.addHelpfullnessAtHR = addHelpfullnessAtHR;
+module.exports.addQuestionHelpHR = addQuestionHelpHR;
+module.exports.addAnswerHelpHR = addAnswerHelpHR;
+module.exports.addNewQuestionToHR = addNewQuestionToHR;
