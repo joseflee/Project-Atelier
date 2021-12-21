@@ -69,7 +69,6 @@ class QnA extends React.Component {
   }
 
   updateQuestionList(questions) {
-    console.log('received questions', questions);
     this.setState({
       questions: questions
     });
