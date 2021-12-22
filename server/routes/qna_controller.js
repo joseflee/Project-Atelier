@@ -72,11 +72,24 @@ var addAnswerToServer = function addAnswerToServer(questionId, body, name, email
   });
 };
 
+var reportAnswerToServer = function reportAnswerToServer(answerId) {
+  return new Promise((resolve, reject) => {
+    api.reportAnswerToHR(answerId, (err, result) => {
+      if (err) {
+        reject (err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
 module.exports = {
   receiveProductInfoById,
   receiveQuestionList,
   increaseQuestionHelp,
   increaseAnswerHelp,
   addQuestionToServer,
-  addAnswerToServer
+  addAnswerToServer,
+  reportAnswerToServer
 };

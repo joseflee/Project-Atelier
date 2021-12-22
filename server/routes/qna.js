@@ -102,8 +102,22 @@ qnaRouter.post('/addNewAnswer', (req, res) => {
     .catch(error => {
       res.sendStatus(400);
     });
+});
 
+qnaRouter.put('/reportAnswer', (req, res) => {
+  let productId = req.body.params.productId;
+  let answerId = req.body.params.answerId;
 
+  qnaController.reportAnswerToServer(answerId)
+    .then(data =>{
+      qnaController.receiveQuestionList(productId)
+        .then(result => {
+          res.send(result);
+        });
+    })
+    .catch(error => {
+      res.sendStatus(400);
+    });
 });
 
 module.exports = qnaRouter;
