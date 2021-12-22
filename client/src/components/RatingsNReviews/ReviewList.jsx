@@ -27,7 +27,7 @@ const ReviewList = ( {productId} )=>{
   const [sortedArray, setSortedArray] = useState([]);
   const [reset, setReset] = useState(false);
   const [count, setCount] = useState(0);
-  const [openReviewModal, setOpenReviewModal] = useState(true);
+  const [openReviewModal, setOpenReviewModal] = useState(false);
   const [isPost, setIsPost] = useState(false);
   const arrayMap =
    { totalReviewArray: totalReviewArray,

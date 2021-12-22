@@ -135,9 +135,7 @@
 .review-starBreakDown-rating-percentage:hover {
   box-shadow: 0 10px 12px 0 rgba(0,0,0,0.24), 0 14px 45px 0 rgba(0,0,0,0.19);
 }
-.review-starBreakDown-reset {
 
-}
 .review-starBreakDown-reset button {
   color: white;
   padding: 8px 22px;
