@@ -85,7 +85,7 @@ qnaRouter.post('/addNewQuestion', (req, res) => {
 
 
 qnaRouter.post('/addNewAnswer', (req, res) => {
-
+  let productId = req.body.params.productId;
   let questionId = req.body.params.id;
   let body = req.body.params.body;
   let name = req.body.params.name;
@@ -94,7 +94,10 @@ qnaRouter.post('/addNewAnswer', (req, res) => {
 
   qnaController.addAnswerToServer(questionId, body, name, email, photos)
     .then(data =>{
-      console.log('confirmed creating new answer');
+      qnaController.receiveQuestionList(productId)
+        .then(result => {
+          res.send(result);
+        });
     })
     .catch(error => {
       res.sendStatus(400);

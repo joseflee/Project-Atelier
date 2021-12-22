@@ -30,11 +30,12 @@ class AddAnswerForm extends React.Component {
     var email = this.state.email;
     var photos = [];
     var validationResult = this.handleValidation(body, nickname, email);
-
+    var productId = this.props.productId;
+    
     if (validationResult) {
       //SEND REQUEST TO SERVER TO ADD A NEW ANSWER
       var url = 'http://localhost:3000/qna/addNewAnswer';
-      axios.post(url, {params: {id: questionId, body: body, name: nickname, email: email, photos: photos}})
+      axios.post(url, {params: {id: questionId, productId: productId, body: body, name: nickname, email: email, photos: photos}})
         .then((response) => {
           console.log('added new answer', response.data.results);
           //render new answer in the parent component
