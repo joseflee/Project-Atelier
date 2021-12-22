@@ -1,12 +1,12 @@
 /* Rating Section Start -----------------------------------------------------------------------------------------------*/
+
+
 .RatingsNReviewsSection {
   position: relative;
-  border: red 3px solid;
-  width: 1100px;
+  width: 1150px;
   height: 800px;
   margin: 0 auto;
 }
-
 
 .newReview-Background {
   width: 100vw;
@@ -50,13 +50,12 @@
 }
 
 .newReview-Container .newReview-Body {
-  /* flex: 50%;
-  display: flex; */
   justify-content: center;
   align-items: center;
   font-size: 1.7rem;
   text-align: center;
   overflow-y: scroll;
+  max-height: 100%;
 }
 
 .newReview-Container .newReview-Footer {
@@ -87,7 +86,6 @@
 }
 .review-starBreakDown-inner {
   height: 100px;
-  border: 3px pink solid;
 }
 .review-starBreakDown-star {
   display: inline-block;
@@ -99,8 +97,8 @@
   display: inline-block;
 }
 .review-Cell {
+  border-bottom: 1px solid #707070;
   width: 750px;
-  border-bottom: 2px solid black;
 }
 .review-Top {
   padding-left: 50px;
@@ -120,8 +118,8 @@
   position: absolute;
   top: 50px;
   right: 0;
-  width: 750px;
-  height: 600px;
+  width: 755px;
+  height: 540px;
   overflow-y: scroll;
 }
 .review-starBreakDown-rating-percentage {
@@ -134,20 +132,58 @@
   display: inline-block;
   cursor: pointer;
 }
+.review-starBreakDown-rating-percentage:hover {
+  box-shadow: 0 10px 12px 0 rgba(0,0,0,0.24), 0 14px 45px 0 rgba(0,0,0,0.19);
+}
+
+.review-starBreakDown-reset button {
+  color: white;
+  padding: 8px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+  border-radius: 5px;
+}
+.review-starBreakDown-reset button:hover {
+  background-color: #555555;
+  color: white;
+}
 .review-Section {
   position: absolute;
   top: 40px;
   right: 0;
-  width: 750px;
+  width: 770px;
   height: 700px;
 }
 .review-Button {
   position: absolute;
-  bottom: 0;
+  bottom: 40px;
+}
+.review-Button button{
+  margin-left: 15px ;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+  border-radius: 5px;
+}
+.review-Button button:hover {
+  background-color: #555555;
+  color: white;
 }
 .review-starSection {
   width: 330px;
-  border: 3px solid black;
 }
 .review-starBreakDown-rating-percentage-clicked {
   background-color: #d8d8d8;
@@ -188,7 +224,6 @@
 .review-starBreakDown-rating {
   position: relative;
   height: 50px;
-  border: 3px black solid;
 }
 .review-starBreakDown-rating-head {
   position: absolute;
@@ -201,8 +236,13 @@
   left: 50px;
 }
 ::-webkit-scrollbar {
-  width: 0px;
-  background: transparent; /* make scrollbar transparent */
+  width: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: black;
+}
+::-webkit-scrollbar-track {
+  background-color: white;
 }
 .review-Imageblock {
   display: inline-block;
@@ -320,6 +360,26 @@
   font-weight: 900;
   color: #ccc;
   cursor: pointer;
+}
+.newReview-Summary textarea {
+  width:60%;
+  height: 15px;
+  padding: 15px;
+  outline: none;
+  border-radius: 5px;
+  resize: none;
+  font-size: 16px;
+  overflow: hidden;
+}
+.newReview-Content textarea {
+  width:89%;
+  height: 190px;
+  padding: 15px;
+  outline: none;
+  border-radius: 5px;
+  resize: none;
+  font-size: 16px;
+  overflow: hidden;
 }
 .review-stars-outer::before {
   content: "\f005 \f005 \f005 \f005 \f005";

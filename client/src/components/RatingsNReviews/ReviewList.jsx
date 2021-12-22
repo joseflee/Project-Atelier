@@ -289,8 +289,8 @@ const ReviewList = ( {productId} )=>{
             );
           })}
         </div>
-        <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === (sortedArray.length ? sortedArray.length : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <div><button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button></div>}
-          <button onClick={()=>{ setOpenReviewModal(true); }}>Write New Review</button>
+        <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === (sortedArray.length ? sortedArray.length : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button>}
+          {isLoading ? null : <button onClick={()=>{ setOpenReviewModal(true); }}>Write New Review</button>}
         </div>
         {openReviewModal && <NewReview setIsPost={setIsPost} setOpenReviewModal={setOpenReviewModal} setOpenReviewModal={setOpenReviewModal}/>}
       </div>
