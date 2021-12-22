@@ -60,8 +60,23 @@ var addQuestionToServer = function addQuestionToServer(productId, body, name, em
   });
 };
 
-module.exports.receiveProductInfoById = receiveProductInfoById;
-module.exports.receiveQuestionList = receiveQuestionList;
-module.exports.increaseQuestionHelp = increaseQuestionHelp;
-module.exports.increaseAnswerHelp = increaseAnswerHelp;
-module.exports.addQuestionToServer = addQuestionToServer;
+var addAnswerToServer = function addAnswerToServer(questionId, body, name, email, photos) {
+  return new Promise((resolve, reject) => {
+    api.addNewAnswerToHR(questionId, body, name, email, photos, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve (result);
+      }
+    });
+  });
+};
+
+module.exports = {
+  receiveProductInfoById,
+  receiveQuestionList,
+  increaseQuestionHelp,
+  increaseAnswerHelp,
+  addQuestionToServer,
+  addAnswerToServer
+};

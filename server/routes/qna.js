@@ -83,4 +83,24 @@ qnaRouter.post('/addNewQuestion', (req, res) => {
     });
 });
 
+
+qnaRouter.post('/addNewAnswer', (req, res) => {
+
+  let questionId = req.body.params.id;
+  let body = req.body.params.body;
+  let name = req.body.params.name;
+  let email = req.body.params.email;
+  let photos = req.body.params.photos;
+
+  qnaController.addAnswerToServer(questionId, body, name, email, photos)
+    .then(data =>{
+      console.log('confirmed creating new answer');
+    })
+    .catch(error => {
+      res.sendStatus(400);
+    });
+
+
+});
+
 module.exports = qnaRouter;
