@@ -6,6 +6,7 @@ class QuestionsListItemAnswer extends React.Component {
     super(props);
 
     this.clickOnYes = this.clickOnYes.bind(this);
+    this.reportAnswer = this.reportAnswer.bind(this);
   }
 
   clickOnYes() {
@@ -23,6 +24,10 @@ class QuestionsListItemAnswer extends React.Component {
       });
   }
 
+  reportAnswer() {
+    console.log('reported');
+  }
+
   render() {
     return (
       <div className='answer-item'>
@@ -30,8 +35,8 @@ class QuestionsListItemAnswer extends React.Component {
         <div className='answer-item-username'>By user {this.props.answer.answerer_name}</div><div className='answer-item-date'>{this.props.answer.date}</div>
         <div className='answer-item-photos'></div>
         <div className='answer-item-helpful-keyword'>Helpful?</div>
-        <div className='answer-item-yes-button' onClick={()=>{this.clickOnYes();}}><u>Yes({this.props.answer.helpfulness})</u></div>
-        <div className='answer-item-report-button'>Report</div>
+        <div className='answer-item-yes-button' onClick={()=>{ this.clickOnYes(); }}><u>Yes({this.props.answer.helpfulness})</u></div>
+        <div className='answer-item-report-button' onClick={()=> { this.reportAnswer(); }}><u>Report</u></div>
       </div>
     );
   }
