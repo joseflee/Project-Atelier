@@ -59,17 +59,22 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
     }});
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
+  const [reviewSummary, setReviewSummary] = useState('');
+  const [reviewBody, setReviewBody] = useState('');
 
   const postReview = function () {
-    axios.post('http://localhost:3000/ratings/postReview')
-      .then(()=>{
-        setIsPost(true);
-        setOpenReviewModal(false);
-      })
-      .catch((err) => {
-        console.log('client side postReview error:', err);
-      });
+    console.log('Do post review:', reviewSummary, reviewBody);
+    // axios.post('http://localhost:3000/ratings/postReview')
+    //   .then(()=>{
+    //     setIsPost(true);
+    //     setOpenReviewModal(false);
+    //   })
+    //   .catch((err) => {
+    //     console.log('client side postReview error:', err);
+    //   });
   };
+
+  
   return (
     <div className="newReview-Background">
       <div className="newReview-Container">
@@ -115,7 +120,7 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
             <label htmlFor="newReview-recommendedN">No</label>
           </div>
 
-          <div className='newReview-Characteristics'>
+          {/* <div className='newReview-Characteristics'>
             <h3>Characteristics</h3>
             <div className='newReview-Characteristics-Fit'>
               <p>{fitVal.rate ? fitVal.text[fitVal.rate] : 'none selected'}</p>
@@ -363,8 +368,32 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
               <label htmlFor="newReview-size-5">5</label>
               <p>1=A size too small, 5=A size too wide</p>
             </div>
+          </div> */}
 
+          <div className='newReview-Summary'>
+            <h2>Review summary</h2>
+            <textarea
+              maxLength="60"
+              placeholder='Example: Best purchase ever!'
+              onKeyPress={e => {
+                if (e.key === 'Enter') { e.preventDefault(); }
+              }}
+              onChange={(e)=>{ setReviewSummary(e.target.value); }}
+            />
           </div>
+
+          <div className='newReview-Content'>
+            <h2>Review body</h2>
+            <textarea
+              maxLength="1000"
+              placeholder='Why did you like the product or not ?'
+              onKeyPress={e => {
+                if (e.key === 'Enter') { e.preventDefault(); }
+              }}
+              onChange={(e)=>{ setReviewBody(e.target.value); }}
+            />
+          </div>
+
 
         </div>
         <div className="newReview-Footer">
