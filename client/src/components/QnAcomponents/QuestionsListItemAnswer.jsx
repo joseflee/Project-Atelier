@@ -4,6 +4,9 @@ import axios from 'axios';
 class QuestionsListItemAnswer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isReported: false
+    };
 
     this.clickOnYes = this.clickOnYes.bind(this);
     this.reportAnswer = this.reportAnswer.bind(this);
@@ -27,7 +30,9 @@ class QuestionsListItemAnswer extends React.Component {
   reportAnswer() {
     let answerId = this.props.answer.id;
     let productId = this.props.productId;
-
+    this.setState({
+      isReported: true
+    });
     //SEND REQUEST TO REPORT ANSWER
     var url = 'http://localhost:3000/qna/reportAnswer';
     axios.put(url, {params: {answerId: answerId, productId: productId}})
@@ -42,6 +47,12 @@ class QuestionsListItemAnswer extends React.Component {
   }
 
   render() {
+    var report;
+    if (this.state.isReported) {
+      report = <div>Reported</div>;
+    } else {
+      report = <div>Report</div>;
+    }
     return (
       <div className='answer-item'>
         <div className='answer-item-a-letter'><h2>A:{this.props.answer.body}</h2></div>
@@ -49,7 +60,7 @@ class QuestionsListItemAnswer extends React.Component {
         <div className='answer-item-photos'></div>
         <div className='answer-item-helpful-keyword'>Helpful?</div>
         <div className='answer-item-yes-button' onClick={()=>{ this.clickOnYes(); }}><u>Yes({this.props.answer.helpfulness})</u></div>
-        <div className='answer-item-report-button' onClick={()=> { this.reportAnswer(); }}><u>Report</u></div>
+        <div className='answer-item-report-button' onClick={()=> { this.reportAnswer(); }}><u>{report}</u></div>
       </div>
     );
   }
