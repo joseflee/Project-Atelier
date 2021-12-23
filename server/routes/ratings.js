@@ -43,13 +43,14 @@ ratingsRouter.get('/ratingOverview', async (req, res) => {
   ratingOverview.ratings['3'] = ratingAverage[4];
   ratingOverview.ratings['4'] = ratingAverage[5];
   ratingOverview.ratings['5'] = ratingAverage[6];
-  console.log('overview:', ratingOverview);
+  // console.log('overview:', ratingOverview);
   res.status(200).send(ratingOverview);
 });
 
 ratingsRouter.post('/postReview', async(req, res) => {
-  await RatingApi.postReview(59553);
-  res.status(200).end();
+  // console.log('post review data:', req.body);
+  await RatingApi.postReview(req.body);
+  res.status(204).end();
 });
 
 

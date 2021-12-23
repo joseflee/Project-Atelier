@@ -23,6 +23,7 @@ const ReviewList = ( {productId} )=>{
   const [threeStar, setThreeStar] = useState(0);
   const [fourStar, setFourStar] = useState(0);
   const [fiveStar, setFiveStar] = useState(0);
+  const [characteristics, setCharacteristics] = useState(null);
   const [filter, setFilter] = useState(new Array(5).fill(null));
   const [sortedArray, setSortedArray] = useState([]);
   const [reset, setReset] = useState(false);
@@ -72,6 +73,7 @@ const ReviewList = ( {productId} )=>{
             setThreeStar(response.data.ratings['3']);
             setFourStar(response.data.ratings['4']);
             setFiveStar(response.data.ratings['5']);
+            setCharacteristics(response.data.characteristics);
           });
       })
       .catch((err) => {
@@ -292,7 +294,7 @@ const ReviewList = ( {productId} )=>{
         <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === (sortedArray.length ? sortedArray.length : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button>}
           {isLoading ? null : <button onClick={()=>{ setOpenReviewModal(true); }}>Write New Review</button>}
         </div>
-        {openReviewModal && <NewReview setIsPost={setIsPost} setOpenReviewModal={setOpenReviewModal} setOpenReviewModal={setOpenReviewModal}/>}
+        {openReviewModal && <NewReview characteristics={characteristics} productId= {productId} setIsPost={setIsPost} setOpenReviewModal={setOpenReviewModal} setOpenReviewModal={setOpenReviewModal}/>}
       </div>
     </div>
   );
