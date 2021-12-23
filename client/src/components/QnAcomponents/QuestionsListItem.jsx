@@ -15,6 +15,7 @@ class QuestionsListItem extends React.Component {
     this.clickOnMoreAnswers = this.clickOnMoreAnswers.bind(this);
     this.addAnswerHandleClick = this.addAnswerHandleClick.bind(this);
     this.clickOnHelpful = this.clickOnHelpful.bind(this);
+    this.closeAnswerForm = this.closeAnswerForm.bind(this);
   }
 
   componentDidMount() {
@@ -41,6 +42,12 @@ class QuestionsListItem extends React.Component {
   addAnswerHandleClick() {
     this.setState({
       isAddAnswerClicked: true
+    });
+  }
+
+  closeAnswerForm() {
+    this.setState({
+      isAddAnswerClicked: false
     });
   }
 
@@ -83,6 +90,9 @@ class QuestionsListItem extends React.Component {
         question_body={this.props.question.question_body}
         questionId={this.props.question.question_id}
         productId={this.props.productId}
+        update={this.props.update}
+        closeAnswer={this.closeAnswerForm}
+
       />;
     } else {
       addAnswer = <u>Add answer</u>;
