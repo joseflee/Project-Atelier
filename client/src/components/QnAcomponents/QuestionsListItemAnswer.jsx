@@ -5,7 +5,8 @@ class QuestionsListItemAnswer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isReported: false
+      isReported: false,
+      isHelpful: false
     };
 
     this.clickOnYes = this.clickOnYes.bind(this);
@@ -17,32 +18,44 @@ class QuestionsListItemAnswer extends React.Component {
     let productId = this.props.productId;
 
     //UPDATE ANSWER HELPFUL COUNTER
-    var url = 'http://localhost:3000/qna/updateAnswerHelp';
-    axios.put(url, {params: {answerId: answerId, productId: productId}})
-      .then((response) => {
-        this.props.update(response.data.results);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if (!this.state.isHelpful) {
+      var url = 'http://localhost:3000/qna/updateAnswerHelp';
+      axios.put(url, {params: {answerId: answerId, productId: productId}})
+        .then((response) => {
+          this.props.update(response.data.results);
+          this.setState({
+            isHelpful: true
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      alert ('you\'ve alredy clicked on helpful link');
+    }
   }
 
   reportAnswer() {
     let answerId = this.props.answer.id;
     let productId = this.props.productId;
-    this.setState({
-      isReported: true
-    });
+
+    if (!this.state.isReported) {
     //SEND REQUEST TO REPORT ANSWER
-    var url = 'http://localhost:3000/qna/reportAnswer';
-    axios.put(url, {params: {answerId: answerId, productId: productId}})
-      .then((response) => {
-        console.log('sent response to client', response);
-        // this.props.update(response.data.results);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      var url = 'http://localhost:3000/qna/reportAnswer';
+      axios.put(url, {params: {answerId: answerId, productId: productId}})
+        .then((response) => {
+          console.log('sent response to client', response);
+          // this.props.update(response.data.results);
+          this.setState({
+            isReported: true
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      alert('you\'ve already reported this answer');
+    }
 
   }
 
