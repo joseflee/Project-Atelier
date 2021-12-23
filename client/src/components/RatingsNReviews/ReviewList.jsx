@@ -42,7 +42,6 @@ const ReviewList = ( {productId} )=>{
     setSortedArray([]);
     setFilter(new Array(5).fill(null));
     setIsPost(false);
-    console.log('trigger effect 1');
     axios.get('http://localhost:3000/ratings/getReviews', { params: { Id: productId } })
       .then((response)=>{
         const sortByRevelant = response.data.slice(0).sort((x, y) => { return y.helpfulness - x.helpfulness || y.review_id - x.review_id; });
@@ -243,7 +242,7 @@ const ReviewList = ( {productId} )=>{
     <div>
       <div className= 'review-starSection'>
         <RatingBreakDown resetFilter={resetFilter} filter={filter} filterOnClicked={filterOnClicked} oneStar={oneStar} twoStar={twoStar} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
-        <ProductBreakDown />
+        <ProductBreakDown characteristics={characteristics}/>
       </div>
       <div className="review-Section">
         <div className="review-DropDown">
