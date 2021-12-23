@@ -45,7 +45,9 @@ class AddAnswerForm extends React.Component {
         .catch(function (error) {
           console.log(error);
         });
-    } //else show warning to user
+    } else {
+      alert('Not all fields filled');
+    }
   }
 
   handleValidation(answer, nickname, email) {
