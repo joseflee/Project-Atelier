@@ -3,9 +3,9 @@ import ProductInfo from './ProductInfo.jsx';
 import StyleSelector from './StyleSelector/StyleSelect.jsx';
 import AddToCart from './AddToCart.jsx';
 import DefaultGallery from './ImageGallery/DefaultGal.jsx';
-import sampleData from '../../../../example/products.js'
+import sampleData from '../../../../example/products.js';
 
-class ProductOverview extends React.Component{
+class ProductOverview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,37 +13,29 @@ class ProductOverview extends React.Component{
       styles: sampleData.style,
       mainProduct: sampleData.specificProduct,
       displayStyle: sampleData.style.results[0],
-      displayStyleImg: sampleData.style.results[0].photos[0].url,
-      displayStyleThumbs: sampleData.style.results[0].photos
     };
-    this.updateStyle = this.updateStyle.bind(this)
+    this.updateStyle = this.updateStyle.bind(this);
   }
 
-  componentDidMount(){};
+  componentDidMount() {}
 
   updateStyle(selectedStyle) {
+    // console.log('selectedStyle', selectedStyle);
     this.setState({
       displayStyle: selectedStyle,
-      displayStyleImg: selectedStyle.photos,
-    })
-  }
-
-  thumbToDisp(selectedImg) {
-    this.setState({
-      displayStyleImg: selectedImg
-    })
+    });
   }
 
   render () {
-    console.log('state', this.state)
+    // console.log('state', this.state);
     return (
       <div className='overview'>
+        <h1>Product Overview</h1>
         <ProductInfo data={this.state.products[0]} />
         <StyleSelector data={this.state.styles} displayedStyle={this.state.displayStyle}
-        changeStyle={this.updateStyle} />
+          changeStyle={this.updateStyle} />
         <AddToCart />
-        <DefaultGallery displayedStyle={this.state.displayStyle} displayStyleImg={this.state.displayStyleImg}
-        displayStyleThumbs={this.state.displayStyleThumbs} thumbToDisp={this.thumbToDisp.bind(this)} />
+        <DefaultGallery photos={this.state.displayStyle.photos} />
       </div>
     );
   }
