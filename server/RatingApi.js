@@ -49,21 +49,20 @@ const ratingOverview = (productId) => {
     });
 };
 
-const postReview = async (productId) => {
-  productId = 59553;
+const postReview = async (body) => {
   let params = {
-    'product_id': 59553,
-    'rating': 5,
-    'summary': '789',
-    'body': 'zxczxczxz',
-    'recommend': true,
-    'name': 'kitty',
-    'email': 'asdsdsa@qq.com',
-    'photos': [],
-    'characteristics': { '15': 1, '16': 2}
+    'product_id': body.productId,
+    'rating': body.rating,
+    'summary': body.reviewSummary,
+    'body': body.reviewBody,
+    'recommend': body.recommended === 'true',
+    'name': body.nickName,
+    'email': body.email,
+    'photos': body.imgUrl.slice(),
+    'characteristics': { '14': body.fitVal, '15': body.lengthVal, '16': body.qualityVal, '17': body.widthVal, '18': body.comfortVal, '19': body.sizeVal}
   };
   let options = {
-    method: 'post',
+    method: 'POST',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
     headers: { Authorization: gitToken.Token },
     data: params
