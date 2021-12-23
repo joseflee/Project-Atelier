@@ -31,7 +31,7 @@ class AddAnswerForm extends React.Component {
     var photos = [];
     var validationResult = this.handleValidation(body, nickname, email);
     var productId = this.props.productId;
-    
+
     if (validationResult) {
       //SEND REQUEST TO SERVER TO ADD A NEW ANSWER
       var url = 'http://localhost:3000/qna/addNewAnswer';
@@ -39,11 +39,15 @@ class AddAnswerForm extends React.Component {
         .then((response) => {
           console.log('added new answer', response.data.results);
           //render new answer in the parent component
+          this.props.update(response.data.results);
+          this.props.closeAnswer();
         })
         .catch(function (error) {
           console.log(error);
         });
-    } //else show warning to user
+    } else {
+      alert('Not all fields filled');
+    }
   }
 
   handleValidation(answer, nickname, email) {
