@@ -8,7 +8,7 @@ const ProductInfo = (props) => {
       <p>{props.data.slogan}</p>
       <p>{props.data.description}</p>
     </div>
-  )
-}
+  );
+};
 
 export default ProductInfo;
