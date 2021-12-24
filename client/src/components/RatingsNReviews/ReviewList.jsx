@@ -4,6 +4,7 @@ import ProductBreakDown from './ProductBreakDown.jsx';
 import axios from 'axios';
 import HelpfulButton from './HelpfulButton.jsx';
 import NewReview from './NewReview.jsx';
+// import SearchBar from './SearchBar.jsx';
 
 const ReviewList = ( {productId} )=>{
   const [selectedArray, setSelectedArray] = useState('totalReviewArray');
@@ -30,6 +31,8 @@ const ReviewList = ( {productId} )=>{
   const [count, setCount] = useState(0);
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [isPost, setIsPost] = useState(false);
+  const [searchResult, setSearchResult] = useState([]);
+
   const arrayMap =
    { totalReviewArray: totalReviewArray,
      helpfulReviewArray: helpfulReviewArray,
@@ -38,6 +41,7 @@ const ReviewList = ( {productId} )=>{
      resetArray: totalReviewArray
    };
   useEffect(() => {
+    console.log('trigger 1:', searchResult, onScreenReviewArray);
     setIsLoading(true);
     setSortedArray([]);
     setFilter(new Array(5).fill(null));
@@ -114,6 +118,27 @@ const ReviewList = ( {productId} )=>{
     }
     setCount(count);
     return currentFiler;
+  };
+  const searching = function (term) {
+    let searchingResult = [];
+    totalReviewArray.filter((val) => {
+      if (term.length >= 3) {
+        console.log('search term longger than 3');
+        if (val.body.toLowerCase().includes(term.toLowerCase()) || val.summary.toLowerCase().includes(term.toLowerCase())) {
+          return val;
+        }
+      }
+    }).map((result, index) => {
+      // setSearchResult((prevState) => {
+      //   return [...prevState, result];
+      // });
+      console.log('searching:', result, term);
+      searchingResult.push(result);
+      if (searchingResult.length >= 3 ) {
+        setOnScreenReviewArray(searchingResult);
+      }
+    });
+    console.log('searching result:', searchingResult);
   };
   const filterOnClicked = function (e) {
     console.log('filterOnClicked');
@@ -244,7 +269,13 @@ const ReviewList = ( {productId} )=>{
         <RatingBreakDown resetFilter={resetFilter} filter={filter} filterOnClicked={filterOnClicked} oneStar={oneStar} twoStar={twoStar} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
         <ProductBreakDown characteristics={characteristics}/>
       </div>
+
       <div className="review-Section">
+        <div>
+          <input type='text' placeholder='Search...' onChange={(e) => {
+            searching(e.target.value);
+          }}></input>
+        </div>
         <div className="review-DropDown">
           <h2 style= {{display: 'inline'}}>{sortedArray.length ? sortedArray.length : totalReviewArray.length} reviews, sorted by </h2>
           <select onChange={dropDownMenu} id="review-sort-select">
