@@ -431,7 +431,54 @@
   pointer-events: none;
   opacity: 0.5;
 }
-
+.review-product {
+  margin-top: 35px;
+  width: 233px;
+  height: 310px;
+}
+.review-product div {
+  margin-bottom: 20px;
+}
+.review-productTrack {
+  position: relative;
+}
+.review-productTrack-bar {
+  display: inline-block;
+  width: 75px;
+  height: 7px;
+  background-color: #ebebeb;
+}
+.review-productTrack-text {
+  display: inline-block;
+  font-size: 12px;
+  color: #5d5d5d;
+}
+#review-productTrack-text-1 {
+  position: absolute;
+  top:16px;
+  left:0;
+}
+#review-productTrack-text-2 {
+  position: absolute;
+  top:24px;
+  left:50%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  text-align: center;
+  transform: translate(-50%) translateY(-50%);
+}
+#review-productTrack-text-3 {
+  position: absolute;
+  top:16px;
+  right:0;
+}
+.review-productTrack i {
+  position: absolute;
+  left: 0;
+  top: -3px;
+  font-size: 25px;
+}
 /* Rating Section End---------------------------------------------------------------------------------------------------*/
 
 /* Related Products and My Outfits --------------------------------------------------------------------------------------------------- Start */
