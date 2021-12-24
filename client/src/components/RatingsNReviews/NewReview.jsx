@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
-const NewReview = ({setIsPost, setOpenReviewModal})=>{
+const NewReview = ({characteristics, productId, setIsPost, setOpenReviewModal})=>{
 
   const [fitVal, setFitVal] = useState({
     rate: '',
@@ -57,24 +57,143 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
       '4': '½ a size too big',
       '5': 'A size too wide'
     }});
-  const [rating, setRating] = useState(null);
+  const [rating, setRating] = useState({
+    val: null,
+    text: {
+      '1': 'Poor',
+      '2': 'Fair',
+      '3': 'Average',
+      '4': 'Good',
+      '5': 'Great'
+    }});
   const [hover, setHover] = useState(null);
   const [reviewSummary, setReviewSummary] = useState('');
   const [reviewBody, setReviewBody] = useState('');
+  const [imgSelected, setImgSelected] = useState('');
+  const [imgUrl, setImgUrl] = useState([]);
+  const [nickName, setNickname ] = useState('');
+  const [email, setEmail ] = useState('');
+  const [recommended, setRecommended] = useState('');
+  const [fileTypeErr, setFileTypeErr] = useState('');
+  const [ratingErr, setRatingErr] = useState('');
+  const [recommendedErr, setRecommendedErr] = useState('');
+  const [emailErr, setEmailErr] = useState('');
+  const [reviewBodyErr, setReviewBodyErr] = useState('');
+  const [nickNameErr, setNickNameErr] = useState('');
 
-  const postReview = function () {
-    console.log('Do post review:', reviewSummary, reviewBody);
-    // axios.post('http://localhost:3000/ratings/postReview')
-    //   .then(()=>{
-    //     setIsPost(true);
-    //     setOpenReviewModal(false);
-    //   })
-    //   .catch((err) => {
-    //     console.log('client side postReview error:', err);
-    //   });
+  const validation = function () {
+    let flag = true;
+    if (!rating.val) {
+      console.log('no rating');
+      flag = false;
+      setRatingErr('Please provide star rating!');
+    }
+    if (!recommended) {
+      flag = false;
+      setRecommendedErr('Please provide your recommendation!');
+    }
+    if (!emailValidation()) {
+      flag = false;
+      setEmailErr ('The email address provided is not in correct email format');
+    }
+    if (!fileValidation()) {
+      flag = false;
+      setFileTypeErr('The images selected are invalid or unable to be uploaded');
+    }
+    if (reviewBody.length < 50) {
+      flag = false;
+      setReviewBodyErr('The review body is less than 50 characters');
+    }
+    if (!nickName.length) {
+      flag = false;
+      setNickNameErr('Name cannot be blank');
+    }
+    if (!fitVal.rate || !lengthVal.rate || !comfortVal.rate || !qualityVal.rate || !widthVal.rate || !sizeVal.rate) {
+      flag = false;
+    }
+    return flag;
   };
 
-  
+  const emailValidation = function (content) {
+    let emailErrText = '';
+    let flag = true;
+    if ((content && !content.includes('@')) || !email) {
+      emailErrText = 'The email address provided is not in correct email format';
+      flag = false;
+    }
+    setEmailErr (emailErrText);
+    return flag;
+  };
+  const fileValidation = function () {
+    let flag = true;
+    let errMessage = '';
+    if (imgSelected) {
+      let fileType = imgSelected.name.split('.').pop();
+      if ( !(fileType === 'jpeg' || fileType === 'jpg' || fileType === 'png')) {
+        flag = false;
+        errMessage = 'The images selected are invalid or unable to be uploaded';
+      }
+    }
+    setFileTypeErr(errMessage);
+    return flag;
+  };
+  const postReview = function () {
+    if (validation()) {
+      console.log('good to submit');
+      axios.post('http://localhost:3000/ratings/postReview', {
+        productId: productId,
+        rating: rating.val,
+        reviewSummary: reviewSummary,
+        reviewBody: reviewBody,
+        imgUrl: imgUrl,
+        nickName: nickName,
+        email: email,
+        recommended: recommended,
+        fitVal: Number(fitVal.rate),
+        lengthVal: Number(lengthVal.rate),
+        qualityVal: Number(qualityVal.rate),
+        widthVal: Number(widthVal.rate),
+        comfortVal: Number(comfortVal.rate),
+        sizeVal: Number(sizeVal.rate)
+      })
+        .then(()=>{
+          setIsPost(true);
+          setOpenReviewModal(false);
+        })
+        .catch((err) => {
+          console.log('client side postReview error:', err);
+        });
+    }
+    return;
+  };
+  const generateText = function () {
+    if (rating !== null) {
+      return rating.text[rating.val];
+    }
+    return;
+  };
+  const bodyWordCount = function () {
+    return reviewBody.length >= 50 ? 'Minimum reached' : 'Minimum required characters left:' + (50 - reviewBody.length);
+  };
+  const uploadImg = function () {
+    setFileTypeErr('');
+    if (fileValidation()) {
+      var formData = new FormData();
+      formData.append('file', imgSelected);
+      formData.append('upload_preset', 'a3yw936t');
+      axios.post ('https://api.cloudinary.com/v1_1/dqidinkkf/upload', formData)
+        .then((response) => {
+          setImgUrl((prevState) => { return [...prevState, response.data.secure_url]; });
+        })
+        .catch((err) => {
+          console.log('this is the client side img upload err:', err);
+        });
+    } else {
+      console.log('incorrect file type');
+      return;
+    }
+
+  };
   return (
     <div className="newReview-Background">
       <div className="newReview-Container">
@@ -93,6 +212,8 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
         </div>
         <div className="newReview-Body">
           <div className="newReview-overallRating ">
+            <h3>Overall rating &#42;</h3>
+            {!rating.val ? <p style={{color: 'red'}}>{ratingErr}</p> : null}
             {[...Array(5)].map((star, index) => {
               const ratingValue = index + 1;
               return (
@@ -101,29 +222,35 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
                     type='radio'
                     name='rating'
                     value={ratingValue}
-                    onClick={() => { setRating(ratingValue); }}
+                    onClick={() => {
+                      setRating((prevState) => ({
+                        ...prevState,
+                        val: ratingValue
+                      }));
+                    }}
                   />
-                  <span className= {ratingValue <= (rating || hover) ? 'newReview-Star-After' : 'newReview-Star'}
+                  <span className= {ratingValue <= (rating.val || hover) ? 'newReview-Star-After' : 'newReview-Star'}
                     onMouseEnter={() => { setHover(ratingValue); }}
                     onMouseLeave={() => { setHover(null); }}>
                   </span>
                 </label>
               );
             })}
-            <span>The text will vary as follows</span>
+            <span>&nbsp; {generateText()}</span>
           </div>
           <div className= 'newReview-Recommended'>
-            <h3>Do you recommend this product ?</h3>
-            <input type="radio" id="newReview-recommendedY" name="recommended" value="Yes" />
+            <h3>Do you recommend this product ? &#42;</h3>
+            {!recommended ? <p style={{color: 'red'}}>{recommendedErr}</p> : null}
+            <input type="radio" id="newReview-recommendedY" name="recommended" value="Yes" onChange={()=> { setRecommended('true'); }}/>
             <label htmlFor="newReview-recommendedY">Yes</label>
-            <input type="radio" id="newReview-recommendedN" name="recommended" value="No" />
+            <input type="radio" id="newReview-recommendedN" name="recommended" value="No" onChange={()=> { setRecommended('false'); }}/>
             <label htmlFor="newReview-recommendedN">No</label>
           </div>
 
-          {/* <div className='newReview-Characteristics'>
-            <h3>Characteristics</h3>
+          <div className='newReview-Characteristics'>
+            <h3>Characteristics &#42;</h3>
             <div className='newReview-Characteristics-Fit'>
-              <p>{fitVal.rate ? fitVal.text[fitVal.rate] : 'none selected'}</p>
+              {fitVal.rate ? <p>{fitVal.text[fitVal.rate]}</p> : <p style={{color: 'red'}}>none selected</p>}
               <span style={{fontWeight: 'bold'}}>Fit</span>
               <input type="radio" id="newReview-fit-1" name="Fit-1" value="1" checked={fitVal.rate === '1' ? true : false} onChange={e => {
                 setFitVal((prevState) => ({
@@ -164,7 +291,7 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
             </div>
 
             <div className='newReview-Characteristics-Length'>
-              <p>{lengthVal.rate ? lengthVal.text[lengthVal.rate] : 'none selected'}</p>
+              {lengthVal.rate ? <p>{lengthVal.text[lengthVal.rate]}</p> : <p style={{color: 'red'}}>none selected</p>}
               <span style={{fontWeight: 'bold'}}>Length</span>
               <input type="radio" id="newReview-length-1" name="Length-1" value="1" checked={lengthVal.rate === '1' ? true : false} onChange={e => {
                 setLengthVal((prevState) => ({
@@ -205,7 +332,7 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
             </div>
 
             <div className='newReview-Characteristics-Quality'>
-              <p>{qualityVal.rate ? qualityVal.text[qualityVal.rate] : 'none selected'}</p>
+              {qualityVal.rate ? <p>{qualityVal.text[qualityVal.rate]}</p> : <p style={{color: 'red'}}>none selected</p>}
               <span style={{fontWeight: 'bold'}}>Quality</span>
               <input type="radio" id="newReview-quality-1" name="Quality-1" value="1" checked={qualityVal.rate === '1' ? true : false} onChange={e => {
                 setQualityVal((prevState) => ({
@@ -247,7 +374,7 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
 
 
             <div className='newReview-Characteristics-Comfort'>
-              <p>{comfortVal.rate ? comfortVal.text[comfortVal.rate] : 'none selected'}</p>
+              {comfortVal.rate ? <p>{comfortVal.text[comfortVal.rate]}</p> : <p style={{color: 'red'}}>none selected</p>}
               <span style={{fontWeight: 'bold'}}>Comfort</span>
               <input type="radio" id="newReview-comfort-1" name="Comfort-1" value="1" checked={comfortVal.rate === '1' ? true : false} onChange={e => {
                 setComfortVal((prevState) => ({
@@ -255,28 +382,28 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
                   rate: e.target.value
                 }));
               }} />
-              <label htmlFor="newReview-quality-1">1</label>
+              <label htmlFor="newReview-comfort-1">1</label>
               <input type="radio" id="newReview-comfort-2" name="Comfort-2" value="2" checked={comfortVal.rate === '2' ? true : false} onChange={e => {
                 setComfortVal((prevState) => ({
                   ...prevState,
                   rate: e.target.value
                 }));
               }} />
-              <label htmlFor="newReview-quality-2">2</label>
+              <label htmlFor="newReview-comfort-2">2</label>
               <input type="radio" id="newReview-comfort-3" name="Comfort-3" value="3" checked={comfortVal.rate === '3' ? true : false} onChange={e => {
                 setComfortVal((prevState) => ({
                   ...prevState,
                   rate: e.target.value
                 }));
               }} />
-              <label htmlFor="newReview-quality-3">3</label>
+              <label htmlFor="newReview-comfort-3">3</label>
               <input type="radio" id="newReview-comfort-4" name="Comfort-4" value="4" checked={comfortVal.rate === '4' ? true : false} onChange={e => {
                 setComfortVal((prevState) => ({
                   ...prevState,
                   rate: e.target.value
                 }));
               }} />
-              <label htmlFor="newReview-quality-4">4</label>
+              <label htmlFor="newReview-comfort-4">4</label>
               <input type="radio" id="newReview-comfort-5" name="Comfort-5" value="5" checked={comfortVal.rate === '5' ? true : false} onChange={e => {
                 setComfortVal((prevState) => ({
                   ...prevState,
@@ -288,7 +415,7 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
             </div>
 
             <div className='newReview-Characteristics-Width'>
-              <p>{widthVal.rate ? widthVal.text[widthVal.rate] : 'none selected'}</p>
+              {widthVal.rate ? <p>{widthVal.text[widthVal.rate]}</p> : <p style={{color: 'red'}}>none selected</p>}
               <span style={{fontWeight: 'bold'}}>Width</span>
               <input type="radio" id="newReview-width-1" name="Width-1" value="1" checked={widthVal.rate === '1' ? true : false} onChange={e => {
                 setWidthVal((prevState) => ({
@@ -329,37 +456,37 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
             </div>
 
             <div className='newReview-Characteristics-Size'>
-              <p>{sizeVal.rate ? sizeVal.text[sizeVal.rate] : 'none selected'}</p>
+              {sizeVal.rate ? <p>{sizeVal.text[sizeVal.rate]}</p> : <p style={{color: 'red'}}>none selected</p>}
               <span style={{fontWeight: 'bold'}}>Size</span>
-              <input type="radio" id="newReview-size-1" name="Size-1" value="1" checked={widthVal.rate === '1' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-size-1" name="Size-1" value="1" checked={sizeVal.rate === '1' ? true : false} onChange={e => {
                 setSizeVal((prevState) => ({
                   ...prevState,
                   rate: e.target.value
                 }));
               }} />
               <label htmlFor="newReview-size-1">1</label>
-              <input type="radio" id="newReview-size-2" name="Size-2" value="2" checked={widthVal.rate === '2' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-size-2" name="Size-2" value="2" checked={sizeVal.rate === '2' ? true : false} onChange={e => {
                 setSizeVal((prevState) => ({
                   ...prevState,
                   rate: e.target.value
                 }));
               }} />
               <label htmlFor="newReview-size-2">2</label>
-              <input type="radio" id="newReview-size-3" name="Size-3" value="3" checked={widthVal.rate === '3' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-size-3" name="Size-3" value="3" checked={sizeVal.rate === '3' ? true : false} onChange={e => {
                 setSizeVal((prevState) => ({
                   ...prevState,
                   rate: e.target.value
                 }));
               }} />
               <label htmlFor="newReview-size-3">3</label>
-              <input type="radio" id="newReview-size-4" name="Size-4" value="4" checked={widthVal.rate === '4' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-size-4" name="Size-4" value="4" checked={sizeVal.rate === '4' ? true : false} onChange={e => {
                 setSizeVal((prevState) => ({
                   ...prevState,
                   rate: e.target.value
                 }));
               }} />
               <label htmlFor="newReview-size-4">4</label>
-              <input type="radio" id="newReview-size-5" name="Size-5" value="5" checked={widthVal.rate === '5' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-size-5" name="Size-5" value="5" checked={sizeVal.rate === '5' ? true : false} onChange={e => {
                 setSizeVal((prevState) => ({
                   ...prevState,
                   rate: e.target.value
@@ -368,10 +495,10 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
               <label htmlFor="newReview-size-5">5</label>
               <p>1=A size too small, 5=A size too wide</p>
             </div>
-          </div> */}
+          </div>
 
           <div className='newReview-Summary'>
-            <h2>Review summary</h2>
+            <h3>Review summary</h3>
             <textarea
               maxLength="60"
               placeholder='Example: Best purchase ever!'
@@ -383,7 +510,8 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
           </div>
 
           <div className='newReview-Content'>
-            <h2>Review body</h2>
+            <h3>Review body &#42;</h3>
+            {reviewBody.length < 50 ? <p style={{color: 'red'}}>{reviewBodyErr}</p> : null}
             <textarea
               maxLength="1000"
               placeholder='Why did you like the product or not ?'
@@ -392,7 +520,50 @@ const NewReview = ({setIsPost, setOpenReviewModal})=>{
               }}
               onChange={(e)=>{ setReviewBody(e.target.value); }}
             />
+            <br></br>
+            <i style={{fontSize: '20px'}}>{bodyWordCount()}</i>
+
           </div>
+
+          <div className='newReview-fileUpLoad'>
+            <h3>Upload your photos</h3>
+            {fileTypeErr ? <p style={{color: 'red'}}>The images selected are invalid or unable to be uploaded</p> : null}
+            <input type='file' onChange={(e) => { setImgSelected( e.target.files[0]); }}/>
+            <button disabled={imgUrl.length >= 5 ? true : false} onClick={uploadImg}>Upload Image</button>
+            {imgUrl.length > 0 ?
+              <div className="review-ImageSection">
+                {imgUrl.map((url, index)=>{
+                  return (
+                    <div key = {index} className="review-Imageblock">
+                      <img id="review-Images" alt = "uploaded img" className = "review-Images" src= {url} />
+                    </div>);
+                })}
+              </div> : null}
+          </div>
+
+          <div className= 'newReview-nickName'>
+            <h3>What is your nickname ? &#42;</h3>
+            {!nickName.length ? <p style={{color: 'red'}}>{nickNameErr}</p> : null}
+            <input type='input' placeholder='Example: jackson11!' onChange={(e) => { setNickname(e.target.value); }}/>
+            <br></br>
+            <i style={{fontSize: '20px'}}>For privacy reasons, do not use your full name or email address</i>
+          </div>
+
+          <div className='newReview-Email'>
+            <h3>Your email &#42;</h3>
+            {emailErr ? <p style={{color: 'red'}}>{emailErr}</p> : null}
+            <textarea
+              maxLength="60"
+              placeholder='Example: jackson11@email.com'
+              onKeyPress={e => {
+                if (e.key === 'Enter') { e.preventDefault(); }
+              }}
+              onChange={(e)=>{ emailValidation(e.target.value), setEmail(e.target.value); }}
+            />
+            <br></br>
+            <i style={{fontSize: '20px'}}>For authentication reasons, you will not be emailed</i>
+          </div>
+
 
 
         </div>
