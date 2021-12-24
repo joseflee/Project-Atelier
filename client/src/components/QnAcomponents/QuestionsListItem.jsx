@@ -1,6 +1,7 @@
 import React from 'react';
 import QuestionsListItemAnswer from './QuestionsListItemAnswer.jsx';
 import AddAnswerForm from './AddAnswerForm.jsx';
+import AnswersList from './AnswersList.jsx';
 import axios from 'axios';
 
 class QuestionsListItem extends React.Component {
@@ -14,6 +15,7 @@ class QuestionsListItem extends React.Component {
     this.clickOnMoreAnswers = this.clickOnMoreAnswers.bind(this);
     this.addAnswerHandleClick = this.addAnswerHandleClick.bind(this);
     this.clickOnHelpful = this.clickOnHelpful.bind(this);
+    this.closeAnswerForm = this.closeAnswerForm.bind(this);
   }
 
   componentDidMount() {
@@ -43,6 +45,12 @@ class QuestionsListItem extends React.Component {
     });
   }
 
+  closeAnswerForm() {
+    this.setState({
+      isAddAnswerClicked: false
+    });
+  }
+
   clickOnHelpful() {
     let questionId = this.props.question.question_id;
     let productId = this.props.productId;
@@ -60,16 +68,32 @@ class QuestionsListItem extends React.Component {
 
   render() {
     let moreAnswers,
-      addAnswer;
+      addAnswer,
+      answersList;
 
     if (this.state.isMoreAnswersShown) {
       moreAnswers = <button onClick={()=>{ this.clickOnMoreAnswers(); }}>Load more answers</button>;
+      answersList = <AnswersList list={Object.values(this.props.question.answers).slice(0, 2)}
+        questionId={this.props.question.question_id}
+        productId={this.props.productId}
+        update={this.props.update} />;
     } else {
       moreAnswers = <div></div>;
+      answersList = <AnswersList list={Object.values(this.props.question.answers)}
+        questionId={this.props.question.question_id}
+        productId={this.props.productId}
+        update={this.props.update} />;
     }
 
     if (this.state.isAddAnswerClicked) {
-      addAnswer = <AddAnswerForm name={this.props.name} question_body={this.props.question.question_body}/>;
+      addAnswer = <AddAnswerForm name={this.props.name}
+        question_body={this.props.question.question_body}
+        questionId={this.props.question.question_id}
+        productId={this.props.productId}
+        update={this.props.update}
+        closeAnswer={this.closeAnswerForm}
+
+      />;
     } else {
       addAnswer = <u>Add answer</u>;
     }
@@ -85,7 +109,8 @@ class QuestionsListItem extends React.Component {
           <div className='question-item-add-answer-link' onClick={()=>this.addAnswerHandleClick()}>{addAnswer}</div>
         </div>
         {/* end of question item */}
-        {
+        {answersList}
+        {/* {
           Object.values(this.props.question.answers).map((answer, key) => {
             return <QuestionsListItemAnswer answer={answer}
               key={key}
@@ -93,7 +118,7 @@ class QuestionsListItem extends React.Component {
               productId={this.props.productId}
               update={this.props.update} />;
           })
-        }
+        } */}
         {moreAnswers}
       </div>
     );

@@ -43,9 +43,17 @@ ratingsRouter.get('/ratingOverview', async (req, res) => {
   ratingOverview.ratings['3'] = ratingAverage[4];
   ratingOverview.ratings['4'] = ratingAverage[5];
   ratingOverview.ratings['5'] = ratingAverage[6];
-  console.log('overview:', ratingOverview);
+  // console.log('overview:', ratingOverview);
   res.status(200).send(ratingOverview);
 });
+
+ratingsRouter.post('/postReview', async(req, res) => {
+  // console.log('post review data:', req.body);
+  await RatingApi.postReview(req.body);
+  res.status(204).end();
+});
+
+
 
 const averageRate = function(ratings, recommended) {
   let a = Object.keys(ratings);

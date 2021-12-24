@@ -3,6 +3,7 @@ import RatingBreakDown from './RatingBreakDown.jsx';
 import ProductBreakDown from './ProductBreakDown.jsx';
 import axios from 'axios';
 import HelpfulButton from './HelpfulButton.jsx';
+import NewReview from './NewReview.jsx';
 
 const ReviewList = ( {productId} )=>{
   const [selectedArray, setSelectedArray] = useState('totalReviewArray');
@@ -22,10 +23,13 @@ const ReviewList = ( {productId} )=>{
   const [threeStar, setThreeStar] = useState(0);
   const [fourStar, setFourStar] = useState(0);
   const [fiveStar, setFiveStar] = useState(0);
+  const [characteristics, setCharacteristics] = useState(null);
   const [filter, setFilter] = useState(new Array(5).fill(null));
   const [sortedArray, setSortedArray] = useState([]);
   const [reset, setReset] = useState(false);
   const [count, setCount] = useState(0);
+  const [openReviewModal, setOpenReviewModal] = useState(false);
+  const [isPost, setIsPost] = useState(false);
   const arrayMap =
    { totalReviewArray: totalReviewArray,
      helpfulReviewArray: helpfulReviewArray,
@@ -37,6 +41,8 @@ const ReviewList = ( {productId} )=>{
     setIsLoading(true);
     setSortedArray([]);
     setFilter(new Array(5).fill(null));
+    setIsPost(false);
+    console.log('trigger effect 1');
     axios.get('http://localhost:3000/ratings/getReviews', { params: { Id: productId } })
       .then((response)=>{
         const sortByRevelant = response.data.slice(0).sort((x, y) => { return y.helpfulness - x.helpfulness || y.review_id - x.review_id; });
@@ -67,12 +73,13 @@ const ReviewList = ( {productId} )=>{
             setThreeStar(response.data.ratings['3']);
             setFourStar(response.data.ratings['4']);
             setFiveStar(response.data.ratings['5']);
+            setCharacteristics(response.data.characteristics);
           });
       })
       .catch((err) => {
         console.log('this is the react reviewlist get reviews err', err);
       });
-  }, [productId, selectedArray]);
+  }, [productId, selectedArray, isPost]);
   useEffect(() => {
     let currentFiler = sortFilter();
     if (currentFiler.length) {
@@ -86,6 +93,7 @@ const ReviewList = ( {productId} )=>{
       setOnScreenReviewArray(totalReviewArray.slice(0));
     }
   }, [filter]);
+
   const resetFilter = function () {
     if (sortedArray.length) {
       setReset(true);
@@ -283,7 +291,10 @@ const ReviewList = ( {productId} )=>{
             );
           })}
         </div>
-        <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === (sortedArray.length ? sortedArray.length : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <div><button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button></div>}</div>
+        <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === (sortedArray.length ? sortedArray.length : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button>}
+          {isLoading ? null : <button onClick={()=>{ setOpenReviewModal(true); }}>Write New Review</button>}
+        </div>
+        {openReviewModal && <NewReview characteristics={characteristics} productId= {productId} setIsPost={setIsPost} setOpenReviewModal={setOpenReviewModal} setOpenReviewModal={setOpenReviewModal}/>}
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ const AddToCart = (props) => {
     <div className='addToCart'>
 
     </div>
-  )
-}
+  );
+};
 
 export default AddToCart;

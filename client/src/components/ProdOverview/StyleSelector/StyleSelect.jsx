@@ -4,7 +4,7 @@ import StyleDropdown from './StyleDropdowns.jsx';
 
 
 const StyleSelector = (props) => {
-  // console.log('style selector component props', props)
+  // console.log('style selector component props', props);
   return (
     <div className='styleSelector'>
       {props.data.results.map((element, pos) => {
@@ -12,7 +12,7 @@ const StyleSelector = (props) => {
       })}
       <StyleDropdown displayedStyle={props.displayedStyle}/>
     </div>
-  )
-}
+  );
+};
 
 export default StyleSelector;
