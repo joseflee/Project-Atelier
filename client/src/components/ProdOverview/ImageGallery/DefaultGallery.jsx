@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ImgContainer, DisplayImg, ThumbContainer, ThumbImg,
-  DisplayedThumbImg, RightArrow, LeftArrow } from './ImageGal.styles.js';
+  DisplayedThumbImg, RightArrow, LeftArrow } from './Gallery.styles.js';
 
 class DefaultGallery extends React.Component {
   constructor (props) {

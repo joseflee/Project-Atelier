@@ -36,6 +36,8 @@ export const DisplayedThumbImg = styled.img`
 `;
 
 export const RightArrow = styled.i`
+  position: absolute;
+  left: 425px;
   border: solid black;
   border-width: 0 3px 3px 0;
   display: inline-block;
@@ -44,6 +46,8 @@ export const RightArrow = styled.i`
 `;
 
 export const LeftArrow = styled.i`
+  position: absolute;
+  left: 20px;
   border: solid black;
   border-width: 0 3px 3px 0;
   display: inline-block;
