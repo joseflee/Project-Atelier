@@ -26,13 +26,14 @@ const ReviewList = ( {productId} )=>{
   const [fiveStar, setFiveStar] = useState(0);
   const [characteristics, setCharacteristics] = useState(null);
   const [filter, setFilter] = useState(new Array(5).fill(null));
+  const [filterClicked, setFilterClicked] = useState(false);
   const [sortedArray, setSortedArray] = useState([]);
   const [reset, setReset] = useState(false);
   const [count, setCount] = useState(0);
   const [openReviewModal, setOpenReviewModal] = useState(false);
   const [isPost, setIsPost] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
-
+  const [searchTerm, setSearchTerm] = useState('');
   const arrayMap =
    { totalReviewArray: totalReviewArray,
      helpfulReviewArray: helpfulReviewArray,
@@ -41,7 +42,6 @@ const ReviewList = ( {productId} )=>{
      resetArray: totalReviewArray
    };
   useEffect(() => {
-    console.log('trigger 1:', searchResult, onScreenReviewArray);
     setIsLoading(true);
     setSortedArray([]);
     setFilter(new Array(5).fill(null));
@@ -50,18 +50,39 @@ const ReviewList = ( {productId} )=>{
       .then((response)=>{
         const sortByRevelant = response.data.slice(0).sort((x, y) => { return y.helpfulness - x.helpfulness || y.review_id - x.review_id; });
         const firstTwo = sortByRevelant.slice(0, 2);
+        let searchBarResult;
         if (selectedArray === 'resetArray') {
-          setOnScreenReviewArray(sortByRevelant);
+          if (searchTerm.length >= 3) {
+            searchBarResult = searching(searchTerm, sortByRevelant);
+            setOnScreenReviewArray(searchBarResult);
+          } else {
+            setOnScreenReviewArray(sortByRevelant);
+          }
           setIsLoading(false);
         }
         if (selectedArray === 'totalReviewArray') {
-          setOnScreenReviewArray(firstTwo);
+          if (searchTerm.length >= 3) {
+            searchBarResult = searching(searchTerm, sortByRevelant);
+            setOnScreenReviewArray(searchBarResult);
+          } else {
+            setOnScreenReviewArray(firstTwo);
+          }
           setIsLoading(false);
         } else if (selectedArray === 'newestReviewArray') {
-          setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }).slice(0, 2));
+          if (searchTerm.length >= 3) {
+            searchBarResult = searching(searchTerm, sortByRevelant);
+            setOnScreenReviewArray(searchBarResult.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }).slice(0));
+          } else {
+            setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }).slice(0, 2));
+          }
           setIsLoading(false);
-        } else if ( selectedArray === 'helpfulReviewArray') {
-          setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }).slice(0, 2));
+        } else if (selectedArray === 'helpfulReviewArray') {
+          if (searchTerm.length >= 3) {
+            searchBarResult = searching(searchTerm, sortByRevelant);
+            setOnScreenReviewArray(searchBarResult.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }).slice(0));
+          } else {
+            setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }).slice(0, 2));
+          }
           setIsLoading(false);
         }
         setTotalReviewArray(sortByRevelant);
@@ -84,19 +105,31 @@ const ReviewList = ( {productId} )=>{
       });
   }, [productId, selectedArray, isPost]);
   useEffect(() => {
-    let currentFiler = sortFilter();
-    if (currentFiler.length) {
-      setOnScreenReviewArray(currentFiler.slice(0));
-      setSortedArray(currentFiler.slice());
+    let currentFilter = sortFilter()[0];
+    let flag = sortFilter()[1];
+    if (currentFilter.length) {
+      setOnScreenReviewArray(currentFilter.slice(0));
+      setSortedArray(currentFilter.slice(0));
     } else if (reset) {
       setSortedArray([]);
-      setOnScreenReviewArray(totalReviewArray.slice(0, 2));
+      if (searchResult.length || searchTerm.length >= 3) {
+        setOnScreenReviewArray(searchResult.slice(0));
+      } else {
+        setOnScreenReviewArray(totalReviewArray.slice(0, 2));
+      }
+    } else if (searchTerm.length >= 3 && searchResult.length && !flag) {
+      setSortedArray([]);
+      setOnScreenReviewArray(searchResult.slice(0));
     } else {
       setSortedArray([]);
-      setOnScreenReviewArray(totalReviewArray.slice(0));
+      if (searchTerm.length >= 3) {
+        setOnScreenReviewArray(currentFilter.slice(0));
+      } else {
+        setOnScreenReviewArray(totalReviewArray.slice(0));
+      }
     }
+    setFilterClicked(flag);
   }, [filter]);
-
   const resetFilter = function () {
     if (sortedArray.length) {
       setReset(true);
@@ -108,43 +141,48 @@ const ReviewList = ( {productId} )=>{
     return;
   };
   const sortFilter = function () {
-    let currentFiler = [];
+    let currentFilter = [];
     let count = 0;
+    let flag = false;
     for (let i = filter.length - 1; i >= 0; i--) {
       if (filter[i] !== null) {
         count++;
-        currentFiler = currentFiler.concat(filter[i]);
+        flag = true;
+        currentFilter = currentFilter.concat(filter[i]);
       }
     }
     setCount(count);
-    return currentFiler;
+    return [currentFilter, flag];
   };
-  const searching = function (term) {
+  const searching = function (term, updatedArray) {
+    updatedArray = updatedArray || arrayMap[selectedArray];
     let searchingResult = [];
-    totalReviewArray.filter((val) => {
-      if (term.length >= 3) {
-        console.log('search term longger than 3');
-        if (val.body.toLowerCase().includes(term.toLowerCase()) || val.summary.toLowerCase().includes(term.toLowerCase())) {
-          return val;
-        }
+    setSearchResult([]);
+    if (term.length < 3 ) {
+      setFilter(new Array(5).fill(null));
+      return;
+    }
+    updatedArray.filter((val) => {
+      if (!(val.body.toLowerCase().includes(term.toLowerCase()) || val.summary.toLowerCase().includes(term.toLowerCase()))) {
+        setFilter(new Array(5).fill(null));
+        setSearchResult([]);
+        setOnScreenReviewArray(searchingResult);
+      } else {
+        return val;
       }
     }).map((result, index) => {
-      // setSearchResult((prevState) => {
-      //   return [...prevState, result];
-      // });
-      console.log('searching:', result, term);
       searchingResult.push(result);
-      if (searchingResult.length >= 3 ) {
-        setOnScreenReviewArray(searchingResult);
-      }
+      setSearchResult(searchingResult);
+      setOnScreenReviewArray(searchingResult);
     });
-    console.log('searching result:', searchingResult);
+    return searchingResult;
   };
   const filterOnClicked = function (e) {
-    console.log('filterOnClicked');
     let onClickedFilter = e.target.id;
     let updatedFilter = [...filter];
-    if (onClickedFilter === 'fiveStar') {
+    if (searchTerm.length >= 3 && !searchResult.length) {
+      return;
+    } else if (onClickedFilter === 'fiveStar') {
       if (filter[4] !== null) {
         if (count === 1) {
           let dropDownList = document.getElementById('review-sort-select');
@@ -153,7 +191,12 @@ const ReviewList = ( {productId} )=>{
         }
         updatedFilter[4] = null;
       } else {
-        let fiveStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 5; });
+        let fiveStarOnly;
+        if (searchResult.length) {
+          fiveStarOnly = searchResult.filter((e) => { return e.rating === 5; });
+        } else {
+          fiveStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 5; });
+        }
         updatedFilter[4] = fiveStarOnly;
       }
       setFilter(updatedFilter);
@@ -166,7 +209,12 @@ const ReviewList = ( {productId} )=>{
         }
         updatedFilter[3] = null;
       } else {
-        let fourStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 4; });
+        let fourStarOnly;
+        if (searchResult.length) {
+          fourStarOnly = searchResult.filter((e) => { return e.rating === 4; });
+        } else {
+          fourStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 4; });
+        }
         updatedFilter[3] = fourStarOnly;
       }
       setFilter(updatedFilter);
@@ -179,7 +227,12 @@ const ReviewList = ( {productId} )=>{
         }
         updatedFilter[2] = null;
       } else {
-        let threeStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 3; });
+        let threeStarOnly;
+        if (searchResult.length) {
+          threeStarOnly = searchResult.filter((e) => { return e.rating === 3; });
+        } else {
+          threeStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 3; });
+        }
         updatedFilter[2] = threeStarOnly;
       }
       setFilter(updatedFilter);
@@ -192,7 +245,12 @@ const ReviewList = ( {productId} )=>{
         }
         updatedFilter[1] = null;
       } else {
-        let twoStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 2; });
+        let twoStarOnly;
+        if (searchResult.length) {
+          twoStarOnly = searchResult.filter((e) => { return e.rating === 2; });
+        } else {
+          twoStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 2; });
+        }
         updatedFilter[1] = twoStarOnly;
       }
       setFilter(updatedFilter);
@@ -205,7 +263,12 @@ const ReviewList = ( {productId} )=>{
         }
         updatedFilter[0] = null;
       } else {
-        let oneStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 1; });
+        let oneStarOnly;
+        if (searchResult.length) {
+          oneStarOnly = searchResult.filter((e) => { return e.rating === 1; });
+        } else {
+          oneStarOnly = arrayMap[selectedArray].filter((e) => { return e.rating === 1; });
+        }
         updatedFilter[0] = oneStarOnly;
       }
       setFilter(updatedFilter);
@@ -260,8 +323,22 @@ const ReviewList = ( {productId} )=>{
       setOnScreenReviewArray(helpfulReviewArray.slice(0, 2));
     }
   };
-  const markClicked = function (id, helpfulness) {
-    setClickedList(prevState => prevState.set( id, helpfulness ));
+  const markClicked = function (id, helpfulness1, helpfulness2) {
+    let count = [helpfulness1, helpfulness2];
+    setClickedList(prevState => prevState.set( id, count ));
+  };
+  const reviewsCount = function () {
+    if (filterClicked) {
+      if (searchTerm.length >= 3 && searchResult.length < sortedArray.length) {
+        return searchResult.length;
+      }
+      return sortedArray.length;
+    } else if (searchTerm.length >= 3) {
+      return searchResult.length;
+    } else {
+      return totalReviewArray.length;
+    }
+
   };
   return (
     <div>
@@ -272,12 +349,12 @@ const ReviewList = ( {productId} )=>{
 
       <div className="review-Section">
         <div>
-          <input type='text' placeholder='Search...' onChange={(e) => {
-            searching(e.target.value);
+          <input type='text' value={searchTerm} placeholder='Search...' onChange={(e) => {
+            searching(e.target.value), setSearchTerm(e.target.value);
           }}></input>
         </div>
         <div className="review-DropDown">
-          <h2 style= {{display: 'inline'}}>{sortedArray.length ? sortedArray.length : totalReviewArray.length} reviews, sorted by </h2>
+          <h2 style= {{display: 'inline'}}>{reviewsCount()} reviews, sorted by </h2>
           <select onChange={dropDownMenu} id="review-sort-select">
             <option value="totalReviewArray">Relevant</option>
             <option value="newestReviewArray">Newest</option>
@@ -321,7 +398,7 @@ const ReviewList = ( {productId} )=>{
             );
           })}
         </div>
-        <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === (sortedArray.length ? sortedArray.length : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button>}
+        <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === ((sortedArray.length || searchResult.length) ? (sortedArray.length || searchResult.length) : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button>}
           {isLoading ? null : <button onClick={()=>{ setOpenReviewModal(true); }}>Write New Review</button>}
         </div>
         {openReviewModal && <NewReview characteristics={characteristics} productId= {productId} setIsPost={setIsPost} setOpenReviewModal={setOpenReviewModal} setOpenReviewModal={setOpenReviewModal}/>}
