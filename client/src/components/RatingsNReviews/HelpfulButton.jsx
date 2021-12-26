@@ -2,14 +2,15 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 const HelpfulButton = ({reviewId, helpfulness, markClicked, clickedList})=>{
-  // console.log('this is the reviewId:', reviewId);
   const [helpfulnessCount, setHelpfulnessCount] = useState(0);
   const [Id, setId] = useState(0);
   const [clicked, setClicked] = useState(false);
 
   useEffect(()=>{
+    setClicked(false);
     if (clickedList.has(reviewId)) {
-      // console.log('clickedList already has:', Id, clickedList.has(reviewId), clicked );
+      let oldHelpfulness = clickedList.get(reviewId)[1];
+      helpfulness = Math.max(helpfulness, oldHelpfulness);
       setClicked(true);
     }
     setHelpfulnessCount(helpfulness);
@@ -19,7 +20,7 @@ const HelpfulButton = ({reviewId, helpfulness, markClicked, clickedList})=>{
 
   const helpfulnessonClicked = function (e) {
     if (!clickedList.has(Id)) {
-      markClicked(Id, helpfulness);
+      markClicked(Id, helpfulness, helpfulness + 1);
       setHelpfulnessCount(helpfulnessCount + 1);
       e.target.className += ' helpfulness-onClicked';
       axios.post('http://localhost:3000/ratings/updateHelpfulness', {Id: Id})
@@ -32,20 +33,22 @@ const HelpfulButton = ({reviewId, helpfulness, markClicked, clickedList})=>{
     }
   };
   return (
-    <div>
+    <div className='review-helpful'>
       {clicked ?
         <div>
           <span>HelpFul ?</span>
-          <span id={reviewId} className= { 'review-helpful-1 helpfulness-onClicked ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
-          <span>({helpfulnessCount})</span>
-          <span> | Report</span>
+          <span className= { 'review-helpful-1 helpfulness-onClicked ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
+          <span id={reviewId}>({helpfulnessCount})</span>
+          <span>|</span>
+          <span>Report</span>
         </div>
         :
         <div>
           <span>HelpFul ?</span>
           <span id={reviewId} className= { 'review-helpful-1 ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
-          <span>({helpfulnessCount})</span>
-          <span> | Report</span>
+          <span id={reviewId}>({helpfulnessCount})</span>
+          <span>|</span>
+          <span>Report</span>
         </div>}
     </div>
   );

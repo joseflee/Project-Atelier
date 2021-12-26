@@ -7,13 +7,13 @@ const RatingBreakDown = ({ resetFilter, filter, filterOnClicked, productId, aver
     <div className='review-starBreakDown'>
       <h3>RATINGS &amp; REVIEWS</h3>
       <div className='review-starBreakDown-inner'>
-        <h1 className = 'review-starBreakDown-star-average'>{averageRate}</h1>
+        <h1>{averageRate}</h1>
         <div className='review-starBreakDown-star'>
           <div className="review-stars-outer">
             <div className="review-stars-inner" style={{width: starWidth(averageRate)}}></div>
           </div>
         </div>
-        <h3 className='review-starBreakDown-recommended'>{recommended}% of reviews recommend this product</h3>
+        <p className='review-starBreakDown-recommended'>{recommended}% of reviews recommend this product</p>
       </div>
 
       <div className='review-starBreakDown-rating' >
