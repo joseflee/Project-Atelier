@@ -10,7 +10,8 @@ class QuestionsListItem extends React.Component {
     this.state = {
       isAddAnswerClicked: false,
       answers: {},
-      isMoreAnswersShown: false
+      isMoreAnswersShown: false,
+      isHelpful: false
     };
     this.clickOnMoreAnswers = this.clickOnMoreAnswers.bind(this);
     this.addAnswerHandleClick = this.addAnswerHandleClick.bind(this);
@@ -56,14 +57,22 @@ class QuestionsListItem extends React.Component {
     let productId = this.props.productId;
 
     //ADD HELPFULLNESS FOR THIS QUESTION
-    var url = 'http://localhost:3000/qna/updateQuestionHelp';
-    axios.put(url, {params: {questionId: questionId, productId: productId}})
-      .then((response) => {
-        this.props.update(response.data.results);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if (!this.state.isHelpful) {
+      var url = 'http://localhost:3000/qna/updateQuestionHelp';
+      axios.put(url, {params: {questionId: questionId, productId: productId}})
+        .then((response) => {
+          this.setState({
+            isHelpful: true
+          });
+          this.props.update(response.data.results);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      alert ('you\'ve already clicked on helpful link');
+    }
+
   }
 
   render() {
