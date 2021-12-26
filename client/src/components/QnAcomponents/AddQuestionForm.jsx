@@ -47,9 +47,9 @@ class AddQuestionForm extends React.Component {
           console.log(error);
         });
     } else {
-      alert ('Not all fields are filled')
+      alert ('Not all fields are filled');
+    }
   }
-
   handleValidation(question, nick, email) {
     if (question.length === 0) {
       return false;
