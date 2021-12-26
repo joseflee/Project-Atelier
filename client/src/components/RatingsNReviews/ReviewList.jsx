@@ -122,7 +122,7 @@ const ReviewList = ( {productId} )=>{
       setOnScreenReviewArray(searchResult.slice(0));
     } else {
       setSortedArray([]);
-      if (searchTerm.length >= 3) {
+      if (searchTerm.length >= 3 || flag) {
         setOnScreenReviewArray(currentFilter.slice(0));
       } else {
         setOnScreenReviewArray(totalReviewArray.slice(0));
