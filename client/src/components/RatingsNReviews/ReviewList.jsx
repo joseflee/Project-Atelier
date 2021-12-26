@@ -107,6 +107,7 @@ const ReviewList = ( {productId} )=>{
   useEffect(() => {
     let currentFilter = sortFilter()[0];
     let flag = sortFilter()[1];
+    console.log('currentfilter:', currentFilter, flag);
     if (currentFilter.length) {
       setOnScreenReviewArray(currentFilter.slice(0));
       setSortedArray(currentFilter.slice(0));
@@ -122,7 +123,7 @@ const ReviewList = ( {productId} )=>{
       setOnScreenReviewArray(searchResult.slice(0));
     } else {
       setSortedArray([]);
-      if (searchTerm.length >= 3) {
+      if (searchTerm.length >= 3 || flag) {
         setOnScreenReviewArray(currentFilter.slice(0));
       } else {
         setOnScreenReviewArray(totalReviewArray.slice(0));
@@ -348,31 +349,32 @@ const ReviewList = ( {productId} )=>{
       </div>
 
       <div className="review-Section">
-        <div>
+
+        <div className='review-searchBar'>
           <input type='text' value={searchTerm} placeholder='Search...' onChange={(e) => {
             searching(e.target.value), setSearchTerm(e.target.value);
           }}></input>
         </div>
         <div className="review-DropDown">
-          <h2 style= {{display: 'inline'}}>{reviewsCount()} reviews, sorted by </h2>
+          <h3 style= {{display: 'inline'}}>{reviewsCount()} reviews, sorted by </h3>
           <select onChange={dropDownMenu} id="review-sort-select">
             <option value="totalReviewArray">Relevant</option>
             <option value="newestReviewArray">Newest</option>
             <option value="helpfulReviewArray">Helpful</option>
           </select>
         </div>
+
         <div className= "review-List">
-          {isLoading === true ? <h1 style = {{color: 'red'}}>Loading</h1> : onScreenReviewArray.map((user, index)=>{
+          {isLoading === true ? <div className='review-loading'><i className="fas fa-spinner "></i> <h3>loading....</h3> </div> : onScreenReviewArray.map((user, index)=>{
             return (
               <div key={index} className="review-Cell">
                 <div className="review-Top">
                   <div className="review-stars-outer">
                     <div className="review-stars-inner" style={{width: starWidth(user.rating)}}></div>
                   </div>
-                  <span className="number-Rating" style= {{color: 'red'}}>{user.rating}</span>
-                  <span className="nameAndDate">{user.reviewer_name}, {convertDate(user.date)}</span>
+                  <span >{user.reviewer_name}, {convertDate(user.date)}</span>
                 </div>
-                <h2 className="Summary">{user.summary.slice(0, 60)}</h2>
+                <h3>{user.summary.slice(0, 60)}</h3>
                 <div className="review-Body"> {user.summary.length > 60 ?
                   <div className="extended-Summary">{user.summary.slice(60)}</div> : null} <br></br>{user.body.length > 250 ?
                   <div>{isTruncated ? <div >{user.body.substring(0, 250)}.........................</div> : <div>{user.body}</div>}
@@ -391,8 +393,8 @@ const ReviewList = ( {productId} )=>{
                         </div>);
                     })}
                   </div> : null}
-                {user.recommend ? <div><span>✔</span><span>I recommend this product</span></div> : null}
-                {user.response ? (<div className="review-Response"><div className="seller-Response">Response from seller:</div> <div className="seller-Response2">{user.response}</div> </div>) : null}
+                {user.recommend ? <div><span>✔ &nbsp;</span><span>I recommend this product</span></div> : null}
+                {user.response ? (<div className="review-Response"><p>Response from seller:</p> <div className="seller-Response2">{user.response}</div> </div>) : null}
                 <HelpfulButton clickedList={clickedList} markClicked={markClicked} helpfulness={user.helpfulness} reviewId = {user.review_id}/>
               </div>
             );
