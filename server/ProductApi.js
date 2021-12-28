@@ -6,7 +6,7 @@ const getSpecificProduct = (productId) => {
   let options = {
     method: 'GET',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}`,
-    headers: { Authorization: gitToken.TOKEN },
+    headers: { Authorization: gitToken.Token },
   };
   return axios(options)
     .then((response) => {
@@ -18,7 +18,7 @@ const getProductStyles = (productId) => {
   let options = {
     method: 'GET',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/products/${productId}/styles`,
-    headers: { Authorization: gitToken.TOKEN },
+    headers: { Authorization: gitToken.Token },
   };
   return axios(options)
     .then((response) => {

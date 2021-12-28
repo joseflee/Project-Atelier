@@ -9,31 +9,42 @@ class RelProducts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listOfRelatedProducts: products,
+      listOfRelatedProducts: [],
       listOfMyOutfits: []
     };
+
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    // this.getRelatedProducts = this.getRelatedProducts.bind(this);
   }
 
   componentDidMount() {
-    // axios.get('/related_products')
-    //   .then(relProdInfo => {
-    //     console.log('Related Products Info: ', relProdInfo);
-    //     this.setState = {
-    //       relatedProducts: relProdInfo
-    //     };
-    //   })
-    //   .catch(err => console.error(err));
+    // this.getRelatedProducts();
+    axios.get('/product/related_products', { params: { Id: this.props.productId } })
+      .then(relProdInfo => {
+        this.setState({
+          listOfRelatedProducts: relProdInfo.data
+        });
+        console.log('at componentDidMount: ', relProdInfo.data);
+      })
+      .catch(err => console.error(err));
+  }
+
+  handleClick(e) {
+    var element = e.target;
+    console.log('clicked element:', element);
   }
 
   render() {
+    console.log('at render: ', this.state.listOfRelatedProducts);
     return (
       <div className="rel-prod-container">
         <h2>Related Products and My Outfits</h2>
-        <div className='rel-products'>
-          <ProductCards productCards={this.state.listOfRelatedProducts}/>
+        <div className='rel-products product-card-container'>
+          <ProductCards productCards={this.state.listOfRelatedProducts} handleClick={this.handleClick} />
         </div>
-        <div className='my-outfits'>
-          <MyOutfitCards myOutfitCards={this.state.listOfMyOutfits}/>
+        <div className='my-outfits product-card-container'>
+          <MyOutfitCards myOutfitCards={this.state.listOfMyOutfits} handleClick={this.handleClick} />
         </div>
       </div>
     );

@@ -8,6 +8,7 @@ const productRouter = require('./routes/product.js');
 const ratingsRouter = require('./routes/ratings.js');
 const qnaRouter = require('./routes/qna.js');
 const cartRouter = require('./routes/cart.js');
+const relProductsRouter = require('./routes/relProduct.js');
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(cors());
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/product', productRouter);
+app.use('/product', relProductsRouter);
 app.use('/ratings', ratingsRouter);
 app.use('/qna', qnaRouter);
 app.use('/cart', cartRouter);
