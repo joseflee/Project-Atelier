@@ -1,16 +1,17 @@
 import { rest } from 'msw';
+import regeneratorRuntime from 'regenerator-runtime';
+import { products } from '../../example/products.js';
+
 
 // Create your own js file with these handlers or mock server responses containing example data within this mocks folder if needed
 
 // Looks very similar to regular server expressions, but 'ctx' is used to handle response handlers instead of res.
 
 export const handlers = [
-  rest.get('/product', (req, res, ctx) => {
-    return res(
+  rest.get('/product/related_products', async (req, res, ctx) => {
+    return await res(
       ctx.status(200),
-      ctx.json({
-        username: 'admin',
-      })
+      ctx.json(products)
     );
   }),
 

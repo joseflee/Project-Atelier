@@ -21,9 +21,9 @@ class App extends React.Component {
     return (
       <div>
         <ProductOverview productId={this.state.productId} />
-        {/* <RelProducts />
+        <RelProducts productId={this.state.productId}/>
         <QnA productId={this.state.productId} />
-        <RatingsNReviews productId={this.state.productId} /> */}
+        <RatingsNReviews productId={this.state.productId} />
       </div>
     );
   }

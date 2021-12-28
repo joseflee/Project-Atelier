@@ -41,21 +41,30 @@ afterAll(() => server.close());
 
 // MOCK SERVER SETUP - END ------------------>
 
-xdescribe('Related Products Component Testing', () => {
-  test('Loads and displays a Related Products Component', () => {
+describe('Related Products Component Testing', () => {
+  test('Loads and displays a Related Products Component', async () => {
     // Renders a Component for this specific test
-    render(<RelProducts />);
+    await render(<RelProducts productId='' />);
 
-    expect(screen.getByText('Related Products Cards')).toBeInTheDocument();
-    expect(screen.getByText('My Outfits Cards')).toBeInTheDocument();
+    await waitFor(async () => {
+      expect(await screen.getByText('Related Products and My Outfits')).toBeInTheDocument();
+    });
 
     // Shows the HTML that has been rendered so far
     // This is utilized to check what has rendered so far, not exactly for the actual testing part
     // screen.debug();
   });
+
+  test('Loads Related Products Component with API call', async () => {
+    await render(<RelProducts productId='' />);
+
+    await waitFor(async () => {
+      expect(await screen.getByText('Jackets')).toBeInTheDocument();
+    });
+  });
 });
 
-describe('Related Products Card Component Testing', () => {
+xdescribe('Related Products Card Component Testing', () => {
   test('Loads and displays a Related Products Card', () => {
     render(<ProductCards productCards={exampleProducts} />);
 
@@ -84,7 +93,7 @@ describe('Related Products Card Component Testing', () => {
 
 });
 
-describe('My Outfits Card Component Testing', () => {
+xdescribe('My Outfits Card Component Testing', () => {
   test('Loads a My Outfit Card with correct category, name, and price', () => {
     render(<MyOutfitCards myOutfitCards={exampleProducts} />);
 
