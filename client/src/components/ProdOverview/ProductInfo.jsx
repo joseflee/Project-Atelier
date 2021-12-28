@@ -5,8 +5,8 @@ const ProductInfo = (props) => {
   //component is receiving specific product info through props
   return (
     <div className='productInfo'>
-      <p>{props.data.slogan}</p>
-      <p>{props.data.description}</p>
+      {/* <p>{props.data.slogan}</p>
+      <p>{props.data.description}</p> */}
     </div>
   );
 };

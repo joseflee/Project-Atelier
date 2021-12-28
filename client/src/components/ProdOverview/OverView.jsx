@@ -10,10 +10,7 @@ class ProductOverview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: sampleData.products,
-      styles: sampleData.style,
-      mainProduct: sampleData.specificProduct,
-      displayStyle: sampleData.style.results[0],
+      hasMounted: false,
     };
     this.updateStyle = this.updateStyle.bind(this);
   }
@@ -35,9 +32,9 @@ class ProductOverview extends React.Component {
     axios.get(styleUrl, {params: {id: productId}})
       .then((response) => {
         this.setState({
+          hasMounted: true,
           styles: response.data,
           displayStyle: response.data.results[0],
-          styleResponse: response.data
         });
       })
       .catch(function (error) {
@@ -46,7 +43,7 @@ class ProductOverview extends React.Component {
   }
 
   updateStyle(selectedStyle) {
-    // console.log('selectedStyle', selectedStyle);
+    console.log('selectedStyle', selectedStyle);
     this.setState({
       displayStyle: selectedStyle,
     });
@@ -54,16 +51,23 @@ class ProductOverview extends React.Component {
 
   render () {
     // console.log('state', this.state);
-    return (
-      <div className='overview'>
-        <h1>Product Overview</h1>
-        <ProductInfo data={this.state.products[0]} />
-        <StyleSelector data={this.state.styles} displayedStyle={this.state.displayStyle}
-          changeStyle={this.updateStyle} />
-        <AddToCart />
-        <DefaultGallery photos={this.state.displayStyle.photos} />
-      </div>
-    );
+    if (!this.state.hasMounted) {
+      return (
+        <div>
+        </div>
+      );
+    } else {
+      return (
+        <div className='overview'>
+          <h1>Product Overview</h1>
+          <ProductInfo />
+          <StyleSelector styles={this.state.styles} displayedStyle={this.state.displayStyle}
+            changeStyle={this.updateStyle} />
+          <AddToCart />
+          <DefaultGallery photos={this.state.displayStyle.photos} />
+        </div>
+      );
+    }
   }
 }
 
