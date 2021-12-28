@@ -8,7 +8,7 @@ const SizeDropdown = (props) => {
     var size = document.getElementById('sizeSelector').value;
     for (var key in props.displayedSkus) {
       if (props.displayedSkus[key].size === size) {
-        props.changeSku(props.displayedSkus[key]);
+        props.changeSku(props.displayedSkus[key], key);
         break;
       } else {
         props.changeSku('Select Size');
