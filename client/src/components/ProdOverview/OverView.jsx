@@ -1,7 +1,7 @@
 import React from 'react';
 import ProductInfo from './ProductInfo.jsx';
 import StyleSelector from './StyleSelector/StyleSelect.jsx';
-import AddToCart from './AddToCart.jsx';
+import AddToCart from './AddToCart/AddToCart.jsx';
 import DefaultGallery from './ImageGallery/DefaultGallery.jsx';
 import sampleData from '../../../../example/products.js';
 import axios from 'axios';
@@ -10,10 +10,7 @@ class ProductOverview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: sampleData.products,
-      styles: sampleData.style,
-      mainProduct: sampleData.specificProduct,
-      displayStyle: sampleData.style.results[0],
+      hasMounted: false,
     };
     this.updateStyle = this.updateStyle.bind(this);
   }
@@ -35,9 +32,9 @@ class ProductOverview extends React.Component {
     axios.get(styleUrl, {params: {id: productId}})
       .then((response) => {
         this.setState({
+          hasMounted: true,
           styles: response.data,
           displayStyle: response.data.results[0],
-          styleResponse: response.data
         });
       })
       .catch(function (error) {
@@ -54,16 +51,23 @@ class ProductOverview extends React.Component {
 
   render () {
     // console.log('state', this.state);
-    return (
-      <div className='overview'>
-        <h1>Product Overview</h1>
-        <ProductInfo data={this.state.products[0]} />
-        <StyleSelector data={this.state.styles} displayedStyle={this.state.displayStyle}
-          changeStyle={this.updateStyle} />
-        <AddToCart />
-        <DefaultGallery photos={this.state.displayStyle.photos} />
-      </div>
-    );
+    if (!this.state.hasMounted) {
+      return (
+        <div>
+        </div>
+      );
+    } else {
+      return (
+        <div className='overview'>
+          <h1>Product Overview</h1>
+          <ProductInfo />
+          <StyleSelector styles={this.state.styles} displayedStyle={this.state.displayStyle}
+            changeStyle={this.updateStyle} />
+          <AddToCart displayedStyle={this.state.displayStyle} />
+          <DefaultGallery photos={this.state.displayStyle.photos} />
+        </div>
+      );
+    }
   }
 }
 

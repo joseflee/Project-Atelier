@@ -38,7 +38,7 @@ class DefaultGallery extends React.Component {
         selectedIndex: this.state.selectedIndex -= 1,
       });
     } else {
-      console.log('end', this.props.photos.length - 1)
+      console.log('end', this.props.photos.length - 1);
       this.setState({
         selectedIndex: this.props.photos.length - 1,
       });
