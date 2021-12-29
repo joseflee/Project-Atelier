@@ -1,7 +1,7 @@
 import React from 'react';
 import ProductInfo from './ProductInfo.jsx';
 import StyleSelector from './StyleSelector/StyleSelect.jsx';
-import AddToCart from './AddToCart.jsx';
+import AddToCart from './AddToCart/AddToCart.jsx';
 import DefaultGallery from './ImageGallery/DefaultGallery.jsx';
 import sampleData from '../../../../example/products.js';
 import axios from 'axios';
@@ -43,7 +43,7 @@ class ProductOverview extends React.Component {
   }
 
   updateStyle(selectedStyle) {
-    console.log('selectedStyle', selectedStyle);
+    // console.log('selectedStyle', selectedStyle);
     this.setState({
       displayStyle: selectedStyle,
     });
@@ -63,7 +63,7 @@ class ProductOverview extends React.Component {
           <ProductInfo />
           <StyleSelector styles={this.state.styles} displayedStyle={this.state.displayStyle}
             changeStyle={this.updateStyle} />
-          <AddToCart />
+          <AddToCart displayedStyle={this.state.displayStyle} />
           <DefaultGallery photos={this.state.displayStyle.photos} />
         </div>
       );
