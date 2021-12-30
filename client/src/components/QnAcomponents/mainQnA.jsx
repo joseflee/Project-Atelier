@@ -20,6 +20,7 @@ class QnA extends React.Component {
     this.clickOnHelpfulQuestion = this.clickOnHelpfulQuestion.bind(this);
     this.clickOnHelpfulAnswer = this.clickOnHelpfulAnswer.bind(this);
     this.reportAnswer = this.reportAnswer.bind(this);
+    this.addNewAnswer = this.addNewAnswer.bind(this);
     this.addNewQuestion = this.addNewQuestion.bind(this);
   }
 
@@ -126,6 +127,21 @@ class QnA extends React.Component {
       });
   }
 
+  addNewAnswer(questionId, body, nickname, email, photos, productId) {
+    //SEND REQUEST TO SERVER TO ADD A NEW ANSWER
+    var url = 'http://localhost:3000/qna/addNewAnswer';
+    axios.post(url, {params: {id: questionId, productId: productId, body: body, name: nickname, email: email, photos: photos}})
+      .then((response) => {
+        console.log('added new answer', response.data.results);
+        //render new answer in the parent component
+        this.updateQuestionList(response.data.results);
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   updateQuestionList(questions) {
     this.setState({
       questions: questions
@@ -187,6 +203,7 @@ class QnA extends React.Component {
           clickOnHelpful={this.clickOnHelpfulQuestion}
           clickOnHelpfulAnswer={this.clickOnHelpfulAnswer}
           reportAnswer={this.reportAnswer}
+          addNewAnswer={this.addNewAnswer}
         />
         <br />
         {moreAnsweredQuestions}

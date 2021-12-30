@@ -96,8 +96,8 @@ class QuestionsListItem extends React.Component {
         question_body={this.props.question.question_body}
         questionId={this.props.question.question_id}
         productId={this.props.productId}
-
         closeAnswer={this.closeAnswerForm}
+        addNewAnswer={this.props.addNewAnswer}
 
       />;
     } else {

@@ -33,18 +33,9 @@ class AddAnswerForm extends React.Component {
     var productId = this.props.productId;
 
     if (validationResult) {
-      //SEND REQUEST TO SERVER TO ADD A NEW ANSWER
-      var url = 'http://localhost:3000/qna/addNewAnswer';
-      axios.post(url, {params: {id: questionId, productId: productId, body: body, name: nickname, email: email, photos: photos}})
-        .then((response) => {
-          console.log('added new answer', response.data.results);
-          //render new answer in the parent component
-          this.props.update(response.data.results);
-          this.props.closeAnswer();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      this.props.addNewAnswer(questionId, body, nickname, email, photos, productId);
+      this.props.closeAnswer();
+
     } else {
       alert('Not all fields filled');
     }
