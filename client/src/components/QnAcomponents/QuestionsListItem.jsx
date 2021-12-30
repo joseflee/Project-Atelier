@@ -75,14 +75,14 @@ class QuestionsListItem extends React.Component {
       moreAnswers = <button onClick={()=>{ this.clickOnMoreAnswers(); }}>Load more answers</button>;
       answersList = <AnswersList list={Object.values(this.props.question.answers).slice(0, 2)}
         questionId={this.props.question.question_id}
-        productId={this.props.productId}
-        update={this.props.update} />;
+        productId={this.props.productId} />
+
     } else {
       moreAnswers = <div></div>;
       answersList = <AnswersList list={Object.values(this.props.question.answers)}
         questionId={this.props.question.question_id}
-        productId={this.props.productId}
-        update={this.props.update} />;
+        productId={this.props.productId} />;
+
     }
 
     if (this.state.isAddAnswerClicked) {
@@ -90,7 +90,7 @@ class QuestionsListItem extends React.Component {
         question_body={this.props.question.question_body}
         questionId={this.props.question.question_id}
         productId={this.props.productId}
-        update={this.props.update}
+
         closeAnswer={this.closeAnswerForm}
 
       />;
