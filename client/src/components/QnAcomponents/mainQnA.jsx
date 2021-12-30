@@ -156,7 +156,6 @@ class QnA extends React.Component {
         <SearchQuestions search={this.search}/>
         <QuestionsList data={this.state.questions}
           productId={this.props.productId}
-          update={this.updateQuestionList}
           clickOnHelpful={this.clickOnHelpfulQuestion}
         />
         <br />
