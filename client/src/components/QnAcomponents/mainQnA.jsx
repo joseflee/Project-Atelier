@@ -17,6 +17,7 @@ class QnA extends React.Component {
     this.showMoreQuestions = this.showMoreQuestions.bind(this);
     this.search = this.search.bind(this);
     this.updateQuestionList = this.updateQuestionList.bind(this);
+    this.clickOnHelpfulQuestion = this.clickOnHelpfulQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +48,21 @@ class QnA extends React.Component {
         this.setState({
           questions: questionsToShow
         });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  clickOnHelpfulQuestion(productId, questionId) {
+    console.log('clicked on helpful question');
+    var url = 'http://localhost:3000/qna/updateQuestionHelp';
+    axios.put(url, {params: {questionId: questionId, productId: productId}})
+      .then((response) => {
+        this.setState({
+          isHelpful: true
+        });
+        this.updateQuestionList(response.data.results);
       })
       .catch(function (error) {
         console.log(error);
@@ -123,7 +139,11 @@ class QnA extends React.Component {
 
         <div className='qna-component-name'><h1>Questions and Answers</h1></div>
         <SearchQuestions search={this.search}/>
-        <QuestionsList data={this.state.questions} productId ={this.props.productId} update={this.updateQuestionList}/>
+        <QuestionsList data={this.state.questions}
+          productId={this.props.productId}
+          update={this.updateQuestionList}
+          clickOnHelpful={this.clickOnHelpfulQuestion}
+        />
         <br />
         {moreAnsweredQuestions}
         <AddQuestion name={this.state.productName} productId={this.props.productId} update={this.updateQuestionList}/>

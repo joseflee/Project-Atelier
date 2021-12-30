@@ -58,17 +58,7 @@ class QuestionsListItem extends React.Component {
 
     //ADD HELPFULLNESS FOR THIS QUESTION
     if (!this.state.isHelpful) {
-      var url = 'http://localhost:3000/qna/updateQuestionHelp';
-      axios.put(url, {params: {questionId: questionId, productId: productId}})
-        .then((response) => {
-          this.setState({
-            isHelpful: true
-          });
-          this.props.update(response.data.results);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      this.props.clickOnHelpful(productId, questionId);
     } else {
       alert ('you\'ve already clicked on helpful link');
     }
@@ -76,6 +66,7 @@ class QuestionsListItem extends React.Component {
   }
 
   render() {
+    { console.log (this.props.clickOnHelpful); }
     let moreAnswers,
       addAnswer,
       answersList;
