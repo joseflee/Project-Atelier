@@ -77,6 +77,7 @@ class QuestionsListItem extends React.Component {
         questionId={this.props.question.question_id}
         productId={this.props.productId}
         clickOnHelpfulAnswer={this.props.clickOnHelpfulAnswer}
+        reportAnswer={this.props.reportAnswer}
       />;
 
     } else {
@@ -85,6 +86,7 @@ class QuestionsListItem extends React.Component {
         questionId={this.props.question.question_id}
         productId={this.props.productId}
         clickOnHelpfulAnswer={this.props.clickOnHelpfulAnswer}
+        reportAnswer={this.props.reportAnswer}
       />;
 
     }

@@ -34,19 +34,11 @@ class QuestionsListItemAnswer extends React.Component {
     let productId = this.props.productId;
 
     if (!this.state.isReported) {
-    //SEND REQUEST TO REPORT ANSWER
-      var url = 'http://localhost:3000/qna/reportAnswer';
-      axios.put(url, {params: {answerId: answerId, productId: productId}})
-        .then((response) => {
-          console.log('sent response to client', response);
-          // this.props.update(response.data.results);
-          this.setState({
-            isReported: true
-          });
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      this.props.reportAnswer(answerId, productId);
+      this.setState({
+        isReported: true
+      });
+
     } else {
       alert('you\'ve already reported this answer');
     }

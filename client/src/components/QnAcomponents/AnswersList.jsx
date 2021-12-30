@@ -18,6 +18,7 @@ const AnswersList = (props) => {
             questionId={props.question_id}
             productId={props.productId}
             clickOnHelpfulAnswer={props.clickOnHelpfulAnswer}
+            reportAnswer={props.reportAnswer}
           />);
       })}
     </div>

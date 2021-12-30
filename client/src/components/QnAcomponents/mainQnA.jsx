@@ -19,6 +19,7 @@ class QnA extends React.Component {
     this.updateQuestionList = this.updateQuestionList.bind(this);
     this.clickOnHelpfulQuestion = this.clickOnHelpfulQuestion.bind(this);
     this.clickOnHelpfulAnswer = this.clickOnHelpfulAnswer.bind(this);
+    this.reportAnswer = this.reportAnswer.bind(this);
     this.addNewQuestion = this.addNewQuestion.bind(this);
   }
 
@@ -105,9 +106,20 @@ class QnA extends React.Component {
     axios.put(url, {params: {answerId: answerId, productId: productId}})
       .then((response) => {
         this.updateQuestionList(response.data.results);
-        // this.setState({
-        //   isHelpful: true
-        // });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  reportAnswer(answerId, productId) {
+    console.log('clicked on report answer');
+    //SEND REQUEST TO REPORT ANSWER
+    var url = 'http://localhost:3000/qna/reportAnswer';
+    axios.put(url, {params: {answerId: answerId, productId: productId}})
+      .then((response) => {
+        console.log('sent response to client', response);
+        this.updateQuestionList(response.data.results);
       })
       .catch(function (error) {
         console.log(error);
@@ -169,10 +181,12 @@ class QnA extends React.Component {
 
         <div className='qna-component-name'><h1>Questions and Answers</h1></div>
         <SearchQuestions search={this.search}/>
-        <QuestionsList data={this.state.questions}
+        <QuestionsList
+          data={this.state.questions}
           productId={this.props.productId}
           clickOnHelpful={this.clickOnHelpfulQuestion}
           clickOnHelpfulAnswer={this.clickOnHelpfulAnswer}
+          reportAnswer={this.reportAnswer}
         />
         <br />
         {moreAnsweredQuestions}
