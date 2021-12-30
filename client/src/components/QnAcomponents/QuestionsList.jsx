@@ -16,6 +16,7 @@ class QuestionsList extends React.Component {
             name={this.props.name}
             productId={this.props.productId}
             clickOnHelpful={this.props.clickOnHelpful}
+            clickOnHelpfulAnswer={this.props.clickOnHelpfulAnswer}
           />;
         })}
       </div>

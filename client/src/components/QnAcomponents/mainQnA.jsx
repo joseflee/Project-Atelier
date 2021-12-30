@@ -18,6 +18,7 @@ class QnA extends React.Component {
     this.search = this.search.bind(this);
     this.updateQuestionList = this.updateQuestionList.bind(this);
     this.clickOnHelpfulQuestion = this.clickOnHelpfulQuestion.bind(this);
+    this.clickOnHelpfulAnswer = this.clickOnHelpfulAnswer.bind(this);
     this.addNewQuestion = this.addNewQuestion.bind(this);
   }
 
@@ -99,6 +100,20 @@ class QnA extends React.Component {
       });
   }
 
+  clickOnHelpfulAnswer(answerId, productId) {
+    var url = 'http://localhost:3000/qna/updateAnswerHelp';
+    axios.put(url, {params: {answerId: answerId, productId: productId}})
+      .then((response) => {
+        this.updateQuestionList(response.data.results);
+        // this.setState({
+        //   isHelpful: true
+        // });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   updateQuestionList(questions) {
     this.setState({
       questions: questions
@@ -157,6 +172,7 @@ class QnA extends React.Component {
         <QuestionsList data={this.state.questions}
           productId={this.props.productId}
           clickOnHelpful={this.clickOnHelpfulQuestion}
+          clickOnHelpfulAnswer={this.clickOnHelpfulAnswer}
         />
         <br />
         {moreAnsweredQuestions}

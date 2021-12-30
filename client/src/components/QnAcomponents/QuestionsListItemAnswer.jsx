@@ -19,17 +19,11 @@ class QuestionsListItemAnswer extends React.Component {
 
     //UPDATE ANSWER HELPFUL COUNTER
     if (!this.state.isHelpful) {
-      var url = 'http://localhost:3000/qna/updateAnswerHelp';
-      axios.put(url, {params: {answerId: answerId, productId: productId}})
-        .then((response) => {
-          this.props.update(response.data.results);
-          this.setState({
-            isHelpful: true
-          });
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      this.props.clickOnHelpfulAnswer(answerId, productId);
+      this.setState({
+        isHelpful: true
+      });
+
     } else {
       alert ('you\'ve alredy clicked on helpful link');
     }
