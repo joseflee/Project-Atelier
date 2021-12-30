@@ -66,7 +66,7 @@ class QuestionsListItem extends React.Component {
   }
 
   render() {
-    { console.log (this.props.clickOnHelpful); }
+   
     let moreAnswers,
       addAnswer,
       answersList;

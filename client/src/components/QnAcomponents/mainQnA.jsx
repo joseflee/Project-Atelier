@@ -18,6 +18,7 @@ class QnA extends React.Component {
     this.search = this.search.bind(this);
     this.updateQuestionList = this.updateQuestionList.bind(this);
     this.clickOnHelpfulQuestion = this.clickOnHelpfulQuestion.bind(this);
+    this.addNewQuestion = this.addNewQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +64,20 @@ class QnA extends React.Component {
           isHelpful: true
         });
         this.updateQuestionList(response.data.results);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  addNewQuestion(productId, body, nickname, email) {
+    console.log('clicked on submit new question');
+    //SEND REQUEST TO SERVER TO ADD A NEW QUESTION
+    var url = 'http://localhost:3000/qna/addNewQuestion';
+    axios.post(url, {params: {id: productId, body: body, name: nickname, email: email}})
+      .then((response) => {
+        console.log('added new question', response.data.results);
+        this.updateQuestionList (response.data.results);
       })
       .catch(function (error) {
         console.log(error);
@@ -146,7 +161,9 @@ class QnA extends React.Component {
         />
         <br />
         {moreAnsweredQuestions}
-        <AddQuestion name={this.state.productName} productId={this.props.productId} update={this.updateQuestionList}/>
+        <AddQuestion name={this.state.productName}
+          productId={this.props.productId}
+          addQuestion={this.addNewQuestion}/>
       </div>
 
     );
