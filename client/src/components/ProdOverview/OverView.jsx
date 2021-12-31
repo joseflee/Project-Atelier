@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductInfo from './ProductInfo.jsx';
+import ProductInfo from './ProductInfo/ProductInfo.jsx';
 import StyleSelector from './StyleSelector/StyleSelect.jsx';
 import AddToCart from './AddToCart/AddToCart.jsx';
 import DefaultGallery from './ImageGallery/DefaultGallery.jsx';
@@ -10,36 +10,29 @@ class ProductOverview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasMounted: false,
+      mainProduct: undefined,
+      styles: undefined,
+      displayStyle: undefined,
     };
     this.updateStyle = this.updateStyle.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let productId = this.props.productId;
     const productUrl = 'http://localhost:3000/product/productInfo';
-    axios.get(productUrl, {params: {id: productId}})
-      .then((response) => {
-        this.setState({
-          mainProduct: response.data
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
     const styleUrl = 'http://localhost:3000/product/styleInfo';
-    axios.get(styleUrl, {params: {id: productId}})
-      .then((response) => {
-        this.setState({
-          hasMounted: true,
-          styles: response.data,
-          displayStyle: response.data.results[0],
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const reviewUrl = 'http://localhost:3000/product/reviewInfo';
+    const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
+      axios.get(productUrl, {params: {id: productId}}),
+      axios.get(styleUrl, {params: {id: productId}}),
+      axios.get(reviewUrl, {params: {id: productId}})
+    ]);
+    this.setState({
+      mainProduct: firstResponse.data,
+      styles: secondResponse.data,
+      displayStyle: secondResponse.data.results[0],
+      productRatings: thirdResponse.data.ratings,
+    });
   }
 
   updateStyle(selectedStyle) {
@@ -51,7 +44,7 @@ class ProductOverview extends React.Component {
 
   render () {
     // console.log('state', this.state);
-    if (!this.state.hasMounted) {
+    if (!this.state.styles) {
       return (
         <div>
         </div>
@@ -60,7 +53,7 @@ class ProductOverview extends React.Component {
       return (
         <div className='overview'>
           <h1>Product Overview</h1>
-          <ProductInfo />
+          <ProductInfo product={this.state.mainProduct} style={this.state.displayStyle} ratings={this.state.productRatings} />
           <StyleSelector styles={this.state.styles} displayedStyle={this.state.displayStyle}
             changeStyle={this.updateStyle} />
           <AddToCart displayedStyle={this.state.displayStyle} />
