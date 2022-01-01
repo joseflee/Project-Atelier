@@ -58,17 +58,7 @@ class QuestionsListItem extends React.Component {
 
     //ADD HELPFULLNESS FOR THIS QUESTION
     if (!this.state.isHelpful) {
-      var url = 'http://localhost:3000/qna/updateQuestionHelp';
-      axios.put(url, {params: {questionId: questionId, productId: productId}})
-        .then((response) => {
-          this.setState({
-            isHelpful: true
-          });
-          this.props.update(response.data.results);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      this.props.clickOnHelpful(productId, questionId);
     } else {
       alert ('you\'ve already clicked on helpful link');
     }
@@ -76,6 +66,7 @@ class QuestionsListItem extends React.Component {
   }
 
   render() {
+
     let moreAnswers,
       addAnswer,
       answersList;
@@ -85,13 +76,19 @@ class QuestionsListItem extends React.Component {
       answersList = <AnswersList list={Object.values(this.props.question.answers).slice(0, 2)}
         questionId={this.props.question.question_id}
         productId={this.props.productId}
-        update={this.props.update} />;
+        clickOnHelpfulAnswer={this.props.clickOnHelpfulAnswer}
+        reportAnswer={this.props.reportAnswer}
+      />;
+
     } else {
       moreAnswers = <div></div>;
       answersList = <AnswersList list={Object.values(this.props.question.answers)}
         questionId={this.props.question.question_id}
         productId={this.props.productId}
-        update={this.props.update} />;
+        clickOnHelpfulAnswer={this.props.clickOnHelpfulAnswer}
+        reportAnswer={this.props.reportAnswer}
+      />;
+
     }
 
     if (this.state.isAddAnswerClicked) {
@@ -99,8 +96,8 @@ class QuestionsListItem extends React.Component {
         question_body={this.props.question.question_body}
         questionId={this.props.question.question_id}
         productId={this.props.productId}
-        update={this.props.update}
         closeAnswer={this.closeAnswerForm}
+        addNewAnswer={this.props.addNewAnswer}
 
       />;
     } else {
@@ -119,15 +116,7 @@ class QuestionsListItem extends React.Component {
         </div>
         {/* end of question item */}
         {answersList}
-        {/* {
-          Object.values(this.props.question.answers).map((answer, key) => {
-            return <QuestionsListItemAnswer answer={answer}
-              key={key}
-              questionId={this.props.question.question_id}
-              productId={this.props.productId}
-              update={this.props.update} />;
-          })
-        } */}
+
         {moreAnswers}
       </div>
     );

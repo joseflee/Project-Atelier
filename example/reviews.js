@@ -1,7 +1,37 @@
-const reviews = {
+const dummyReviews = {
   "product": "2",
   "page": 0,
   "count": 5,
+  "meta": {
+    "product_id": "59553",
+    "ratings": {
+        "1": "14",
+        "2": "4",
+        "3": "21",
+        "4": "15",
+        "5": "83",
+        "average":"3.5"
+    },
+    "recommended": 50,
+    "characteristics": {
+        "Fit": {
+            "id": 199845,
+            "value": "2.7600000000000000"
+        },
+        "Length": {
+            "id": 199846,
+            "value": "2.5866666666666667"
+        },
+        "Comfort": {
+            "id": 199847,
+            "value": "2.9178082191780822"
+        },
+        "Quality": {
+            "id": 199848,
+            "value": "3.0000000000000000"
+        }
+    }
+},
   "results": [
     {
       "review_id": 1,
@@ -156,5 +186,5 @@ const reviews = {
 }
 
 module.exports = {
-  reviews
+  dummyReviews
 }

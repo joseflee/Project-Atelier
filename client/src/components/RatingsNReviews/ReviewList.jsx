@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import RatingBreakDown from './RatingBreakDown.jsx';
 import ProductBreakDown from './ProductBreakDown.jsx';
 import axios from 'axios';
@@ -17,7 +17,7 @@ const ReviewList = ( {productId} )=>{
   const [onScreenReviewArray, setOnScreenReviewArray] = useState([]);
   const [clickedList, setClickedList] = useState(new Map());
   const [isLoading, setIsLoading] = useState(false);
-  const [averageRate, setAverageRate] = useState(0);
+  const [averageRate, setAverageRate] = useState('');
   const [recommended, setRecommended] = useState(0);
   const [oneStar, setOneStar] = useState(0);
   const [twoStar, setTwoStar] = useState(0);
@@ -41,95 +41,110 @@ const ReviewList = ( {productId} )=>{
      sortedArray: sortedArray,
      resetArray: totalReviewArray
    };
+
   useEffect(() => {
+    let mounted = true;
     setIsLoading(true);
     setSortedArray([]);
     setFilter(new Array(5).fill(null));
     setIsPost(false);
-    axios.get('http://localhost:3000/ratings/getReviews', { params: { Id: productId } })
+    axios.get('/ratings/getReviews', { params: { Id: productId } })
       .then((response)=>{
-        const sortByRevelant = response.data.slice(0).sort((x, y) => { return y.helpfulness - x.helpfulness || y.review_id - x.review_id; });
-        const firstTwo = sortByRevelant.slice(0, 2);
-        let searchBarResult;
-        if (selectedArray === 'resetArray') {
-          if (searchTerm.length >= 3) {
-            searchBarResult = searching(searchTerm, sortByRevelant);
-            setOnScreenReviewArray(searchBarResult);
-          } else {
-            setOnScreenReviewArray(sortByRevelant);
+        if (mounted) {
+          const sortByRevelant = response.data.slice(0).sort((x, y) => { return y.helpfulness - x.helpfulness || y.review_id - x.review_id; });
+          const firstTwo = sortByRevelant.slice(0, 2);
+          let searchBarResult;
+          if (selectedArray === 'resetArray') {
+            if (searchTerm.length >= 3) {
+              searchBarResult = searching(searchTerm, sortByRevelant);
+              setOnScreenReviewArray(searchBarResult);
+            } else {
+              setOnScreenReviewArray(sortByRevelant);
+            }
+            setIsLoading(false);
           }
-          setIsLoading(false);
+          if (selectedArray === 'totalReviewArray') {
+            if (searchTerm.length >= 3) {
+              searchBarResult = searching(searchTerm, sortByRevelant);
+              setOnScreenReviewArray(searchBarResult);
+            } else {
+              setOnScreenReviewArray(firstTwo);
+            }
+            setIsLoading(false);
+          } else if (selectedArray === 'newestReviewArray') {
+            if (searchTerm.length >= 3) {
+              searchBarResult = searching(searchTerm, sortByRevelant);
+              setOnScreenReviewArray(searchBarResult.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }).slice(0));
+            } else {
+              setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }).slice(0, 2));
+            }
+            setIsLoading(false);
+          } else if (selectedArray === 'helpfulReviewArray') {
+            if (searchTerm.length >= 3) {
+              searchBarResult = searching(searchTerm, sortByRevelant);
+              setOnScreenReviewArray(searchBarResult.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }).slice(0));
+            } else {
+              setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }).slice(0, 2));
+            }
+            setIsLoading(false);
+          }
+          setTotalReviewArray(sortByRevelant);
+          setNewestReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }));
+          setHelpfulReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }));
+          axios.get('ratings/ratingOverview', { params: { Id: productId } })
+            .then((response)=>{
+              if (mounted) {
+                setAverageRate(response.data.ratings.average);
+                setRecommended(response.data.recommended);
+                setOneStar(response.data.ratings['1']);
+                setTwoStar(response.data.ratings['2']);
+                setThreeStar(response.data.ratings['3']);
+                setFourStar(response.data.ratings['4']);
+                setFiveStar(response.data.ratings['5']);
+                setCharacteristics(response.data.characteristics);
+              }
+            });
         }
-        if (selectedArray === 'totalReviewArray') {
-          if (searchTerm.length >= 3) {
-            searchBarResult = searching(searchTerm, sortByRevelant);
-            setOnScreenReviewArray(searchBarResult);
-          } else {
-            setOnScreenReviewArray(firstTwo);
-          }
-          setIsLoading(false);
-        } else if (selectedArray === 'newestReviewArray') {
-          if (searchTerm.length >= 3) {
-            searchBarResult = searching(searchTerm, sortByRevelant);
-            setOnScreenReviewArray(searchBarResult.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }).slice(0));
-          } else {
-            setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }).slice(0, 2));
-          }
-          setIsLoading(false);
-        } else if (selectedArray === 'helpfulReviewArray') {
-          if (searchTerm.length >= 3) {
-            searchBarResult = searching(searchTerm, sortByRevelant);
-            setOnScreenReviewArray(searchBarResult.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }).slice(0));
-          } else {
-            setOnScreenReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }).slice(0, 2));
-          }
-          setIsLoading(false);
-        }
-        setTotalReviewArray(sortByRevelant);
-        setNewestReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }));
-        setHelpfulReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }));
-        axios.get('http://localhost:3000/ratings/ratingOverview', { params: { Id: productId } })
-          .then((response)=>{
-            setAverageRate(response.data.ratings.average);
-            setRecommended(response.data.recommended);
-            setOneStar(response.data.ratings['1']);
-            setTwoStar(response.data.ratings['2']);
-            setThreeStar(response.data.ratings['3']);
-            setFourStar(response.data.ratings['4']);
-            setFiveStar(response.data.ratings['5']);
-            setCharacteristics(response.data.characteristics);
-          });
       })
       .catch((err) => {
         console.log('this is the react reviewlist get reviews err', err);
       });
+
+    return () => {
+      mounted = false;
+    };
   }, [productId, selectedArray, isPost]);
   useEffect(() => {
-    let currentFilter = sortFilter()[0];
-    let flag = sortFilter()[1];
-    console.log('currentfilter:', currentFilter, flag);
-    if (currentFilter.length) {
-      setOnScreenReviewArray(currentFilter.slice(0));
-      setSortedArray(currentFilter.slice(0));
-    } else if (reset) {
-      setSortedArray([]);
-      if (searchResult.length || searchTerm.length >= 3) {
+    let mounted = true;
+    if (mounted) {
+      let currentFilter = sortFilter()[0];
+      let flag = sortFilter()[1];
+      if (currentFilter.length) {
+        setOnScreenReviewArray(currentFilter.slice(0));
+        setSortedArray(currentFilter.slice(0));
+      } else if (reset) {
+        setSortedArray([]);
+        if (searchResult.length || searchTerm.length >= 3) {
+          setOnScreenReviewArray(searchResult.slice(0));
+        } else {
+          setOnScreenReviewArray(totalReviewArray.slice(0, 2));
+        }
+      } else if (searchTerm.length >= 3 && searchResult.length && !flag) {
+        setSortedArray([]);
         setOnScreenReviewArray(searchResult.slice(0));
       } else {
-        setOnScreenReviewArray(totalReviewArray.slice(0, 2));
+        setSortedArray([]);
+        if (searchTerm.length >= 3 || flag) {
+          setOnScreenReviewArray(currentFilter.slice(0));
+        } else {
+          setOnScreenReviewArray(totalReviewArray.slice(0));
+        }
       }
-    } else if (searchTerm.length >= 3 && searchResult.length && !flag) {
-      setSortedArray([]);
-      setOnScreenReviewArray(searchResult.slice(0));
-    } else {
-      setSortedArray([]);
-      if (searchTerm.length >= 3 || flag) {
-        setOnScreenReviewArray(currentFilter.slice(0));
-      } else {
-        setOnScreenReviewArray(totalReviewArray.slice(0));
-      }
+      setFilterClicked(flag);
     }
-    setFilterClicked(flag);
+    return () => {
+      mounted = false;
+    };
   }, [filter]);
   const resetFilter = function () {
     if (sortedArray.length) {
@@ -356,7 +371,7 @@ const ReviewList = ( {productId} )=>{
           }}></input>
         </div>
         <div className="review-DropDown">
-          <h3 style= {{display: 'inline'}}>{reviewsCount()} reviews, sorted by </h3>
+          <h3 data-testid="totalReviews" style= {{display: 'inline'}}>{reviewsCount()} reviews, sorted by </h3>
           <select onChange={dropDownMenu} id="review-sort-select">
             <option value="totalReviewArray">Relevant</option>
             <option value="newestReviewArray">Newest</option>

@@ -1,7 +1,7 @@
 import React from 'react';
-import ProductInfo from './ProductInfo.jsx';
+import ProductInfo from './ProductInfo/ProductInfo.jsx';
 import StyleSelector from './StyleSelector/StyleSelect.jsx';
-import AddToCart from './AddToCart.jsx';
+import AddToCart from './AddToCart/AddToCart.jsx';
 import DefaultGallery from './ImageGallery/DefaultGallery.jsx';
 import sampleData from '../../../../example/products.js';
 import axios from 'axios';
@@ -10,39 +10,29 @@ class ProductOverview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: sampleData.products,
-      styles: sampleData.style,
-      mainProduct: sampleData.specificProduct,
-      displayStyle: sampleData.style.results[0],
+      mainProduct: undefined,
+      styles: undefined,
+      displayStyle: undefined,
     };
     this.updateStyle = this.updateStyle.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let productId = this.props.productId;
     const productUrl = 'http://localhost:3000/product/productInfo';
-    axios.get(productUrl, {params: {id: productId}})
-      .then((response) => {
-        this.setState({
-          mainProduct: response.data
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
     const styleUrl = 'http://localhost:3000/product/styleInfo';
-    axios.get(styleUrl, {params: {id: productId}})
-      .then((response) => {
-        this.setState({
-          styles: response.data,
-          displayStyle: response.data.results[0],
-          styleResponse: response.data
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const reviewUrl = 'http://localhost:3000/product/reviewInfo';
+    const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
+      axios.get(productUrl, {params: {id: productId}}),
+      axios.get(styleUrl, {params: {id: productId}}),
+      axios.get(reviewUrl, {params: {id: productId}})
+    ]);
+    this.setState({
+      mainProduct: firstResponse.data,
+      styles: secondResponse.data,
+      displayStyle: secondResponse.data.results[0],
+      productRatings: thirdResponse.data.ratings,
+    });
   }
 
   updateStyle(selectedStyle) {
@@ -54,16 +44,23 @@ class ProductOverview extends React.Component {
 
   render () {
     // console.log('state', this.state);
-    return (
-      <div className='overview'>
-        <h1>Product Overview</h1>
-        <ProductInfo data={this.state.products[0]} />
-        <StyleSelector data={this.state.styles} displayedStyle={this.state.displayStyle}
-          changeStyle={this.updateStyle} />
-        <AddToCart />
-        <DefaultGallery photos={this.state.displayStyle.photos} />
-      </div>
-    );
+    if (!this.state.styles) {
+      return (
+        <div>
+        </div>
+      );
+    } else {
+      return (
+        <div className='overview'>
+          <h1>Product Overview</h1>
+          <ProductInfo product={this.state.mainProduct} style={this.state.displayStyle} ratings={this.state.productRatings} />
+          <StyleSelector styles={this.state.styles} displayedStyle={this.state.displayStyle}
+            changeStyle={this.updateStyle} />
+          <AddToCart displayedStyle={this.state.displayStyle} />
+          <DefaultGallery photos={this.state.displayStyle.photos} />
+        </div>
+      );
+    }
   }
 }
 

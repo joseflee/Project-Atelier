@@ -13,4 +13,10 @@ productRouter.get('/styleInfo', async (req, res) => {
   res.send(data);
 });
 
+productRouter.get('/reviewInfo', async (req, res) => {
+  let id = req.query.id;
+  var data = await productApi.getProductReviews(id);
+  res.send(data);
+});
+
 module.exports = productRouter;
