@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Add an event handler for clicking and adding an outfit. But store them locally for the specific user to be read at the time of web site buildup
+
 var MyOutfitCards = (props) => {
   if (props.myOutfitCards === null) {
     return (

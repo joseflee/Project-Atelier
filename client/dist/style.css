@@ -557,11 +557,27 @@
 
 .product-card {
   float: left;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
   max-width: 200px;
   max-height: 500px;
   margin: auto;
-  padding: 5px;
+  padding: 10px;
   text-align: center;
   font-family: arial;
+}
+
+.card-scroll-left{
+  left: 20px;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  padding: 10px;
+  transform: rotate(135deg);
+}
+
+.card-scroll-right {
+  left: 425px;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  padding: 10px;
+  transform: rotate(-45deg);
 }

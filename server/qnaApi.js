@@ -68,6 +68,7 @@ var addNewQuestionToHR = function addNewQuestionToHR(productId, body, nick, emai
     method: 'POST',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/qa/questions',
     headers: { Authorization: gitToken.Token },
+    // eslint-disable-next-line camelcase
     body: { body: body, name: nick, email: email, product_id: productId }
   };
   //console.log('post options', options);

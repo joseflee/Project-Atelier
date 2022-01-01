@@ -64,7 +64,7 @@ describe('Related Products Component Testing', () => {
   });
 });
 
-xdescribe('Related Products Card Component Testing', () => {
+describe('Related Products Card Component Testing', () => {
   test('Loads and displays a Related Products Card', () => {
     render(<ProductCards productCards={exampleProducts} />);
 
@@ -93,7 +93,7 @@ xdescribe('Related Products Card Component Testing', () => {
 
 });
 
-xdescribe('My Outfits Card Component Testing', () => {
+describe('My Outfits Card Component Testing', () => {
   test('Loads a My Outfit Card with correct category, name, and price', () => {
     render(<MyOutfitCards myOutfitCards={exampleProducts} />);
 
