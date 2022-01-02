@@ -40,3 +40,14 @@ export var getQuestionsListInfo = async (productId) => {
       console.error(error);
     });
 };
+
+export var getReviewInfo = async (productId) => {
+  const styleUrl = 'http://localhost:3000/product/reviewInfo';
+  return await axios.get(styleUrl, { params: { id: productId } })
+    .then((response) => {
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};

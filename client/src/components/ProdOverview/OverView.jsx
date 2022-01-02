@@ -12,28 +12,11 @@ class ProductOverview extends React.Component {
     this.state = {
       mainProduct: undefined,
       styles: undefined,
-      displayStyle: undefined,
+      displayStyle: this.props.currentProductStyle.results[0],
     };
     this.updateStyle = this.updateStyle.bind(this);
   }
 
-  async componentDidMount() {
-    let productId = this.props.productId;
-    const productUrl = 'http://localhost:3000/product/productInfo';
-    const styleUrl = 'http://localhost:3000/product/styleInfo';
-    const reviewUrl = 'http://localhost:3000/product/reviewInfo';
-    const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
-      axios.get(productUrl, {params: {id: productId}}),
-      axios.get(styleUrl, {params: {id: productId}}),
-      axios.get(reviewUrl, {params: {id: productId}})
-    ]);
-    this.setState({
-      mainProduct: firstResponse.data,
-      styles: secondResponse.data,
-      displayStyle: secondResponse.data.results[0],
-      productRatings: thirdResponse.data.ratings,
-    });
-  }
 
   updateStyle(selectedStyle) {
     // console.log('selectedStyle', selectedStyle);
@@ -43,24 +26,16 @@ class ProductOverview extends React.Component {
   }
 
   render () {
-    // console.log('state', this.state);
-    if (!this.state.styles) {
-      return (
-        <div>
-        </div>
-      );
-    } else {
-      return (
-        <div className='overview'>
-          <h1>Product Overview</h1>
-          <ProductInfo product={this.state.mainProduct} style={this.state.displayStyle} ratings={this.state.productRatings} />
-          <StyleSelector styles={this.state.styles} displayedStyle={this.state.displayStyle}
-            changeStyle={this.updateStyle} />
-          <AddToCart displayedStyle={this.state.displayStyle} />
-          <DefaultGallery photos={this.state.displayStyle.photos} />
-        </div>
-      );
-    }
+    return (
+      <div className='overview'>
+        <h1>Product Overview</h1>
+        <ProductInfo product={this.props.currentProduct} style={this.props.currentProductStyle.results[0]} ratings={this.props.currentReview.ratings} />
+        <StyleSelector styles={this.props.currentProductStyle} displayedStyle={this.state.displayStyle}
+          changeStyle={this.updateStyle.bind(this)} />
+        <AddToCart displayedStyle={this.state.displayStyle} />
+        <DefaultGallery photos={this.state.displayStyle.photos} />
+      </div>
+    );
   }
 }
 

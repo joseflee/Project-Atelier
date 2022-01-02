@@ -1,6 +1,5 @@
 import React from 'react';
 import StyleBubble from './StyleSelectBubble.jsx';
-import { StyleCont, HiddenText } from './Style.styles.js';
 
 class StyleSelector extends React.Component {
   constructor (props) {
@@ -12,10 +11,10 @@ class StyleSelector extends React.Component {
     return (
       <div className='styleSelector'>
         {this.props.styles.results.map((element, index) => {
-          return <StyleCont key={index}>
-            <HiddenText>{element.name}</HiddenText>
+          return <div className='POStyleContainer' key={index}>
+            <p className='POStyleName'>{element.name}</p>
             <StyleBubble style={element} updater={this.props.changeStyle} />
-          </StyleCont>;
+          </div>;
         })}
       </div>
     );

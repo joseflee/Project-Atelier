@@ -581,3 +581,99 @@
   padding: 10px;
   transform: rotate(-45deg);
 }
+
+
+/* Product Overview Section --------------------------------------------------------------------------------------------------- Start */
+.POImageGallery {
+  display:flex;
+  width: 700px;
+  border: 1px solid black;
+}
+.POImgContainer {
+  flex: 90%;
+
+  height: 400px;
+  width: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.POThumbContainer {
+  flex: 10%;
+  /* display: flex; */
+  /* Overflow: auto; */
+  /* border: 1px solid black; */
+  /* height: auto;
+  width: auto; */
+  /* align-items: left;
+  justify-content: left; */
+  position: relative;
+  display: inline-block;
+}
+
+.POThumbImg {
+  display: block;
+  max-height: 50%;
+  max-width: 50%;
+}
+
+.PODisplayThumbImg {
+  display: block;
+  max-height: 50%;
+  max-width: 50%;
+  border: 3px solid #000000;
+}
+
+.PODisplayImg {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.POThumbImgContainer {
+  /* position: absolute; */
+  /* right: 0px; */
+  align-items: left;
+  justify-content: left;
+}
+
+.PORightArrow {
+  position: absolute;
+  left: 425px;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 10px;
+  transform: rotate(-45deg);
+}
+
+.POLeftArrow {
+  position: absolute;
+  left: 20px;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 10px;
+  transform: rotate(135deg);
+}
+
+.POStyleContainer {
+  display:inline-block;
+}
+
+.POStyleName {
+  font-size: 8px;
+}
+
+.POStyleCircleContainer {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  display:inline-block;
+}
+
+.POStyleSmallImg{
+  width: 100%;
+}

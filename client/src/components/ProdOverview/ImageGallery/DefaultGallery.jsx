@@ -1,7 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
-import { ImgContainer, DisplayImg, ThumbContainer, ThumbImg,
-  DisplayedThumbImg, RightArrow, LeftArrow } from './Gallery.styles.js';
 
 class DefaultGallery extends React.Component {
   constructor (props) {
@@ -38,7 +35,6 @@ class DefaultGallery extends React.Component {
         selectedIndex: this.state.selectedIndex -= 1,
       });
     } else {
-      console.log('end', this.props.photos.length - 1);
       this.setState({
         selectedIndex: this.props.photos.length - 1,
       });
@@ -53,21 +49,21 @@ class DefaultGallery extends React.Component {
 
   render () {
     return (
-      <div className='imageGallery'>
-        <ImgContainer className='mainImage'>
-          <LeftArrow className='leftArrow' onClick={this.rotateLeft.bind(this)}></LeftArrow>
-          <DisplayImg src={this.props.photos[this.state.selectedIndex].url} />
-          <RightArrow className='arrowRight' onClick={this.rotateRight.bind(this)}></RightArrow>
-        </ImgContainer>
-        <ThumbContainer className='thumbnails'>
+      <div className='POImageGallery'>
+        <div className='POThumbContainer'>
           {this.props.photos.map((element, index) => {
             if (this.state.selectedIndex === index) {
-              return <DisplayedThumbImg key={index} src={element.thumbnail_url} onClick={() => { this.thumbToDisp(index); }} />;
+              return <img className='PODisplayThumbImg POThumbImg' key={index} src={element.thumbnail_url} onClick={() => { this.thumbToDisp(index); }} />;
             } else {
-              return <ThumbImg key={index} src={element.thumbnail_url} onClick={() => { this.thumbToDisp(index); }} />;
+              return <img className='POThumbImg' key={index} src={element.thumbnail_url} onClick={() => { this.thumbToDisp(index); }} />;
             }
           })}
-        </ThumbContainer>
+        </div>
+        <div className='POImgContainer'>
+          <i className='POLeftArrow' onClick={this.rotateLeft.bind(this)}></i>
+          <img className='PODisplayImg' src={this.props.photos[this.state.selectedIndex].url} />
+          <i className='PORightArrow' onClick={this.rotateRight.bind(this)}></i>
+        </div>
       </div>
     );
   }
