@@ -586,7 +586,7 @@
 /* Product Overview Section --------------------------------------------------------------------------------------------------- Start */
 .POImageGallery {
   display:flex;
-  width: 700px;
+  width: 500px;
   border: 1px solid black;
 }
 .POImgContainer {
@@ -639,7 +639,7 @@
 
 .PORightArrow {
   position: absolute;
-  left: 425px;
+  left: 450px;
   border: solid black;
   border-width: 0 3px 3px 0;
   display: inline-block;
@@ -649,7 +649,7 @@
 
 .POLeftArrow {
   position: absolute;
-  left: 20px;
+  left: 90px;
   border: solid black;
   border-width: 0 3px 3px 0;
   display: inline-block;

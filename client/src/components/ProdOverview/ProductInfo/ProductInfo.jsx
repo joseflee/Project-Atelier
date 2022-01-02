@@ -21,10 +21,10 @@ const ProductInfo = (props) => {
       <div className='POProductCategory'>
         <p>{props.product.category}</p>
       </div>
-      {price}
       <div className='POProductTitle'>
         <h2>{props.product.name}</h2>
       </div>
+      {price}
       <div className='POProductDescription'>
         <p>{props.product.description}</p>
       </div>
