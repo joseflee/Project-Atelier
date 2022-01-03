@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import AnswerPhotoUpload from './AnswerPhotoUpload.jsx';
 
 class AddAnswerForm extends React.Component {
   constructor(props) {
@@ -98,6 +99,10 @@ class AddAnswerForm extends React.Component {
             <i>For authentication reasons, you will not be emailed</i>
           </label>
           <br />
+          <label>
+            <br />
+            <AnswerPhotoUpload />
+          </label>
           <input type="submit" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
         </form>
       </div>
