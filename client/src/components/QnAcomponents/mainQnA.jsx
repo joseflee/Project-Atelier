@@ -9,6 +9,7 @@ import axios from 'axios';
 class QnA extends React.Component {
   constructor(props) {
     super(props);
+    this._isMounted = false;
     this.state = {
       questions: [],
       isMoreQuestionsButtonShown: false,
@@ -23,16 +24,22 @@ class QnA extends React.Component {
     this.addNewAnswer = this.addNewAnswer.bind(this);
     this.addNewQuestion = this.addNewQuestion.bind(this);
   }
-
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
   componentDidMount() {
+    this._isMounted = true;
     let productId = this.props.productId;
     //GET PRODUCT NAME BY ITS ID
     var url = 'http://localhost:3000/qna/getProductById';
     axios.get(url, {params: {id: productId}})
       .then((response) => {
-        this.setState({
-          productName: response.data.name
-        });
+        if (this._isMounted) {
+          this.setState({
+            productName: response.data.name
+          });
+        }
+
       })
       .catch(function (error) {
         console.log(error);
@@ -41,17 +48,20 @@ class QnA extends React.Component {
     var url = 'http://localhost:3000/qna/getQuestionsList';
     axios.get(url, {params: {id: productId}})
       .then((response) => {
-        console.log('should be question list', response.data.results);
         var questionsToShow = response.data.results;
         if (questionsToShow.length > 2) {
-          this.setState({
-            isMoreQuestionsButtonShown: true
-          });
+          if (this._isMounted) {
+            this.setState({
+              isMoreQuestionsButtonShown: true
+            });
+          }
         }
         questionsToShow = questionsToShow.slice(0, 2);
-        this.setState({
-          questions: questionsToShow
-        });
+        if (this._isMounted) {
+          this.setState({
+            questions: questionsToShow
+          });
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -63,9 +73,11 @@ class QnA extends React.Component {
     var url = 'http://localhost:3000/qna/updateQuestionHelp';
     axios.put(url, {params: {questionId: questionId, productId: productId}})
       .then((response) => {
-        this.setState({
-          isHelpful: true
-        });
+        if (this._isMounted) {
+          this.setState({
+            isHelpful: true
+          });
+        }
         this.updateQuestionList(response.data.results);
       })
       .catch(function (error) {
@@ -79,7 +91,6 @@ class QnA extends React.Component {
     var url = 'http://localhost:3000/qna/addNewQuestion';
     axios.post(url, {params: {id: productId, body: body, name: nickname, email: email}})
       .then((response) => {
-        console.log('added new question', response.data.results);
         this.updateQuestionList (response.data.results);
       })
       .catch(function (error) {
@@ -92,10 +103,12 @@ class QnA extends React.Component {
     var url = 'http://localhost:3000/qna/getQuestionsList';
     axios.get(url, {params: {id: productId}})
       .then((response) => {
-        this.setState({
-          questions: response.data.results,
-          isMoreQuestionsButtonShown: false
-        });
+        if (this._isMounted) {
+          this.setState({
+            questions: response.data.results,
+            isMoreQuestionsButtonShown: false
+          });
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -143,9 +156,12 @@ class QnA extends React.Component {
   }
 
   updateQuestionList(questions) {
-    this.setState({
-      questions: questions
-    });
+    if (this._isMounted) {
+      this.setState({
+        questions: questions
+      });
+    }
+
   }
 
   search(query, isSearchTriggered) {
@@ -162,22 +178,28 @@ class QnA extends React.Component {
           const filtered = questions.filter(item => item.question_body.toLowerCase().includes(query));
           console.log('filtered', filtered);
           //do not hiding questions if more than 2
-          this.setState({
-            questions: filtered
-          });
+          if (this._isMounted) {
+            this.setState({
+              questions: filtered
+            });
+          }
         } else {
           console.log('search stopped');
           //render all the questions and hide the rest if more than 2
           var questionsToShow = response.data.results;
           if (questionsToShow.length > 2) {
-            this.setState({
-              isMoreQuestionsButtonShown: true
-            });
+            if (this._isMounted) {
+              this.setState({
+                isMoreQuestionsButtonShown: true
+              });
+            }
           }
           questionsToShow = questionsToShow.slice(0, 2);
-          this.setState({
-            questions: questionsToShow
-          });
+          if (this._isMounted) {
+            this.setState({
+              questions: questionsToShow
+            });
+          }
         }
       })
       .catch(function (error) {

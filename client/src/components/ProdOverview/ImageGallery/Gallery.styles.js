@@ -12,7 +12,6 @@ export const ImgContainer = styled.div`
 export const DisplayImg = styled.img`
   max-height: 100%;
   max-width: 100%;
-
 `;
 
 export const ThumbContainer = styled.div`
