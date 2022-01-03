@@ -13,7 +13,7 @@ const PhotoUpload = (props) => {
   };
 
   return (
-    <form>
+    <div>
       <div className="form-group preview">
         {file.length > 0 &&
           file.map((item, index) => {
@@ -43,7 +43,7 @@ const PhotoUpload = (props) => {
       >
         Upload photos
       </button>
-    </form>
+    </div>
   );
 };
 
