@@ -8,10 +8,12 @@ class AddAnswerForm extends React.Component {
     this.state = {
       answerBody: '',
       nickname: '',
-      email: ''
+      email: '',
+      photos: []
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePhotos = this.handlePhotos.bind(this);
   }
 
   handleInputChange(event) {
@@ -23,6 +25,13 @@ class AddAnswerForm extends React.Component {
     });
   }
 
+  handlePhotos(photos) {
+    console.log('triggered handle photos', photos);
+    this.setState({
+      photos: photos
+    });
+  }
+
   handleSubmit() {
     event.preventDefault();
     var questionId = this.props.questionId;
@@ -30,6 +39,7 @@ class AddAnswerForm extends React.Component {
     var nickname = this.state.nickname;
     var email = this.state.email;
     var photos = [];
+    console.log('42', this.state);
     var validationResult = this.handleValidation(body, nickname, email);
     var productId = this.props.productId;
 
@@ -101,7 +111,7 @@ class AddAnswerForm extends React.Component {
           <br />
           <label>
             <br />
-            <AnswerPhotoUpload />
+            <AnswerPhotoUpload handlePhotos={this.handlePhotos} />
           </label>
           <input type="submit" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
         </form>

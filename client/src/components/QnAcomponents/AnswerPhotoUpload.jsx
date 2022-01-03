@@ -10,6 +10,7 @@ const PhotoUpload = (props) => {
   let upload = function upload(e) {
     e.preventDefault();
     console.log('clicked on upload');
+    props.handlePhotos(file);
   };
 
   return (
