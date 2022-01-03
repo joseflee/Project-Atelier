@@ -584,9 +584,33 @@
 
 
 /* Product Overview Section --------------------------------------------------------------------------------------------------- Start */
+.POOverview {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 5px;
+}
+
+.Infocontainer{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-column: 8/-1;
+  grid-row: 1;
+}
+
+.POProductInfoContainer {
+  grid-column: 1/8;
+}
+
+.POProductDescription {
+  grid-column: 2/8;
+}
+
 .POImageGallery {
+  grid-column: 1/8;
+  grid-row: 1;
   display:flex;
-  width: 500px;
+  /* width: 500px; */
   border: 1px solid black;
 }
 .POImgContainer {
@@ -606,10 +630,12 @@
   /* border: 1px solid black; */
   /* height: auto;
   width: auto; */
-  /* align-items: left;
-  justify-content: left; */
+  align-items: center;
+  justify-content: center;
   position: relative;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .POThumbImg {
@@ -659,6 +685,10 @@
 
 .POStyleContainer {
   display:inline-block;
+}
+
+.styleSelector {
+  grid-column: 1/-1
 }
 
 .POStyleName {
