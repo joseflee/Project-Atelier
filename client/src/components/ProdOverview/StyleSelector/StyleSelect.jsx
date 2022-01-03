@@ -1,24 +1,27 @@
 import React from 'react';
 import StyleBubble from './StyleSelectBubble.jsx';
 
-class StyleSelector extends React.Component {
-  constructor (props) {
-    super(props);
-  }
-
-  render () {
-    // console.log('state', this.state);
-    return (
-      <div className='styleSelector'>
-        {this.props.styles.results.map((element, index) => {
-          return <div className='POStyleContainer' key={index}>
-            <p className='POStyleName'>{element.name}</p>
-            <StyleBubble style={element} updater={this.props.changeStyle} />
-          </div>;
-        })}
+const StyleSelector = (props) => {
+  console.log('style props', props);
+  const rows = [...Array( Math.ceil(props.styles.results.length / 4) )];
+  const formattedArr = rows.map( (row, idx) => props.styles.results.slice(idx * 4, idx * 4 + 4) );
+  const styleRows = formattedArr.map((row, index) => (
+    <div className='POStyleRowContainer' key={index}>
+      {row.map((element, index) => (
+        <div className='POStyleContainer' key={index}>
+          <StyleBubble style={element} updater={props.changeStyle} />
+        </div>
+      ))}
+    </div>
+  ));
+  return (
+    <div className='styleSelector'>
+      <div>
+        <p><strong>{'Style >'}</strong> {props.displayedStyle.name}</p>
       </div>
-    );
-  }
-}
+      {styleRows}
+    </div>
+  );
+};
 
 export default StyleSelector;
