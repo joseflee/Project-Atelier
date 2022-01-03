@@ -65,7 +65,7 @@ class AddAnswerForm extends React.Component {
             <input
               name='answerBody'
               type='text'
-              maxlength='1000'
+              maxLength='1000'
               value={this.state.answerBody}
               onChange={this.handleInputChange}
             />
@@ -76,7 +76,7 @@ class AddAnswerForm extends React.Component {
             <input
               name='nickname'
               type='text'
-              maxlength='60'
+              maxLength='60'
               placeholder='Example: jack543'
               value={this.state.nickname}
               onChange={this.handleInputChange}
@@ -90,7 +90,7 @@ class AddAnswerForm extends React.Component {
             <input
               name='email'
               type='text'
-              maxlength='60'
+              maxLength='60'
               placeholder='Example: jack@email.com'
               value={this.state.email}
               onChange={this.handleInputChange}
