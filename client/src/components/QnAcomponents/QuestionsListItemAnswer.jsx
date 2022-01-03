@@ -58,7 +58,6 @@ class QuestionsListItemAnswer extends React.Component {
 
     return (
       <div className='answer-item'>
-        {console.log(this.props.answer)}
         <div className='answer-item-a-letter'><h2>A:{this.props.answer.body}</h2></div>
         <div className='answer-photo-upload'>{this.props.answer.photos}</div>
         <div className='answer-item-username'>By user {this.props.answer.answerer_name}</div><div className='answer-item-date'>{moment(this.props.answer.date).format('MMMM DD, YYYY')};</div>
