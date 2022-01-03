@@ -24,7 +24,7 @@ class ProductCards extends React.Component {
       return (
         <div>
           <h3>Related Products Cards</h3>
-          <div className="card-scroll-left product-card"></div>
+          <div className="card-scroll-left product-card" onClick={this.props.handleClick}></div>
           {this.props.productCards.map(product => {
             return (
               <div className="product-card" key={product.id} onClick={this.props.handleClick}>
@@ -40,7 +40,7 @@ class ProductCards extends React.Component {
               </div>
             );
           })}
-          <div className="card-scroll-right product-card"></div>
+          <div className="card-scroll-right product-card" onClick={this.props.handleClick}></div>
         </div>
       );
     }
