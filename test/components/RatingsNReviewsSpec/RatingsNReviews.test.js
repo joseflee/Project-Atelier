@@ -50,13 +50,13 @@ describe('Rating and reviews rendering Testing', () => {
 
   test ('Should display the ratings and reviews header', async () => {
     await render(<ReviewList productId={59553}/>);
-    expect(screen.getByText('RATINGS & REVIEWS')).toBeInTheDocument();
+    expect(screen.getByText('RATINGS & REVIEWS')).toBeVisible();
   });
 
   test ('Should display the reviews Average Rate', async () => {
     await render(<ReviewList productId={59553}/>);
     await waitFor( async () => {
-      expect(await screen.getByText('3.5')).toBeInTheDocument();
+      expect(await screen.getByText('3.5')).toBeVisible();
     });
   });
 
@@ -65,6 +65,22 @@ describe('Rating and reviews rendering Testing', () => {
     await waitFor( async () => {
       expect(await screen.getByTestId('review-recommended').innerHTML).toBe(
         '50% of reviews recommend this product'
+      );
+    });
+  });
+
+  const starWidth = jest.fn((rating) => {
+    const starsTotal = 5;
+    const starPercentage = (rating / starsTotal) * 100;
+    const starPercentageRounded = (starPercentage / 10) * 10 + '%';
+    return starPercentageRounded;
+  });
+  test ('The left corner star rating width should have the same value with average rate', async () => {
+    await render(<ReviewList productId={59553}/>);
+    await waitFor( async () => {
+      const average = await screen.getByText('3.5');
+      expect(await screen.getByTestId('review-leftCornerStar').style.width).toBe(
+        '3.5'
       );
     });
   });

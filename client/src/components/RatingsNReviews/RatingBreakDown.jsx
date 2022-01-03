@@ -10,7 +10,7 @@ const RatingBreakDown = ({ resetFilter, filter, filterOnClicked, productId, aver
         <h1>{averageRate}</h1>
         <div className='review-starBreakDown-star'>
           <div className="review-stars-outer">
-            <div className="review-stars-inner" style={{width: starWidth(averageRate)}}></div>
+            <div data-testid="review-leftCornerStar" className="review-stars-inner" style={{width: starWidth(averageRate)}}></div>
           </div>
         </div>
         <p className='review-starBreakDown-recommended' data-testid="review-recommended">{recommended}% of reviews recommend this product</p>
