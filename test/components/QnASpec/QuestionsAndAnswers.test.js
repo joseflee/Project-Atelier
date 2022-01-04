@@ -6,8 +6,11 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { handlers } from '../../mocks/qnaHandlers.js';
 
-//import ReviewList from '../../../client/src/components/RatingsNReviews/ReviewList.jsx';
+//example data
+import exampleQuestions from '../../../example/questions.js';
+//components
 import QnA from '../../../client/src/components/QnAcomponents/mainQnA.jsx';
+import QuestionsList from '../../../client/src/components/QnAcomponents/QuestionsList.jsx';
 
 const server = setupServer(...handlers);
 
@@ -22,6 +25,12 @@ describe('Rating and reviews rendering Testing', () => {
 
     expect (screen.getByText('Questions and Answers')).toBeInTheDocument();
     expect (screen.getByText('Add a new question')).toBeInTheDocument();
+  });
+
+
+  test('Should render Question List', async () => {
+    await render(<QuestionsList  data = {exampleQuestions.questions.results}
+       />);
   });
 
 });
