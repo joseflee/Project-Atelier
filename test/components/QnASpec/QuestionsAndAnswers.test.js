@@ -11,6 +11,7 @@ import exampleQuestions from '../../../example/questions.js';
 //components
 import QnA from '../../../client/src/components/QnAcomponents/mainQnA.jsx';
 import QuestionsList from '../../../client/src/components/QnAcomponents/QuestionsList.jsx';
+import QuestionsListItem from '../../../client/src/components/QnAcomponents/QuestionsListItem.jsx';
 
 const server = setupServer(...handlers);
 
@@ -30,6 +31,11 @@ describe('Rating and reviews rendering Testing', () => {
 
   test('Should render Question List', async () => {
     await render(<QuestionsList  data = {exampleQuestions.questions.results}
+       />);
+  });
+
+  test('Should render one question', async () => {
+    await render(<QuestionsListItem question = {exampleQuestions.questions.results[0]}
        />);
   });
 
