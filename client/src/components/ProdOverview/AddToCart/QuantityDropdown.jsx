@@ -23,7 +23,7 @@ const QuantityDropdown = (props) => {
     }
     return (
       <div>
-        <select id='QuantitySelector'>
+        <select id='POQuantitySelector'>
           {sizeArr.map((element, index) => {
             return <option key={index}>{element}</option>;
           })}
