@@ -68,7 +68,7 @@ class App extends React.Component {
           <ProductOverview productId={this.state.productId} currentProduct={this.state.currentProduct} currentProductStyle={this.state.currentProductStyle} currentReview={this.state.productReview} />
           <RelProducts productId={this.state.productId} currentProduct={this.state.currentProduct} currentProductStyle={this.state.productStyleInfo} relatedProducts={this.state.relatedProducts} />
           <QnA productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
-          <RatingsNReviews productId={this.state.productId} />
+          <RatingsNReviews productId={this.state.productId} currentProduct={this.state.currentProduct} />
         </div>
       );
     }
