@@ -30,7 +30,7 @@ class ProductOverview extends React.Component {
     // console.log('props', this.props);
     // console.log('displayed style', this.state.displayStyle);
     return (
-      <div className='POOverview'>
+      <div className='POOverview' data-testid="Overview">
         {/* <h1 className='POTitle'>Product Overview</h1> */}
         <ProductDescription product={this.props.currentProduct} />
         <div className='Infocontainer'>
