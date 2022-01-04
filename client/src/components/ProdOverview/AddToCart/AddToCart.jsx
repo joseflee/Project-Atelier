@@ -32,7 +32,6 @@ class AddToCart extends React.Component {
       desiredQuantity: quantity
     });
   }
-
   render () {
     // console.log('state', this.state);
     return (
