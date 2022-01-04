@@ -17,7 +17,9 @@ import Search from '../../../client/src/components/QnAcomponents/SearchQuestions
 import MoreAnsweredQuestions from '../../../client/src/components/QnAcomponents/MoreAnsweredQuestions.jsx';
 import AnswersList from '../../../client/src/components/QnAcomponents/AnswersList.jsx';
 import AddQuestion from '../../../client/src/components/QnAcomponents/AddQuestion.jsx';
-
+import AddAnswerForm from '../../../client/src/components/QnAcomponents/AddAnswerForm.jsx';
+import AddQuestionForm from '../../../client/src/components/QnAcomponents/AddQuestionForm.jsx';
+import AnswerPhotoUpload from '../../../client/src/components/QnAcomponents/AnswerPhotoUpload.jsx';
 
 const server = setupServer(...handlers);
 
@@ -65,6 +67,23 @@ describe('Questions and Answers rendering', () => {
   test('Should render add question component ', async () => {
     await render(<AddQuestion />);
   });
+
+  test('Should render add question form ', async () => {
+    await render(<AddQuestionForm />);
+  });
+
+  test('Should render add answer form ', async () => {
+    await render(<AddAnswerForm />);
+  });
+
+  test('Should render uploading photo to answers component', async () => {
+    await render(<AnswerPhotoUpload />);
+  });
+
+
+
+
+
 
 
 
