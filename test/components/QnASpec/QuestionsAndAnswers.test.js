@@ -12,6 +12,7 @@ import exampleQuestions from '../../../example/questions.js';
 import QnA from '../../../client/src/components/QnAcomponents/mainQnA.jsx';
 import QuestionsList from '../../../client/src/components/QnAcomponents/QuestionsList.jsx';
 import QuestionsListItem from '../../../client/src/components/QnAcomponents/QuestionsListItem.jsx';
+import QuestionsListItemAnswer from '../../../client/src/components/QnAcomponents/QuestionsListItemAnswer.jsx';
 
 const server = setupServer(...handlers);
 
@@ -19,7 +20,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-describe('Rating and reviews rendering Testing', () => {
+describe('Questions and Answers rendering', () => {
 
   test ('Should render main Questions and Answers component', async () => {
     await render(<QnA productId={59553} />);
@@ -38,5 +39,14 @@ describe('Rating and reviews rendering Testing', () => {
     await render(<QuestionsListItem question = {exampleQuestions.questions.results[0]}
        />);
   });
+
+  test('Should render question\'s answer ', async () => {
+    await render(<QuestionsListItemAnswer answer = {exampleQuestions.answers.results[0]}
+       />);
+  });
+
+  
+
+
 
 });
