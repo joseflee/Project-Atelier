@@ -22,7 +22,7 @@ const avgRating = (ratingsObj) => {
 
 const StarRating = (props) => {
   return (
-    <div>
+    <div className='POStarRating' data-testid="starRating">
       <Rating start={0} stop={5} initialRating={avgRating(props.ratings)} emptySymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#808080
 ' />} fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#f8ce0b' />} readonly />
     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import StyleBubble from './StyleSelectBubble.jsx';
 
 const StyleSelector = (props) => {
-  console.log('style props', props);
+  // console.log('style props', props);
   const rows = [...Array( Math.ceil(props.styles.results.length / 4) )];
   const formattedArr = rows.map( (row, idx) => props.styles.results.slice(idx * 4, idx * 4 + 4) );
   const styleRows = formattedArr.map((row, index) => (

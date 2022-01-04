@@ -49,7 +49,7 @@ class DefaultGallery extends React.Component {
 
   render () {
     return (
-      <div className='POImageGallery'>
+      <div className='POImageGallery' data-testid="ImageGallery">
         <div className='POThumbContainer'>
           {this.props.photos.map((element, index) => {
             if (this.state.selectedIndex === index) {

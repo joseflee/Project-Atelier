@@ -19,6 +19,6 @@ display:inline-block;
 `;
 
 
-export const HiddenText = styled.p`
+export const StyleText = styled.p`
   font-size: 8px;
 `;
