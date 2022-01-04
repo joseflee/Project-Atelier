@@ -15,6 +15,7 @@ import QuestionsListItem from '../../../client/src/components/QnAcomponents/Ques
 import QuestionsListItemAnswer from '../../../client/src/components/QnAcomponents/QuestionsListItemAnswer.jsx';
 import Search from '../../../client/src/components/QnAcomponents/SearchQuestions.jsx';
 import MoreAnsweredQuestions from '../../../client/src/components/QnAcomponents/MoreAnsweredQuestions.jsx';
+import AnswersList from '../../../client/src/components/QnAcomponents/AnswersList.jsx';
 
 const server = setupServer(...handlers);
 
@@ -54,6 +55,12 @@ describe('Questions and Answers rendering', () => {
   test('Should render more answered questions component ', async () => {
     await render(<MoreAnsweredQuestions />);
   });
+
+  test('Should render answers list ', async () => {
+    await render(<AnswersList list={exampleQuestions.answers.results}/>);
+  });
+
+
 
 
 
