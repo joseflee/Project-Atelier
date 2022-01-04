@@ -9,6 +9,7 @@ class QuestionsList extends React.Component {
   render() {
     return (
       <div>
+        {/* {console.log('questions', this.props.data)} */}
         {this.props.data.map((question, key) =>{
           return <QuestionsListItem
             question={question}
