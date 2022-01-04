@@ -8,33 +8,42 @@ import { ImgContainer, DisplayImg, ThumbContainer, ThumbImg,
 class ProductCards extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    // this.state = {
 
-    };
+    // };
   }
 
   render() {
-    console.log('product info: ', this.props.productCards);
-    return (
-      <div>
-        <h3>Related Products Cards</h3>
-        {this.props.productCards.map(product => {
-          return (
-            <div className="product-card" key={product.id} onClick={this.props.handleClick}>
-              <DisplayImg src={product.results[0].photos[0].thumbnail_url} />
-              <h5 className="category-relProd">{product.category}</h5>
-              <h4 className="name-relProd">{product.name}</h4>
-              <h5 className="price-relProd">{product.default_price}</h5>
-              {/* <div className='review-starBreakDown-star'>
-                <div className="review-stars-outer">
-                  <div className="review-stars-inner" style={{width: starWidth(averageRate)}}></div>
-                </div>
-              </div> */}
-            </div>
-          );
-        })}
-      </div>
-    );
+    if (this.props.productCards.length === 0) {
+      return (
+        <div>
+          <h3>Related Products Cards</h3>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h3>Related Products Cards</h3>
+          <div className="card-scroll-left product-card"></div>
+          {this.props.productCards.map(product => {
+            return (
+              <div className="product-card" key={product.id} onClick={this.props.handleClick}>
+                <DisplayImg src={product.results[0].photos[0].thumbnail_url} />
+                <h5 className="category-relProd">{product.category}</h5>
+                <h4 className="name-relProd">{product.name}</h4>
+                <h5 className="price-relProd">{product.default_price}</h5>
+                {/* <div className='review-starBreakDown-star'>
+                  <div className="review-stars-outer">
+                    <div className="review-stars-inner" style={{width: starWidth(averageRate)}}></div>
+                  </div>
+                </div> */}
+              </div>
+            );
+          })}
+          <div className="card-scroll-right product-card"></div>
+        </div>
+      );
+    }
   }
 }
 

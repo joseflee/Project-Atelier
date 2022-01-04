@@ -9,6 +9,7 @@ import axios from 'axios';
 class QnA extends React.Component {
   constructor(props) {
     super(props);
+    this._isMounted = false;
     this.state = {
       questions: [],
       isMoreQuestionsButtonShown: false,
@@ -17,17 +18,28 @@ class QnA extends React.Component {
     this.showMoreQuestions = this.showMoreQuestions.bind(this);
     this.search = this.search.bind(this);
     this.updateQuestionList = this.updateQuestionList.bind(this);
+    this.clickOnHelpfulQuestion = this.clickOnHelpfulQuestion.bind(this);
+    this.clickOnHelpfulAnswer = this.clickOnHelpfulAnswer.bind(this);
+    this.reportAnswer = this.reportAnswer.bind(this);
+    this.addNewAnswer = this.addNewAnswer.bind(this);
+    this.addNewQuestion = this.addNewQuestion.bind(this);
   }
-
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
   componentDidMount() {
+    this._isMounted = true;
     let productId = this.props.productId;
     //GET PRODUCT NAME BY ITS ID
     var url = 'http://localhost:3000/qna/getProductById';
     axios.get(url, {params: {id: productId}})
       .then((response) => {
-        this.setState({
-          productName: response.data.name
-        });
+        if (this._isMounted) {
+          this.setState({
+            productName: response.data.name
+          });
+        }
+
       })
       .catch(function (error) {
         console.log(error);
@@ -36,17 +48,50 @@ class QnA extends React.Component {
     var url = 'http://localhost:3000/qna/getQuestionsList';
     axios.get(url, {params: {id: productId}})
       .then((response) => {
-        console.log('should be question list', response.data.results);
         var questionsToShow = response.data.results;
         if (questionsToShow.length > 2) {
-          this.setState({
-            isMoreQuestionsButtonShown: true
-          });
+          if (this._isMounted) {
+            this.setState({
+              isMoreQuestionsButtonShown: true
+            });
+          }
         }
         questionsToShow = questionsToShow.slice(0, 2);
-        this.setState({
-          questions: questionsToShow
-        });
+        if (this._isMounted) {
+          this.setState({
+            questions: questionsToShow
+          });
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  clickOnHelpfulQuestion(productId, questionId) {
+    console.log('clicked on helpful question');
+    var url = 'http://localhost:3000/qna/updateQuestionHelp';
+    axios.put(url, {params: {questionId: questionId, productId: productId}})
+      .then((response) => {
+        if (this._isMounted) {
+          this.setState({
+            isHelpful: true
+          });
+        }
+        this.updateQuestionList(response.data.results);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  addNewQuestion(productId, body, nickname, email) {
+    console.log('clicked on submit new question');
+    //SEND REQUEST TO SERVER TO ADD A NEW QUESTION
+    var url = 'http://localhost:3000/qna/addNewQuestion';
+    axios.post(url, {params: {id: productId, body: body, name: nickname, email: email}})
+      .then((response) => {
+        this.updateQuestionList (response.data.results);
       })
       .catch(function (error) {
         console.log(error);
@@ -58,10 +103,52 @@ class QnA extends React.Component {
     var url = 'http://localhost:3000/qna/getQuestionsList';
     axios.get(url, {params: {id: productId}})
       .then((response) => {
-        this.setState({
-          questions: response.data.results,
-          isMoreQuestionsButtonShown: false
-        });
+        if (this._isMounted) {
+          this.setState({
+            questions: response.data.results,
+            isMoreQuestionsButtonShown: false
+          });
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  clickOnHelpfulAnswer(answerId, productId) {
+    var url = 'http://localhost:3000/qna/updateAnswerHelp';
+    axios.put(url, {params: {answerId: answerId, productId: productId}})
+      .then((response) => {
+        this.updateQuestionList(response.data.results);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  reportAnswer(answerId, productId) {
+    console.log('clicked on report answer');
+    //SEND REQUEST TO REPORT ANSWER
+    var url = 'http://localhost:3000/qna/reportAnswer';
+    axios.put(url, {params: {answerId: answerId, productId: productId}})
+      .then((response) => {
+        console.log('sent response to client', response);
+        this.updateQuestionList(response.data.results);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  addNewAnswer(questionId, body, nickname, email, photos, productId) {
+    //SEND REQUEST TO SERVER TO ADD A NEW ANSWER
+    var url = 'http://localhost:3000/qna/addNewAnswer';
+    axios.post(url, {params: {id: questionId, productId: productId, body: body, name: nickname, email: email, photos: photos}})
+      .then((response) => {
+        console.log('added new answer', response.data.results);
+        //render new answer in the parent component
+        this.updateQuestionList(response.data.results);
+
       })
       .catch(function (error) {
         console.log(error);
@@ -69,9 +156,12 @@ class QnA extends React.Component {
   }
 
   updateQuestionList(questions) {
-    this.setState({
-      questions: questions
-    });
+    if (this._isMounted) {
+      this.setState({
+        questions: questions
+      });
+    }
+
   }
 
   search(query, isSearchTriggered) {
@@ -88,22 +178,28 @@ class QnA extends React.Component {
           const filtered = questions.filter(item => item.question_body.toLowerCase().includes(query));
           console.log('filtered', filtered);
           //do not hiding questions if more than 2
-          this.setState({
-            questions: filtered
-          });
+          if (this._isMounted) {
+            this.setState({
+              questions: filtered
+            });
+          }
         } else {
           console.log('search stopped');
           //render all the questions and hide the rest if more than 2
           var questionsToShow = response.data.results;
           if (questionsToShow.length > 2) {
-            this.setState({
-              isMoreQuestionsButtonShown: true
-            });
+            if (this._isMounted) {
+              this.setState({
+                isMoreQuestionsButtonShown: true
+              });
+            }
           }
           questionsToShow = questionsToShow.slice(0, 2);
-          this.setState({
-            questions: questionsToShow
-          });
+          if (this._isMounted) {
+            this.setState({
+              questions: questionsToShow
+            });
+          }
         }
       })
       .catch(function (error) {
@@ -123,10 +219,19 @@ class QnA extends React.Component {
 
         <div className='qna-component-name'><h1>Questions and Answers</h1></div>
         <SearchQuestions search={this.search}/>
-        <QuestionsList data={this.state.questions} productId ={this.props.productId} update={this.updateQuestionList}/>
+        <QuestionsList
+          data={this.state.questions}
+          productId={this.props.productId}
+          clickOnHelpful={this.clickOnHelpfulQuestion}
+          clickOnHelpfulAnswer={this.clickOnHelpfulAnswer}
+          reportAnswer={this.reportAnswer}
+          addNewAnswer={this.addNewAnswer}
+        />
         <br />
         {moreAnsweredQuestions}
-        <AddQuestion name={this.state.productName} productId={this.props.productId} update={this.updateQuestionList}/>
+        <AddQuestion name={this.state.productName}
+          productId={this.props.productId}
+          addQuestion={this.addNewQuestion}/>
       </div>
 
     );
