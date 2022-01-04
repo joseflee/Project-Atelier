@@ -58,6 +58,7 @@ describe('Questions and Answers rendering', () => {
 
   test('Should render more answered questions component ', async () => {
     await render(<MoreAnsweredQuestions />);
+    expect (screen.getByText('More answered questions')).toBeInTheDocument();
   });
 
   test('Should render answers list ', async () => {
@@ -74,6 +75,14 @@ describe('Questions and Answers rendering', () => {
 
   test('Should render add answer form ', async () => {
     await render(<AddAnswerForm />);
+    expect (screen.getByText('Submit your answer')).toBeInTheDocument();
+    expect (screen.getByText('Your answer*')).toBeInTheDocument();
+    expect (screen.getByText('What\'s your nickname?*')).toBeInTheDocument();
+    expect (screen.getByText('For privacy reasons, do not use your full name or email address')).toBeInTheDocument();
+    expect (screen.getByText('Your email?*')).toBeInTheDocument();
+    expect (screen.getByText('For authentication reasons, you will not be emailed')).toBeInTheDocument();
+
+
   });
 
   test('Should render uploading photo to answers component', async () => {
