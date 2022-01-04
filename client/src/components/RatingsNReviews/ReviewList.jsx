@@ -6,7 +6,7 @@ import HelpfulButton from './HelpfulButton.jsx';
 import NewReview from './NewReview.jsx';
 // import SearchBar from './SearchBar.jsx';
 
-const ReviewList = ( {productId} )=>{
+const ReviewList = ( {productId, currentProduct} )=>{
   const [selectedArray, setSelectedArray] = useState('totalReviewArray');
   const [isOpen, setIsOpen] = useState(false);
   const [isTruncated, setIsTruncated] = useState(true);
@@ -418,7 +418,7 @@ const ReviewList = ( {productId} )=>{
         <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === ((sortedArray.length || searchResult.length) ? (sortedArray.length || searchResult.length) : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button>}
           {isLoading ? null : <button onClick={()=>{ setOpenReviewModal(true); }}>Write New Review</button>}
         </div>
-        {openReviewModal && <NewReview characteristics={characteristics} productId= {productId} setIsPost={setIsPost} setOpenReviewModal={setOpenReviewModal} setOpenReviewModal={setOpenReviewModal}/>}
+        {openReviewModal && <NewReview currentProduct={currentProduct} characteristics={characteristics} productId= {productId} setIsPost={setIsPost} setOpenReviewModal={setOpenReviewModal} setOpenReviewModal={setOpenReviewModal}/>}
       </div>
     </div>
   );

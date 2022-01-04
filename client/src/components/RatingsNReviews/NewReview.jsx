@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
-const NewReview = ({characteristics, productId, setIsPost, setOpenReviewModal})=>{
+const NewReview = ({currentProduct, characteristics, productId, setIsPost, setOpenReviewModal})=>{
 
   const [fitVal, setFitVal] = useState({
     rate: '',
@@ -208,7 +208,7 @@ const NewReview = ({characteristics, productId, setIsPost, setOpenReviewModal})=
         </div>
         <div className="title">
           <h1>Write Your Review</h1>
-          <h3>About the [Product Name Here]</h3>
+          <h3>{currentProduct.name}</h3>
         </div>
         <div className="newReview-Body">
           <div className="newReview-overallRating ">
