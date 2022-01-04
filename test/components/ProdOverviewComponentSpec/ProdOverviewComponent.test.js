@@ -30,7 +30,7 @@ afterAll(() => server.close());
 describe ('Product Overview Component Testing', () => {
   test('Loads and displays a Product Overview Component', () => {
     render(<ProductOverview currentProduct={specificProduct} currentProductStyle={style} currentReview={dummyReviews.meta} />);
-    expect(screen.getByText('Product Overview')).toBeInTheDocument();
+    expect(screen.getByTestId('Overview')).toBeInTheDocument();
   });
 });
 
