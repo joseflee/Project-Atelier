@@ -49,6 +49,13 @@ class QuestionsListItemAnswer extends React.Component {
 
   render() {
     var report;
+    let photoLink;
+    if (this.props.answer.photos.length > 0) {
+      photoLink = <img src={this.props.answer.photos[0]} width='300' height='200'></img>;
+    } else {
+      photoLink = <div></div>;
+    }
+
 
     if (this.state.isReported) {
       report = <div>Reported</div>;
@@ -58,8 +65,9 @@ class QuestionsListItemAnswer extends React.Component {
 
     return (
       <div className='answer-item'>
+
         <div className='answer-item-a-letter'><h2>A:{this.props.answer.body}</h2></div>
-        <div className='answer-photo-upload'>{this.props.answer.photos}</div>
+        <div className='answer-photo-upload'>{photoLink}</div>
         <div className='answer-item-username'>By user {this.props.answer.answerer_name}</div><div className='answer-item-date'>{moment(this.props.answer.date).format('MMMM DD, YYYY')};</div>
         <div className='answer-item-photos'></div>
         <div className='answer-item-helpful-keyword'>Helpful?</div>
