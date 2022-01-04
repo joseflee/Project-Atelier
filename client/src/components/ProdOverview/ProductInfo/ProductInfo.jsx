@@ -18,6 +18,7 @@ const ProductInfo = (props) => {
   }
   return (
     <div className='POProductInfoContainer'>
+      <StarRating ratings={props.ratings}/>
       <div className='POProductCategory'>
         <p>{props.product.category}</p>
       </div>
@@ -25,10 +26,9 @@ const ProductInfo = (props) => {
         <h2>{props.product.name}</h2>
       </div>
       {price}
-      <div className='POProductDescription'>
+      {/* <div className='POProductDescription'>
         <p>{props.product.description}</p>
-      </div>
-      <StarRating ratings={props.ratings}/>
+      </div> */}
     </div>
   );
 };
