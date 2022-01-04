@@ -13,6 +13,7 @@ import QnA from '../../../client/src/components/QnAcomponents/mainQnA.jsx';
 import QuestionsList from '../../../client/src/components/QnAcomponents/QuestionsList.jsx';
 import QuestionsListItem from '../../../client/src/components/QnAcomponents/QuestionsListItem.jsx';
 import QuestionsListItemAnswer from '../../../client/src/components/QnAcomponents/QuestionsListItemAnswer.jsx';
+import Search from '../../../client/src/components/QnAcomponents/SearchQuestions.jsx';
 
 const server = setupServer(...handlers);
 
@@ -45,7 +46,11 @@ describe('Questions and Answers rendering', () => {
        />);
   });
 
-  
+  test('Should render search component ', async () => {
+    await render(<Search />);
+  });
+
+
 
 
 
