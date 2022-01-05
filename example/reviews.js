@@ -9,7 +9,7 @@ const dummyReviews = {
         "2": "4",
         "3": "21",
         "4": "15",
-        "5": "83",
+        "5": "46",
         "average":"3.5"
     },
     "recommended": 50,

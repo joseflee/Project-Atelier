@@ -53,7 +53,7 @@ const ProductBreakDown = ({characteristics})=>{
               <span className='review-productTrack-text' id='review-productTrack-text-1'>{sizeChart[key]['sm']}</span>
               <span className='review-productTrack-text' id='review-productTrack-text-2'>{sizeChart[key]['mid']}</span>
               <span className='review-productTrack-text' id='review-productTrack-text-3'>{sizeChart[key]['lg']}</span>
-              <i className='fas fa-caret-down' style={{left: calProductVal(characteristics[key]['value'])}}></i>
+              <i data-testid="review-leftCorner-triangle" className='fas fa-caret-down' style={{left: calProductVal(characteristics[key]['value'])}}></i>
             </div>
           </div>
         );
