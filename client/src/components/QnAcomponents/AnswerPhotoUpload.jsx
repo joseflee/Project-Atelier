@@ -9,19 +9,37 @@ class PhotoUpload extends React.Component {
     };
 
     this.uploadSingleFile = this.uploadSingleFile.bind(this);
+    //this.uploadImage = this.uploadImage.bind(this);
 
   }
 
+  // uploadImage(base64file) {
+  //   console.log(base64file);
+  // }
 
   uploadSingleFile(e) {
-    // setFile([...file, URL.createObjectURL(e.target.files[0])], ()=> {
-    //   props.handlePhotos(file);
-    // });
+
+
     this.setState({
-      file: [...this.state.file, URL.createObjectURL(e.target.files[0])]
+      file: [...this.state.file, (e.target.files[0])]
     }, ()=> {
-      this.props.handlePhotos(this.state.file);
+      //this.props.handlePhotos(this.state.file);
+      var photos = [...this.state.file];
+      //make base 64 file from each photo
+      for (var i = 0; i < photos.length; i++) {
+        const reader = new FileReader();
+        reader.readAsDataURL(photos[i]);
+        reader.onloadend = () => {
+          this.props.handlePhotos(reader.result);
+        };
+        reader.onerror = () => {
+          console.error('AHHHHHHHH!!');
+          setErrMsg('something went wrong!');
+        };
+      }
     });
+
+
 
   }
 

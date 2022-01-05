@@ -26,7 +26,7 @@ class AddAnswerForm extends React.Component {
   }
 
   handlePhotos(photos) {
-    console.log('triggered handle photos', photos);
+    console.log('triggered handle photos');
     this.setState({
       photos: photos
     });
@@ -43,9 +43,16 @@ class AddAnswerForm extends React.Component {
     var validationResult = this.handleValidation(body, nickname, email);
     var productId = this.props.productId;
 
+    console.log('line 46, photos', photos);
+   
+
+
+
+
     if (validationResult) {
-      this.props.addNewAnswer(questionId, body, nickname, email, photos, productId);
-      this.props.closeAnswer();
+      // this.props.addNewAnswer(questionId, body, nickname, email, photos, productId);
+      // this.props.closeAnswer();
+
 
     } else {
       alert('Not all fields filled');
