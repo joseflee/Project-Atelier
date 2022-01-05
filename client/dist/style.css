@@ -607,6 +607,8 @@
 }
 
 .POImageGallery {
+  position: relative;
+  width: 100%;
   grid-column: 1/7;
   grid-row: 1;
   display:flex;
@@ -719,4 +721,20 @@
 
 .POQuantitySelector {
   grid-column: 2/3
+}
+
+.POModal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 225, 225, 0.5);
+  /* look into rgba to set opacity for background */
+}
+
+.POCloseModal {
+  position: absolute;
+  top: 0;
+  right: 0;
 }

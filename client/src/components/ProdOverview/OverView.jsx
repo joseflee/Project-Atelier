@@ -4,6 +4,7 @@ import StyleSelector from './StyleSelector/StyleSelect.jsx';
 import AddToCart from './AddToCart/AddToCart.jsx';
 import DefaultGallery from './ImageGallery/DefaultGallery.jsx';
 import ProductDescription from './ProductInfo/ProductDescription.jsx';
+import ExpandedModal from './ImageGallery/ExpandedModal.jsx';
 import sampleData from '../../../../example/products.js';
 import axios from 'axios';
 
@@ -14,8 +15,16 @@ class ProductOverview extends React.Component {
       mainProduct: undefined,
       styles: undefined,
       displayStyle: this.props.currentProductStyle.results[0],
+      useModal: false,
     };
     this.updateStyle = this.updateStyle.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.state.useModal) {
+      console.log('im here');
+      document.body.style.overflow = 'hidden';
+    }
   }
 
 
@@ -24,6 +33,18 @@ class ProductOverview extends React.Component {
     this.setState({
       displayStyle: selectedStyle,
     });
+  }
+
+  switchImageModal() {
+    if (!this.state.useModal) {
+      this.setState({
+        useModal: true,
+      });
+    } else {
+      this.setState({
+        useModal: false,
+      });
+    }
   }
 
   render () {
@@ -39,7 +60,8 @@ class ProductOverview extends React.Component {
             changeStyle={this.updateStyle.bind(this)} />
           <AddToCart displayedStyle={this.state.displayStyle} />
         </div>
-        <DefaultGallery photos={this.state.displayStyle.photos} />
+        <DefaultGallery photos={this.state.displayStyle.photos} switchImageModal={this.switchImageModal.bind(this)} />
+        {this.state.useModal ? <ExpandedModal switchModal={this.switchImageModal.bind(this)} /> : null}
       </div>
     );
   }
