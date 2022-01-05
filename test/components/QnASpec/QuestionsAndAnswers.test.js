@@ -17,7 +17,9 @@ import Search from '../../../client/src/components/QnAcomponents/SearchQuestions
 import MoreAnsweredQuestions from '../../../client/src/components/QnAcomponents/MoreAnsweredQuestions.jsx';
 import AnswersList from '../../../client/src/components/QnAcomponents/AnswersList.jsx';
 import AddQuestion from '../../../client/src/components/QnAcomponents/AddQuestion.jsx';
-
+import AddAnswerForm from '../../../client/src/components/QnAcomponents/AddAnswerForm.jsx';
+import AddQuestionForm from '../../../client/src/components/QnAcomponents/AddQuestionForm.jsx';
+import AnswerPhotoUpload from '../../../client/src/components/QnAcomponents/AnswerPhotoUpload.jsx';
 
 const server = setupServer(...handlers);
 
@@ -40,14 +42,18 @@ describe('Questions and Answers rendering', () => {
        />);
   });
 
+
   test('Should render one question', async () => {
     await render(<QuestionsListItem question = {exampleQuestions.questions.results[0]}
-       />);
+        />);
+    expect (screen.getByText('Q:Why is this product cheaper here than other sites?')).toBeInTheDocument();
+
   });
 
   test('Should render question\'s answer ', async () => {
     await render(<QuestionsListItemAnswer answer = {exampleQuestions.answers.results[0]}
-       />);
+    />);
+      expect (screen.getByText('A:What a great question!')).toBeInTheDocument();
   });
 
   test('Should render search component ', async () => {
@@ -56,6 +62,7 @@ describe('Questions and Answers rendering', () => {
 
   test('Should render more answered questions component ', async () => {
     await render(<MoreAnsweredQuestions />);
+    expect (screen.getByText('More answered questions')).toBeInTheDocument();
   });
 
   test('Should render answers list ', async () => {
@@ -64,14 +71,35 @@ describe('Questions and Answers rendering', () => {
 
   test('Should render add question component ', async () => {
     await render(<AddQuestion />);
+    expect (screen.getByText('Add a new question')).toBeInTheDocument();
+
   });
 
+  test('Should render add question form ', async () => {
+    await render(<AddQuestionForm />);
+    expect (screen.getByText('Ask a question')).toBeInTheDocument();
+    expect (screen.getByText('Your question*')).toBeInTheDocument();
+    expect (screen.getByText('What\'s your nickname?*')).toBeInTheDocument();
+    expect (screen.getByText('For privacy reasons, do not use your full name or email address')).toBeInTheDocument();
+    expect (screen.getByText('Your email?*')).toBeInTheDocument();
+    expect (screen.getByText('For authentication reasons, you will not be emailed')).toBeInTheDocument();
 
+  });
 
+  test('Should render add answer form ', async () => {
+    await render(<AddAnswerForm />);
+    expect (screen.getByText('Submit your answer')).toBeInTheDocument();
+    expect (screen.getByText('Your answer*')).toBeInTheDocument();
+    expect (screen.getByText('What\'s your nickname?*')).toBeInTheDocument();
+    expect (screen.getByText('For privacy reasons, do not use your full name or email address')).toBeInTheDocument();
+    expect (screen.getByText('Your email?*')).toBeInTheDocument();
+    expect (screen.getByText('For authentication reasons, you will not be emailed')).toBeInTheDocument();
 
+  });
 
-
-
+  test('Should render uploading photo to answers component', async () => {
+    await render(<AnswerPhotoUpload />);
+  });
 
 
 });
