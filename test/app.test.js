@@ -16,13 +16,15 @@ import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
 import { handlers } from './mocks/handlers.js';
+import { handlers as qnaHandlers } from './mocks/qnaHandlers.js';
 import { products as exampleProducts } from '../example/products.js';
 
-const server = setupServer(...handlers);
+const server = setupServer(...handlers, ...qnaHandlers);
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 test('App should display', () => {
+  // render(<App />);
 });

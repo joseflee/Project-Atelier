@@ -548,16 +548,19 @@
 
 .product-card-container {
   height: 100%;
-  justify-self: center;
-  content: "";
   display: grid;
   clear: both;
   margin: auto;
 }
 
+.product-cards {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
 .product-card {
-  float: left;
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+  display: inline-block;
   max-width: 200px;
   max-height: 500px;
   margin: auto;
@@ -566,7 +569,21 @@
   font-family: arial;
 }
 
-.card-scroll-left{
+.product-description {
+
+}
+
+.original_price {
+  color: red;
+  text-decoration: line-through;
+}
+
+.sale_price {
+  color: red;
+}
+
+.card-scroll-left {
+  display: inline-block;
   left: 20px;
   border: solid black;
   border-width: 0 3px 3px 0;
@@ -575,6 +592,7 @@
 }
 
 .card-scroll-right {
+  display: inline-block;
   left: 425px;
   border: solid black;
   border-width: 0 3px 3px 0;
