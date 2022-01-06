@@ -98,7 +98,7 @@ var addNewAnswerToHR = function addNewAnswerToHR(questionId, body, name, email, 
       callback(null, response.data);
     })
     .catch(function (error) {
-      console.log('error creating new question');
+      console.log('error creating new question', error);
       callback(error, null);
     });
 
