@@ -46,18 +46,16 @@ class AddAnswerForm extends React.Component {
     console.log('line 46 form, photos', photos);
 
 
-    this.props.addNewAnswer(questionId, body, nickname, email, photos, productId);
+    //this.props.addNewAnswer(questionId, body, nickname, email, photos, productId);
+
+    if (validationResult) {
+      this.props.addNewAnswer(questionId, body, nickname, email, photos, productId);
+      this.props.closeAnswer();
 
 
-
-    // if (validationResult) {
-    //   this.props.addNewAnswer(questionId, body, nickname, email, photos, productId);
-    //   this.props.closeAnswer();
-
-
-    // } else {
-    //   alert('Not all fields filled');
-    // }
+    } else {
+      alert('Not all fields filled');
+    }
   }
 
   handleValidation(answer, nickname, email) {

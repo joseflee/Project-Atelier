@@ -152,6 +152,21 @@ class QnA extends React.Component {
       axios.post ('https://api.cloudinary.com/v1_1/dtve8mtfz/upload', formData)
         .then((response) => {
           console.log('uploaded photo', response.data.secure_url);
+          var photosToSend = [];
+          photosToSend.push(response.data.secure_url);
+          //SEND REQUEST TO SERVER TO ADD A NEW ANSWER
+          var url = 'http://localhost:3000/qna/addNewAnswer';
+          axios.post(url, {params: {id: questionId, productId: productId, body: body, name: nickname, email: email, photos: photosToSend}})
+            .then((response) => {
+              console.log('added new answer', response.data.results);
+              //render new answer in the parent component
+              this.updateQuestionList(response.data.results);
+
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+
         })
         .catch((err) => {
           console.log('error uploading photo', err);
@@ -160,18 +175,7 @@ class QnA extends React.Component {
 
 
 
-    // //SEND REQUEST TO SERVER TO ADD A NEW ANSWER
-    // var url = 'http://localhost:3000/qna/addNewAnswer';
-    // axios.post(url, {params: {id: questionId, productId: productId, body: body, name: nickname, email: email, photos: photos}})
-    //   .then((response) => {
-    //     console.log('added new answer', response.data.results);
-    //     //render new answer in the parent component
-    //     this.updateQuestionList(response.data.results);
 
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
   }
 
   updateQuestionList(questions) {
