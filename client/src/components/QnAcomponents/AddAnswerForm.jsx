@@ -32,7 +32,7 @@ class AddAnswerForm extends React.Component {
     });
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
     event.preventDefault();
     var questionId = this.props.questionId;
     var body = this.state.answerBody;
@@ -43,7 +43,8 @@ class AddAnswerForm extends React.Component {
     var validationResult = this.handleValidation(body, nickname, email);
     var productId = this.props.productId;
 
-    console.log('line 46 form, photos', photos);
+    //console.log('line 46 form, photos', photos);
+    //this.props.closeAnswer();
 
 
     //this.props.addNewAnswer(questionId, body, nickname, email, photos, productId);
@@ -119,7 +120,7 @@ class AddAnswerForm extends React.Component {
             <br />
             <AnswerPhotoUpload handlePhotos={this.handlePhotos} />
           </label>
-          <input type="submit" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
+          <input type="submit" value="Submit" onClick = {this.handleSubmit} />
         </form>
       </div>
     );

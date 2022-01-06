@@ -40,15 +40,29 @@ class QuestionsListItem extends React.Component {
     });
   }
 
-  addAnswerHandleClick() {
+  addAnswerHandleClick(event) {
+    //event.stopPropagation();
+    console.log('should be triggered once');
     this.setState({
       isAddAnswerClicked: true
     });
   }
 
   closeAnswerForm() {
-    this.setState({
-      isAddAnswerClicked: false
+     console.log('triggered close answer');
+     console.log('before triggering closing', this.state);
+    // this.setState({
+    //   isAddAnswerClicked: false
+    // }, ()=> {
+    //   console.log('should be after closing', this.state);
+    // });
+    this.setState((prevState) => {
+      console.log(prevState);
+      return {
+        isAddAnswerClicked: false
+      };
+    }, () => {
+      console.log('updated', this.state);
     });
   }
 
@@ -101,7 +115,7 @@ class QuestionsListItem extends React.Component {
 
       />;
     } else {
-      addAnswer = <u>Add answer</u>;
+      addAnswer = <div onClick={this.addAnswerHandleClick}><u>Add answer</u></div>;
     }
 
     return (
@@ -112,7 +126,7 @@ class QuestionsListItem extends React.Component {
           <div className='question-item-q-letter'><h2>Q:{this.props.question.question_body}</h2></div>
           <div className='question-item-helpful-keyword' >Helpful?</div>
           <div className='question-item-yes-button' onClick={()=>{ this.clickOnHelpful(); }}><u>Yes</u>({this.props.question.question_helpfulness})</div>
-          <div className='question-item-add-answer-link' onClick={()=>this.addAnswerHandleClick()}>{addAnswer}</div>
+          <div className='question-item-add-answer-link' >{addAnswer}</div>
         </div>
         {/* end of question item */}
         {answersList}
