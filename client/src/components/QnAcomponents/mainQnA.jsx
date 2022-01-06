@@ -144,6 +144,7 @@ class QnA extends React.Component {
 
   addNewAnswer(questionId, body, nickname, email, photos, productId) {
     console.log('144 main', photos);
+    var photosToSend = [];
     for (var i = 0; i < photos.length; i++) {
       let file = photos[i];
       var formData = new FormData();
@@ -152,7 +153,6 @@ class QnA extends React.Component {
       axios.post ('https://api.cloudinary.com/v1_1/dtve8mtfz/upload', formData)
         .then((response) => {
           console.log('uploaded photo', response.data.secure_url);
-          var photosToSend = [];
           photosToSend.push(response.data.secure_url);
           //SEND REQUEST TO SERVER TO ADD A NEW ANSWER
           var url = 'http://localhost:3000/qna/addNewAnswer';

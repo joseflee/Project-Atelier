@@ -5,7 +5,8 @@ class PhotoUpload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: []
+      file: [],
+      filesToSend: []
     };
 
     this.uploadSingleFile = this.uploadSingleFile.bind(this);
@@ -18,12 +19,13 @@ class PhotoUpload extends React.Component {
 
 
     this.setState({
-      file: [...this.state.file, (e.target.files[0])]
+      file: [...this.state.file, URL.createObjectURL(e.target.files[0])],
+      filesToSend: [...this.state.filesToSend, e.target.files[0]]
     }, ()=> {
-      var photos = [...this.state.file];
+      //var photos = [...this.state.file];
       console.log(e.target.files[0]);
 
-      this.props.handlePhotos(this.state.file);
+      this.props.handlePhotos(this.state.filesToSend);
 
     });
 
