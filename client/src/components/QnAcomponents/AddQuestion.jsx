@@ -10,6 +10,7 @@ class AddQuestion extends React.Component {
       productId: this.props.productId
     };
     this.clickOnAddQuestion = this.clickOnAddQuestion.bind(this);
+    this.closeForm = this.closeForm.bind(this);
 
   }
 
@@ -17,6 +18,14 @@ class AddQuestion extends React.Component {
     this.setState({
       isModalShown: true,
       isAddButtonShown: false
+    });
+  }
+
+  closeForm() {
+    console.log('close form is triggered');
+    this.setState({
+      isModalShown: false,
+      isAddButtonShown: true
     });
   }
 
@@ -29,6 +38,7 @@ class AddQuestion extends React.Component {
         name={this.props.name}
         productId={this.props.productId}
         addQuestion={this.props.addQuestion}
+        closeForm={this.closeForm}
       /></div>;
     } else {
       modal = <div></div>;

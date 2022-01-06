@@ -37,6 +37,7 @@ class AddQuestionForm extends React.Component {
         isValid: true
       });
       this.props.addQuestion(productId, body, nickname, email);
+      this.props.closeForm();
 
     } else {
       alert ('Not all fields are filled');
