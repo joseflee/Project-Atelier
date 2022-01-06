@@ -1,6 +1,7 @@
 const relProductRouter = require('express').Router();
 const getRelatedProduct = require ('../relProductApi.js');
 const productApi = require('../ProductApi.js');
+const ratingApi = require('../RatingApi.js');
 
 relProductRouter.get('/related_products', async (req, res) => {
   let productId = req.query.Id;
@@ -10,9 +11,11 @@ relProductRouter.get('/related_products', async (req, res) => {
   var data = await Promise.all(relatedProductsIdList.map(async relProdId => {
     var prodInfo = await productApi.getSpecificProduct(relProdId);
     var prodStyleInfo = await productApi.getProductStyles(relProdId);
+    var prodRatingInfo = await ratingApi.ratingOverview(relProdId);
     var relProdData = {
       ...prodInfo,
-      ...prodStyleInfo
+      ...prodStyleInfo,
+      ...prodRatingInfo
     };
 
     return relProdData;

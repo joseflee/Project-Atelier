@@ -8,6 +8,7 @@ import {render, waitFor, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import '@testing-library/jest-dom';
+import App from '../../../client/src/app.jsx';
 import RelProducts from '../../../client/src/components/RelProductsComponents/RelProducts.jsx';
 import MyOutfitCards from '../../../client/src/components/RelProductsComponents/MyOutfitCards.jsx';
 import ProductCards from '../../../client/src/components/RelProductsComponents/ProductCards.jsx';
@@ -44,7 +45,9 @@ afterAll(() => server.close());
 xdescribe('Related Products Component Testing', () => {
   test('Loads and displays a Related Products Component', async () => {
     // Renders a Component for this specific test
-    await render(<RelProducts productId='' />);
+    // await render(<App />);
+    await render(<RelProducts productId='59553' />);
+    screen.debug();
 
     await waitFor(async () => {
       expect(await screen.getByText('Related Products and My Outfits')).toBeInTheDocument();

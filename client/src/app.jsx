@@ -18,29 +18,25 @@ class App extends React.Component {
       relatedProducts: null,
       questionsNAnswers: null,
     };
+
+    this.updateProduct = this.updateProduct.bind(this);
   }
 
-  async componentDidMount() {
-    // var productInfo = await getProductInfo(this.state.productId);
-    // var productStyleInfo = await getStyleInfo(this.state.productId);
-    // var relProductInfo = await getRelatedProductInfo(this.state.productId);
-    // var questionsList = await getQuestionsListInfo(this.state.productId);
-    // var reviewInfo = await getReviewInfo(this.state.productId);
+  componentDidMount() {
+    this.updateProduct(this.state.productId);
+  }
 
-    // await this.setState({
-    //   currentProduct: productInfo,
-    //   currentProductStyle: productStyleInfo,
-    //   relatedProducts: relProductInfo,
-    //   questionsNAnswers: questionsList,
-    //   productReview: reviewInfo,
-    // });
+  async updateProduct(productId) {
+    console.log('updateProduct: ', productId);
+
     const [productInfo, productStyleInfo, relProductInfo, questionsList, reviewInfo] = await Promise.all([
-      getProductInfo(this.state.productId),
-      getStyleInfo(this.state.productId),
-      getRelatedProductInfo(this.state.productId),
-      getQuestionsListInfo(this.state.productId),
-      getReviewInfo(this.state.productId)
+      getProductInfo(productId),
+      getStyleInfo(productId),
+      getRelatedProductInfo(productId),
+      getQuestionsListInfo(productId),
+      getReviewInfo(productId)
     ]);
+
     this.setState({
       currentProduct: productInfo,
       currentProductStyle: productStyleInfo,
@@ -66,7 +62,7 @@ class App extends React.Component {
       return (
         <div>
           <ProductOverview productId={this.state.productId} currentProduct={this.state.currentProduct} currentProductStyle={this.state.currentProductStyle} currentReview={this.state.productReview} />
-          <RelProducts productId={this.state.productId} currentProduct={this.state.currentProduct} currentProductStyle={this.state.productStyleInfo} relatedProducts={this.state.relatedProducts} />
+          <RelProducts productId={this.state.productId} currentProduct={this.state.currentProduct} currentProductStyle={this.state.productStyleInfo} relatedProducts={this.state.relatedProducts} handleClick={this.updateProduct}/>
           <QnA productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
           <RatingsNReviews productId={this.state.productId} currentProduct={this.state.currentProduct} />
         </div>
