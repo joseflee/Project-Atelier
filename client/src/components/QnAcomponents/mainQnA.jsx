@@ -145,33 +145,48 @@ class QnA extends React.Component {
   addNewAnswer(questionId, body, nickname, email, photos, productId) {
     console.log('144 main', photos);
     var photosToSend = [];
+    var allPromises = [];
     for (var i = 0; i < photos.length; i++) {
-      let file = photos[i];
-      var formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', config.uploadPreset);
-      axios.post ('https://api.cloudinary.com/v1_1/dtve8mtfz/upload', formData)
-        .then((response) => {
-          console.log('uploaded photo', response.data.secure_url);
-          photosToSend.push(response.data.secure_url);
-          //SEND REQUEST TO SERVER TO ADD A NEW ANSWER
-          var url = 'http://localhost:3000/qna/addNewAnswer';
-          axios.post(url, {params: {id: questionId, productId: productId, body: body, name: nickname, email: email, photos: photosToSend}})
-            .then((response) => {
-              console.log('added new answer', response.data.results);
-              //render new answer in the parent component
-              this.updateQuestionList(response.data.results);
-
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-
-        })
-        .catch((err) => {
-          console.log('error uploading photo', err);
-        });
+      var promise = new Promise((resolve, reject)=>{
+        let file = photos[i];
+        var formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', config.uploadPreset);
+        axios.post ('https://api.cloudinary.com/v1_1/dtve8mtfz/upload', formData)
+          .then((response) => {
+            console.log('uploaded photo', response.data.secure_url);
+            photosToSend.push(response.data.secure_url);
+            resolve();
+          }). catch(err => {
+            console.log(err);
+            reject();
+          });
+      });
+      console.log('promises array', allPromises);
+      allPromises.push(promise);
     }
+    Promise.all(allPromises)
+      .then(result => {
+        console.log('promises resolved');
+        //SEND REQUEST TO SERVER TO ADD A NEW ANSWER
+        var url = 'http://localhost:3000/qna/addNewAnswer';
+        axios.post(url, {params: {id: questionId, productId: productId, body: body, name: nickname, email: email, photos: photosToSend}})
+          .then((response) => {
+            console.log('added new answer', response.data.results);
+            //render new answer in the parent component
+            this.updateQuestionList(response.data.results);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+
+
+    // })
+    // .catch((err) => {
+    //   console.log('error uploading photo', err);
+    // });
+
 
 
 
