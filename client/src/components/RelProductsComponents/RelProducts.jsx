@@ -9,7 +9,6 @@ class RelProducts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentProduct: this.props.currentProduct,
       listOfMyOutfits: [],
       leftArrowDisplay: true,
       rightArrowDisplay: true
@@ -28,21 +27,33 @@ class RelProducts extends React.Component {
     var element = e.target;
     if (this.state.listOfMyOutfits.length === 0) {
       this.setState({
-        listOfMyOutfits: [this.state.currentProduct]
+        listOfMyOutfits: [this.props.currentProduct]
       });
     } else {
+      var isPresent = false;
+
       for (var i = 0; i < this.state.listOfMyOutfits.length; i++) {
-        console.log(this.state.listOfMyOutfits[i].id);
-        if (this.state.listOfMyOutfits[i].id !== this.state.currentProduct.id) {
-          this.setState({
-            listOfMyOutfits: [this.state.currentProduct, ...this.state.listOfMyOutfits]
-          });
+        console.log(this.state.listOfMyOutfits[i].id, this.props.currentProduct.id);
+        if (this.state.listOfMyOutfits[i].id !== this.props.currentProduct.id) {
+          isPresent = false;
+        } else {
+          isPresent = true;
+          return;
         }
+      }
+
+      console.log(isPresent);
+
+      if (isPresent === false) {
+        this.setState({
+          listOfMyOutfits: [this.props.currentProduct, ...this.state.listOfMyOutfits]
+        });
       }
     }
   }
 
   render() {
+    console.log(this.state.currentProduct);
     return (
       <div className="rel-prod-container">
         <h2>Related Products and My Outfits</h2>

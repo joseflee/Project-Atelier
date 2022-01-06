@@ -78,7 +78,9 @@ class ProductCards extends React.Component {
               }
 
               return (
-                <div className="product-card" key={product.id} onClick={() => {this.props.handleClick(product.id);}}>
+                <div className="product-card" key={product.id} onClick={() => {
+                  this.props.handleClick(product.id);
+                }}>
                   <DisplayImg src={product.results[0].photos[0].thumbnail_url} />
                   <StarRating ratings={product.ratings} />
                   <div className="product-description">
