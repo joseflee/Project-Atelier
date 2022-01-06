@@ -9,13 +9,10 @@ class PhotoUpload extends React.Component {
     };
 
     this.uploadSingleFile = this.uploadSingleFile.bind(this);
-    //this.uploadImage = this.uploadImage.bind(this);
 
   }
 
-  // uploadImage(base64file) {
-  //   console.log(base64file);
-  // }
+
 
   uploadSingleFile(e) {
 
@@ -23,32 +20,18 @@ class PhotoUpload extends React.Component {
     this.setState({
       file: [...this.state.file, (e.target.files[0])]
     }, ()=> {
-      //this.props.handlePhotos(this.state.file);
       var photos = [...this.state.file];
       console.log(e.target.files[0]);
-      //make base 64 file from each photo
-      // for (var i = 0; i < photos.length; i++) {
-      //   const reader = new FileReader();
-      //   reader.readAsDataURL(photos[i]);
-      //   reader.onloadend = () => {
+
       this.props.handlePhotos(this.state.file);
-      //   };
-      //   reader.onerror = () => {
-      //     console.error('AHHHHHHHH!!');
-      //     setErrMsg('something went wrong!');
-      //   };
-      // }
+
     });
 
 
 
   }
 
-  // let upload = function upload(e) {
-  //   e.preventDefault();
-  //   console.log('clicked on upload');
-  //   props.handlePhotos(file);
-  // };
+
   render() {
     return (
       <div>
