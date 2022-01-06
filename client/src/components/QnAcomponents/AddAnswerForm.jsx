@@ -39,15 +39,8 @@ class AddAnswerForm extends React.Component {
     var nickname = this.state.nickname;
     var email = this.state.email;
     var photos = this.state.photos;
-    //console.log('42', this.state);
     var validationResult = this.handleValidation(body, nickname, email);
     var productId = this.props.productId;
-
-    //console.log('line 46 form, photos', photos);
-    //this.props.closeAnswer();
-
-
-    //this.props.addNewAnswer(questionId, body, nickname, email, photos, productId);
 
     if (validationResult) {
       this.props.addNewAnswer(questionId, body, nickname, email, photos, productId);

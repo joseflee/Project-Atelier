@@ -49,13 +49,9 @@ class QuestionsListItem extends React.Component {
   }
 
   closeAnswerForm() {
-     console.log('triggered close answer');
-     console.log('before triggering closing', this.state);
-    // this.setState({
-    //   isAddAnswerClicked: false
-    // }, ()=> {
-    //   console.log('should be after closing', this.state);
-    // });
+    //console.log('triggered close answer');
+    //console.log('before triggering closing', this.state);
+
     this.setState((prevState) => {
       console.log(prevState);
       return {
