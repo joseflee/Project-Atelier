@@ -20,14 +20,6 @@ class ProductOverview extends React.Component {
     this.updateStyle = this.updateStyle.bind(this);
   }
 
-  componentDidMount() {
-    if (this.state.useModal) {
-      console.log('im here');
-      document.body.style.overflow = 'hidden';
-    }
-  }
-
-
   updateStyle(selectedStyle) {
     // console.log('selectedStyle', selectedStyle);
     this.setState({
@@ -61,7 +53,7 @@ class ProductOverview extends React.Component {
           <AddToCart displayedStyle={this.state.displayStyle} />
         </div>
         <DefaultGallery photos={this.state.displayStyle.photos} switchImageModal={this.switchImageModal.bind(this)} />
-        {this.state.useModal ? <ExpandedModal switchModal={this.switchImageModal.bind(this)} /> : null}
+        {this.state.useModal ? <ExpandedModal photos={this.state.displayStyle.photos} switchModal={this.switchImageModal.bind(this)} /> : null}
       </div>
     );
   }

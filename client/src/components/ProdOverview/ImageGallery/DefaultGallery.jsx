@@ -48,7 +48,7 @@ class DefaultGallery extends React.Component {
   }
 
   render () {
-    console.log('image props', this.props);
+    // console.log('image props', this.props);
     return (
       <div className='POImageGallery' data-testid="ImageGallery">
         <div className='POThumbContainer'>
