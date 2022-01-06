@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import AnswerPhotoUpload from './AnswerPhotoUpload.jsx';
 
 class AddAnswerForm extends React.Component {
   constructor(props) {
@@ -7,10 +8,12 @@ class AddAnswerForm extends React.Component {
     this.state = {
       answerBody: '',
       nickname: '',
-      email: ''
+      email: '',
+      photos: []
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePhotos = this.handlePhotos.bind(this);
   }
 
   handleInputChange(event) {
@@ -22,13 +25,21 @@ class AddAnswerForm extends React.Component {
     });
   }
 
+  handlePhotos(photos) {
+    console.log('triggered handle photos', photos);
+    this.setState({
+      photos: photos
+    });
+  }
+
   handleSubmit() {
     event.preventDefault();
     var questionId = this.props.questionId;
     var body = this.state.answerBody;
     var nickname = this.state.nickname;
     var email = this.state.email;
-    var photos = [];
+    var photos = this.state.photos;
+    console.log('42', this.state);
     var validationResult = this.handleValidation(body, nickname, email);
     var productId = this.props.productId;
 
@@ -64,7 +75,7 @@ class AddAnswerForm extends React.Component {
             <input
               name='answerBody'
               type='text'
-              maxlength='1000'
+              maxLength='1000'
               value={this.state.answerBody}
               onChange={this.handleInputChange}
             />
@@ -75,7 +86,7 @@ class AddAnswerForm extends React.Component {
             <input
               name='nickname'
               type='text'
-              maxlength='60'
+              maxLength='60'
               placeholder='Example: jack543'
               value={this.state.nickname}
               onChange={this.handleInputChange}
@@ -89,7 +100,7 @@ class AddAnswerForm extends React.Component {
             <input
               name='email'
               type='text'
-              maxlength='60'
+              maxLength='60'
               placeholder='Example: jack@email.com'
               value={this.state.email}
               onChange={this.handleInputChange}
@@ -98,6 +109,10 @@ class AddAnswerForm extends React.Component {
             <i>For authentication reasons, you will not be emailed</i>
           </label>
           <br />
+          <label>
+            <br />
+            <AnswerPhotoUpload handlePhotos={this.handlePhotos} />
+          </label>
           <input type="submit" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
         </form>
       </div>

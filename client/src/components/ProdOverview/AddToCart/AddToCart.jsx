@@ -32,11 +32,10 @@ class AddToCart extends React.Component {
       desiredQuantity: quantity
     });
   }
-
   render () {
     // console.log('state', this.state);
     return (
-      <div className='addToCart'>
+      <div className='POAddToCart'>
         <SizeDropdown displayedSkus={this.props.displayedStyle.skus} changeSku={this.changeSku.bind(this)} />
         <QuantityDropdown selectedQuantity={this.state.skuQuantity} />
         <button onClick={this.updateQuantity.bind(this)}>Add To Cart</button>

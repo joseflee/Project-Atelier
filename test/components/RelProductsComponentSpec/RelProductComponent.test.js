@@ -42,7 +42,7 @@ afterAll(() => server.close());
 
 // MOCK SERVER SETUP - END ------------------>
 
-describe('Related Products Component Testing', () => {
+xdescribe('Related Products Component Testing', () => {
   test('Loads and displays a Related Products Component', async () => {
     // Renders a Component for this specific test
     // await render(<App />);
