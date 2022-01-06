@@ -33,7 +33,7 @@ const HelpfulButton = ({reviewId, helpfulness, markClicked, clickedList})=>{
     }
   };
   return (
-    <div className='review-helpful'>
+    <div data-testid="review-helpful" className='review-helpful'>
       {clicked ?
         <div>
           <span>HelpFul ?</span>

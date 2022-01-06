@@ -42,7 +42,7 @@ const dummyReviews = {
       "body": "Comfortable and practical.",
       "date": "2019-04-14T00:00:00.000Z",
       "reviewer_name": "shortandsweeet",
-      "helpfulness": 1,
+      "helpfulness": 99,
       "photos": [{
           "id": 1,
           "url": "https://ucarecdn.com/97ebb29a-775a-4786-8a7f-ea44e88e28bf/"
@@ -74,7 +74,7 @@ const dummyReviews = {
       "body": "They are very dark. But that's good because I'm in very sunny spots",
       "date": "2019-06-23T00:00:00.000Z",
       "reviewer_name": "bigbrotherbenjamin",
-      "helpfulness": 2,
+      "helpfulness": 98,
       "photos": [],
     },
     {
