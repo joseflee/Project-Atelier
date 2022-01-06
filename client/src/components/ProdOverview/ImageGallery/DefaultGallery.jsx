@@ -48,6 +48,7 @@ class DefaultGallery extends React.Component {
   }
 
   render () {
+    // console.log('image props', this.props);
     return (
       <div className='POImageGallery' data-testid="ImageGallery">
         <div className='POThumbContainer'>
@@ -61,7 +62,7 @@ class DefaultGallery extends React.Component {
         </div>
         <div className='POImgContainer'>
           <i className='POLeftArrow' onClick={this.rotateLeft.bind(this)}></i>
-          <img className='PODisplayImg' src={this.props.photos[this.state.selectedIndex].url} />
+          <img className='PODisplayImg' src={this.props.photos[this.state.selectedIndex].url} onClick={this.props.switchImageModal} />
           <i className='PORightArrow' onClick={this.rotateRight.bind(this)}></i>
         </div>
       </div>
