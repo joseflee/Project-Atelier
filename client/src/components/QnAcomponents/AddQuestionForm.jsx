@@ -57,7 +57,7 @@ class AddQuestionForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='qna-add-new-question-form'>
         <div className = 'qna-add-question-main-title'>Ask a question</div>
         <div className ='qna-add-question-subtitle'>About the {this.props.name}</div>
         <form>
@@ -103,6 +103,7 @@ class AddQuestionForm extends React.Component {
           <input type="submit" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
         </form>
       </div>
+      
     );
   }
 }
