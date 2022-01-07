@@ -4,7 +4,7 @@ import ProductBreakDown from './ProductBreakDown.jsx';
 import axios from 'axios';
 import HelpfulButton from './HelpfulButton.jsx';
 import NewReview from './NewReview.jsx';
-// import SearchBar from './SearchBar.jsx';
+import SearchBar from './SearchBar.jsx';
 
 const ReviewList = ( {productId, currentProduct} )=>{
   const [selectedArray, setSelectedArray] = useState('totalReviewArray');
