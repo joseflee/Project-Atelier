@@ -252,21 +252,21 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
                       }));
                     }}
                   />
-                  <span className={ratingValue <= (rating.val || hover) ? 'newReview-Star-After' : 'newReview-Star'}
+                  <span data-testid='newReview-rating-star' className={ratingValue <= (rating.val || hover) ? 'newReview-Star-After' : 'newReview-Star'}
                     onMouseEnter={() => { setHover(ratingValue); }}
                     onMouseLeave={() => { setHover(null); }}>
                   </span>
                 </label>
               );
             })}
-            <span>&nbsp; {generateText()}</span>
+            <span data-testid='newReview-rating-star-text'>&nbsp; {generateText()}</span>
           </div>
           <div className='newReview-Recommended'>
             <h3>Do you recommend this product ? &#42;</h3>
             {!recommended ? <p style={{ color: 'red' }}>{recommendedErr}</p> : null}
-            <input type="radio" id="newReview-recommendedY" name="recommended" value="Yes" onChange={() => { setRecommended('true'); }} />
+            <input data-testid='newReview-recommendedY' type="radio" id="newReview-recommendedY" name="recommended" value= 'Yes' onChange={() => { setRecommended('true'); }} />
             <label htmlFor="newReview-recommendedY">Yes</label>
-            <input type="radio" id="newReview-recommendedN" name="recommended" value="No" onChange={() => { setRecommended('false'); }} />
+            <input data-testid='newReview-recommendedN' type="radio" id="newReview-recommendedN" name="recommended" value= 'No' onChange={() => { setRecommended('false'); }} />
             <label htmlFor="newReview-recommendedN">No</label>
           </div>
 
@@ -275,38 +275,38 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
             { characteristics && characteristics.Fit === undefined ? null : <div className='newReview-Characteristics-Fit'>
               {fitVal.rate ? <p>{fitVal.text[fitVal.rate]}</p> : <p style={{ color: 'red' }}>none selected</p>}
               <span style={{ fontWeight: 'bold' }}>Fit</span>
-              <input type="radio" id="newReview-fit-1" name="Fit-1" value="1" checked={fitVal.rate === '1' ? true : false} onChange={e => {
+              <input data-testid='newReview-fit-1' type="radio" id="newReview-fit-1" name="Fit-1" value={fitVal.rate} checked={fitVal.rate === '1' ? true : false} onChange={e => {
                 setFitVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '1'
                 }));
               }} />
               <label htmlFor="newReview-fit-1">1</label>
-              <input type="radio" id="newReview-fit-2" name="Fit-2" value="2" checked={fitVal.rate === '2' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-fit-2" name="Fit-2" value={fitVal.rate} checked={fitVal.rate === '2' ? true : false} onChange={e => {
                 setFitVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '2'
                 }));
               }} />
               <label htmlFor="newReview-fit-2">2</label>
-              <input type="radio" id="newReview-fit-3" name="Fit-3" value="3" checked={fitVal.rate === '3' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-fit-3" name="Fit-3" value={fitVal.rate} checked={fitVal.rate === '3' ? true : false} onChange={e => {
                 setFitVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '3'
                 }));
               }} />
               <label htmlFor="newReview-fit-3">3</label>
-              <input type="radio" id="newReview-fit-4" name="Fit-4" value="4" checked={fitVal.rate === '4' ? true : false} onChange={e => {
+              <input data-testid='newReview-fit-4' type="radio" id="newReview-fit-4" name="Fit-4" value={fitVal.rate} checked={fitVal.rate === '4' ? true : false} onChange={e => {
                 setFitVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '4'
                 }));
               }} />
               <label htmlFor="newReview-fit-4">4</label>
-              <input type="radio" id="newReview-fit-5" name="Fit-5" value="5" checked={fitVal.rate === '5' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-fit-5" name="Fit-5" value={fitVal.rate} checked={fitVal.rate === '5' ? true : false} onChange={e => {
                 setFitVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '5'
                 }));
               }} />
               <label htmlFor="newReview-fit-5">5</label>
@@ -316,38 +316,38 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
             { characteristics && characteristics.Length === undefined ? null : <div className='newReview-Characteristics-Length'>
               {lengthVal.rate ? <p>{lengthVal.text[lengthVal.rate]}</p> : <p style={{ color: 'red' }}>none selected</p>}
               <span style={{ fontWeight: 'bold' }}>Length</span>
-              <input type="radio" id="newReview-length-1" name="Length-1" value="1" checked={lengthVal.rate === '1' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-length-1" name="Length-1" value={lengthVal.rate} checked={lengthVal.rate === '1' ? true : false} onChange={e => {
                 setLengthVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '1'
                 }));
               }} />
               <label htmlFor="newReview-length-1">1</label>
-              <input type="radio" id="newReview-length-2" name="Length-2" value="2" checked={lengthVal.rate === '2' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-length-2" name="Length-2" value={lengthVal.rate} checked={lengthVal.rate === '2' ? true : false} onChange={e => {
                 setLengthVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '2'
                 }));
               }} />
               <label htmlFor="newReview-length-2">2</label>
-              <input type="radio" id="newReview-length-3" name="Length-3" value="3" checked={lengthVal.rate === '3' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-length-3" name="Length-3" value={lengthVal.rate} checked={lengthVal.rate === '3' ? true : false} onChange={e => {
                 setLengthVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '3'
                 }));
               }} />
               <label htmlFor="newReview-length-3">3</label>
-              <input type="radio" id="newReview-length-4" name="Length-4" value="4" checked={lengthVal.rate === '4' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-length-4" name="Length-4" value={lengthVal.rate} checked={lengthVal.rate === '4' ? true : false} onChange={e => {
                 setLengthVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '4'
                 }));
               }} />
               <label htmlFor="newReview-length-4">4</label>
-              <input type="radio" id="newReview-length-5" name="Length-5" value="5" checked={lengthVal.rate === '5' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-length-5" name="Length-5" value={lengthVal.rate} checked={lengthVal.rate === '5' ? true : false} onChange={e => {
                 setLengthVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '5'
                 }));
               }} />
               <label htmlFor="newReview-length-5">5</label>
@@ -357,38 +357,38 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
             { characteristics && characteristics.Quality === undefined ? null : <div className='newReview-Characteristics-Quality'>
               {qualityVal.rate ? <p>{qualityVal.text[qualityVal.rate]}</p> : <p style={{ color: 'red' }}>none selected</p>}
               <span style={{ fontWeight: 'bold' }}>Quality</span>
-              <input type="radio" id="newReview-quality-1" name="Quality-1" value="1" checked={qualityVal.rate === '1' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-quality-1" name="Quality-1" value={qualityVal.rate} checked={qualityVal.rate === '1' ? true : false} onChange={e => {
                 setQualityVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '1'
                 }));
               }} />
               <label htmlFor="newReview-quality-1">1</label>
-              <input type="radio" id="newReview-quality-2" name="Quality-2" value="2" checked={qualityVal.rate === '2' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-quality-2" name="Quality-2" value={qualityVal.rate} checked={qualityVal.rate === '2' ? true : false} onChange={e => {
                 setQualityVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '2'
                 }));
               }} />
               <label htmlFor="newReview-quality-2">2</label>
-              <input type="radio" id="newReview-quality-3" name="Quality-3" value="3" checked={qualityVal.rate === '3' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-quality-3" name="Quality-3" value={qualityVal.rate} checked={qualityVal.rate === '3' ? true : false} onChange={e => {
                 setQualityVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '3'
                 }));
               }} />
               <label htmlFor="newReview-quality-3">3</label>
-              <input type="radio" id="newReview-quality-4" name="Quality-4" value="4" checked={qualityVal.rate === '4' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-quality-4" name="Quality-4" value={qualityVal.rate} checked={qualityVal.rate === '4' ? true : false} onChange={e => {
                 setQualityVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '4'
                 }));
               }} />
               <label htmlFor="newReview-quality-4">4</label>
-              <input type="radio" id="newReview-quality-5" name="Quality-5" value="5" checked={qualityVal.rate === '5' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-quality-5" name="Quality-5" value={qualityVal.rate} checked={qualityVal.rate === '5' ? true : false} onChange={e => {
                 setQualityVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '5'
                 }));
               }} />
               <label htmlFor="newReview-quality-5">5</label>
@@ -399,38 +399,38 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
             { characteristics && characteristics.Comfort === undefined ? null : <div className='newReview-Characteristics-Comfort'>
               {comfortVal.rate ? <p>{comfortVal.text[comfortVal.rate]}</p> : <p style={{ color: 'red' }}>none selected</p>}
               <span style={{ fontWeight: 'bold' }}>Comfort</span>
-              <input type="radio" id="newReview-comfort-1" name="Comfort-1" value="1" checked={comfortVal.rate === '1' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-comfort-1" name="Comfort-1" value={comfortVal.rate} checked={comfortVal.rate === '1' ? true : false} onChange={e => {
                 setComfortVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '1'
                 }));
               }} />
               <label htmlFor="newReview-comfort-1">1</label>
-              <input type="radio" id="newReview-comfort-2" name="Comfort-2" value="2" checked={comfortVal.rate === '2' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-comfort-2" name="Comfort-2" value={comfortVal.rate} checked={comfortVal.rate === '2' ? true : false} onChange={e => {
                 setComfortVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '2'
                 }));
               }} />
               <label htmlFor="newReview-comfort-2">2</label>
-              <input type="radio" id="newReview-comfort-3" name="Comfort-3" value="3" checked={comfortVal.rate === '3' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-comfort-3" name="Comfort-3" value={comfortVal.rate} checked={comfortVal.rate === '3' ? true : false} onChange={e => {
                 setComfortVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '3'
                 }));
               }} />
               <label htmlFor="newReview-comfort-3">3</label>
-              <input type="radio" id="newReview-comfort-4" name="Comfort-4" value="4" checked={comfortVal.rate === '4' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-comfort-4" name="Comfort-4" value={comfortVal.rate} checked={comfortVal.rate === '4' ? true : false} onChange={e => {
                 setComfortVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '4'
                 }));
               }} />
               <label htmlFor="newReview-comfort-4">4</label>
-              <input type="radio" id="newReview-comfort-5" name="Comfort-5" value="5" checked={comfortVal.rate === '5' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-comfort-5" name="Comfort-5" value={comfortVal.rate} checked={comfortVal.rate === '5' ? true : false} onChange={e => {
                 setComfortVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '5'
                 }));
               }} />
               <label htmlFor="newReview-comfort-5">5</label>
@@ -440,38 +440,38 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
             { characteristics && characteristics.Width === undefined ? null : <div className='newReview-Characteristics-Width'>
               {widthVal.rate ? <p>{widthVal.text[widthVal.rate]}</p> : <p style={{ color: 'red' }}>none selected</p>}
               <span style={{ fontWeight: 'bold' }}>Width</span>
-              <input type="radio" id="newReview-width-1" name="Width-1" value="1" checked={widthVal.rate === '1' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-width-1" name="Width-1" value={widthVal.rate} checked={widthVal.rate === '1' ? true : false} onChange={e => {
                 setWidthVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '1'
                 }));
               }} />
               <label htmlFor="newReview-width-1">1</label>
-              <input type="radio" id="newReview-width-2" name="Width-2" value="2" checked={widthVal.rate === '2' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-width-2" name="Width-2" value={widthVal.rate} checked={widthVal.rate === '2' ? true : false} onChange={e => {
                 setWidthVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '2'
                 }));
               }} />
               <label htmlFor="newReview-width-2">2</label>
-              <input type="radio" id="newReview-width-3" name="Width-3" value="3" checked={widthVal.rate === '3' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-width-3" name="Width-3" value={widthVal.rate} checked={widthVal.rate === '3' ? true : false} onChange={e => {
                 setWidthVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '3'
                 }));
               }} />
               <label htmlFor="newReview-width-3">3</label>
-              <input type="radio" id="newReview-width-4" name="Width-4" value="4" checked={widthVal.rate === '4' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-width-4" name="Width-4" value={widthVal.rate} checked={widthVal.rate === '4' ? true : false} onChange={e => {
                 setWidthVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '4'
                 }));
               }} />
               <label htmlFor="newReview-width-4">4</label>
-              <input type="radio" id="newReview-width-5" name="Width-5" value="5" checked={widthVal.rate === '5' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-width-5" name="Width-5" value={widthVal.rate} checked={widthVal.rate === '5' ? true : false} onChange={e => {
                 setWidthVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '5'
                 }));
               }} />
               <label htmlFor="newReview-width-5">5</label>
@@ -481,38 +481,38 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
             { characteristics && characteristics.Size === undefined ? null : <div className='newReview-Characteristics-Size'>
               {sizeVal.rate ? <p>{sizeVal.text[sizeVal.rate]}</p> : <p style={{ color: 'red' }}>none selected</p>}
               <span style={{ fontWeight: 'bold' }}>Size</span>
-              <input type="radio" id="newReview-size-1" name="Size-1" value="1" checked={sizeVal.rate === '1' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-size-1" name="Size-1" value={sizeVal.rate} checked={sizeVal.rate === '1' ? true : false} onChange={e => {
                 setSizeVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '1'
                 }));
               }} />
               <label htmlFor="newReview-size-1">1</label>
-              <input type="radio" id="newReview-size-2" name="Size-2" value="2" checked={sizeVal.rate === '2' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-size-2" name="Size-2" value={sizeVal.rate} checked={sizeVal.rate === '2' ? true : false} onChange={e => {
                 setSizeVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '2'
                 }));
               }} />
               <label htmlFor="newReview-size-2">2</label>
-              <input type="radio" id="newReview-size-3" name="Size-3" value="3" checked={sizeVal.rate === '3' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-size-3" name="Size-3" value={sizeVal.rate} checked={sizeVal.rate === '3' ? true : false} onChange={e => {
                 setSizeVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '3'
                 }));
               }} />
               <label htmlFor="newReview-size-3">3</label>
-              <input type="radio" id="newReview-size-4" name="Size-4" value="4" checked={sizeVal.rate === '4' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-size-4" name="Size-4" value={sizeVal.rate} checked={sizeVal.rate === '4' ? true : false} onChange={e => {
                 setSizeVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '4'
                 }));
               }} />
               <label htmlFor="newReview-size-4">4</label>
-              <input type="radio" id="newReview-size-5" name="Size-5" value="5" checked={sizeVal.rate === '5' ? true : false} onChange={e => {
+              <input type="radio" id="newReview-size-5" name="Size-5" value={sizeVal.rate} checked={sizeVal.rate === '5' ? true : false} onChange={e => {
                 setSizeVal((prevState) => ({
                   ...prevState,
-                  rate: e.target.value
+                  rate: '5'
                 }));
               }} />
               <label htmlFor="newReview-size-5">5</label>
@@ -520,7 +520,7 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
             </div>
             }
           </div>
-          <div className='newReview-Summary'>
+          <div data-testid='newReview-Summary' className='newReview-Summary'>
             <h3>Review summary</h3>
             <textarea
               maxLength="60"
@@ -532,7 +532,7 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
             />
           </div>
 
-          <div className='newReview-Content'>
+          <div data-testid='newReview-Body' className='newReview-Content'>
             <h3>Review body &#42;</h3>
             {reviewBody.length < 50 ? <p style={{ color: 'red' }}>{reviewBodyErr}</p> : null}
             <textarea
@@ -548,7 +548,7 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
 
           </div>
 
-          <div className='newReview-fileUpLoad'>
+          <div data-testid='newReview-fileUpLoad' className='newReview-fileUpLoad'>
             <h3>Upload your photos</h3>
             {fileTypeErr ? <p style={{ color: 'red' }}>The images selected are invalid or unable to be uploaded</p> : null}
             <input type='file' onChange={(e) => { setImgSelected(e.target.files[0]); }} />
@@ -564,7 +564,7 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
               </div> : null}
           </div>
 
-          <div className='newReview-nickName'>
+          <div data-testid='newReview-nickName' className='newReview-nickName'>
             <h3>What is your nickname ? &#42;</h3>
             {!nickName.length ? <p style={{ color: 'red' }}>{nickNameErr}</p> : null}
             <input type='input' placeholder='Example: jackson11!' onChange={(e) => { setNickname(e.target.value); }} />
@@ -572,7 +572,7 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
             <i style={{ fontSize: '20px' }}>For privacy reasons, do not use your full name or email address</i>
           </div>
 
-          <div className='newReview-Email'>
+          <div data-testid='newReview-Email' className='newReview-Email'>
             <h3>Your email &#42;</h3>
             {emailErr ? <p style={{ color: 'red' }}>{emailErr}</p> : null}
             <textarea
