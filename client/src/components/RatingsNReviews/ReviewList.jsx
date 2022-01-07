@@ -417,7 +417,7 @@ const ReviewList = ( {productId, currentProduct} )=>{
         <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === ((sortedArray.length || searchResult.length) ? (sortedArray.length || searchResult.length) : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <button data-testid="review-moreButton" onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button>}
           {isLoading ? null : <button data-testid="review-newReviewButton" onClick={()=>{ setOpenReviewModal(true); }}>Write New Review</button>}
         </div>
-        {openReviewModal && <NewReview currentProduct={currentProduct} characteristics={characteristics} productId= {productId} setIsPost={setIsPost} setOpenReviewModal={setOpenReviewModal} setOpenReviewModal={setOpenReviewModal}/>}
+        {openReviewModal && <NewReview characteristics={characteristics} currentProduct={currentProduct} productId= {productId} setIsPost={setIsPost} setOpenReviewModal={setOpenReviewModal} />}
       </div>
     </div>
   );

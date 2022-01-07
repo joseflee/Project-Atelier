@@ -59,8 +59,14 @@ const postReview = async (body) => {
     'name': body.nickName,
     'email': body.email,
     'photos': body.imgUrl.slice(),
-    'characteristics': { '14': body.fitVal, '15': body.lengthVal, '16': body.qualityVal, '17': body.widthVal, '18': body.comfortVal, '19': body.sizeVal}
+    'characteristics': {}
   };
+  let chars = body.Chars;
+  for (let i = 0; i < chars.length; i++) {
+    if (chars[i].Id) {
+      params['characteristics'][chars[i].Id] = chars[i].val;
+    }
+  }
   let options = {
     method: 'POST',
     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews',
@@ -71,7 +77,6 @@ const postReview = async (body) => {
     .catch((err) => {
       console.log('This is the post review error: ', err);
     });
-
 };
 module.exports = {
   getTotalReviews,
