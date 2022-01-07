@@ -272,7 +272,7 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
 
           <div className='newReview-Characteristics'>
             <h3>Characteristics &#42;</h3>
-            {characteristics.Fit === undefined ? null : <div className='newReview-Characteristics-Fit'>
+            { characteristics && characteristics.Fit === undefined ? null : <div className='newReview-Characteristics-Fit'>
               {fitVal.rate ? <p>{fitVal.text[fitVal.rate]}</p> : <p style={{ color: 'red' }}>none selected</p>}
               <span style={{ fontWeight: 'bold' }}>Fit</span>
               <input type="radio" id="newReview-fit-1" name="Fit-1" value="1" checked={fitVal.rate === '1' ? true : false} onChange={e => {
@@ -313,7 +313,7 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
               <p>1=Runs tight, 5=Runs long</p>
             </div>}
 
-            {characteristics.Length === undefined ? null : <div className='newReview-Characteristics-Length'>
+            { characteristics && characteristics.Length === undefined ? null : <div className='newReview-Characteristics-Length'>
               {lengthVal.rate ? <p>{lengthVal.text[lengthVal.rate]}</p> : <p style={{ color: 'red' }}>none selected</p>}
               <span style={{ fontWeight: 'bold' }}>Length</span>
               <input type="radio" id="newReview-length-1" name="Length-1" value="1" checked={lengthVal.rate === '1' ? true : false} onChange={e => {
@@ -354,7 +354,7 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
               <p>1=Runs Short, 5=Runs long</p>
             </div>}
 
-            {characteristics.Quality === undefined ? null : <div className='newReview-Characteristics-Quality'>
+            { characteristics && characteristics.Quality === undefined ? null : <div className='newReview-Characteristics-Quality'>
               {qualityVal.rate ? <p>{qualityVal.text[qualityVal.rate]}</p> : <p style={{ color: 'red' }}>none selected</p>}
               <span style={{ fontWeight: 'bold' }}>Quality</span>
               <input type="radio" id="newReview-quality-1" name="Quality-1" value="1" checked={qualityVal.rate === '1' ? true : false} onChange={e => {
@@ -396,7 +396,7 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
             </div>}
 
 
-            {characteristics.Comfort === undefined ? null : <div className='newReview-Characteristics-Comfort'>
+            { characteristics && characteristics.Comfort === undefined ? null : <div className='newReview-Characteristics-Comfort'>
               {comfortVal.rate ? <p>{comfortVal.text[comfortVal.rate]}</p> : <p style={{ color: 'red' }}>none selected</p>}
               <span style={{ fontWeight: 'bold' }}>Comfort</span>
               <input type="radio" id="newReview-comfort-1" name="Comfort-1" value="1" checked={comfortVal.rate === '1' ? true : false} onChange={e => {
@@ -437,7 +437,7 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
               <p>1=Uncomfortable, 5=Perfect</p>
             </div>}
 
-            {characteristics.Width === undefined ? null : <div className='newReview-Characteristics-Width'>
+            { characteristics && characteristics.Width === undefined ? null : <div className='newReview-Characteristics-Width'>
               {widthVal.rate ? <p>{widthVal.text[widthVal.rate]}</p> : <p style={{ color: 'red' }}>none selected</p>}
               <span style={{ fontWeight: 'bold' }}>Width</span>
               <input type="radio" id="newReview-width-1" name="Width-1" value="1" checked={widthVal.rate === '1' ? true : false} onChange={e => {
@@ -478,7 +478,7 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
               <p>1=Too narrow, 5=Too width</p>
             </div>}
 
-            {characteristics.Size === undefined ? null : <div className='newReview-Characteristics-Size'>
+            { characteristics && characteristics.Size === undefined ? null : <div className='newReview-Characteristics-Size'>
               {sizeVal.rate ? <p>{sizeVal.text[sizeVal.rate]}</p> : <p style={{ color: 'red' }}>none selected</p>}
               <span style={{ fontWeight: 'bold' }}>Size</span>
               <input type="radio" id="newReview-size-1" name="Size-1" value="1" checked={sizeVal.rate === '1' ? true : false} onChange={e => {

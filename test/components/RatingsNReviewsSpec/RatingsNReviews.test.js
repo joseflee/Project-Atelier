@@ -293,7 +293,7 @@ xdescribe('Review list rendering Test', () => {
 
 });
 
-describe('write new review form rendering Test', () => {
+xdescribe('write new review form rendering Test', () => {
   test('New review form should display the tilte', async () => {
     await waitFor(async () => {
       render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
@@ -304,7 +304,7 @@ describe('write new review form rendering Test', () => {
   });
   test('New review form should display the current product', async () => {
     await waitFor(async () => {
-      await render(<NewReview productId={59553} currentProduct={{name: 'Camo Onesie'}} />);
+      await render(<NewReview productId={59553} currentProduct={{ name: 'Camo Onesie' }} />);
       const currentProduct = await screen.findByTestId('newReview-currentProduct');
       expect(currentProduct).toBeInTheDocument();
       expect(currentProduct).toBeVisible();
@@ -312,19 +312,18 @@ describe('write new review form rendering Test', () => {
     });
   });
   test('New review form should display the overall rating', async () => {
-    render(<NewReview productId={59553} currentProduct={{name: 'Camo Onesie'}} />);
+    render(<NewReview productId={59553} currentProduct={{ name: 'Camo Onesie' }} />);
     const overAll = screen.getByText('Overall rating *');
     expect(overAll).toBeInTheDocument();
     expect(overAll).toBeVisible();
   });
   test('New review form should display the rating star', async () => {
     await waitFor(async () => {
-      await render(<NewReview productId={59553} currentProduct={{name: 'Camo Onesie'}} />);
+      await render(<NewReview productId={59553} currentProduct={{ name: 'Camo Onesie' }} />);
       const ratingSection = await screen.findAllByTestId('newReview-rating');
       expect(ratingSection[0]).toBeInTheDocument();
       expect(ratingSection[0]).toBeVisible();
     });
-
   });
 
 
