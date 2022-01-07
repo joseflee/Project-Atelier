@@ -115,7 +115,7 @@ class QuestionsListItem extends React.Component {
     }
 
     return (
-      <div>
+      <div className='question-item-wrap'>
 
         {/* beginning of question item */}
         <div className='question-item'>
