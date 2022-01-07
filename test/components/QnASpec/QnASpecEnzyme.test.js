@@ -37,6 +37,8 @@ describe('Main Questions and Answers form', function() {
     var text = 'Questions and AnswersAdd a new question';
     expect(render(<MainQnA productId={59553}/>).text()).toEqual(text);
   });
+
+
 });
 
 describe('Rendering one question item', function() {
@@ -115,6 +117,7 @@ describe('Rendering add question parent component', function() {
 });
 
 describe('Add new question form', function() {
+
   it('should render without throwing an error', function() {
     expect(shallow(<AddQuestionForm />).contains(<div className = 'qna-add-question-main-title'>Ask a question</div>)).toBe(true);
   });
@@ -131,6 +134,17 @@ describe('Add new question form', function() {
     var text = 'Ask a questionAbout the Your question*What\'s your nickname?*For privacy reasons, do not use your full name or email addressYour email?*For authentication reasons, you will not be emailed';
     expect(render(<AddQuestionForm />).text()).toEqual(text);
   });
+
+  it('should have properties at state', () => {
+    const wrapper = mount(<AddQuestionForm
+    />);
+    expect(wrapper.state().isValid).toEqual(true);
+    expect(wrapper.state().questionBody).toEqual('');
+    expect(wrapper.state().nickname).toEqual('');
+    expect(wrapper.state().email).toEqual('');
+  });
+
+
 });
 
 describe('Add new answer form', function() {
