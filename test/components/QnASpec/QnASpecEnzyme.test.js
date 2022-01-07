@@ -10,7 +10,7 @@ import AddQuestionForm from '../../../client/src/components/QnAcomponents/AddQue
 
 
 
-describe('A suite', function() {
+describe('Add new question form', function() {
   it('should render without throwing an error', function() {
     expect(shallow(<AddQuestionForm />).contains(<div className = 'qna-add-question-main-title'>Ask a question</div>)).toBe(true);
   });
