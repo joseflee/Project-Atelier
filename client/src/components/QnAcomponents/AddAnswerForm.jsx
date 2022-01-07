@@ -66,8 +66,8 @@ class AddAnswerForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>Submit your answer</div>
+      <div className='qna-add-answer'>
+        <div className='qna-submit-answer'>Submit your answer</div>
         <div>{this.props.name}: {this.props.question_body}</div>
         <form>
           <label>
