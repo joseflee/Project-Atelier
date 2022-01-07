@@ -293,7 +293,7 @@ xdescribe('Review list rendering Test', () => {
 
 });
 
-xdescribe('write new review form rendering Test', () => {
+xdescribe('New review form rendering Test', () => {
   test('New review form should display the tilte', async () => {
     await waitFor(async () => {
       render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
@@ -325,6 +325,133 @@ xdescribe('write new review form rendering Test', () => {
       expect(ratingSection[0]).toBeVisible();
     });
   });
+  test('New review form should display the recommend option', async () => {
+    render(<NewReview productId={59553} currentProduct={{ name: 'Camo Onesie' }} />);
+    const recommend = screen.getByText('Do you recommend this product ? *');
+    expect(recommend).toBeInTheDocument();
+    expect(recommend).toBeVisible();
+  });
+  test('New review form should display all the characteristics', async () => {
+    render(<NewReview productId={59553} currentProduct={{ name: 'Camo Onesie' }} />);
+    const characteristics = screen.getByText('Characteristics *');
+    const fit = screen.getByText('Fit');
+    const size = screen.getByText('Size');
+    const length = screen.getByText('Length');
+    const comfort = screen.getByText('Comfort');
+    const width = screen.getByText('Width');
+    const quality = screen.getByText('Quality');
+    expect(characteristics).toBeInTheDocument();
+    expect(characteristics).toBeVisible();
+    expect(fit).toBeInTheDocument();
+    expect(size).toBeInTheDocument();
+    expect(width).toBeInTheDocument();
+    expect(length).toBeInTheDocument();
+    expect(quality).toBeInTheDocument();
+    expect(comfort).toBeInTheDocument();
+  });
+  test('New review form should display all characteristics meaning', async () => {
+    render(<NewReview productId={59553} currentProduct={{ name: 'Camo Onesie' }} />);
+    const fit = screen.getByText('1=Runs tight, 5=Runs long');
+    const length = screen.getByText('1=Runs Short, 5=Runs long');
+    const quality = screen.getByText('1=Poor, 5=Perfect');
+    const comfort = screen.getByText('1=Uncomfortable, 5=Perfect');
+    const width = screen.getByText('1=Too narrow, 5=Too width');
+    const size = screen.getByText('1=A size too small, 5=A size too wide');
+    expect(fit).toBeInTheDocument();
+    expect(size).toBeInTheDocument();
+    expect(width).toBeInTheDocument();
+    expect(length).toBeInTheDocument();
+    expect(quality).toBeInTheDocument();
+    expect(comfort).toBeInTheDocument();
+  });
+  test('New review form should include the summary section', async () => {
+    render(<NewReview productId={59553} currentProduct={{ name: 'Camo Onesie' }} />);
+    const summary = screen.getByTestId('newReview-Summary');
+    expect(summary).toBeInTheDocument();
+  });
+  test('New review form should include the body section', async () => {
+    render(<NewReview productId={59553} currentProduct={{ name: 'Camo Onesie' }} />);
+    const body = screen.getByTestId('newReview-Body');
+    expect(body).toBeInTheDocument();
+  });
+  test('New review form should include the image upload section', async () => {
+    render(<NewReview productId={59553} currentProduct={{ name: 'Camo Onesie' }} />);
+    const upload = screen.getByTestId('newReview-fileUpLoad');
+    expect(upload).toBeInTheDocument();
+  });
+  test('New review form should include the nick name section', async () => {
+    render(<NewReview productId={59553} currentProduct={{ name: 'Camo Onesie' }} />);
+    const nickName = screen.getByTestId('newReview-nickName');
+    expect(nickName).toBeInTheDocument();
+  });
+  test('New review form should include the email section', async () => {
+    render(<NewReview productId={59553} currentProduct={{ name: 'Camo Onesie' }} />);
+    const email = screen.getByTestId('newReview-Email');
+    expect(email).toBeInTheDocument();
+  });
+  test('New review form should include cancel and submit button', async () => {
+    render(<NewReview productId={59553} currentProduct={{ name: 'Camo Onesie' }} />);
+    const cancel = screen.getByText('Cancel');
+    const submit = screen.getByText('Submit');
+    expect(cancel).toBeInTheDocument();
+  });
+});
 
-
+describe('New review form functional test', () => {
+  test('When the rating star is being hovered should display the hover effect', async () => {
+    await waitFor(async () => {
+      render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
+      const star = await screen.findAllByTestId('newReview-rating-star');
+      expect(star[3]).toHaveClass('newReview-Star');
+      await userEvent.hover(star[3]);
+      expect(star[3]).toHaveClass('newReview-Star-After');
+      await userEvent.unhover(star[3]);
+      expect(star[3]).not.toHaveClass('newReview-Star-After');
+    });
+  });
+  test('When the rating star is being clicked should display the click effect', async () => {
+    await waitFor(async () => {
+      render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
+      const star = await screen.findAllByTestId('newReview-rating-star');
+      const text = await screen.findAllByTestId('newReview-rating-star-text');
+      expect(star[4]).toHaveClass('newReview-Star');
+      await userEvent.click(star[4]);
+      expect(star[0]).toHaveClass('newReview-Star-After');
+      expect(star[1]).toHaveClass('newReview-Star-After');
+      expect(star[2]).toHaveClass('newReview-Star-After');
+      expect(star[3]).toHaveClass('newReview-Star-After');
+      expect(star[4]).toHaveClass('newReview-Star-After');
+      expect(text[0].innerHTML).toBe('&nbsp; Great');
+      await userEvent.click(star[3]);
+      expect(star[4]).not.toHaveClass('newReview-Star-After');
+      expect(text[0].innerHTML).toBe('&nbsp; Good');
+    });
+  });
+  test('User should able to select options of recommend section', async () => {
+    await waitFor(async () => {
+      render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
+      const recommendedY = screen.getByTestId('newReview-recommendedY');
+      const recommendedN = screen.getByTestId('newReview-recommendedN');
+      expect(recommendedY.checked).toEqual(false);
+      expect(recommendedN.checked).toEqual(false);
+      userEvent.click(recommendedY);
+      expect(recommendedY.checked).toEqual(true);
+      userEvent.click(recommendedN);
+      expect(recommendedY.checked).toEqual(false);
+      expect(recommendedN.checked).toEqual(true);
+    });
+  });
+  test('User should able to select options of fit section', async () => {
+    await waitFor(async () => {
+      render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
+      const one = screen.getByTestId('newReview-fit-1');
+      const four = screen.getByTestId('newReview-fit-4');
+      expect(one.checked).toEqual(false);
+      await userEvent.click(one);
+      expect(one.checked).toEqual(true);
+      await userEvent.click(four);
+      expect(one.checked).toEqual(false);
+      expect(four.checked).toEqual(true);
+    });
+  });
 });
