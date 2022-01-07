@@ -50,7 +50,7 @@ describe('Questions and Answers rendering', () => {
 
   });
 
-  test('Should render question\'s answer ', async () => {
+  xtest('Should render question\'s answer ', async () => {
     await render(<QuestionsListItemAnswer answer = {exampleQuestions.answers.results[0]}
     />);
       expect (screen.getByText('A:What a great question!')).toBeInTheDocument();
@@ -65,7 +65,7 @@ describe('Questions and Answers rendering', () => {
     expect (screen.getByText('More answered questions')).toBeInTheDocument();
   });
 
-  test('Should render answers list ', async () => {
+  xtest('Should render answers list ', async () => {
     await render(<AnswersList list={exampleQuestions.answers.results}/>);
   });
 
