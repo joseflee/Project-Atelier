@@ -12,25 +12,30 @@ import AddQuestionForm from '../../../client/src/components/QnAcomponents/AddQue
 import MainQnA from '../../../client/src/components/QnAcomponents/mainQnA.jsx';
 //import QuestionsList from '../../../client/src/components/QnAcomponents/QuestionsList.jsx';
 import QuestionItem from '../../../client/src/components/QnAcomponents/QuestionsListItem.jsx';
+import Answer from '../../../client/src/components/QnAcomponents/QuestionsListItemAnswer.jsx';
+import AddQuestion from '../../../client/src/components/QnAcomponents/AddQuestion.jsx';
+import AddAnswerForm from '../../../client/src/components/QnAcomponents/AddAnswerForm.jsx';
+import AnswerPhoto from '../../../client/src/components/QnAcomponents/AnswerPhotoUpload.jsx';
+import MoreAnsweredQuestions from '../../../client/src/components/QnAcomponents/MoreAnsweredQuestions.jsx';
 
 
 
 describe('Main Questions and Answers form', function() {
   xit('should render without throwing an error', function() {
-    expect(shallow(<MainQnA/>).contains( <div className='qna-component-name'><h1>Questions and Answers</h1></div>)).toBe(true);
+    expect(shallow(<MainQnA productId={59553}/>).contains( <div className='qna-component-name'><h1>Questions and Answers</h1></div>)).toBe(true);
   });
 
   xit('should be selectable by class', function() {
-    expect(shallow(<MainQnA />).is('.qna-main-component')).toBe(true);
+    expect(shallow(<MainQnA productId={59553} />).is('.qna-main-component')).toBe(true);
   });
 
   xit('should mount in a full DOM', function() {
-    expect(mount(<MainQnA />).find('.qna-main-component').length).toBe(1);
+    expect(mount(<MainQnA productId={59553}/>).find('.qna-main-component').length).toBe(1);
   });
 
   it('should render to static HTML', function() {
     var text = 'Questions and AnswersAdd a new question';
-    expect(render(<MainQnA />).text()).toEqual(text);
+    expect(render(<MainQnA productId={59553}/>).text()).toEqual(text);
   });
 });
 
@@ -51,6 +56,62 @@ describe('Rendering one question item', function() {
     var text = 'Q:Why is this product cheaper here than other sites?Helpful?Yes(4)Add answerA:We are selling it here without any markup from the middleman!By user SellerAugust 17, 2018;Helpful?Yes(4)Report';
     expect(render(<QuestionItem question={exampleQuestions.questions.results[0]}/>).text()).toEqual(text);
   });
+
+  it('should pass props', function() {
+    const wrapper = mount(<QuestionItem question={exampleQuestions.questions.results[0]} />);
+    const id = wrapper.props().question.question_id;
+    const questionBody = wrapper.props().question.question_body;
+    expect(id).toEqual(37);
+    expect(questionBody).toEqual('Why is this product cheaper here than other sites?');
+  });
+});
+
+describe('Rendering one answer item', function() {
+  it('should render without throwing an error', function() {
+    expect(shallow(<Answer answer={exampleQuestions.answers.results[0]}/>).contains(<div className='answer-item-helpful-keyword'>Helpful?</div>
+    )).toBe(true);
+  });
+
+  it('should be selectable by class', function() {
+    expect(shallow(<Answer answer={exampleQuestions.answers.results[0]}/>).is('.answer-item')).toBe(true);
+  });
+
+  it('should mount in a full DOM', function() {
+    expect(mount(<Answer answer={exampleQuestions.answers.results[0]}/>).find('.answer-item').length).toBe(1);
+  });
+
+  it('should render to static HTML', function() {
+    var text = 'A:What a great question!By user metsloverJanuary 03, 2018;Helpful?Yes(8)Report';
+    expect(render(<Answer answer={exampleQuestions.answers.results[0]}/>).text()).toEqual(text);
+  });
+
+  it('should pass props', function() {
+    const wrapper = mount(<Answer answer={exampleQuestions.answers.results[0]} />);
+    const id = wrapper.props().answer.answer_id;
+    const answerBody = wrapper.props().answer.body;
+    expect(id).toEqual(8);
+    expect(answerBody).toEqual('What a great question!');
+  });
+});
+
+describe('Rendering add question parent component', function() {
+  xit('should render without throwing an error', function() {
+    expect(shallow(<AddQuestion />).contains( <div className='add-question-parent'></div>
+    )).toBe(true);
+  });
+
+  it('should be selectable by class', function() {
+    expect(shallow(<AddQuestion />).is('.add-question-parent')).toBe(true);
+  });
+
+  it('should mount in a full DOM', function() {
+    expect(mount(<AddQuestion />).find('.add-question-parent').length).toBe(1);
+  });
+
+  it('should render to static HTML', function() {
+    var text = 'Add a new question';
+    expect(render(<AddQuestion />).text()).toEqual(text);
+  });
 });
 
 describe('Add new question form', function() {
@@ -69,5 +130,48 @@ describe('Add new question form', function() {
   it('should render to static HTML', function() {
     var text = 'Ask a questionAbout the Your question*What\'s your nickname?*For privacy reasons, do not use your full name or email addressYour email?*For authentication reasons, you will not be emailed';
     expect(render(<AddQuestionForm />).text()).toEqual(text);
+  });
+});
+
+describe('Add new answer form', function() {
+  it('should render without throwing an error', function() {
+    expect(shallow(<AddAnswerForm />).contains(<div className='qna-submit-answer'>Submit your answer</div>)).toBe(true);
+  });
+
+  it('should be selectable by class', function() {
+    expect(shallow(<AddAnswerForm />).is('.qna-add-answer')).toBe(true);
+  });
+
+  it('should mount in a full DOM', function() {
+    expect(mount(<AddAnswerForm />).find('.qna-add-answer').length).toBe(1);
+  });
+
+  it('should render to static HTML', function() {
+    var text = 'Submit your answer: Your answer*What\'s your nickname?*For privacy reasons, do not use your full name or email addressYour email?*For authentication reasons, you will not be emailed';
+    expect(render(<AddAnswerForm />).text()).toEqual(text);
+  });
+});
+
+describe('Uploading photos in answers', function() {
+
+  it('should be selectable by class', function() {
+    expect(shallow(<AnswerPhoto />).is('.qna-answer-photo-upload')).toBe(true);
+  });
+
+  it('should mount in a full DOM', function() {
+    expect(mount(<AnswerPhoto />).find('.qna-answer-photo-upload').length).toBe(1);
+  });
+
+  it('should render to static HTML', function() {
+    var text = '';
+    expect(render(<AnswerPhoto />).text()).toEqual(text);
+  });
+});
+
+describe('More answered questions button', function() {
+
+  it('should render to static HTML', function() {
+    var text = 'More answered questions';
+    expect(render(<MoreAnsweredQuestions />).text()).toEqual(text);
   });
 });
