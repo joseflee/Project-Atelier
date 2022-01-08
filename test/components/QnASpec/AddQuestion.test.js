@@ -31,6 +31,47 @@ describe('Rendering add question parent component', function() {
     var text = 'Add a new question';
     expect(render(<AddQuestion />).text()).toEqual(text);
   });
+
+  test('invokes clickOnAddQuestion() and correctly changing state if clicking on button \'Add question\' ', () => {
+
+    const wrapper = shallow(<AddQuestion/>);
+    const spy = jest.spyOn(wrapper.instance(), 'clickOnAddQuestion');
+    wrapper.find('#qna-add-new-question-button').simulate('click');
+    expect(spy).toHaveBeenCalled();
+    //console.log(wrapper.state());
+    expect(wrapper.state().isModalShown).toEqual(true);
+    expect(wrapper.state().isAddButtonShown).toEqual(false);
+
+  });
+
+  test('child component correctly changes state of  parent component ', () => {
+    const parent = shallow(<AddQuestion />);
+    const spy = jest.spyOn(parent.instance(), 'closeForm');
+
+    //imitating adding new question
+    parent.find('#qna-add-new-question-button').simulate('click');
+    expect(parent.state().isModalShown).toEqual(true);
+    expect(parent.state().isAddButtonShown).toEqual(false);
+
+    const formEventMocked = { preventDefault: jest.fn() };
+    const passedMock1 = jest.fn();
+    const wrapper = shallow(<AddQuestionForm addQuestion={passedMock1} closeForm={spy} />);
+
+    const state = {
+      questionBody: 'This is a question from tests',
+      nickname: 'gandalf',
+      email: 'example@email.com'
+    };
+    wrapper.setState(state);
+
+    wrapper.find('[type="submit"]').simulate('click', formEventMocked);
+    //
+    expect (spy).toHaveBeenCalled();
+    expect(parent.state().isModalShown).toEqual(false);
+    expect (parent.state().isAddButtonShown).toEqual(true);
+
+  });
+
 });
 
 describe('Add new question form', function() {
