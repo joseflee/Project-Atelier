@@ -5,7 +5,7 @@ class AddQuestionForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isValid: true,
+      isValid: false,
       questionBody: '',
       nickname: '',
       email: ''
@@ -65,6 +65,7 @@ class AddQuestionForm extends React.Component {
               Your question*
             <input
               name='questionBody'
+              id='questionBody'
               type='text'
               maxLength='1000'
               value={this.state.questionBody}
