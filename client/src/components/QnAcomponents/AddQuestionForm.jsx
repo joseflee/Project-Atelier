@@ -39,7 +39,7 @@ class AddQuestionForm extends React.Component {
       this.props.addQuestion(productId, body, nickname, email);
 
     } else {
-      alert ('Not all fields are filled');
+      alert('not submitted');
     }
   }
   handleValidation(question, nick, email) {
@@ -60,7 +60,7 @@ class AddQuestionForm extends React.Component {
       <div className='qna-add-new-question-form'>
         <div className = 'qna-add-question-main-title'>Ask a question</div>
         <div className ='qna-add-question-subtitle'>About the {this.props.name}</div>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <label>
               Your question*
             <input
@@ -100,10 +100,10 @@ class AddQuestionForm extends React.Component {
             <i>For authentication reasons, you will not be emailed</i>
           </label>
           <br />
-          <input type="submit" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
+          <input type="submit" className="primary" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
         </form>
       </div>
-      
+
     );
   }
 }
