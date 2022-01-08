@@ -97,6 +97,36 @@ describe('Add new question form', function() {
 
   });
 
+  test('handle validation should return false without input', () => {
+    const component = new AddQuestionForm;
+    expect(component.handleValidation('', '', '')).toEqual(false);
+  });
+
+  test('handle validation should return false without question', () => {
+    const component = new AddQuestionForm;
+    expect(component.handleValidation('', 'aragorn', 'kings@dunedain.com')).toEqual(false);
+  });
+
+  test('handle validation should return false without nickname', () => {
+    const component = new AddQuestionForm;
+    expect(component.handleValidation('for frodo', '', 'kings@dunedain.com')).toEqual(false);
+  });
+
+  test('handle validation should return false without email', () => {
+    const component = new AddQuestionForm;
+    expect(component.handleValidation('for frodo', 'bill the pony', '')).toEqual(false);
+  });
+
+  test('handle validation should return false with email in wrong format', () => {
+    const component = new AddQuestionForm;
+    expect(component.handleValidation('for frodo', 'bill the pony', 'dummyemail')).toEqual(false);
+  });
+
+  test('handle validation should return true with proper arguments', () => {
+    const component = new AddQuestionForm;
+    expect(component.handleValidation('for frodo', 'bill the pony', 'ponies@example.com')).toEqual(true);
+  });
+
   it('should render without throwing an error', function() {
     expect(shallow(<AddQuestionForm />).contains(<div className = 'qna-add-question-main-title'>Ask a question</div>)).toBe(true);
   });
