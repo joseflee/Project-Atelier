@@ -70,6 +70,61 @@ describe('Rendering one question item', function() {
 });
 
 describe('Rendering one answer item', function() {
+
+  it('should call clickOnYes when clicking on \'Yes\' link', () => {
+    let spy = jest.fn();
+
+    const component = mount(<Answer clickOnHelpfulAnswer={spy}
+      answer={exampleQuestions.answers.results[0]} />);
+
+    component.find('.answer-item-yes-button').simulate('click');
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call reportAnswer() when clicking on \'Report answer\' link', () => {
+    let spy = jest.fn();
+
+    const component = mount(<Answer reportAnswer={spy}
+      answer={exampleQuestions.answers.results[0]} />);
+
+    component.find('.answer-item-report-button').simulate('click');
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('doesn\'t let you click again on alredy reported answer', () => {
+    let spy = jest.fn();
+    const alertSpy = window.alert;
+    window.alert = () => {}; // provide an empty implementation for window.alert
+
+    const component = mount(<Answer reportAnswer={spy}
+      answer={exampleQuestions.answers.results[0]} />);
+    const state = {
+      isReported: true
+    };
+    component.setState(state);
+    //console.log(component.state().isReported);
+    component.find('.answer-item-report-button').simulate('click');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('doesn\'t let you click again on helpful counter', () => {
+    let spy = jest.fn();
+    const alertSpy = window.alert;
+    window.alert = () => {}; // provide an empty implementation for window.alert
+
+    const component = mount(<Answer clickOnHelpfulAnswer={spy}
+      answer={exampleQuestions.answers.results[0]} />);
+    const state = {
+      isHelpful: true
+    };
+    component.setState(state);
+    //console.log(component.state().isReported);
+    component.find('.answer-item-yes-button').simulate('click');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+
+
   it('should render without throwing an error', function() {
     expect(shallow(<Answer answer={exampleQuestions.answers.results[0]}/>).contains(<div className='answer-item-helpful-keyword'>Helpful?</div>
     )).toBe(true);
@@ -311,6 +366,10 @@ describe('More answered questions button', function() {
     var text = 'More answered questions';
     expect(render(<MoreAnsweredQuestions />).text()).toEqual(text);
   });
+
+
+
+
 });
 
 describe('Search', function() {
