@@ -118,81 +118,51 @@ describe('Rendering add question parent component', function() {
 
 describe('Add new question form', function() {
 
-  test('click', () => {
-         const formEventMocked = { preventDefault: jest.fn() };
+  test('click on submit button without filling the form', () => {
+    const formEventMocked = { preventDefault: jest.fn() };
+    const alertSpy = window.alert;
+    window.alert = () => {}; // provide an empty implementation for window.alert
 
-    const wrapper = shallow(<AddAnswerForm/>);
+    const wrapper = shallow(<AddQuestionForm/>);
     const spy1 = jest.spyOn(wrapper.instance(), 'handleInputChange');
     const spy2 = jest.spyOn(wrapper.instance(), 'handleSubmit');
     const spy3 = jest.spyOn(wrapper.instance(), 'handleValidation');
     //wrapper.find('[type="submit"]').simulate('submit');
-        expect(wrapper.find('form')).toHaveLength(1);
+    expect(wrapper.find('form')).toHaveLength(1);
 
-    wrapper.find('form').simulate('submit', formEventMocked);
-   wrapper.find('[type="submit"]').simulate('click', formEventMocked);
-       expect(formEventMocked.preventDefault).toBeCalledTimes(1);
-       //expect(spy3).toBeCalledTimes(1);
-
-
+    //wrapper.find('form').simulate('submit', formEventMocked);
+    wrapper.find('[type="submit"]').simulate('click', formEventMocked);
+    expect(formEventMocked.preventDefault).toBeCalledTimes(1);
+    expect(spy3).toBeCalledTimes(1);
+    expect(spy1).not.toHaveBeenCalled();
 
   });
-    // wrapper.find('#one').simulate('click');
-    // expect(spy1).not.toHaveBeenCalled();  // Success!  (onClick NOT bound to spy)
-    // wrapper.find('#two').simulate('click');
-    // expect(spy2).toHaveBeenCalledTimes(1);  // Success!
-  // let wrapper
-  // let getFullNameSpy;
-  // let alertSpy;
-  // beforeEach(() => {
-  //   alertSpy = jest.spyOn(window, 'alert');
-  //   getFullNameSpy = jest.spyOn(SomeComponent.prototype as any, 'getFullName');
-  //   wrapper = shallow(<SomeComponent></SomeComponent>);
-  // });
-  // afterEach(() => {
-  //   jest.resetAllMocks();
-  // });
+ 
+  it('should render without throwing an error', function() {
+    expect(shallow(<AddQuestionForm />).contains(<div className = 'qna-add-question-main-title'>Ask a question</div>)).toBe(true);
+  });
 
-  // it('check submit', () => {
-  //   expect(wrapper.find('form')).toHaveLength(1);
-  //   const formEventMocked = { preventDefault: jest.fn() };
-  //   const state: ISomeComponentState = {
-  //     firstName: 'Cel.du.on',
-  //     lastName: 'lin.on',
-  //     isDone: false
-  //   };
-  //   wrapper.setState(state);
-  //   expect(wrapper).toMatchSnapshot();
-  //   wrapper.find('form').simulate('submit', formEventMocked);
-  //   expect(getFullNameSpy).toBeCalledTimes(1);
-  //   expect(formEventMocked.preventDefault).toBeCalledTimes(1);
-  //   expect(wrapper.state('isDone')).toBeTruthy();
-  // });
+  it('should be selectable by class', function() {
+    expect(shallow(<AddQuestionForm />).is('.qna-add-new-question-form')).toBe(true);
+  });
 
-  // it('should render without throwing an error', function() {
-  //   expect(shallow(<AddQuestionForm />).contains(<div className = 'qna-add-question-main-title'>Ask a question</div>)).toBe(true);
-  // });
+  it('should mount in a full DOM', function() {
+    expect(mount(<AddQuestionForm />).find('.qna-add-new-question-form').length).toBe(1);
+  });
 
-  // it('should be selectable by class', function() {
-  //   expect(shallow(<AddQuestionForm />).is('.qna-add-new-question-form')).toBe(true);
-  // });
+  it('should render to static HTML', function() {
+    var text = 'Ask a questionAbout the Your question*What\'s your nickname?*For privacy reasons, do not use your full name or email addressYour email?*For authentication reasons, you will not be emailed';
+    expect(render(<AddQuestionForm />).text()).toEqual(text);
+  });
 
-  // it('should mount in a full DOM', function() {
-  //   expect(mount(<AddQuestionForm />).find('.qna-add-new-question-form').length).toBe(1);
-  // });
-
-  // it('should render to static HTML', function() {
-  //   var text = 'Ask a questionAbout the Your question*What\'s your nickname?*For privacy reasons, do not use your full name or email addressYour email?*For authentication reasons, you will not be emailed';
-  //   expect(render(<AddQuestionForm />).text()).toEqual(text);
-  // });
-
-  // it('should have properties at state', () => {
-  //   const wrapper = mount(<AddQuestionForm
-  //   />);
-  //   expect(wrapper.state().isValid).toEqual(true);
-  //   expect(wrapper.state().questionBody).toEqual('');
-  //   expect(wrapper.state().nickname).toEqual('');
-  //   expect(wrapper.state().email).toEqual('');
-  // });
+  it('should have properties at state', () => {
+    const wrapper = mount(<AddQuestionForm
+    />);
+    expect(wrapper.state().isValid).toEqual(true);
+    expect(wrapper.state().questionBody).toEqual('');
+    expect(wrapper.state().nickname).toEqual('');
+    expect(wrapper.state().email).toEqual('');
+  });
 
 
 });
