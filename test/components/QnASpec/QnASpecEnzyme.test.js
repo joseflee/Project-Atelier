@@ -367,8 +367,12 @@ describe('More answered questions button', function() {
     expect(render(<MoreAnsweredQuestions />).text()).toEqual(text);
   });
 
-
-
+  it('should trigger the passed function on click', function() {
+    const click = jest.fn();
+    const wrapper = mount(<MoreAnsweredQuestions click={click}/>);
+    wrapper.find('.more-answered-questions-button').simulate('click');
+    expect (click).toHaveBeenCalled();
+  });
 
 });
 
