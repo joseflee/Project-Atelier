@@ -17,6 +17,7 @@ import AddQuestion from '../../../client/src/components/QnAcomponents/AddQuestio
 import AddAnswerForm from '../../../client/src/components/QnAcomponents/AddAnswerForm.jsx';
 import AnswerPhoto from '../../../client/src/components/QnAcomponents/AnswerPhotoUpload.jsx';
 import MoreAnsweredQuestions from '../../../client/src/components/QnAcomponents/MoreAnsweredQuestions.jsx';
+import Search from '../../../client/src/components/QnAcomponents/SearchQuestions.jsx';
 
 
 
@@ -310,4 +311,53 @@ describe('More answered questions button', function() {
     var text = 'More answered questions';
     expect(render(<MoreAnsweredQuestions />).text()).toEqual(text);
   });
+});
+
+describe('Search', function() {
+
+  it('should render to static HTML', function() {
+    var text = '';
+    expect(render(<Search />).text()).toEqual(text);
+  });
+
+  test('allows to type in the form fields', () => {
+    const formEventMocked = { preventDefault: jest.fn() };
+    const alertSpy = window.alert;
+    window.alert = () => {}; // provide an empty implementation for window.alert
+
+    const wrapper = mount(<Search/>);
+
+    const query = wrapper.find('input');
+    query.props().value = 'bla';
+
+    expect(query.props().value).toBeTruthy();
+
+  });
+
+  test('click on submit button invokes handleInputChange', () => {
+    const onSearchMock = jest.fn();
+    const component = mount(<Search search={onSearchMock} value='bla' />);
+    const input = component.find('input');
+    const event = {
+      preventDefault() {},
+      target: { value: 'bla' }
+    };
+    component.find('input').simulate('change', event);
+    expect(onSearchMock).toHaveBeenCalled();
+    expect(onSearchMock).toBeCalledWith('bla', true);
+  });
+
+  test('passes false to parent if the query less than 2 characters', () => {
+    const onSearchMock = jest.fn();
+    const component = mount(<Search search={onSearchMock} value='bla' />);
+    const input = component.find('input');
+    const event = {
+      preventDefault() {},
+      target: { value: 'a' }
+    };
+    component.find('input').simulate('change', event);
+    expect(onSearchMock).toHaveBeenCalled();
+    expect(onSearchMock).toBeCalledWith('a', false);
+  });
+
 });
