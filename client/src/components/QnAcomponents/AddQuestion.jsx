@@ -49,7 +49,7 @@ class AddQuestion extends React.Component {
       questionButton = <div></div>;
     }
     return (
-      <div>
+      <div className='add-question-parent'>
         {questionButton}
         {modal}
       </div>

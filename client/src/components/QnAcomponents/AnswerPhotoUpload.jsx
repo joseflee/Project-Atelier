@@ -36,7 +36,7 @@ class PhotoUpload extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='qna-answer-photo-upload'>
         <div className="form-group preview">
           {this.state.file.length > 0 &&
           this.state.file.map((item, index) => {

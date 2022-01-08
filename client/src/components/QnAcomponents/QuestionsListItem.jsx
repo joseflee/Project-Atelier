@@ -42,7 +42,7 @@ class QuestionsListItem extends React.Component {
 
   addAnswerHandleClick(event) {
     //event.stopPropagation();
-    console.log('should be triggered once');
+    //console.log('should be triggered once');
     this.setState({
       isAddAnswerClicked: true
     });
@@ -82,7 +82,7 @@ class QuestionsListItem extends React.Component {
       answersList;
 
     if (this.state.isMoreAnswersShown) {
-      moreAnswers = <button onClick={()=>{ this.clickOnMoreAnswers(); }}>Load more answers</button>;
+      moreAnswers = <button id='more-answers-button' onClick={()=>{ this.clickOnMoreAnswers(); }}>Load more answers</button>;
       answersList = <AnswersList list={Object.values(this.props.question.answers).slice(0, 2)}
         questionId={this.props.question.question_id}
         productId={this.props.productId}
@@ -111,7 +111,7 @@ class QuestionsListItem extends React.Component {
 
       />;
     } else {
-      addAnswer = <div onClick={this.addAnswerHandleClick}><u>Add answer</u></div>;
+      addAnswer = <div className='question-item-add-answer-link' onClick={()=>this.addAnswerHandleClick()}><u>Add answer</u></div>;
     }
 
     return (
@@ -122,7 +122,7 @@ class QuestionsListItem extends React.Component {
           <div className='question-item-q-letter'><h2>Q:{this.props.question.question_body}</h2></div>
           <div className='question-item-helpful-keyword' >Helpful?</div>
           <div className='question-item-yes-button' onClick={()=>{ this.clickOnHelpful(); }}><u>Yes</u>({this.props.question.question_helpfulness})</div>
-          <div className='question-item-add-answer-link' >{addAnswer}</div>
+          <div>{addAnswer}</div>
         </div>
         {/* end of question item */}
         {answersList}
