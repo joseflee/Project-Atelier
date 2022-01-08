@@ -38,14 +38,14 @@ describe('Questions and Answers rendering', () => {
 
 
   test('Should render Question List', async () => {
-    await render(<QuestionsList  data = {exampleQuestions.questions.results}
-       />);
+    await render(<QuestionsList data = {exampleQuestions.questions.results}
+    />);
   });
 
 
   test('Should render one question', async () => {
     await render(<QuestionsListItem question = {exampleQuestions.questions.results[0]}
-        />);
+    />);
     expect (screen.getByText('Q:Why is this product cheaper here than other sites?')).toBeInTheDocument();
 
   });
@@ -53,7 +53,7 @@ describe('Questions and Answers rendering', () => {
   xtest('Should render question\'s answer ', async () => {
     await render(<QuestionsListItemAnswer answer = {exampleQuestions.answers.results[0]}
     />);
-      expect (screen.getByText('A:What a great question!')).toBeInTheDocument();
+    expect (screen.getByText('A:What a great question!')).toBeInTheDocument();
   });
 
   test('Should render search component ', async () => {
