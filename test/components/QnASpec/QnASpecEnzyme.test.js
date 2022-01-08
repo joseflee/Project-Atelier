@@ -67,6 +67,35 @@ describe('Rendering one question item', function() {
     expect(id).toEqual(37);
     expect(questionBody).toEqual('Why is this product cheaper here than other sites?');
   });
+
+
+  it('should call clickOnYes when clicking on \'Yes\' link', () => {
+    let spy = jest.fn();
+
+    const component = mount(<QuestionItem clickOnHelpful={spy}
+      question={exampleQuestions.questions.results[0]} />);
+
+    component.find('.question-item-yes-button').simulate('click');
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('doesn\'t let you click again on helpful counter', () => {
+    let spy = jest.fn();
+    const alertSpy = window.alert;
+    window.alert = () => {}; // provide an empty implementation for window.alert
+
+    const component = mount(<QuestionItem clickOnHelpful={spy}
+      question={exampleQuestions.questions.results[0]} />);
+    const state = {
+      isHelpful: true
+    };
+    component.setState(state);
+    component.find('.question-item-yes-button').simulate('click');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+
+
 });
 
 describe('Rendering one answer item', function() {
