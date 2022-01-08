@@ -127,6 +127,33 @@ describe('Add new question form', function() {
     expect(component.handleValidation('for frodo', 'bill the pony', 'ponies@example.com')).toEqual(true);
   });
 
+  test('isValid if true should invoked passed functions', () => {
+
+    const formEventMocked = { preventDefault: jest.fn() };
+
+    const passedMock1 = jest.fn();
+    const passedMock2 = jest.fn();
+    const wrapper = shallow(<AddQuestionForm addQuestion={passedMock1} closeForm={passedMock2} />);
+    const spy1 = jest.spyOn(wrapper.instance(), 'handleInputChange');
+    const spy2 = jest.spyOn(wrapper.instance(), 'handleSubmit');
+    const spy3 = jest.spyOn(wrapper.instance(), 'handleValidation');
+
+    const state = {
+      questionBody: 'This is a question from tests',
+      nickname: 'gandalf',
+      email: 'example@email.com'
+    };
+    wrapper.setState(state);
+    expect(wrapper).toMatchSnapshot();
+
+    wrapper.find('[type="submit"]').simulate('click', formEventMocked);
+    expect(wrapper.state().isValid).toEqual(true);
+    expect(spy3).toBeCalledTimes(1);
+    expect(passedMock1).toBeCalledTimes(1);
+    expect(passedMock2).toBeCalledTimes(1);
+
+  });
+
   it('should render without throwing an error', function() {
     expect(shallow(<AddQuestionForm />).contains(<div className = 'qna-add-question-main-title'>Ask a question</div>)).toBe(true);
   });
