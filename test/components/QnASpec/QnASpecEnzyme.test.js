@@ -129,7 +129,6 @@ describe('Add new question form', function() {
     const spy3 = jest.spyOn(wrapper.instance(), 'handleValidation');
     //wrapper.find('[type="submit"]').simulate('submit');
     expect(wrapper.find('form')).toHaveLength(1);
-
     //wrapper.find('form').simulate('submit', formEventMocked);
     wrapper.find('[type="submit"]').simulate('click', formEventMocked);
     expect(formEventMocked.preventDefault).toBeCalledTimes(1);
@@ -137,7 +136,61 @@ describe('Add new question form', function() {
     expect(spy1).not.toHaveBeenCalled();
 
   });
- 
+
+  test('click on submit button when form not filled properly', () => {
+    const formEventMocked = { preventDefault: jest.fn() };
+    const alertSpy = window.alert;
+    window.alert = () => {}; // provide an empty implementation for window.alert
+
+    const wrapper = shallow(<AddQuestionForm/>);
+    const spy1 = jest.spyOn(wrapper.instance(), 'handleInputChange');
+    const spy2 = jest.spyOn(wrapper.instance(), 'handleSubmit');
+    const spy3 = jest.spyOn(wrapper.instance(), 'handleValidation');
+
+    const state = {
+      questionBody: 'This is a question from tests',
+      nickname: 'gandalf',
+      email: ''
+    };
+    wrapper.setState(state);
+    expect(wrapper).toMatchSnapshot();
+    //expect(wrapper.find('form')).toHaveLength(1);
+
+    wrapper.find('[type="submit"]').simulate('click', formEventMocked);
+
+    expect(formEventMocked.preventDefault).toBeCalledTimes(1);
+    expect(spy3).toBeCalledTimes(1);
+
+  });
+
+  test('allows to type in the form fields', () => {
+    const formEventMocked = { preventDefault: jest.fn() };
+    const alertSpy = window.alert;
+    window.alert = () => {}; // provide an empty implementation for window.alert
+
+    const wrapper = mount(<AddQuestionForm/>);
+    // const spy1 = jest.spyOn(wrapper.instance(), 'handleInputChange');
+    // const spy2 = jest.spyOn(wrapper.instance(), 'handleSubmit');
+    // const spy3 = jest.spyOn(wrapper.instance(), 'handleValidation');
+
+
+    //wrapper.find('input').simulate('change', {target: {value: 'Your new Value'}});
+    const question = wrapper.find({name: 'questionBody'});
+    question.props().value = 'foo';
+    //question.simulate('change', { target: { value: 'bla' } });
+    //console.log(question.debug());
+
+    //wrapper.update();
+
+
+    //wrapper.find('[type="submit"]').simulate('click', formEventMocked);
+    //console.log(wrapper.state());
+    //expect(spy3).toBeCalledTimes(1);
+    expect(question.props().value).toBeTruthy();
+    //expect(spy1).toBeCalledTimes(1);
+
+  });
+
   it('should render without throwing an error', function() {
     expect(shallow(<AddQuestionForm />).contains(<div className = 'qna-add-question-main-title'>Ask a question</div>)).toBe(true);
   });
@@ -158,7 +211,7 @@ describe('Add new question form', function() {
   it('should have properties at state', () => {
     const wrapper = mount(<AddQuestionForm
     />);
-    expect(wrapper.state().isValid).toEqual(true);
+    expect(wrapper.state().isValid).toEqual(false);
     expect(wrapper.state().questionBody).toEqual('');
     expect(wrapper.state().nickname).toEqual('');
     expect(wrapper.state().email).toEqual('');
