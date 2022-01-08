@@ -88,6 +88,62 @@ describe('Add new answer form', function() {
     var text = 'Submit your answer: Your answer*What\'s your nickname?*For privacy reasons, do not use your full name or email addressYour email?*For authentication reasons, you will not be emailed';
     expect(render(<AddAnswerForm />).text()).toEqual(text);
   });
+
+  test('handle validation should return false without input', () => {
+    const component = new AddAnswerForm;
+    expect(component.handleValidation('', '', '')).toEqual(false);
+  });
+
+  test('handle validation should return false without answer', () => {
+    const component = new AddAnswerForm;
+    expect(component.handleValidation('', 'aragorn', 'kings@dunedain.com')).toEqual(false);
+  });
+
+  test('handle validation should return false without nickname', () => {
+    const component = new AddAnswerForm;
+    expect(component.handleValidation('for frodo', '', 'kings@dunedain.com')).toEqual(false);
+  });
+
+  test('handle validation should return false without email', () => {
+    const component = new AddAnswerForm;
+    expect(component.handleValidation('for frodo', 'bill the pony', '')).toEqual(false);
+  });
+
+  test('handle validation should return false with email in wrong format', () => {
+    const component = new AddAnswerForm;
+    expect(component.handleValidation('for frodo', 'bill the pony', 'dummyemail')).toEqual(false);
+  });
+
+  test('handle validation should return true with proper arguments', () => {
+    const component = new AddAnswerForm;
+    expect(component.handleValidation('for frodo', 'bill the pony', 'ponies@example.com')).toEqual(true);
+  });
+
+  test('adding new answer invoked passed functions', () => {
+
+    const formEventMocked = { preventDefault: jest.fn() };
+
+    const passedMock1 = jest.fn();
+    const passedMock2 = jest.fn();
+    const wrapper = shallow(<AddAnswerForm addNewAnswer={passedMock1} closeAnswer={passedMock2} />);
+    const spy1 = jest.spyOn(wrapper.instance(), 'handleInputChange');
+    const spy2 = jest.spyOn(wrapper.instance(), 'handleSubmit');
+    const spy3 = jest.spyOn(wrapper.instance(), 'handleValidation');
+
+    const state = {
+      answerBody: 'This is a answerfrom tests',
+      nickname: 'gandalf',
+      email: 'example@email.com'
+    };
+    wrapper.setState(state);
+    expect(wrapper).toMatchSnapshot();
+
+    wrapper.find('[type="submit"]').simulate('click', formEventMocked);
+    expect(spy3).toBeCalledTimes(1);
+    expect(passedMock1).toBeCalledTimes(1);
+    expect(passedMock2).toBeCalledTimes(1);
+
+  });
 });
 
 describe('Uploading photos in answers', function() {
