@@ -94,7 +94,43 @@ describe('Rendering one question item', function() {
     expect(spy).not.toHaveBeenCalled();
   });
 
+  it('should change state property if clicking on \'add new answer\' ', () => {
 
+    const component = mount(<QuestionItem
+      question={exampleQuestions.questions.results[0]} />);
+    const spy1 = jest.spyOn(component.instance(), 'addAnswerHandleClick');
+
+    expect(component.state().isAddAnswerClicked).toEqual(false);
+    component.find('.question-item-add-answer-link').simulate('click');
+    expect(spy1).toHaveBeenCalled();
+    expect(component.state().isAddAnswerClicked).toEqual(true);
+
+  });
+
+  it('should change state property if clicking on \'show more answers\' ', () => {
+
+    const component = mount(<QuestionItem
+      question={exampleQuestions.questions.results[1]} />);
+    const spy1 = jest.spyOn(component.instance(), 'clickOnMoreAnswers');
+    //button is visible
+    expect(component.state().isMoreAnswersShown).toEqual(true);
+    expect(component.state().answers.length).toEqual(2);
+    component.find('#more-answers-button').simulate('click');
+    //console.log(component.debug());
+    expect(spy1).toHaveBeenCalled();
+    expect(component.state().isMoreAnswersShown).toEqual(false);
+
+  });
+
+  it('should not show  \'show more answers\' buttons with less than 2 answers', () => {
+
+    const component = mount(<QuestionItem
+      question={exampleQuestions.questions.results[0]} />);
+    const spy1 = jest.spyOn(component.instance(), 'clickOnMoreAnswers');
+    //button is not visible
+    expect(component.state().answers.length).toEqual(1);
+    expect(component.state().isMoreAnswersShown).toEqual(false);
+  });
 
 });
 
