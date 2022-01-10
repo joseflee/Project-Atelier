@@ -22,6 +22,26 @@ beforeAll(() => server.listen(
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+const checkChars = async (a, b, c, d, e) => {
+  const one = screen.getByTestId(a);
+  const two = screen.getByTestId(b);
+  const three = screen.getByTestId(c);
+  const four = screen.getByTestId(d);
+  const five = screen.getByTestId(e);
+  const options = [one, two, three, four, five];
+  let selected;
+  for (let i = 0; i < options.length; i++) {
+    selected = options[i];
+    await userEvent.click(selected);
+    expect(selected.checked).toEqual(true);
+    for (let j = 0; j < options.length; j++) {
+      if (options[j] === selected) {
+        continue;
+      }
+      expect(options[j].checked).toEqual(false);
+    }
+  }
+};
 
 xdescribe('Rating breakdown and product breakdown rendering Test', () => {
 
@@ -397,7 +417,7 @@ xdescribe('New review form rendering Test', () => {
   });
 });
 
-describe('New review form functional test', () => {
+xdescribe('New review form functional test', () => {
   test('When the rating star is being hovered should display the hover effect', async () => {
     await waitFor(async () => {
       render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
@@ -444,14 +464,80 @@ describe('New review form functional test', () => {
   test('User should able to select options of fit section', async () => {
     await waitFor(async () => {
       render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
-      const one = screen.getByTestId('newReview-fit-1');
-      const four = screen.getByTestId('newReview-fit-4');
-      expect(one.checked).toEqual(false);
-      await userEvent.click(one);
-      expect(one.checked).toEqual(true);
-      await userEvent.click(four);
-      expect(one.checked).toEqual(false);
-      expect(four.checked).toEqual(true);
+      checkChars('newReview-fit-1', 'newReview-fit-2', 'newReview-fit-3', 'newReview-fit-4', 'newReview-fit-5');
+    });
+  });
+  test('User should able to select options of length section', async () => {
+    await waitFor(async () => {
+      render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
+      checkChars('newReview-length-1', 'newReview-length-2', 'newReview-length-3', 'newReview-length-4', 'newReview-length-5');
+    });
+  });
+  test('User should able to select options of quality section', async () => {
+    await waitFor(async () => {
+      render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
+      checkChars('newReview-quality-1', 'newReview-quality-2', 'newReview-quality-3', 'newReview-quality-4', 'newReview-quality-5');
+    });
+  });
+  test('User should able to select options of comfort section', async () => {
+    await waitFor(async () => {
+      render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
+      checkChars('newReview-comfort-1', 'newReview-comfort-2', 'newReview-comfort-3', 'newReview-comfort-4', 'newReview-comfort-5');
+    });
+  });
+  test('User should able to select options of width section', async () => {
+    await waitFor(async () => {
+      render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
+      checkChars('newReview-width-1', 'newReview-width-2', 'newReview-width-3', 'newReview-width-4', 'newReview-width-5');
+    });
+  });
+  test('User should able to input review summary', async () => {
+    await waitFor(async () => {
+      render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
+      const summary = await screen.findByPlaceholderText(/Example: Best purchase ever!/i);
+      await userEvent.type(summary, 'oklaoklaoklaoklaoklaokla');
+      expect(summary).toHaveValue('oklaoklaoklaoklaoklaokla');
+    });
+  });
+  test('User should able to input review body', async () => {
+    await waitFor(async () => {
+      render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
+      const body = await screen.findByPlaceholderText(/Why did you like the product or not ?/i);
+      await userEvent.type(body, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.');
+      expect(body).toHaveValue('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.');
+    });
+  });
+  test('User should able to input nick name', async () => {
+    await waitFor(async () => {
+      render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
+      const nickName = await screen.findByPlaceholderText(/Example: jackson11!/i);
+      await userEvent.type(nickName, 'jack222');
+      expect(nickName).toHaveValue('jack222');
+    });
+  });
+  test('User should able to input email', async () => {
+    await waitFor(async () => {
+      render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
+      const email = await screen.findByPlaceholderText(/Example: jackson11@email.com/i);
+      await userEvent.type(email, 'jack222@email.com');
+      expect(email).toHaveValue('jack222@email.com');
+    });
+  });
+  test('User should able to upload image', async () => {
+    await waitFor(async () => {
+      render(<NewReview productId={59553} currentProduct={'Camo Onesie'} />);
+      const files = [
+        new File(['hello'], 'hello1.png', {type: 'image/png'}),
+        new File(['hello'], 'hello2.png', {type: 'image/png'}),
+        new File(['hello'], 'hello3.png', {type: 'image/png'}),
+        new File(['hello'], 'hello4.png', {type: 'image/png'}),
+        new File(['hello'], 'hello5.png', {type: 'image/png'})
+      ];
+      const input = screen.getByTestId('img-uploader');
+      const button = screen.queryAllByTestId('upload-button');
+      await userEvent.upload(input, files);
+      expect(input.files).toHaveLength(5);
     });
   });
 });
+
