@@ -5,7 +5,7 @@ const QuantityDropdown = (props) => {
   if (!props.selectedQuantity) {
     return (
       <div>
-        <select disabled>
+        <select id='PODisabledQuantity' disabled>
           <option value='' hidden>-</option>
         </select>
       </div>

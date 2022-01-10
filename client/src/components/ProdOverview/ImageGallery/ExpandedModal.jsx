@@ -11,16 +11,30 @@ export class ExpandedModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      index: 0,
+      index: this.props.selectedIndex,
+      zoomActivated: false,
     };
+    let img = '';
+    let lens = '';
+    let container = '';
   }
 
-  componentDidMount() {
+  componentDidMount () {
     document.body.style.overflow = 'hidden';
+    this.img = document.getElementById('PONormalImage');
+    this.lens = document.getElementById('POModalLens');
+    this.container = document.getElementById('POModaImageWrapper');
+    this.zoomContainer = document.getElementById('POModalZoomImage');
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     document.body.style.overflow = 'unset';
+  }
+
+  thumbToDisplay (index) {
+    this.setState({
+      index: index,
+    });
   }
 
   rotateRight () {
@@ -35,6 +49,7 @@ export class ExpandedModal extends React.Component {
     }
   }
 
+
   rotateLeft () {
     if (this.state.index <= this.props.photos.length - 1 && this.state.index !== 0) {
       this.setState({
@@ -47,24 +62,105 @@ export class ExpandedModal extends React.Component {
     }
   }
 
+  changeImageSize () {
+    if (!this.state.enlargeImage) {
+      document.getElementById('PONormalImage').setAttribute('id', 'POModalEnglarge');
+      document.getElementById('POModaImageWrapper').style.display = 'block';
+      this.setState({
+        enlargeImage: true,
+      });
+    } else {
+      document.getElementById('POModalEnglarge').setAttribute('id', 'PONormalImage');
+      document.getElementById('POModaImageWrapper').style.display = 'flex';
+      this.setState({
+        enlargeImage: false,
+      });
+    }
+  }
+
+  imageZoom (e) {
+    const ratio = 2.5;
+    this.lens.style.backgroundImage = `url('${this.img.src})`;
+    this.lens.style.backgroundSize = (this.img.width * ratio) + 'px ' + (this.img.height * ratio) + 'px';
+    this.moveLens(e);
+  }
+
+  getCursorPos (e) {
+    let a = this.img.getBoundingClientRect();
+    let x = e.pageX - a.left;
+    let y = e.pageY - a.top;
+    return {'x': x, 'y': y};
+  }
+
+  moveLens (e) {
+    const width = 150;
+    const height = 0;
+    const position = this.getCursorPos(e);
+    const ratio = 2.5;
+    let x = position.x;
+    let y = position.y;
+    if (x > this.img.width - (width / ratio)) {
+      x = this.img.width - (width / ratio);
+    }
+    if (x < (width / ratio)) {
+      x = (width / ratio);
+    }
+    if (y > this.img.height - (height / ratio)) {
+      y = this.img.height - (height / ratio);
+    }
+    if (y < (height / ratio)) {
+      y = (height / ratio);
+    }
+    this.lens.style.left = (x - width) + 'px';
+    this.lens.style.top = (y - height) + 'px';
+    this.lens.style.backgroundPosition = '-' + ((x * ratio) - width + ratio) +
+      'px -' + ((y * ratio) - height + ratio) + 'px';
+  }
+
+  activateZoom (e) {
+    if (!this.state.zoomActivated) {
+      this.lens.style.display = 'block';
+      document.getElementById('POModalThumbDisplayer').style.display = 'none';
+      document.getElementById('POModalArrowContainer').style.display = 'none';
+      // document.getElementById('POModalImageDisplayer').style.gridRow = '2/ span 10';
+      this.setState({
+        zoomActivated: true,
+      });
+    } else {
+      this.lens.style.display = 'none';
+      document.getElementById('POModalThumbDisplayer').style.display = 'flex';
+      document.getElementById('POModalArrowContainer').style.display = 'flex';
+      // document.getElementById('POModalImageDisplayer').style.gridRow = '1/ span 9';
+      this.setState({
+        zoomActivated: false,
+      });
+    }
+  }
+
   render () {
-    console.log('props', this.props);
+    // console.log('props', this.props);
+    console.log('state', this.state);
     return (
-      <div className='POModal'>
+      <div className='POModal' id='POModal'>
         <button className='POCloseModal' onClick={this.props.switchModal}>x</button>
-        <div className='POModalArrowContainer'>
-          <FontAwesomeIcon icon={faArrowLeft} size='lg' onClick={this.rotateLeft.bind(this)} />
-          <FontAwesomeIcon icon={faArrowRight} size='lg' onClick={this.rotateRight.bind(this)}/>
+        <div id='POModalArrowContainer'>
+          <FontAwesomeIcon icon={faArrowLeft} size='lg' className='ModalArrow' onClick={this.rotateLeft.bind(this)} />
+          <FontAwesomeIcon icon={faArrowRight} size='lg' className='ModalArrow' onClick={this.rotateRight.bind(this)}/>
         </div>
-        <div className='POModalImageDisplayer'>
-          <img className='POModalImage' src={this.props.photos[this.state.index].url}/>
+        <div id='POModalImageDisplayer'>
+          <div id='POModalZoomImage'></div>
+          <div id='POModaImageWrapper'>
+            <div id='POModalLens' onMouseMove={this.imageZoom.bind(this)} onClick={this.activateZoom.bind(this)}></div>
+            <img className='POModalImage' id='PONormalImage' onClick={() => { this.activateZoom.bind(this)(); }} src={this.props.photos[this.state.index].url}
+              onMouseMove={this.imageZoom.bind(this)}/>
+          </div>
         </div>
-        <div className='POModalThumbDisplayer'>
+        <div id='POModalThumbDisplayer'>
           {this.props.photos.map((element, index) => {
             if (this.state.index === index) {
               return <img className='POModalDisplayThumbImg POModalThumbImg' key={index} src={element.thumbnail_url} onClick={() => { this.thumbToDisp(index); }} />;
             } else {
-              return <img className='POModalThumbImg' key={index} src={element.thumbnail_url} onClick={() => { this.thumbToDisp(index); }} />;
+              return <img className='POModalThumbImg' key={index} src={element.thumbnail_url} onClick={() => { this.thumbToDisplay.bind(this)(index); }} />;
             }
           })}
         </div>
