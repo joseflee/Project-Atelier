@@ -26,7 +26,7 @@ class SearchQuestions extends React.Component {
           <input
             className='qna-search-input'
             type='text'
-            placeholder='Have a question? Search for answers…'
+            placeholder='HAVE A QUESTION? SEARCH FOR ANSWERS…'
             // size='50'
             // value=''
             onChange={(e)=>this.handleInputChange(e)} />

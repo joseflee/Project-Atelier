@@ -873,14 +873,18 @@
 }
 
 .qna-search-icon {
+  /* display: inline-block; */
   position: absolute;
-  top: 4px;
-  right: 360px;
-  width: 19px;
+  top: 17px;
+  left: 5px;
+  width: 24px;
+  height: 24px;
 }
 
 .qna-search-input{
   height:50px;
   width:1000px;
+  padding-left: 32px;
+  font-size:18px;
 }
 
