@@ -855,8 +855,32 @@
 }
 
 /* Questions and answers section */
+
+/* Main */
+
 .qna-main-component{
   width:63%;
   margin:auto;
   position:relative
 }
+
+/* Search */
+.qna-search-wrapper{
+  position: relative;
+  display: flex;
+
+
+}
+
+.qna-search-icon {
+  position: absolute;
+  top: 4px;
+  right: 360px;
+  width: 19px;
+}
+
+.qna-search-input{
+  height:50px;
+  width:1000px;
+}
+
