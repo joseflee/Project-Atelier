@@ -27,7 +27,12 @@ export const handlers = [
       ctx.json(dummyReviews.meta)
     );
   }),
-
+  rest.post('https://api.cloudinary.com/v1_1/dqidinkkf/upload', (req, res, ctx) => {
+    return res(
+      ctx.status(201),
+      ctx.json({'data': {'secure_url': 'https://res.cloudinary.com/dqidinkkf/image/upload/v1641767630/plv1j7hjp5ajpsdrtkmu.jpg'}})
+    );
+  }),
   rest.get('/qna', (req, res, ctx) => {
     return res(
       ctx.status(200)
