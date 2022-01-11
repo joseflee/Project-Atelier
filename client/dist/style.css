@@ -853,3 +853,10 @@
   left: 70%;
   top: 30%;
 }
+
+/* Questions and answers section */
+.qna-main-component{
+  width:63%;
+  margin:auto;
+  position:relative
+}
