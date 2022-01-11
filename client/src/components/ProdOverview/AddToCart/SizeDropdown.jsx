@@ -18,7 +18,7 @@ const SizeDropdown = (props) => {
 
   if (sizes.length === 0) {
     return (
-      <div>
+      <div className='POATOC'>
         <select disabled>
           <option value='' hidden>Out Of Stock</option>
         </select>
@@ -26,7 +26,7 @@ const SizeDropdown = (props) => {
     );
   } else {
     return (
-      <div>
+      <div className='POATOC'>
         <select name='Size' id='sizeSelector' defaultValue='' onChange={setSku}>
           <option value='SelectSize' >Select Size</option>
           {sizes.map((element, index) => {
