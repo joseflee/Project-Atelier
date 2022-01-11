@@ -255,7 +255,7 @@ class QnA extends React.Component {
     return (
       <div className='qna-main-component'>
 
-        <div className='qna-component-name'><h2>Questions and Answers</h2></div>
+        <div className='qna-component-name'>QUESTIONS AND ANSWERS</div>
         <SearchQuestions search={this.search}/>
         <QuestionsList
           data={this.state.questions}
