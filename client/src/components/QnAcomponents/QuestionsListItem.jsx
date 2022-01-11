@@ -40,15 +40,25 @@ class QuestionsListItem extends React.Component {
     });
   }
 
-  addAnswerHandleClick() {
+  addAnswerHandleClick(event) {
+    //event.stopPropagation();
+    //console.log('should be triggered once');
     this.setState({
       isAddAnswerClicked: true
     });
   }
 
   closeAnswerForm() {
-    this.setState({
-      isAddAnswerClicked: false
+    //console.log('triggered close answer');
+    //console.log('before triggering closing', this.state);
+
+    this.setState((prevState) => {
+      console.log(prevState);
+      return {
+        isAddAnswerClicked: false
+      };
+    }, () => {
+      console.log('updated', this.state);
     });
   }
 
@@ -72,7 +82,7 @@ class QuestionsListItem extends React.Component {
       answersList;
 
     if (this.state.isMoreAnswersShown) {
-      moreAnswers = <button onClick={()=>{ this.clickOnMoreAnswers(); }}>Load more answers</button>;
+      moreAnswers = <button id='more-answers-button' onClick={()=>{ this.clickOnMoreAnswers(); }}>Load more answers</button>;
       answersList = <AnswersList list={Object.values(this.props.question.answers).slice(0, 2)}
         questionId={this.props.question.question_id}
         productId={this.props.productId}
@@ -101,18 +111,18 @@ class QuestionsListItem extends React.Component {
 
       />;
     } else {
-      addAnswer = <u>Add answer</u>;
+      addAnswer = <div className='question-item-add-answer-link' onClick={()=>this.addAnswerHandleClick()}><u>Add answer</u></div>;
     }
 
     return (
-      <div>
+      <div className='question-item-wrap'>
 
         {/* beginning of question item */}
         <div className='question-item'>
           <div className='question-item-q-letter'><h2>Q:{this.props.question.question_body}</h2></div>
           <div className='question-item-helpful-keyword' >Helpful?</div>
           <div className='question-item-yes-button' onClick={()=>{ this.clickOnHelpful(); }}><u>Yes</u>({this.props.question.question_helpfulness})</div>
-          <div className='question-item-add-answer-link' onClick={()=>this.addAnswerHandleClick()}>{addAnswer}</div>
+          <div>{addAnswer}</div>
         </div>
         {/* end of question item */}
         {answersList}

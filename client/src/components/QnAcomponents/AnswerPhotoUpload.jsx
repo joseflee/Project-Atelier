@@ -5,7 +5,8 @@ class PhotoUpload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: []
+      file: [],
+      filesToSend: []
     };
 
     this.uploadSingleFile = this.uploadSingleFile.bind(this);
@@ -13,26 +14,29 @@ class PhotoUpload extends React.Component {
   }
 
 
+
   uploadSingleFile(e) {
-    // setFile([...file, URL.createObjectURL(e.target.files[0])], ()=> {
-    //   props.handlePhotos(file);
-    // });
+
+
     this.setState({
-      file: [...this.state.file, URL.createObjectURL(e.target.files[0])]
+      file: [...this.state.file, URL.createObjectURL(e.target.files[0])],
+      filesToSend: [...this.state.filesToSend, e.target.files[0]]
     }, ()=> {
-      this.props.handlePhotos(this.state.file);
+      //var photos = [...this.state.file];
+      console.log(e.target.files[0]);
+
+      this.props.handlePhotos(this.state.filesToSend);
+
     });
+
+
 
   }
 
-  // let upload = function upload(e) {
-  //   e.preventDefault();
-  //   console.log('clicked on upload');
-  //   props.handlePhotos(file);
-  // };
+
   render() {
     return (
-      <div>
+      <div className='qna-answer-photo-upload'>
         <div className="form-group preview">
           {this.state.file.length > 0 &&
           this.state.file.map((item, index) => {

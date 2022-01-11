@@ -3,7 +3,7 @@ import React from 'react';
 class SearchQuestions extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
@@ -25,6 +25,7 @@ class SearchQuestions extends React.Component {
           type='text'
           placeholder='Have a question? Search for answers…'
           size='50'
+          value=''
           onChange={(e)=>this.handleInputChange(e)} />
       </form>
     );

@@ -26,26 +26,26 @@ class AddAnswerForm extends React.Component {
   }
 
   handlePhotos(photos) {
-    console.log('triggered handle photos', photos);
+    console.log('triggered handle photos');
     this.setState({
       photos: photos
     });
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
     event.preventDefault();
     var questionId = this.props.questionId;
     var body = this.state.answerBody;
     var nickname = this.state.nickname;
     var email = this.state.email;
     var photos = this.state.photos;
-    console.log('42', this.state);
     var validationResult = this.handleValidation(body, nickname, email);
     var productId = this.props.productId;
 
     if (validationResult) {
       this.props.addNewAnswer(questionId, body, nickname, email, photos, productId);
       this.props.closeAnswer();
+
 
     } else {
       alert('Not all fields filled');
@@ -66,8 +66,8 @@ class AddAnswerForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>Submit your answer</div>
+      <div className='qna-add-answer'>
+        <div className='qna-submit-answer'>Submit your answer</div>
         <div>{this.props.name}: {this.props.question_body}</div>
         <form>
           <label>
@@ -113,7 +113,7 @@ class AddAnswerForm extends React.Component {
             <br />
             <AnswerPhotoUpload handlePhotos={this.handlePhotos} />
           </label>
-          <input type="submit" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
+          <input type="submit" value="Submit" onClick = {this.handleSubmit} />
         </form>
       </div>
     );

@@ -4,7 +4,7 @@ import ProductBreakDown from './ProductBreakDown.jsx';
 import axios from 'axios';
 import HelpfulButton from './HelpfulButton.jsx';
 import NewReview from './NewReview.jsx';
-// import SearchBar from './SearchBar.jsx';
+import SearchBar from './SearchBar.jsx';
 
 const ReviewList = ( {productId, currentProduct} )=>{
   const [selectedArray, setSelectedArray] = useState('totalReviewArray');
@@ -41,7 +41,6 @@ const ReviewList = ( {productId, currentProduct} )=>{
      sortedArray: sortedArray,
      resetArray: totalReviewArray
    };
-
   useEffect(() => {
     let mounted = true;
     setIsLoading(true);
@@ -372,7 +371,7 @@ const ReviewList = ( {productId, currentProduct} )=>{
         </div>
         <div className="review-DropDown">
           <h3 data-testid="totalReviews" style= {{display: 'inline'}}>{reviewsCount()} reviews, sorted by </h3>
-          <select onChange={dropDownMenu} id="review-sort-select">
+          <select data-testid="review-sort-select" onChange={dropDownMenu} id="review-sort-select">
             <option value="totalReviewArray">Relevant</option>
             <option value="newestReviewArray">Newest</option>
             <option value="helpfulReviewArray">Helpful</option>
@@ -382,21 +381,21 @@ const ReviewList = ( {productId, currentProduct} )=>{
         <div className= "review-List">
           {isLoading === true ? <div className='review-loading'><i className="fas fa-spinner "></i> <h3>loading....</h3> </div> : onScreenReviewArray.map((user, index)=>{
             return (
-              <div key={index} className="review-Cell">
+              <div key={index} className="review-Cell" data-testid="review-Cell">
                 <div className="review-Top">
                   <div className="review-stars-outer">
-                    <div className="review-stars-inner" style={{width: starWidth(user.rating)}}></div>
+                    <div data-testid="review-stars-inner" className="review-stars-inner" style={{width: starWidth(user.rating)}}></div>
                   </div>
-                  <span >{user.reviewer_name}, {convertDate(user.date)}</span>
+                  <span data-testid="review-nameNDate" >{user.reviewer_name}, {convertDate(user.date)}</span>
                 </div>
-                <h3>{user.summary.slice(0, 60)}</h3>
-                <div className="review-Body"> {user.summary.length > 60 ?
-                  <div className="extended-Summary">{user.summary.slice(60)}</div> : null} <br></br>{user.body.length > 250 ?
-                  <div>{isTruncated ? <div >{user.body.substring(0, 250)}.........................</div> : <div>{user.body}</div>}
+                <h3 data-testid="review-summary">{user.summary.slice(0, 60)}</h3>
+                <div data-testid="review-body" className="review-Body"> {user.summary.length > 60 ?
+                  <div data-testid="review-Extended-Summary" className="extended-Summary">{user.summary.slice(60)}</div> : null} <br></br>{user.body.length > 250 ?
+                  <div>{isTruncated ? <div >{user.body.substring(0, 250)}.........................</div> : <div >{user.body}</div>}
                     <div><button onClick = {()=>{ toggleIsTruncated(); }}>{isExtended}</button></div> </div> : <div>{user.body}</div>}
                 </div>
                 {user.photos.length > 0 ?
-                  <div className="review-ImageSection">
+                  <div data-testid="review-ImageSection" className="review-ImageSection">
                     {user.photos.map((img, index)=>{
                       return (
                         <div key = {index} className="review-Imageblock">
@@ -408,17 +407,17 @@ const ReviewList = ( {productId, currentProduct} )=>{
                         </div>);
                     })}
                   </div> : null}
-                {user.recommend ? <div><span>✔ &nbsp;</span><span>I recommend this product</span></div> : null}
+                {user.recommend ? <div data-testid="review-recommend"><span>✔ &nbsp;</span><span>I recommend this product</span></div> : null}
                 {user.response ? (<div className="review-Response"><p>Response from seller:</p> <div className="seller-Response2">{user.response}</div> </div>) : null}
                 <HelpfulButton clickedList={clickedList} markClicked={markClicked} helpfulness={user.helpfulness} reviewId = {user.review_id}/>
               </div>
             );
           })}
         </div>
-        <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === ((sortedArray.length || searchResult.length) ? (sortedArray.length || searchResult.length) : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <button onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button>}
-          {isLoading ? null : <button onClick={()=>{ setOpenReviewModal(true); }}>Write New Review</button>}
+        <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === ((sortedArray.length || searchResult.length) ? (sortedArray.length || searchResult.length) : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <button data-testid="review-moreButton" onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button>}
+          {isLoading ? null : <button data-testid="review-newReviewButton" onClick={()=>{ setOpenReviewModal(true); }}>Write New Review</button>}
         </div>
-        {openReviewModal && <NewReview currentProduct={currentProduct} characteristics={characteristics} productId= {productId} setIsPost={setIsPost} setOpenReviewModal={setOpenReviewModal} setOpenReviewModal={setOpenReviewModal}/>}
+        {openReviewModal && <NewReview characteristics={characteristics} currentProduct={currentProduct} productId= {productId} setIsPost={setIsPost} setOpenReviewModal={setOpenReviewModal} />}
       </div>
     </div>
   );

@@ -10,7 +10,6 @@ const AnswersList = (props) => {
 
   return (
     <div>
-      {/* { console.log(list) } */}
       {list.map((answer, key) => {
         return (
           <QuestionsListItemAnswer answer={answer}
