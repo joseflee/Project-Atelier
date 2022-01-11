@@ -4,13 +4,17 @@ import axios from 'axios';
 import ProductCards from './ProductCards.jsx';
 import MyOutfitCards from './MyOutfitCards.jsx';
 
+import ClickedData from '../ClickDataAnalytics.jsx';
+
 class RelProducts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       listOfMyOutfits: [],
       leftArrowDisplay: true,
-      rightArrowDisplay: true
+      rightArrowDisplay: true,
+      // test if works in HOC
+      widgetName: 'Related Products'
     };
 
     this.handleCardClick = this.handleCardClick.bind(this);
@@ -51,10 +55,10 @@ class RelProducts extends React.Component {
     return (
       <div className="rel-prod-container">
         <h2>Related Products and My Outfits</h2>
-        <div className='rel-products product-card-container'>
+        <div className='rel-products product-card-container' onClick={this.props.onClick}>
           <ProductCards productCards={this.props.relatedProducts} handleClick={this.handleCardClick} />
         </div>
-        <div className='my-outfits product-card-container'>
+        <div className='my-outfits product-card-container' onClick={this.props.onClick}>
           <MyOutfitCards myOutfitCards={this.state.listOfMyOutfits} handleClick={this.handleCardClick} handleAddOutfitClick={this.handleAddOutfitClick} />
         </div>
       </div>
@@ -62,4 +66,6 @@ class RelProducts extends React.Component {
   }
 }
 
-export default RelProducts;
+const RelProductsWithClickData = ClickedData(RelProducts, 'Related Products');
+
+export default RelProductsWithClickData;
