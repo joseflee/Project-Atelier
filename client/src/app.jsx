@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ProductOverview from './components/ProdOverview/OverView.jsx';
-import RelProducts from './components/RelProductsComponents/RelProducts.jsx';
+import RelProductsWithClickData from './components/RelProductsComponents/RelProducts.jsx';
 import QnA from './components/QnAcomponents/mainQnA.jsx';
 import RatingsNReviews from './components/RatingsNReviews/RatingsNReviews.jsx';
 import axios from 'axios';
+
+import ClickedData from './components/ClickDataAnalytics.jsx';
+// const RelProductsWithClickData = ClickedData(RelProducts);
 
 import { getProductInfo, getStyleInfo, getRelatedProductInfo, getQuestionsListInfo, getReviewInfo } from './helpers.js';
 
@@ -17,6 +20,7 @@ class App extends React.Component {
       currentProductStyle: null,
       relatedProducts: null,
       questionsNAnswers: null,
+      productReview: null
     };
 
     this.updateProduct = this.updateProduct.bind(this);
@@ -27,8 +31,6 @@ class App extends React.Component {
   }
 
   async updateProduct(productId) {
-    console.log('updateProduct: ', productId);
-
     const [productInfo, productStyleInfo, relProductInfo, questionsList, reviewInfo] = await Promise.all([
       getProductInfo(productId),
       getStyleInfo(productId),
@@ -55,14 +57,14 @@ class App extends React.Component {
       productReview,
     } = this.state;
 
-    if (currentProduct == null || currentProductStyle == null || relatedProducts == null ||
-      questionsNAnswers == null || productReview == null) {
+    if (currentProduct === null || currentProductStyle === null || relatedProducts === null ||
+      questionsNAnswers === null || productReview === null) {
       return null;
     } else {
       return (
         <div>
           <ProductOverview productId={this.state.productId} currentProduct={this.state.currentProduct} currentProductStyle={this.state.currentProductStyle} currentReview={this.state.productReview} />
-          <RelProducts productId={this.state.productId} currentProduct={this.state.currentProduct} currentProductStyle={this.state.productStyleInfo} relatedProducts={this.state.relatedProducts} handleClick={this.updateProduct}/>
+          <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts} handleClick={this.updateProduct} />
           <QnA productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
           <RatingsNReviews productId={this.state.productId} currentProduct={this.state.currentProduct} />
         </div>

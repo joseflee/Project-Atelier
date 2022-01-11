@@ -51,3 +51,10 @@ export var getReviewInfo = async (productId) => {
       console.log(error);
     });
 };
+
+export var sendInteractions = async (data) => {
+  const interactionsUrl = '/interactions/postData';
+  return await axios.post(interactionsUrl, data)
+    .then(response => console.log(response))
+    .catch(error => console.log(error));
+};

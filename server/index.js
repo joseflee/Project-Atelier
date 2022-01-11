@@ -9,6 +9,7 @@ const ratingsRouter = require('./routes/ratings.js');
 const qnaRouter = require('./routes/qna.js');
 const cartRouter = require('./routes/cart.js');
 const relProductsRouter = require('./routes/relProduct.js');
+const interactionsRouter = require('./routes/interactions.js');
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(cors());
@@ -20,7 +21,6 @@ app.use('/product', relProductsRouter);
 app.use('/ratings', ratingsRouter);
 app.use('/qna', qnaRouter);
 app.use('/cart', cartRouter);
-
-
+app.use('/interactions', interactionsRouter);
 
 app.listen(port, () => console.log('Listening on:', port));

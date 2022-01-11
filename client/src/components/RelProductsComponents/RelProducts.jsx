@@ -1,21 +1,22 @@
 import React from 'react';
 import axios from 'axios';
-import { products } from '../../../../example/products.js';
 
 import ProductCards from './ProductCards.jsx';
 import MyOutfitCards from './MyOutfitCards.jsx';
+
+import ClickedData from '../ClickDataAnalytics.jsx';
 
 class RelProducts extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentProduct: this.props.currentProduct,
       listOfMyOutfits: [],
       leftArrowDisplay: true,
-      rightArrowDisplay: true
+      rightArrowDisplay: true,
+      // test if works in HOC
+      widgetName: 'Related Products'
     };
 
-    // this.componentDidMount = this.componentDidMount.bind(this);
     this.handleCardClick = this.handleCardClick.bind(this);
     this.handleAddOutfitClick = this.handleAddOutfitClick.bind(this);
   }
@@ -28,16 +29,24 @@ class RelProducts extends React.Component {
     var element = e.target;
     if (this.state.listOfMyOutfits.length === 0) {
       this.setState({
-        listOfMyOutfits: [this.state.currentProduct]
+        listOfMyOutfits: [this.props.currentProduct]
       });
     } else {
+      var isPresent = false;
+
       for (var i = 0; i < this.state.listOfMyOutfits.length; i++) {
-        console.log(this.state.listOfMyOutfits[i].id);
-        if (this.state.listOfMyOutfits[i].id !== this.state.currentProduct.id) {
-          this.setState({
-            listOfMyOutfits: [this.state.currentProduct, ...this.state.listOfMyOutfits]
-          });
+        if (this.state.listOfMyOutfits[i].id !== this.props.currentProduct.id) {
+          isPresent = false;
+        } else {
+          isPresent = true;
+          return;
         }
+      }
+
+      if (isPresent === false) {
+        this.setState({
+          listOfMyOutfits: [this.props.currentProduct, ...this.state.listOfMyOutfits]
+        });
       }
     }
   }
@@ -46,10 +55,10 @@ class RelProducts extends React.Component {
     return (
       <div className="rel-prod-container">
         <h2>Related Products and My Outfits</h2>
-        <div className='rel-products product-card-container'>
+        <div className='rel-products product-card-container' onClick={this.props.onClick}>
           <ProductCards productCards={this.props.relatedProducts} handleClick={this.handleCardClick} />
         </div>
-        <div className='my-outfits product-card-container'>
+        <div className='my-outfits product-card-container' onClick={this.props.onClick}>
           <MyOutfitCards myOutfitCards={this.state.listOfMyOutfits} handleClick={this.handleCardClick} handleAddOutfitClick={this.handleAddOutfitClick} />
         </div>
       </div>
@@ -57,4 +66,6 @@ class RelProducts extends React.Component {
   }
 }
 
-export default RelProducts;
+const RelProductsWithClickData = ClickedData(RelProducts, 'Related Products');
+
+export default RelProductsWithClickData;
