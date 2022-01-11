@@ -20,14 +20,18 @@ class SearchQuestions extends React.Component {
 
   render() {
     return (
-      <form>
-        <input
-          type='text'
-          placeholder='Have a question? Search for answers…'
-          size='50'
-          value=''
-          onChange={(e)=>this.handleInputChange(e)} />
-      </form>
+      <div className='qna-search-wrapper'>
+        <img className='qna-search-icon' src='https://www.clipartmax.com/png/full/213-2137376_search-vector-art-icon-small-search-icon-png.png'/>
+        <form>
+          <input
+            className='qna-search-input'
+            type='text'
+            placeholder='HAVE A QUESTION? SEARCH FOR ANSWERS…'
+            // size='50'
+            // value=''
+            onChange={(e)=>this.handleInputChange(e)} />
+        </form>
+      </div>
     );
   }
 
