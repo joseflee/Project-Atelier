@@ -119,10 +119,12 @@ class QuestionsListItem extends React.Component {
 
         {/* beginning of question item */}
         <div className='question-item'>
-          <div className='question-item-q-letter'><h2>Q:{this.props.question.question_body}</h2></div>
-          <div className='question-item-helpful-keyword' >Helpful?</div>
-          <div className='question-item-yes-button' onClick={()=>{ this.clickOnHelpful(); }}><u>Yes</u>({this.props.question.question_helpfulness})</div>
-          <div>{addAnswer}</div>
+          <div className='question-item-q-letter'>Q:</div><div className='qna-question-body'>{this.props.question.question_body}</div>
+          <div className='qna-question-links'>
+            <div className='question-item-helpful-keyword' >Helpful?</div>
+            <div className='question-item-yes-button' onClick={()=>{ this.clickOnHelpful(); }}><u>Yes</u>({this.props.question.question_helpfulness})</div>
+            <div>{addAnswer}</div>
+          </div>
         </div>
         {/* end of question item */}
         {answersList}
