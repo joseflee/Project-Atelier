@@ -890,9 +890,9 @@
 /* Main */
 
 .qna-main-component{
-  width:63%;
+  width:80%;
   margin:auto;
-  position:relative
+  position:relative;
 }
 
 
@@ -900,8 +900,6 @@
 .qna-search-wrapper{
   position: relative;
   display: flex;
-
-
 }
 
 .qna-search-icon {
@@ -929,7 +927,41 @@
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
+}
+
+.qna-button-wrapper{
+  display: flex;
+  justify-content: center;
+}
+
+.more-answered-questions-button{
+  margin-left: 10px;
+  margin-top: 15px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size:18px;
+  height:50px;
+  border:2px solid black;
 
 }
+
+.qna-add-question-button{
+  margin-left: 10px;
+  margin-top: 15px;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  cursor: pointer;
+  height:50px;
+  border:2px solid black;
+}
+
+
 
 

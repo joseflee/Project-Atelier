@@ -44,7 +44,7 @@ class AddQuestion extends React.Component {
       modal = <div></div>;
     }
     if (this.state.isAddButtonShown) {
-      questionButton = <button onClick={()=>this.clickOnAddQuestion()}>Add a new question</button>;
+      questionButton = <button className='qna-add-question-button' onClick={()=>this.clickOnAddQuestion()}>ADD A NEW QUESTION</button>;
     } else {
       questionButton = <div></div>;
     }

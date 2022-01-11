@@ -101,9 +101,10 @@ class QnA extends React.Component {
   }
 
   showMoreQuestions() {
+    console.log('click');
     //GET ALL QUESTIONS BY PRODUCT ID
     var url = 'http://localhost:3000/qna/getQuestionsList';
-    axios.get(url, {params: {id: productId}})
+    axios.get(url, {params: {id: this.props.productId}})
       .then((response) => {
         if (this._isMounted) {
           this.setState({
@@ -266,10 +267,12 @@ class QnA extends React.Component {
           addNewAnswer={this.addNewAnswer}
         />
         <br />
-        {moreAnsweredQuestions}
-        <AddQuestion name={this.state.productName}
-          productId={this.props.productId}
-          addQuestion={this.addNewQuestion}/>
+        <div className='qna-button-wrapper'>
+          {moreAnsweredQuestions}
+          <AddQuestion name={this.state.productName}
+            productId={this.props.productId}
+            addQuestion={this.addNewQuestion}/>
+        </div>
       </div>
 
     );
