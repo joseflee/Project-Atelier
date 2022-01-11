@@ -7,8 +7,8 @@ const AddToFavorite = (props) => {
   };
 
   return (
-    <div>
-      <button onClick={sendToMyOutfit}>&#9734;</button>
+    <div className='POATOC'>
+      <button onClick={sendToMyOutfit} className='POAddToFavorte'>&#9734;</button>
     </div>
   );
 };
