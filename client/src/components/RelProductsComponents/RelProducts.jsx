@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import { products } from '../../../../example/products.js';
 
 import ProductCards from './ProductCards.jsx';
 import MyOutfitCards from './MyOutfitCards.jsx';
@@ -14,7 +13,6 @@ class RelProducts extends React.Component {
       rightArrowDisplay: true
     };
 
-    // this.componentDidMount = this.componentDidMount.bind(this);
     this.handleCardClick = this.handleCardClick.bind(this);
     this.handleAddOutfitClick = this.handleAddOutfitClick.bind(this);
   }
@@ -33,7 +31,6 @@ class RelProducts extends React.Component {
       var isPresent = false;
 
       for (var i = 0; i < this.state.listOfMyOutfits.length; i++) {
-        console.log(this.state.listOfMyOutfits[i].id, this.props.currentProduct.id);
         if (this.state.listOfMyOutfits[i].id !== this.props.currentProduct.id) {
           isPresent = false;
         } else {
@@ -41,8 +38,6 @@ class RelProducts extends React.Component {
           return;
         }
       }
-
-      console.log(isPresent);
 
       if (isPresent === false) {
         this.setState({
@@ -53,7 +48,6 @@ class RelProducts extends React.Component {
   }
 
   render() {
-    console.log(this.state.currentProduct);
     return (
       <div className="rel-prod-container">
         <h2>Related Products and My Outfits</h2>
