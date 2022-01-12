@@ -72,9 +72,9 @@ const averageRate = function(ratings, recommended) {
   const twoStar = Math.round((b[1] / totalRatings) * 100);
   const oneStar = Math.round((b[0] / totalRatings) * 100);
   const averageValues = totalRatePoint / totalRatings;
-  let numOfFalse = Number(recommended.false);
-  let numOfTrue = Number(recommended.true);
-  let percentageOfRecommended = Math.round((numOfTrue / (numOfTrue + numOfFalse)) * 100);
+  let numOfFalse = Number(recommended.false) || 0;
+  let numOfTrue = Number(recommended.true) || 0;
+  let percentageOfRecommended = ((numOfTrue) ? Math.round((numOfTrue / (numOfTrue + numOfFalse)) * 100) : 0);
   return [averageValues.toFixed(1), percentageOfRecommended, oneStar, twoStar, threeStar, fourStar, fiveStar];
 };
 

@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import ClickedData from '../ClickDataAnalytics.jsx';
 
-const HelpfulButton = ({reviewId, helpfulness, markClicked, clickedList})=>{
+const HelpfulButton = ({ onClick, reviewId, helpfulness, markClicked, clickedList })=>{
   const [helpfulnessCount, setHelpfulnessCount] = useState(0);
   const [Id, setId] = useState(0);
   const [clicked, setClicked] = useState(false);
@@ -33,7 +34,7 @@ const HelpfulButton = ({reviewId, helpfulness, markClicked, clickedList})=>{
     }
   };
   return (
-    <div data-testid="review-helpful" className='review-helpful'>
+    <div data-testid="review-helpful" className='review-helpful' onClick = {onClick}>
       {clicked ?
         <div data-testid="review-helpful-2">
           <span>HelpFul ?</span>
