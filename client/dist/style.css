@@ -1019,14 +1019,14 @@
   width: 100%;
   /* margin:0 20px; */
   /* display:inline-block; */
-  line-height: 60px;
+  line-height: 50px;
   float:left;
   font-size: 18px;
   font-weight: bold;
 }
 .qna-answer-item-wrapper{
   width: 100%;
-
+  line-height: 50px;
 }
 .qna-answer-item-body{
   font-size: 18px;
@@ -1230,6 +1230,12 @@ font-style: italic;
 width:90px;
 height:30px;
 
+}
+
+.qna-add-question-form-close{
+width:190px;
+height:30px;
+margin-left:20px;
 }
 
 
