@@ -893,6 +893,7 @@
   width:80%;
   margin:auto;
   position:relative;
+  /* height:2000px; */
 }
 
 
@@ -965,44 +966,79 @@
 .qna-question-item-wrap {
 
   overflow:auto;
-  /*the same margin which is every button have, it is for small screen, and if you have many buttons.*/
-
+  /* height:150px; */
+  width: 100%;
 }
 
 .qna-question-q-letter-body-wrapper {
-  width: auto;
+  width: 100%;
   /* margin:0 20px; */
   /* display:inline-block; */
   line-height: 60px;
   float:left;
   font-size: 18px;
+  font-weight: bold;
+}
+.qna-answer-item-wrapper{
+  width: 100%;
+
+}
+.qna-answer-item-body{
+  font-size: 18px;
+  font-weight: bold;
 }
 
-/* #center {
-  display: inline-block;
-  margin:0 auto;
-  width:100px;
-} */
+.qna-anwer-links{
+
+  width: 100%;
+
+  /* display:inline-block; */
+  line-height: 30px;
+  /* float:left; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  /* justify-content: space-between; // switched from default (flex-start, see below) */
+  /* background-color: lightyellow; */
+  font-size: 14px;
+  height:30px;
+}
+
+
+.qna-anwer-links > div {
+  width: auto;
+  height: 30px;
+  margin: 0px 20px;
+}
+
+
 
 .qna-question-links {
   width: 240px;
-  margin:0 100px;
+  /* margin:0 100px; */
   /* display:inline-block; */
-  line-height: 30px;
-  float:right;
-  display: flex;                  /* establish flex container */
-  flex-direction: row;            /* default value; can be omitted */
-  flex-wrap: nowrap;              /* default value; can be omitted */
-  justify-content: space-between; /* switched from default (flex-start, see below) */
-  background-color: lightyellow;
+  line-height: 20px;
+  float:left;
+  left: 50px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  /* background-color: lightyellow; */
   font-size: 14px;
+  height:40px;
 }
 
 .qna-question-links > div {
   width: auto;
-  height: 100px;
+  /* height: 100px; */
 
 }
+
+.qna-question-body {
+  width: 100%;
+}
+
 
 
 

@@ -125,7 +125,8 @@ class QuestionsListItem extends React.Component {
           <div className='qna-question-links'>
             <div className='qna-question-item-helpful-keyword' >Helpful?</div>
             <div className='qna-question-item-yes-button' onClick={()=>{ this.clickOnHelpful(); }}><u>Yes</u>({this.props.question.question_helpfulness})</div>
-            <div>{addAnswer}</div>
+            <div className='qna-question-item-answer-border'>|</div>
+            <div className='qna-add-answer-link'>{addAnswer}</div>
           </div>
         </div>
         {/* end of question item */}
