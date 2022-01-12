@@ -10,7 +10,7 @@ var MyOutfitCards = (props) => {
     <div>
       <h3>My Outfits Cards</h3>
       {/* Is a clickable element that adds current item as a card */}
-      <div className="product-card" onClick={props.handleAddOutfitClick}>
+      <div className="product-card add-outfit" onClick={props.handleAddOutfitClick}>
         <div>+</div>
         <div>Add to Outfit</div>
       </div>
