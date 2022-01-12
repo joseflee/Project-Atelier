@@ -13,7 +13,7 @@ import MoreAnsweredQuestions from '../../../client/src/components/QnAcomponents/
 describe('More answered questions button', function() {
 
   it('should render to static HTML', function() {
-    var text = 'More answered questions';
+    var text = 'MORE ANSWERED QUESTIONS';
     expect(render(<MoreAnsweredQuestions />).text()).toEqual(text);
   });
 

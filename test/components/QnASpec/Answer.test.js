@@ -12,7 +12,7 @@ import Answer from '../../../client/src/components/QnAcomponents/QuestionsListIt
 
 
 
-describe('Rendering one answer item', function() {
+xdescribe('Rendering one answer item', function() {
 
   it('should call clickOnYes when clicking on \'Yes\' link', () => {
     let spy = jest.fn();
