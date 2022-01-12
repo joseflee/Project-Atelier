@@ -5,7 +5,6 @@ const RatingsNReviews = ( {productId, currentProduct}) =>{
   return (
     <div className= "RatingsNReviewsSection">
       <ReviewList currentProduct={currentProduct} productId= {productId}/>
-      {/* <NewReview /> */}
     </div>
   );
 };

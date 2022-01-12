@@ -23,7 +23,7 @@ const HelpfulButton = ({reviewId, helpfulness, markClicked, clickedList})=>{
       markClicked(Id, helpfulness, helpfulness + 1);
       setHelpfulnessCount(helpfulnessCount + 1);
       e.target.className += ' helpfulness-onClicked';
-      axios.post('http://localhost:3000/ratings/updateHelpfulness', {Id: Id})
+      axios.post('/ratings/updateHelpfulness', {Id: Id})
         .catch((err) => {
           console.log('This is updatehelfulness amount err:', err);
         });
@@ -35,18 +35,18 @@ const HelpfulButton = ({reviewId, helpfulness, markClicked, clickedList})=>{
   return (
     <div data-testid="review-helpful" className='review-helpful'>
       {clicked ?
-        <div>
+        <div data-testid="review-helpful-2">
           <span>HelpFul ?</span>
-          <span className= { 'review-helpful-1 helpfulness-onClicked ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
+          <span data-testid="review-helpful-2-button" className= { 'review-helpful-1 helpfulness-onClicked ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
           <span id={reviewId}>({helpfulnessCount})</span>
           <span>|</span>
           <span>Report</span>
         </div>
         :
-        <div>
+        <div data-testid="review-helpful-1">
           <span>HelpFul ?</span>
-          <span id={reviewId} className= { 'review-helpful-1 ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
-          <span id={reviewId}>({helpfulnessCount})</span>
+          <span data-testid="review-helpful-1-button" id={reviewId} className= { 'review-helpful-1 ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
+          <span data-testid="review-helpful-1-count" id={reviewId}>({helpfulnessCount})</span>
           <span>|</span>
           <span>Report</span>
         </div>}
