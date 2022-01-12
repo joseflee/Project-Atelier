@@ -68,10 +68,10 @@ class QuestionsListItemAnswer extends React.Component {
     }
 
     return (
-      <div className='answer-item'>
+      <div className='qna-answer-item-wrapper'>
 
-        <div className='answer-item-a-letter'><h2>A:{this.props.answer.body}</h2></div>
-        <div className='answer-photo-upload'>{this.props.answer.photos.length > 0 &&
+        <div className='qna-answer-item-body'>A:{this.props.answer.body}</div>
+        <div className='qna-answer-photo-upload'>{this.props.answer.photos.length > 0 &&
           this.props.answer.photos.map((item, index) => {
             return (
               <div key={item}>
@@ -80,11 +80,13 @@ class QuestionsListItemAnswer extends React.Component {
             );
           })
         }</div>
-        <div className='answer-item-username'>By user {this.props.answer.answerer_name}</div><div className='answer-item-date'>{moment(this.props.answer.date).format('MMMM DD, YYYY')};</div>
-        <div className='answer-item-photos'></div>
-        <div className='answer-item-helpful-keyword'>Helpful?</div>
-        <div className='answer-item-yes-button' onClick={()=>{ this.clickOnYes(); }}><u>Yes({this.props.answer.helpfulness})</u></div>
-        <div className='answer-item-report-button' onClick={()=> { this.reportAnswer(); }}><u>{report}</u></div>
+        <div className='qna-anwer-links'>
+          <div className='qna-answer-item-username'>By user {this.props.answer.answerer_name}</div><div className='answer-item-date'>{moment(this.props.answer.date).format('MMMM DD, YYYY')};</div>
+          <div className='qna-answer-item-helpful-keyword'>Helpful?</div>
+          <div className='qna-answer-item-yes-button' onClick={()=>{ this.clickOnYes(); }}><u>Yes({this.props.answer.helpfulness})</u></div>
+          <div className='qna-answer-item-report-button' onClick={()=> { this.reportAnswer(); }}><u>{report}</u></div>
+        </div>
+        <div className='qna-answer-item-photos'></div>
       </div>
     );
   }

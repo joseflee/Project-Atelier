@@ -935,14 +935,57 @@
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Questions and answers section */
 
 /* Main */
 
 .qna-main-component{
-  width:63%;
+  width:80%;
   margin:auto;
-  position:relative
+  position:relative;
+  /* height:2000px; */
 }
 
 
@@ -950,8 +993,6 @@
 .qna-search-wrapper{
   position: relative;
   display: flex;
-
-
 }
 
 .qna-search-icon {
@@ -979,7 +1020,134 @@
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
+}
+
+.qna-button-wrapper{
+  display: flex;
+  justify-content: left;
+  margin-bottom: 40px;
+}
+
+.more-answered-questions-button{
+  margin-left: 10px;
+  margin-top: 15px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size:18px;
+  height:50px;
+  border:2px solid black;
+  font-weight:bold;
 
 }
+
+.qna-add-question-button{
+  margin-left: 10px;
+  margin-top: 15px;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  font-weight:bold;
+  cursor: pointer;
+  height:50px;
+  border:2px solid black;
+}
+
+.qna-question-item-wrap {
+
+  overflow:auto;
+  /* height:150px; */
+  width: 100%;
+}
+
+.qna-question-q-letter-body-wrapper {
+  width: 100%;
+  /* margin:0 20px; */
+  /* display:inline-block; */
+  line-height: 60px;
+  float:left;
+  font-size: 18px;
+  font-weight: bold;
+}
+.qna-answer-item-wrapper{
+  width: 100%;
+
+}
+.qna-answer-item-body{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.qna-anwer-links{
+
+  width: 100%;
+
+  /* display:inline-block; */
+  line-height: 30px;
+  /* float:left; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  /* justify-content: space-between; // switched from default (flex-start, see below) */
+  /* background-color: lightyellow; */
+  font-size: 14px;
+  height:30px;
+}
+
+
+.qna-anwer-links > div {
+  width: auto;
+  height: 30px;
+  margin: 0px 20px;
+}
+
+
+
+.qna-question-links {
+  width: 240px;
+  /* margin:0 100px; */
+  /* display:inline-block; */
+  line-height: 20px;
+  float:left;
+  left: 50px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  /* background-color: lightyellow; */
+  font-size: 14px;
+  height:40px;
+}
+
+.qna-question-links > div {
+  width: auto;
+  /* height: 100px; */
+
+}
+
+.qna-question-body {
+  width: 100%;
+}
+
+#qna-more-answers-button{
+  margin-left: 10px;
+  margin-top: 15px;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  height:50px;
+  font-weight: bold;
+}
+
+
 
 

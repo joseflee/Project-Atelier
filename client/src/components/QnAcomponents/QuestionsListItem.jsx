@@ -82,7 +82,7 @@ class QuestionsListItem extends React.Component {
       answersList;
 
     if (this.state.isMoreAnswersShown) {
-      moreAnswers = <button id='more-answers-button' onClick={()=>{ this.clickOnMoreAnswers(); }}>Load more answers</button>;
+      moreAnswers = <button id='qna-more-answers-button' onClick={()=>{ this.clickOnMoreAnswers(); }}>LOAD MORE ANSWERS</button>;
       answersList = <AnswersList list={Object.values(this.props.question.answers).slice(0, 2)}
         questionId={this.props.question.question_id}
         productId={this.props.productId}
@@ -115,19 +115,25 @@ class QuestionsListItem extends React.Component {
     }
 
     return (
-      <div className='question-item-wrap'>
+      <div>
+        <div className='qna-question-item-wrap'>
 
-        {/* beginning of question item */}
-        <div className='question-item'>
-          <div className='question-item-q-letter'><h2>Q:{this.props.question.question_body}</h2></div>
-          <div className='question-item-helpful-keyword' >Helpful?</div>
-          <div className='question-item-yes-button' onClick={()=>{ this.clickOnHelpful(); }}><u>Yes</u>({this.props.question.question_helpfulness})</div>
-          <div>{addAnswer}</div>
+          {/* beginning of question item */}
+          <div className='qna-question-q-letter-body-wrapper'>
+            <div className='qna-question-body'>Q: {this.props.question.question_body}</div>
+          </div>
+          <div className='qna-question-links'>
+            <div className='qna-question-item-helpful-keyword' >Helpful?</div>
+            <div className='qna-question-item-yes-button' onClick={()=>{ this.clickOnHelpful(); }}><u>Yes</u>({this.props.question.question_helpfulness})</div>
+            <div className='qna-question-item-answer-border'>|</div>
+            <div className='qna-add-answer-link'>{addAnswer}</div>
+          </div>
         </div>
         {/* end of question item */}
-        {answersList}
+        <div className='qna-answer-list'>{answersList}</div>
 
         {moreAnswers}
+
       </div>
     );
 
