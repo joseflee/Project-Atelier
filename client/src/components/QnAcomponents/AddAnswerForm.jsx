@@ -69,10 +69,10 @@ class AddAnswerForm extends React.Component {
       <div className='qna-add-answer-form'>
         <div className='qna-add-answer-form-wrapper'>
           <div className='qna-add-answer-form-subtitle'>Submit your answer</div>
-          <div>{this.props.productName}: {this.props.question_body}</div>
+          <div className='qna-add-answer-form-product-name'>{this.props.productName}: {this.props.question_body}</div>
           <form>
             <label>
-              <div className='qna-add-answer-form-your answer'>
+              <div className='qna-add-answer-form-your-answer'>
               Your answer*
               </div>
               <input
@@ -105,7 +105,7 @@ class AddAnswerForm extends React.Component {
             </label>
             <br />
             <label>
-              <div className='qna-add-answer-form-your email'>
+              <div className='qna-add-answer-form-your-email'>
               Your email?*
               </div>
               <input

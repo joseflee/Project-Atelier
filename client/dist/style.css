@@ -1257,6 +1257,85 @@ margin-left:20px;
 display: none;
 }
 
+.qna-add-answer-form{
+  font-size: 30px;
+  margin:10px 10px 10px 10px;
+}
+
+.qna-add-answer-form-wrapper{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.qna-add-answer-form-subtitle{
+  font-size:30px;
+  font-weight:bold;
+  margin:10px 10px 10px 0px;
+}
+
+.qna-add-answer-form-product-name{
+  margin:10px 10px 10px 0px;
+
+}
+
+.qna-add-answer-form-your-answer{
+  margin:20px 20px 20px 0px;
+
+}
+
+.qna-add-answer-form-input-answer{
+  height:30px;
+  width:600px;
+  padding-left: 2px;
+  font-size:18px;
+}
+
+.qna-add-answer-form-your-nickname{
+  margin:20px 20px 20px 0px;
+}
+
+.qna-add-answer-form-input-nickname{
+  height:30px;
+  width:300px;
+  padding-left: 2px;
+  font-size:18px;
+}
+
+.qna-add-answer-form-warning-1{
+  font-size: 14px;
+  font-style: italic;
+}
+
+.qna-add-answer-form-your-email{
+  margin:20px 20px 20px 0px;
+}
+
+.qna-add-answer-form-input-email{
+  height:30px;
+  width:300px;
+  padding-left: 2px;
+  font-size:18px;
+}
+
+.qna-add-answer-form-warning-2{
+  font-size: 14px;
+  font-style: italic;
+}
+
+.qna-add-answer-form-submit{
+  width:90px;
+  height:30px;
+  margin-top:20px;
+}
+.qna-add-answer-form-close{
+  width:190px;
+  height:30px;
+  margin-left:20px;
+}
+
+
 
 
 
