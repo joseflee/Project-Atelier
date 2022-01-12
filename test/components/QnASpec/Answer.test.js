@@ -20,7 +20,7 @@ describe('Rendering one answer item', function() {
     const component = mount(<Answer clickOnHelpfulAnswer={spy}
       answer={exampleQuestions.answers.results[0]} />);
 
-    component.find('.answer-item-yes-button').simulate('click');
+    component.find('.qna-answer-item-yes-button').simulate('click');
     expect(spy).toHaveBeenCalled();
   });
 
@@ -30,7 +30,7 @@ describe('Rendering one answer item', function() {
     const component = mount(<Answer reportAnswer={spy}
       answer={exampleQuestions.answers.results[0]} />);
 
-    component.find('.answer-item-report-button').simulate('click');
+    component.find('.qna-answer-item-report-button').simulate('click');
     expect(spy).toHaveBeenCalled();
   });
 
@@ -46,7 +46,7 @@ describe('Rendering one answer item', function() {
     };
     component.setState(state);
     //console.log(component.state().isReported);
-    component.find('.answer-item-report-button').simulate('click');
+    component.find('.qna-answer-item-report-button').simulate('click');
     expect(spy).not.toHaveBeenCalled();
   });
 
@@ -62,23 +62,23 @@ describe('Rendering one answer item', function() {
     };
     component.setState(state);
     //console.log(component.state().isReported);
-    component.find('.answer-item-yes-button').simulate('click');
+    component.find('.qna-answer-item-yes-button').simulate('click');
     expect(spy).not.toHaveBeenCalled();
   });
 
 
 
   it('should render without throwing an error', function() {
-    expect(shallow(<Answer answer={exampleQuestions.answers.results[0]}/>).contains(<div className='answer-item-helpful-keyword'>Helpful?</div>
+    expect(shallow(<Answer answer={exampleQuestions.answers.results[0]}/>).contains(<div className='qna-answer-item-helpful-keyword'>Helpful?</div>
     )).toBe(true);
   });
 
-  it('should be selectable by class', function() {
-    expect(shallow(<Answer answer={exampleQuestions.answers.results[0]}/>).is('.answer-item')).toBe(true);
+  xit('should be selectable by class', function() {
+    expect(shallow(<Answer answer={exampleQuestions.answers.results[0]}/>).is('.qna-answer-item-body')).toBe(true);
   });
 
   it('should mount in a full DOM', function() {
-    expect(mount(<Answer answer={exampleQuestions.answers.results[0]}/>).find('.answer-item').length).toBe(1);
+    expect(mount(<Answer answer={exampleQuestions.answers.results[0]}/>).find('.qna-answer-item-body').length).toBe(1);
   });
 
   it('should render to static HTML', function() {
