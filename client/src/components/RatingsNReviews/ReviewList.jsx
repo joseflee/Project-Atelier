@@ -372,9 +372,9 @@ const ReviewList = ( {productId, currentProduct} )=>{
         <div className="review-DropDown">
           <h3 data-testid="totalReviews" style= {{display: 'inline'}}>{reviewsCount()} reviews, sorted by </h3>
           <select data-testid="review-sort-select" onChange={dropDownMenu} id="review-sort-select">
-            <option value="totalReviewArray">Relevant</option>
-            <option value="newestReviewArray">Newest</option>
-            <option value="helpfulReviewArray">Helpful</option>
+            <option data-testid='select-option' value="totalReviewArray">Relevant</option>
+            <option data-testid='select-option' value="newestReviewArray">Newest</option>
+            <option data-testid='select-option' value="helpfulReviewArray">Helpful</option>
           </select>
         </div>
 

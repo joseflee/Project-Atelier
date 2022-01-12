@@ -43,7 +43,7 @@ const dummyReviews = {
   "results": [
     {
       "review_id": 1,
-      "rating": 3.7,
+      "rating": 2,
       "summary": "startasdassdasdasdsasdaasasdasstartasdassdasdasdsasdaasasdaFSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXjpK",
       "recommend": true,
       "response": "This is the response,This is the response,This is the response",
@@ -75,7 +75,7 @@ const dummyReviews = {
     },
     {
       "review_id": 2,
-      "rating": 2,
+      "rating": 3,
       "summary": "I am liking these glasses",
       "recommend": false,
       "response": "Glad you're enjoying the product!",
@@ -87,7 +87,7 @@ const dummyReviews = {
     },
     {
       "review_id": 3,
-      "rating": 3,
+      "rating": 2,
       "summary": "asdassdasdasdsasdaasasd",
       "recommend": false,
       "response": null,
@@ -112,7 +112,7 @@ const dummyReviews = {
       "summary": "I'm enjoying wearing these shades",
       "recommend": false,
       "response": null,
-      "body": "Comfortable and practical.",
+      "body": "Comfortable and cheap.",
       "date": "2019-02-04T00:00:00.000Z",
       "reviewer_name": "shortandsweeet",
       "helpfulness": 5,
@@ -129,12 +129,12 @@ const dummyReviews = {
     },
     {
       "review_id": 5,
-      "rating": 5,
+      "rating": 1,
       "summary": "I'm enjoying wearing these shades",
       "recommend": false,
       "response": null,
-      "body": "Comfortable and practical.",
-      "date": "2019-01-14T00:00:00.000Z",
+      "body": "Comfortable and cheap.",
+      "date": "2019-01-19T00:00:00.000Z",
       "reviewer_name": "shortandsweeet",
       "helpfulness": 5,
       "photos": [{
@@ -150,12 +150,12 @@ const dummyReviews = {
     },
     {
       "review_id": 6,
-      "rating": 3.8,
-      "summary": "I'm enjoying wearing these shades",
+      "rating": 5,
+      "summary": "I'm enjoying wearing these shades dark",
       "recommend": false,
       "response": null,
-      "body": "Comfortable and practical.",
-      "date": "2019-01-14T00:00:00.000Z",
+      "body": "Comfortable and cheap.",
+      "date": "2019-10-14T00:00:00.000Z",
       "reviewer_name": "shortandsweeet",
       "helpfulness": 5,
       "photos": [{
@@ -171,12 +171,12 @@ const dummyReviews = {
     },
     {
       "review_id": 7,
-      "rating": 4.3,
+      "rating": 1,
       "summary": "I'm enjoying wearing these shades",
       "recommend": false,
       "response": null,
-      "body": "Comfortable and practical.",
-      "date": "2019-01-14T00:00:00.000Z",
+      "body": "Comfortable and practical. dark",
+      "date": "2019-11-14T00:00:00.000Z",
       "reviewer_name": "shortandsweeet",
       "helpfulness": 5,
       "photos": [{

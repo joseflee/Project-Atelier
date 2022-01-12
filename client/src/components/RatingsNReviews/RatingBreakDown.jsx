@@ -19,7 +19,7 @@ const RatingBreakDown = ({ resetFilter, filter, filterOnClicked, productId, aver
       <div className='review-starBreakDown-rating' >
         <div className='review-starBreakDown-rating-head' > 5 stars </div>
         <div className='review-starBreakDown-rating-star' >
-          <div className= {filter[4] !== null ? 'review-starBreakDown-rating-percentage-clicked' : 'review-starBreakDown-rating-percentage'} id='fiveStar' onClick={filterOnClicked}>
+          <div data-testid = 'fiveStar' className= {filter[4] !== null ? 'review-starBreakDown-rating-percentage-clicked' : 'review-starBreakDown-rating-percentage'} id='fiveStar' onClick={filterOnClicked}>
             <div data-testid="review-leftCorner-5stars" className={filter[4] !== null ? 'review-starBreakDown-filter-clicked' : 'review-starBreakDown-filter'} style={{width: Number(fiveStar) + '%'}}>
             </div>
           </div>
@@ -29,7 +29,7 @@ const RatingBreakDown = ({ resetFilter, filter, filterOnClicked, productId, aver
       <div className='review-starBreakDown-rating' >
         <div className='review-starBreakDown-rating-head' > 4 stars </div>
         <div className='review-starBreakDown-rating-star' >
-          <div className= {filter[3] !== null ? 'review-starBreakDown-rating-percentage-clicked' : 'review-starBreakDown-rating-percentage'} id='fourStar' onClick={filterOnClicked}>
+          <div data-testid = 'fourStar' className= {filter[3] !== null ? 'review-starBreakDown-rating-percentage-clicked' : 'review-starBreakDown-rating-percentage'} id='fourStar' onClick={filterOnClicked}>
             <div data-testid="review-leftCorner-4stars" className={filter[3] !== null ? 'review-starBreakDown-filter-clicked' : 'review-starBreakDown-filter'} style={{width: Number(fourStar) + '%'}}>
             </div>
           </div>
@@ -39,7 +39,7 @@ const RatingBreakDown = ({ resetFilter, filter, filterOnClicked, productId, aver
       <div className='review-starBreakDown-rating' >
         <div className='review-starBreakDown-rating-head' > 3 stars </div>
         <div className='review-starBreakDown-rating-star' >
-          <div className= {filter[2] !== null ? 'review-starBreakDown-rating-percentage-clicked' : 'review-starBreakDown-rating-percentage'} id='threeStar' onClick={filterOnClicked}>
+          <div data-testid = 'threeStar' className= {filter[2] !== null ? 'review-starBreakDown-rating-percentage-clicked' : 'review-starBreakDown-rating-percentage'} id='threeStar' onClick={filterOnClicked}>
             <div data-testid="review-leftCorner-3stars" className={filter[2] !== null ? 'review-starBreakDown-filter-clicked' : 'review-starBreakDown-filter'} style={{width: Number(threeStar) + '%'}}>
             </div>
           </div>
@@ -67,7 +67,7 @@ const RatingBreakDown = ({ resetFilter, filter, filterOnClicked, productId, aver
       </div>
 
       <div className='review-starBreakDown-reset'>
-        <button onClick={resetFilter}>Remove all filters</button>
+        <button data-testid='remove-filter' onClick={resetFilter}>Remove all filters</button>
       </div>
 
     </div>
