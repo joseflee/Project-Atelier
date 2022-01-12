@@ -1335,6 +1335,10 @@ display: none;
   margin-left:20px;
 }
 
+.qna-add-answer-link{
+  text-decoration: underline;
+}
+
 
 
 

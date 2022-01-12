@@ -49,7 +49,7 @@ class QuestionsListItem extends React.Component {
   }
 
   closeAnswerForm() {
-    //console.log('triggered close answer');
+    console.log('triggered close answer');
     //console.log('before triggering closing', this.state);
 
     this.setState((prevState) => {
