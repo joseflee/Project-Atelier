@@ -971,10 +971,11 @@
 
 .qna-question-q-letter-body-wrapper {
   width: auto;
-  margin:0 20px;
+  /* margin:0 20px; */
   /* display:inline-block; */
   line-height: 60px;
   float:left;
+  font-size: 18px;
 }
 
 /* #center {
@@ -984,11 +985,23 @@
 } */
 
 .qna-question-links {
-  width: 150px;
+  width: 240px;
   margin:0 100px;
   /* display:inline-block; */
-  line-height: 60px;
+  line-height: 30px;
   float:right;
+  display: flex;                  /* establish flex container */
+  flex-direction: row;            /* default value; can be omitted */
+  flex-wrap: nowrap;              /* default value; can be omitted */
+  justify-content: space-between; /* switched from default (flex-start, see below) */
+  background-color: lightyellow;
+  font-size: 14px;
+}
+
+.qna-question-links > div {
+  width: auto;
+  height: 100px;
+
 }
 
 
