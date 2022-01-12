@@ -5,8 +5,9 @@ import axios from 'axios';
 import HelpfulButton from './HelpfulButton.jsx';
 import NewReview from './NewReview.jsx';
 import SearchBar from './SearchBar.jsx';
+import ClickedData from '../ClickDataAnalytics.jsx';
 
-const ReviewList = ( {productId, currentProduct} )=>{
+const ReviewList = ( { onClick, productId, currentProduct } )=>{
   const [selectedArray, setSelectedArray] = useState('totalReviewArray');
   const [isOpen, setIsOpen] = useState(false);
   const [isTruncated, setIsTruncated] = useState(true);
@@ -358,8 +359,8 @@ const ReviewList = ( {productId, currentProduct} )=>{
   return (
     <div>
       <div className= 'review-starSection'>
-        <RatingBreakDown resetFilter={resetFilter} filter={filter} filterOnClicked={filterOnClicked} oneStar={oneStar} twoStar={twoStar} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
-        <ProductBreakDown characteristics={characteristics}/>
+        <RatingBreakDown onClick={onClick} resetFilter={resetFilter} filter={filter} filterOnClicked={filterOnClicked} oneStar={oneStar} twoStar={twoStar} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
+        <ProductBreakDown onClick={onClick} characteristics={characteristics}/>
       </div>
 
       <div className="review-Section">
@@ -369,7 +370,7 @@ const ReviewList = ( {productId, currentProduct} )=>{
             searching(e.target.value), setSearchTerm(e.target.value);
           }}></input>
         </div>
-        <div className="review-DropDown">
+        <div className="review-DropDown" >
           <h3 data-testid="totalReviews" style= {{display: 'inline'}}>{reviewsCount()} reviews, sorted by </h3>
           <select data-testid="review-sort-select" onChange={dropDownMenu} id="review-sort-select">
             <option data-testid='select-option' value="totalReviewArray">Relevant</option>
@@ -409,12 +410,12 @@ const ReviewList = ( {productId, currentProduct} )=>{
                   </div> : null}
                 {user.recommend ? <div data-testid="review-recommend"><span>✔ &nbsp;</span><span>I recommend this product</span></div> : null}
                 {user.response ? (<div className="review-Response"><p>Response from seller:</p> <div className="seller-Response2">{user.response}</div> </div>) : null}
-                <HelpfulButton clickedList={clickedList} markClicked={markClicked} helpfulness={user.helpfulness} reviewId = {user.review_id}/>
+                <HelpfulButton onClick={onClick} clickedList={clickedList} markClicked={markClicked} helpfulness={user.helpfulness} reviewId = {user.review_id}/>
               </div>
             );
           })}
         </div>
-        <div className='review-Button'>{ isLoading ? null : onScreenReviewArray.length === ((sortedArray.length || searchResult.length) ? (sortedArray.length || searchResult.length) : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <button data-testid="review-moreButton" onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button>}
+        <div className='review-Button' onClick={onClick} >{ isLoading ? null : onScreenReviewArray.length === ((sortedArray.length || searchResult.length) ? (sortedArray.length || searchResult.length) : totalReviewArray.length) || totalReviewArray.length <= 2 ? null : <button data-testid="review-moreButton" onClick= {()=>{ loadReviews(selectedArray); }}>More reviews</button>}
           {isLoading ? null : <button data-testid="review-newReviewButton" onClick={()=>{ setOpenReviewModal(true); }}>Write New Review</button>}
         </div>
         {openReviewModal && <NewReview characteristics={characteristics} currentProduct={currentProduct} productId= {productId} setIsPost={setIsPost} setOpenReviewModal={setOpenReviewModal} />}
@@ -423,4 +424,5 @@ const ReviewList = ( {productId, currentProduct} )=>{
   );
 };
 
-export default ReviewList;
+export default ClickedData(ReviewList, 'Ratings & Reviews');
+

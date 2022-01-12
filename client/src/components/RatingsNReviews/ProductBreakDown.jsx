@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProductBreakDown = ({characteristics})=>{
+const ProductBreakDown = ({ characteristics })=>{
   const sizeChart = {
     'Size': {
       'sm': 'Too small',

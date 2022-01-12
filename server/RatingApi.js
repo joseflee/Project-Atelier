@@ -10,7 +10,6 @@ const getTotalReviews = (productId, page) => {
   };
   return axios(options)
     .then(response => {
-      // console.log('response:', response.data.results.length);
       return response.data;
     })
     .catch((err) => {
@@ -25,7 +24,6 @@ const updateHelpfulness = (reviewId) => {
   };
   return axios(options)
     .then(response => {
-      // console.log('updatehelpful response:', response);
       return response;
     })
     .catch((err) => {
@@ -41,7 +39,6 @@ const ratingOverview = (productId) => {
   };
   return axios(options)
     .then(response => {
-      // console.log('ratingOverview response:', response.data);
       return response.data;
     })
     .catch((err) => {
