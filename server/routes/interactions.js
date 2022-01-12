@@ -1,12 +1,13 @@
 const interactionsRouter = require('express').Router();
 const postInteractions = require('../interactionsApi.js');
 
-interactionsRouter.post('/postData', (req, res) => {
+interactionsRouter.post('/postData', async (req, res) => {
   let postData = req.body;
-
-  postInteractions(postData)
-    .then(response => console.log(response))
-    .catch(err => console.log(err));
+  let element = postData.element;
+  let widget = postData.widget;
+  let time = postData.time;
+  await postInteractions(element, widget, time);
+  res.status(201).end();
 });
 
 module.exports = interactionsRouter;

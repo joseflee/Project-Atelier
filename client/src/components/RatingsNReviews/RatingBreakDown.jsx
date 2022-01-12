@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
-const RatingBreakDown = ({ onClick, resetFilter, filter, filterOnClicked, productId, averageRate, starWidth, recommended, oneStar, twoStar, threeStar, fourStar, fiveStar })=>{
+const RatingBreakDown = ({ resetFilter, filter, filterOnClicked, productId, averageRate, starWidth, recommended, oneStar, twoStar, threeStar, fourStar, fiveStar })=>{
 
   return (
-    <div className='review-starBreakDown'onClick={onClick}>
+    <div className='review-starBreakDown' >
       <h3>RATINGS &amp; REVIEWS</h3>
       <div className='review-starBreakDown-inner'>
         <h1>{averageRate}</h1>

@@ -42,15 +42,64 @@ const ReviewList = ( { onClick, productId, currentProduct } )=>{
      sortedArray: sortedArray,
      resetArray: totalReviewArray
    };
-  useEffect(() => {
+  useEffect( async () => {
     let mounted = true;
     setIsLoading(true);
     setSortedArray([]);
     setFilter(new Array(5).fill(null));
     setIsPost(false);
-    axios.get('/ratings/getReviews', { params: { Id: productId } })
-      .then((response)=>{
-        if (mounted) {
+    console.log('trigger1');
+    if (mounted) {
+      console.log('trigger2');
+      await getReviews();
+    }
+    // .catch((err) => {
+    //   console.log('this is the react reviewlist get reviews err', err);
+    // });
+    console.log('trigger3');
+    return () => {
+      mounted = false;
+    };
+  }, [productId, selectedArray, isPost]);
+  useEffect(() => {
+    let mounted = true;
+    if (mounted) {
+      let currentFilter = sortFilter()[0];
+      let flag = sortFilter()[1];
+      if (currentFilter.length) {
+        setOnScreenReviewArray(currentFilter.slice(0));
+        setSortedArray(currentFilter.slice(0));
+      } else if (reset) {
+        setSortedArray([]);
+        if (searchResult.length || searchTerm.length >= 3) {
+          setOnScreenReviewArray(searchResult.slice(0));
+        } else {
+          setOnScreenReviewArray(totalReviewArray.slice(0, 2));
+        }
+      } else if (searchTerm.length >= 3 && searchResult.length && !flag) {
+        setSortedArray([]);
+        setOnScreenReviewArray(searchResult.slice(0));
+      } else {
+        setSortedArray([]);
+        if (searchTerm.length >= 3 || flag) {
+          setOnScreenReviewArray(currentFilter.slice(0));
+        } else {
+          setOnScreenReviewArray(totalReviewArray.slice(0));
+        }
+      }
+      setFilterClicked(flag);
+    }
+    return () => {
+      mounted = false;
+    };
+  }, [filter]);
+  const getReviews = async () => {
+    console.log('get request1');
+    try {
+      console.log('get request2');
+      await axios.get('/ratings/getReviews', { params: { Id: productId } })
+        .then((response)=>{
+          console.log('get request3');
           const sortByRevelant = response.data.slice(0).sort((x, y) => { return y.helpfulness - x.helpfulness || y.review_id - x.review_id; });
           const firstTwo = sortByRevelant.slice(0, 2);
           let searchBarResult;
@@ -88,64 +137,27 @@ const ReviewList = ( { onClick, productId, currentProduct } )=>{
             }
             setIsLoading(false);
           }
+          console.log('end mounted:', isLoading);
           setTotalReviewArray(sortByRevelant);
           setNewestReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }));
           setHelpfulReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }));
           axios.get('ratings/ratingOverview', { params: { Id: productId } })
             .then((response)=>{
-              if (mounted) {
-                setAverageRate(response.data.ratings.average);
-                setRecommended(response.data.recommended);
-                setOneStar(response.data.ratings['1']);
-                setTwoStar(response.data.ratings['2']);
-                setThreeStar(response.data.ratings['3']);
-                setFourStar(response.data.ratings['4']);
-                setFiveStar(response.data.ratings['5']);
-                setCharacteristics(response.data.characteristics);
-              }
+              setAverageRate(response.data.ratings.average);
+              setRecommended(response.data.recommended);
+              setOneStar(response.data.ratings['1']);
+              setTwoStar(response.data.ratings['2']);
+              setThreeStar(response.data.ratings['3']);
+              setFourStar(response.data.ratings['4']);
+              setFiveStar(response.data.ratings['5']);
+              setCharacteristics(response.data.characteristics);
             });
-        }
-      })
-      .catch((err) => {
-        console.log('this is the react reviewlist get reviews err', err);
-      });
 
-    return () => {
-      mounted = false;
-    };
-  }, [productId, selectedArray, isPost]);
-  useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      let currentFilter = sortFilter()[0];
-      let flag = sortFilter()[1];
-      if (currentFilter.length) {
-        setOnScreenReviewArray(currentFilter.slice(0));
-        setSortedArray(currentFilter.slice(0));
-      } else if (reset) {
-        setSortedArray([]);
-        if (searchResult.length || searchTerm.length >= 3) {
-          setOnScreenReviewArray(searchResult.slice(0));
-        } else {
-          setOnScreenReviewArray(totalReviewArray.slice(0, 2));
-        }
-      } else if (searchTerm.length >= 3 && searchResult.length && !flag) {
-        setSortedArray([]);
-        setOnScreenReviewArray(searchResult.slice(0));
-      } else {
-        setSortedArray([]);
-        if (searchTerm.length >= 3 || flag) {
-          setOnScreenReviewArray(currentFilter.slice(0));
-        } else {
-          setOnScreenReviewArray(totalReviewArray.slice(0));
-        }
-      }
-      setFilterClicked(flag);
+        });
+    } catch (err) {
+      console.log('this is the react reviewlist get reviews err', err);
     }
-    return () => {
-      mounted = false;
-    };
-  }, [filter]);
+  };
   const resetFilter = function () {
     if (sortedArray.length) {
       setReset(true);
@@ -358,9 +370,9 @@ const ReviewList = ( { onClick, productId, currentProduct } )=>{
   };
   return (
     <div>
-      <div className= 'review-starSection'>
-        <RatingBreakDown onClick={onClick} resetFilter={resetFilter} filter={filter} filterOnClicked={filterOnClicked} oneStar={oneStar} twoStar={twoStar} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
-        <ProductBreakDown onClick={onClick} characteristics={characteristics}/>
+      <div className= 'review-starSection' onClick={ async (e) => { await onClick(e); }}>
+        <RatingBreakDown resetFilter={resetFilter} filter={filter} filterOnClicked={filterOnClicked} oneStar={oneStar} twoStar={twoStar} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
+        <ProductBreakDown characteristics={characteristics}/>
       </div>
 
       <div className="review-Section">

@@ -24,9 +24,9 @@ const ClickedData = (WrappedComponent, widgetName) => {
       var sentInteractions = await sendInteractions(clickedData);
 
       // Executes any click handlers already present.
-      if (this.props.onClick !== undefined || this.props.onClick !== null) {
-        this.props.onClick(e);
-      }
+      // if (this.props.onClick !== undefined || this.props.onClick !== null) {
+      //   this.props.onClick(e);
+      // }
     }
 
     render() {
