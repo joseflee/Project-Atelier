@@ -59,51 +59,64 @@ class AddQuestionForm extends React.Component {
   render() {
     return (
       <div className='qna-add-new-question-form'>
-        {/* <div className = 'qna-add-question-main-title'>Ask a question</div> */}
-        <div className ='qna-add-question-subtitle'>Ask a question about the {this.props.name}</div>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-              Your question*
-            <input
-              name='questionBody'
-              id='questionBody'
-              type='text'
-              maxLength='1000'
-              value={this.state.questionBody}
-              onChange={this.handleInputChange}
-            />
-          </label>
-          <br />
-          <label>
-              What's your nickname?*
-            <input
-              name='nickname'
-              type='text'
-              maxLength='60'
-              placeholder='Example: jackson11'
-              value={this.state.nickname}
-              onChange={this.handleInputChange}
-            />
+        <div className='qna-add-question-form-wrapper'>
+          {/* <div className = 'qna-add-question-main-title'>Ask a question</div> */}
+          <div className ='qna-add-question-subtitle'>Ask a question about the {this.props.name}</div>
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              <div className ='qna-add-question-form-your-question'>Your question*</div>
+              <input
+                className='qna-add-question-input-questionbody'
+                name='questionBody'
+                id='questionBody'
+                type='text'
+                maxLength='1000'
+                value={this.state.questionBody}
+                onChange={this.handleInputChange}
+              />
+            </label>
             <br />
-            <i>For privacy reasons, do not use your full name or email address</i>
-          </label>
-          <br />
-          <label>
+            <label>
+              <div className='qna-add-question-form-your-nickname'>What's your nickname?*</div>
+              <input
+                className='qna-add-question-input-nickname'
+                name='nickname'
+                type='text'
+                maxLength='60'
+                placeholder='Example: jackson11'
+                value={this.state.nickname}
+                onChange={this.handleInputChange}
+              />
+              <br />
+              <div className='qna-add-question-form-warning-1'>
+               For privacy reasons, do not use your full name or email address
+              </div>
+            </label>
+            <br />
+            <label>
+              <div className='qna-add-question-form-your-email'>
               Your email?*
-            <input
-              name='email'
-              type='text'
-              maxLength='60'
-              placeholder='Example: sample@email.com'
-              value={this.state.email}
-              onChange={this.handleInputChange}
-            />
+              </div>
+              <input
+                className='qna-add-question-form-input-email'
+                name='email'
+                type='text'
+                maxLength='60'
+                placeholder='Example: sample@email.com'
+                value={this.state.email}
+                onChange={this.handleInputChange}
+              />
+              <br />
+              <div className='qna-add-question-form-warning-2'>
+               For authentication reasons, you will not be emailed
+              </div>
+            </label>
             <br />
-            <i>For authentication reasons, you will not be emailed</i>
-          </label>
-          <br />
-          <input type="submit" className="primary" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
-        </form>
+
+              <input type="submit" className="qna-add-question-form-submit" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
+
+          </form>
+        </div>
       </div>
 
     );

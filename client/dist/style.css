@@ -1166,7 +1166,75 @@
 }
 
 .qna-add-new-question-form{
-  font-size: 20px;
+  font-size: 30px;
+  /* position: relative; */
 }
+
+.qna-add-question-form-wrapper{
+
+  /* Center vertically and horizontally */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.qna-add-question-subtitle{
+  /* margin: 20px 0px 20px 0px; */
+  font-size:30px;
+  font-weight:bold
+}
+
+.qna-add-question-form-your-question{
+
+}
+
+.qna-add-question-input-questionbody{
+  height:30px;
+  width:600px;
+  padding-left: 2px;
+  font-size:18px;
+}
+
+ .qna-add-question-form-your-nickname{
+ margin-top:30px;
+}
+
+.qna-add-question-input-nickname{
+  height:30px;
+  width:300px;
+  padding-left: 2px;
+  font-size:18px;
+}
+
+.qna-add-question-form-warning-1{
+font-size: 14px;
+font-style: italic;
+}
+
+.qna-add-question-form-input-email{
+  height:30px;
+  width:300px;
+  padding-left: 2px;
+  font-size:18px;
+}
+
+
+
+.qna-add-question-form-warning-2{
+  font-size: 14px;
+  font-style: italic;
+}
+
+.qna-add-question-form-submit{
+width:90px;
+height:30px;
+
+}
+
+
+
+
+
 
 
