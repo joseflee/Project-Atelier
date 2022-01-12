@@ -7,12 +7,8 @@ import { setupServer } from 'msw/node';
 import { handlers } from '../../mocks/handlers.js';
 
 import ReviewList from '../../../client/src/components/RatingsNReviews/ReviewList.jsx';
-// import SearchBar from '../../../client/src/components/RatingsNReviews/SearchBar.jsx';
-// import RatingBreakDown from '../../../client/src/components/RatingsNReviews/RatingBreakDown.jsx';
-// import ProductBreakDown from '../../../client/src/components/RatingsNReviews/ProductBreakDown.jsx';
 import NewReview from '../../../client/src/components/RatingsNReviews/NewReview.jsx';
-// import HelpfulButton from '../../../client/src/components/RatingsNReviews/HelpfulButton.jsx';
-// import RatingsNReviews from '../../../client/src/components/RatingsNReviews/RatingsNReviews.jsx';
+
 
 const server = setupServer(...handlers);
 
@@ -161,28 +157,19 @@ xdescribe('Review list rendering Test', () => {
     expect(loading).toBeTruthy();
     expect(loading).toBeVisible();
   });
-  test(' Reviewlist should have a search bar, and the value attribute of the search bar should match with the input value', async () => {
-    await render(<ReviewList productId={59553} />);
-    const inputElement = await screen.getByPlaceholderText(/Search.../i);
-    fireEvent.change(inputElement, { target: { value: 123 } });
-    await waitFor(async () => {
-      expect(inputElement).toBeVisible();
-      expect(inputElement.value).toBe('123');
-    });
-  });
 
   test(' Reviewlist should have a search bar, and the value attribute of the search bar should match with the input value', async () => {
     await render(<ReviewList productId={59553} />);
-    const inputElement = await screen.getByPlaceholderText(/Search.../i);
-    fireEvent.change(inputElement, { target: { value: 123 } });
+    const inputElement = screen.getByPlaceholderText(/Search.../i);
+    fireEvent.change(inputElement, { target: { value: 'dark' } });
     await waitFor(async () => {
       expect(inputElement).toBeInTheDocument();
       expect(inputElement).toBeVisible();
-      expect(inputElement.value).toBe('123');
+      expect(inputElement.value).toBe('dark');
     });
   });
 
-  test('Reviewlist should have a search bar, and the value attribute of the search bar should match with the input value', async () => {
+  test('should display total reviews ', async () => {
     await render(<ReviewList productId={59553} />);
     await waitFor(async () => {
       const totalReviews = await screen.getByTestId('totalReviews');
@@ -541,3 +528,89 @@ xdescribe('New review form functional test', () => {
   });
 });
 
+xdescribe('Review list functional test', () => {
+  test('Search bar should able to search for element that with the key word ', async () => {
+    await render(<ReviewList productId={59553} />);
+    await waitFor(async () => {
+      const body = await screen.findAllByTestId('review-body');
+      const inputElement = await screen.findByPlaceholderText(/Search.../i);
+      await fireEvent.change(inputElement, { target: { value: 'cheap' } });
+      await expect(body.length).toBe(3);
+    });
+  });
+  test('Yes button should able to increment the count of helpfulness', async () => {
+    await render(<ReviewList productId={59553} />);
+    await waitFor(async () => {
+      const helpful = await screen.findAllByTestId('review-helpful-1');
+      expect(helpful[0]).toBeInTheDocument();
+
+      const button = await screen.findAllByTestId('review-helpful-1-button');
+      await fireEvent.click(button[0]);
+      const count = await screen.findAllByTestId('review-helpful-1-count');
+      expect(count[0].innerHTML).toBe('(100)');
+      expect(button[0]).toHaveClass('helpfulness-onClicked');
+
+    });
+  });
+  test('Yes button should able to increment the count of helpfulness', async () => {
+    await render(<ReviewList productId={59553} />);
+    const button = await screen.findByTestId('review-moreButton');
+    userEvent.click(button);
+    const cells = await screen.findAllByTestId('review-Cell');
+    expect(cells.length).toBe(4);
+  });
+  test('More reviews button on clicked should display more reviews', async () => {
+    await render(<ReviewList productId={59553} />);
+    const button = await screen.findByTestId('review-moreButton');
+    userEvent.click(button);
+    const cells = await screen.findAllByTestId('review-Cell');
+    expect(cells.length).toBe(4);
+  });
+  test('star filter should filter out reviews', async () => {
+    await render(<ReviewList productId={59553} />);
+    const fiveStar = await screen.findByTestId('fiveStar');
+    const fourStar = await screen.findByTestId('fourStar');
+    const threeStar = await screen.findByTestId('threeStar');
+    const total = await screen.findByTestId('totalReviews');
+    userEvent.click(fiveStar);
+    userEvent.click(fourStar);
+    userEvent.click(threeStar);
+
+    expect(total.innerHTML).toBe('3 reviews, sorted by ');
+
+  });
+  test('Once remove all filter on clicked should return to default state', async () => {
+    await render(<ReviewList productId={59553} />);
+    const fiveStar = await screen.findByTestId('fiveStar');
+    const remove = await screen.findByTestId('remove-filter');
+    const total = await screen.findByTestId('totalReviews');
+    userEvent.click(fiveStar);
+    expect(total.innerHTML).toBe('1 reviews, sorted by ');
+    userEvent.click(remove);
+    expect(total.innerHTML).toBe('7 reviews, sorted by ');
+  });
+  test('reviews should sort by helpfulness', async () => {
+    await render(<ReviewList productId={59553} />);
+    const select = await screen.findByTestId('review-sort-select');
+    fireEvent.change(select, { target: { value: 'helpfulReviewArray' } });
+    const options = await screen.findAllByTestId('select-option');
+    expect(options[0].selected).toBeFalsy();
+    expect(options[1].selected).toBeFalsy();
+    expect(options[2].selected).toBeTruthy();
+    const date = await screen.findAllByTestId('review-nameNDate');
+    expect(date[0].innerHTML).toBe('shortandsweeet, April 13, 2019');
+    expect(date[1].innerHTML).toBe('bigbrotherbenjamin, June 22, 2019');
+  });
+  test('reviews should sort by date', async () => {
+    await render(<ReviewList productId={59553} />);
+    const select = await screen.findByTestId('review-sort-select');
+    fireEvent.change(select, { target: { value: 'newestReviewArray' } });
+    const options = await screen.findAllByTestId('select-option');
+    expect(options[0].selected).toBeFalsy();
+    expect(options[1].selected).toBeTruthy();
+    expect(options[2].selected).toBeFalsy();
+    const date = await screen.findAllByTestId('review-nameNDate');
+    expect(date[0].innerHTML).toBe('shortandsweeet, November 13, 2019');
+    expect(date[1].innerHTML).toBe('shortandsweeet, October 13, 2019');
+  });
+});

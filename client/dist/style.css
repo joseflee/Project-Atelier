@@ -1,5 +1,53 @@
-/* Rating Section Start -----------------------------------------------------------------------------------------------*/
+* {
+  margin: 0;
+}
+/* top search bar Start -----------------------------------------------------------------------------------------------*/
 
+.top-Search-Section {
+  width: 1650px;
+  height: 80px;
+  background-color: #525252;
+  margin-bottom: 10px;
+  position: relative;
+}
+.top-Search-Logo {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute;
+  left: 25px;
+  top: 25px;
+  -webkit-user-select: none;
+}
+.top-Search-Logo span:nth-child(1),
+.top-Search-Logo span:nth-child(3) {
+  text-decoration: underline;
+}
+.top-Search-Container {
+  color: white;
+  position: absolute;
+  right: 25px;
+  top: 25px;
+}
+.top-Search-Container i {
+  padding-left: 15px;
+  font-size: 20px;
+  cursor: pointer;
+  -webkit-user-select: none;
+}
+.top-Search-Text {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid white;
+    color: white;
+}
+.top-Search-Text:focus {
+  outline: none;
+}
+
+/* top search bar end -----------------------------------------------------------------------------------------------*/
+
+/* Rating Section Start -----------------------------------------------------------------------------------------------*/
 
 .RatingsNReviewsSection {
   position: relative;

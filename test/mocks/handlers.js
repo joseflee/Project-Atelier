@@ -27,6 +27,11 @@ export const handlers = [
       ctx.json(dummyReviews.meta)
     );
   }),
+  rest.post('/ratings/updateHelpfulness', (req, res, ctx) => {
+    return res(
+      ctx.status(201),
+    );
+  }),
   rest.post('https://api.cloudinary.com/v1_1/dqidinkkf/upload', (req, res, ctx) => {
     return res(
       ctx.status(201),
