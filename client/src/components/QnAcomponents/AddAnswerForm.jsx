@@ -66,55 +66,71 @@ class AddAnswerForm extends React.Component {
 
   render() {
     return (
-      <div className='qna-add-answer'>
-        <div className='qna-submit-answer'>Submit your answer</div>
-        <div>{this.props.name}: {this.props.question_body}</div>
-        <form>
-          <label>
+      <div className='qna-add-answer-form'>
+        <div className='qna-add-answer-form-wrapper'>
+          <div className='qna-add-answer-form-subtitle'>Submit your answer</div>
+          <div className='qna-add-answer-form-product-name'>{this.props.productName}: {this.props.question_body}</div>
+          <form>
+            <label>
+              <div className='qna-add-answer-form-your-answer'>
               Your answer*
-            <input
-              name='answerBody'
-              type='text'
-              maxLength='1000'
-              value={this.state.answerBody}
-              onChange={this.handleInputChange}
-            />
-          </label>
-          <br />
-          <label>
+              </div>
+              <input
+                className='qna-add-answer-form-input-answer'
+                name='answerBody'
+                type='text'
+                maxLength='1000'
+                value={this.state.answerBody}
+                onChange={this.handleInputChange}
+              />
+            </label>
+            <br />
+            <label>
+              <div className='qna-add-answer-form-your-nickname'>
               What's your nickname?*
-            <input
-              name='nickname'
-              type='text'
-              maxLength='60'
-              placeholder='Example: jack543'
-              value={this.state.nickname}
-              onChange={this.handleInputChange}
-            />
+              </div>
+              <input
+                className='qna-add-answer-form-input-nickname'
+                name='nickname'
+                type='text'
+                maxLength='60'
+                placeholder='Example: jack543'
+                value={this.state.nickname}
+                onChange={this.handleInputChange}
+              />
+              <br />
+              <div className='qna-add-answer-form-warning-1'>
+              For privacy reasons, do not use your full name or email address
+              </div>
+            </label>
             <br />
-            <i>For privacy reasons, do not use your full name or email address</i>
-          </label>
-          <br />
-          <label>
+            <label>
+              <div className='qna-add-answer-form-your-email'>
               Your email?*
-            <input
-              name='email'
-              type='text'
-              maxLength='60'
-              placeholder='Example: jack@email.com'
-              value={this.state.email}
-              onChange={this.handleInputChange}
-            />
+              </div>
+              <input
+                className='qna-add-answer-form-input-email'
+                name='email'
+                type='text'
+                maxLength='60'
+                placeholder='Example: jack@email.com'
+                value={this.state.email}
+                onChange={this.handleInputChange}
+              />
+              <br />
+              <div className='qna-add-answer-form-warning-2'>
+             For authentication reasons, you will not be emailed
+              </div>
+            </label>
             <br />
-            <i>For authentication reasons, you will not be emailed</i>
-          </label>
-          <br />
-          <label>
-            <br />
-            <AnswerPhotoUpload handlePhotos={this.handlePhotos} />
-          </label>
-          <input type="submit" value="Submit" onClick = {this.handleSubmit} />
-        </form>
+            <label>
+              <br />
+              <AnswerPhotoUpload handlePhotos={this.handlePhotos} />
+            </label>
+            <input type="submit" className='qna-add-answer-form-submit' value="Submit" onClick = {this.handleSubmit} />
+            <button className='qna-add-answer-form-close' onClick={this.props.closeAnswer}>Close without adding</button>
+          </form>
+        </div>
       </div>
     );
   }

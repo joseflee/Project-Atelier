@@ -284,6 +284,7 @@ class QnA extends React.Component {
           clickOnHelpfulAnswer={this.clickOnHelpfulAnswer}
           reportAnswer={this.reportAnswer}
           addNewAnswer={this.addNewAnswer}
+          productName={this.state.productName}
         />
         <br />
         <div className='qna-button-wrapper'>

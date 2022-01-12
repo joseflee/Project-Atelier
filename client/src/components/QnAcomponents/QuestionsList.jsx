@@ -20,6 +20,7 @@ class QuestionsList extends React.Component {
             clickOnHelpfulAnswer={this.props.clickOnHelpfulAnswer}
             reportAnswer={this.props.reportAnswer}
             addNewAnswer={this.props.addNewAnswer}
+            productName={this.props.productName}
           />;
         })}
       </div>

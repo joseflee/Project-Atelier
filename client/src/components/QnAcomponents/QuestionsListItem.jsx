@@ -42,14 +42,14 @@ class QuestionsListItem extends React.Component {
 
   addAnswerHandleClick(event) {
     //event.stopPropagation();
-    //console.log('should be triggered once');
+    console.log('should be triggered once');
     this.setState({
       isAddAnswerClicked: true
     });
   }
 
   closeAnswerForm() {
-    //console.log('triggered close answer');
+    console.log('triggered close answer');
     //console.log('before triggering closing', this.state);
 
     this.setState((prevState) => {
@@ -80,6 +80,13 @@ class QuestionsListItem extends React.Component {
     let moreAnswers,
       addAnswer,
       answersList;
+    let qnaAddAnswerModal;
+
+    if (this.state.isAddAnswerClicked) {
+      qnaAddAnswerModal = 'qna-add-answer-modal-shown';
+    } else {
+      qnaAddAnswerModal = 'qna-add-answer-modal-hidden';
+    }
 
     if (this.state.isMoreAnswersShown) {
       moreAnswers = <button id='qna-more-answers-button' onClick={()=>{ this.clickOnMoreAnswers(); }}>LOAD MORE ANSWERS</button>;
@@ -101,18 +108,7 @@ class QuestionsListItem extends React.Component {
 
     }
 
-    if (this.state.isAddAnswerClicked) {
-      addAnswer = <AddAnswerForm name={this.props.name}
-        question_body={this.props.question.question_body}
-        questionId={this.props.question.question_id}
-        productId={this.props.productId}
-        closeAnswer={this.closeAnswerForm}
-        addNewAnswer={this.props.addNewAnswer}
 
-      />;
-    } else {
-      addAnswer = <div className='question-item-add-answer-link' onClick={()=>this.addAnswerHandleClick()}><u>Add answer</u></div>;
-    }
 
     return (
       <div>
@@ -126,7 +122,18 @@ class QuestionsListItem extends React.Component {
             <div className='qna-question-item-helpful-keyword' >Helpful?</div>
             <div className='qna-question-item-yes-button' onClick={()=>{ this.clickOnHelpful(); }}><u>Yes</u>({this.props.question.question_helpfulness})</div>
             <div className='qna-question-item-answer-border'>|</div>
-            <div className='qna-add-answer-link'>{addAnswer}</div>
+            <div className='qna-add-answer-link' onClick={(e)=> this.addAnswerHandleClick(e)}>Add answer</div>
+            <div className={qnaAddAnswerModal}>
+              <AddAnswerForm name={this.props.name}
+                question_body={this.props.question.question_body}
+                questionId={this.props.question.question_id}
+                productId={this.props.productId}
+                closeAnswer={this.closeAnswerForm}
+                addNewAnswer={this.props.addNewAnswer}
+                productName={this.props.productName}
+
+              />;
+            </div>
           </div>
         </div>
         {/* end of question item */}

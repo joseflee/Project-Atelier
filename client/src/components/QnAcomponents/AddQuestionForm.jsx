@@ -113,8 +113,8 @@ class AddQuestionForm extends React.Component {
             </label>
             <br />
 
-              <input type="submit" className="qna-add-question-form-submit" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
-
+            <input type="submit" className="qna-add-question-form-submit" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
+            <button className='qna-add-question-form-close' onClick={()=> this.props.closeForm()}>Close without submitting</button>
           </form>
         </div>
       </div>
