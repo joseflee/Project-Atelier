@@ -82,7 +82,7 @@ class QuestionsListItem extends React.Component {
       answersList;
 
     if (this.state.isMoreAnswersShown) {
-      moreAnswers = <button id='more-answers-button' onClick={()=>{ this.clickOnMoreAnswers(); }}>Load more answers</button>;
+      moreAnswers = <button id='qna-more-answers-button' onClick={()=>{ this.clickOnMoreAnswers(); }}>LOAD MORE ANSWERS</button>;
       answersList = <AnswersList list={Object.values(this.props.question.answers).slice(0, 2)}
         questionId={this.props.question.question_id}
         productId={this.props.productId}

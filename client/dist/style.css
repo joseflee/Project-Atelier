@@ -974,7 +974,8 @@
 
 .qna-button-wrapper{
   display: flex;
-  justify-content: center;
+  justify-content: left;
+  margin-bottom: 40px;
 }
 
 .more-answered-questions-button{
@@ -988,6 +989,7 @@
   font-size:18px;
   height:50px;
   border:2px solid black;
+  font-weight:bold;
 
 }
 
@@ -1000,6 +1002,7 @@
   text-decoration: none;
   display: inline-block;
   font-size: 18px;
+  font-weight:bold;
   cursor: pointer;
   height:50px;
   border:2px solid black;
@@ -1079,6 +1082,20 @@
 
 .qna-question-body {
   width: 100%;
+}
+
+#qna-more-answers-button{
+  margin-left: 10px;
+  margin-top: 15px;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  height:50px;
+  font-weight: bold;
 }
 
 
