@@ -13,7 +13,7 @@ import AddQuestion from '../../../client/src/components/QnAcomponents/AddQuestio
 
 
 
-xdescribe('Rendering add question parent component', function() {
+describe('Rendering add question parent component', function() {
   xit('should render without throwing an error', function() {
     expect(shallow(<AddQuestion />).contains( <div className='qna-add-new-question-form'></div>
     )).toBe(true);
@@ -32,11 +32,11 @@ xdescribe('Rendering add question parent component', function() {
     expect(render(<AddQuestion />).text()).toEqual(text);
   });
 
-  test('invokes clickOnAddQuestion() and correctly changing state if clicking on button \'Add question\' ', () => {
+  xtest('invokes clickOnAddQuestion() and correctly changing state if clicking on button \'Add question\' ', () => {
 
     const wrapper = shallow(<AddQuestion/>);
     const spy = jest.spyOn(wrapper.instance(), 'clickOnAddQuestion');
-    wrapper.find('#qna-add-new-question-button').simulate('click');
+    wrapper.find('.qna-add-question-button').simulate('click');
     expect(spy).toHaveBeenCalled();
     //console.log(wrapper.state());
     expect(wrapper.state().isModalShown).toEqual(true);
@@ -44,7 +44,7 @@ xdescribe('Rendering add question parent component', function() {
 
   });
 
-  test('child component correctly changes state of  parent component ', () => {
+  xtest('child component correctly changes state of  parent component ', () => {
     const parent = shallow(<AddQuestion />);
     const spy = jest.spyOn(parent.instance(), 'closeForm');
 
