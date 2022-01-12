@@ -962,6 +962,34 @@
   border:2px solid black;
 }
 
+.qna-question-item-wrap {
+
+  overflow:auto;
+  /*the same margin which is every button have, it is for small screen, and if you have many buttons.*/
+
+}
+
+.qna-question-q-letter-body-wrapper {
+  width: auto;
+  margin:0 20px;
+  /* display:inline-block; */
+  line-height: 60px;
+  float:left;
+}
+
+/* #center {
+  display: inline-block;
+  margin:0 auto;
+  width:100px;
+} */
+
+.qna-question-links {
+  width: 150px;
+  margin:0 100px;
+  /* display:inline-block; */
+  line-height: 60px;
+  float:right;
+}
 
 
 

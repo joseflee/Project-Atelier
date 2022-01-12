@@ -115,21 +115,24 @@ class QuestionsListItem extends React.Component {
     }
 
     return (
-      <div className='question-item-wrap'>
+      <div>
+        <div className='qna-question-item-wrap'>
 
-        {/* beginning of question item */}
-        <div className='question-item'>
-          <div className='question-item-q-letter'>Q:</div><div className='qna-question-body'>{this.props.question.question_body}</div>
+          {/* beginning of question item */}
+          <div className='qna-question-q-letter-body-wrapper'>
+            <div className='qna-question-body'>Q: {this.props.question.question_body}</div>
+          </div>
           <div className='qna-question-links'>
-            <div className='question-item-helpful-keyword' >Helpful?</div>
-            <div className='question-item-yes-button' onClick={()=>{ this.clickOnHelpful(); }}><u>Yes</u>({this.props.question.question_helpfulness})</div>
+            <div className='qna-question-item-helpful-keyword' >Helpful?</div>
+            <div className='qna-question-item-yes-button' onClick={()=>{ this.clickOnHelpful(); }}><u>Yes</u>({this.props.question.question_helpfulness})</div>
             <div>{addAnswer}</div>
           </div>
         </div>
         {/* end of question item */}
-        {answersList}
+        <div className='qna-answer-list'>{answersList}</div>
 
         {moreAnswers}
+
       </div>
     );
 
