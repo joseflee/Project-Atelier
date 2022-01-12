@@ -69,7 +69,7 @@ class AddAnswerForm extends React.Component {
       <div className='qna-add-answer-form'>
         <div className='qna-add-answer-form-wrapper'>
           <div className='qna-add-answer-form-subtitle'>Submit your answer</div>
-          <div>{this.props.name}: {this.props.question_body}</div>
+          <div>{this.props.productName}: {this.props.question_body}</div>
           <form>
             <label>
               <div className='qna-add-answer-form-your answer'>

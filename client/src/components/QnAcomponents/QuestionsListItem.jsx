@@ -130,6 +130,7 @@ class QuestionsListItem extends React.Component {
                 productId={this.props.productId}
                 closeAnswer={this.closeAnswerForm}
                 addNewAnswer={this.props.addNewAnswer}
+                productName={this.props.productName}
 
               />;
             </div>
