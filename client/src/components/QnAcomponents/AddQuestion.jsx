@@ -32,8 +32,8 @@ class AddQuestion extends React.Component {
 
 
   render() {
-    let qnaAskQuestionModal;
-    let questionButton;
+    let qnaAskQuestionModal,
+      questionButton;
     if (this.state.isModalShown) {
       qnaAskQuestionModal = 'qna-ask-question-modal-shown';
     } else {
