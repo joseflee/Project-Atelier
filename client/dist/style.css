@@ -608,6 +608,143 @@
   font-weight: bold;
 }
 
+.qna-ask-question-modal-shown{
+
+  height:90vh;
+  width:90vw;
+  background-color: lightblue;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  margin: auto;
+  z-index:9000;
+
+
+}
+
+/* .qna-ask-question-modal-shown{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:90vh;
+  width:90vw;
+  background-color: lightblue;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+.qna-ask-question-modal-hidden{
+  width: 100 px;
+  height: 100 px;
+  background-color: lightblue;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  margin: auto;
+
+  display:none;
+}
+
+.qna-screen-not-transparent{
+  width:100%;
+  margin:auto;
+  position:fixed;
+  z-index:4500;
+  background-color: black;
+  opacity:50%;
+  display:none;
+}
+
+.qna-screen-transparent{
+  width:100%;
+  margin:auto;
+  position:fixed;
+  z-index:4500;
+  background-color: black;
+  opacity:50%;
+  display:block;
+}
+
+.qna-add-new-question-form{
+  font-size: 30px;
+  /* position: relative; */
+}
+
+.qna-add-question-form-wrapper{
+
+  /* Center vertically and horizontally */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.qna-add-question-subtitle{
+  /* margin: 20px 0px 20px 0px; */
+  font-size:30px;
+  font-weight:bold
+}
+
+.qna-add-question-form-your-question{
+
+}
+
+.qna-add-question-input-questionbody{
+  height:30px;
+  width:600px;
+  padding-left: 2px;
+  font-size:18px;
+}
+
+ .qna-add-question-form-your-nickname{
+ margin-top:30px;
+}
+
+.qna-add-question-input-nickname{
+  height:30px;
+  width:300px;
+  padding-left: 2px;
+  font-size:18px;
+}
+
+.qna-add-question-form-warning-1{
+font-size: 14px;
+font-style: italic;
+}
+
+.qna-add-question-form-input-email{
+  height:30px;
+  width:300px;
+  padding-left: 2px;
+  font-size:18px;
+}
+
+
+
+.qna-add-question-form-warning-2{
+  font-size: 14px;
+  font-style: italic;
+}
+
+.qna-add-question-form-submit{
+width:90px;
+height:30px;
+
+}
+
+
+
+
 
 
 

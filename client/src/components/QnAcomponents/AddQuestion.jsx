@@ -19,6 +19,7 @@ class AddQuestion extends React.Component {
       isModalShown: true,
       isAddButtonShown: false
     });
+    this.props.checkForm();
   }
 
   closeForm() {
@@ -31,18 +32,20 @@ class AddQuestion extends React.Component {
 
 
   render() {
-    let modal,
-      questionButton;
+    let qnaAskQuestionModal;
+    let questionButton;
     if (this.state.isModalShown) {
-      modal = <div><AddQuestionForm
-        name={this.props.name}
-        productId={this.props.productId}
-        addQuestion={this.props.addQuestion}
-        closeForm={this.closeForm}
-      /></div>;
+      qnaAskQuestionModal = 'qna-ask-question-modal-shown';
     } else {
-      modal = <div></div>;
+      qnaAskQuestionModal = 'qna-ask-question-modal-hidden';
     }
+    // let modal,
+
+    // if (this.state.isModalShown) {
+    //   modal = <div></div>;
+    // } else {
+    //   modal = <div></div>;
+    // }
     if (this.state.isAddButtonShown) {
       questionButton = <button className='qna-add-question-button' onClick={()=>this.clickOnAddQuestion()}>ADD A QUESTION</button>;
     } else {
@@ -51,7 +54,13 @@ class AddQuestion extends React.Component {
     return (
       <div className='add-question-parent'>
         {questionButton}
-        {modal}
+        <div className={qnaAskQuestionModal}><AddQuestionForm
+          name={this.props.name}
+          productId={this.props.productId}
+          addQuestion={this.props.addQuestion}
+          closeForm={this.closeForm}
+        />
+        </div>
       </div>
     );
   }
