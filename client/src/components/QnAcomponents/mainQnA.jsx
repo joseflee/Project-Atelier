@@ -15,8 +15,10 @@ class QnA extends React.Component {
     this.state = {
       questions: [],
       isMoreQuestionsButtonShown: false,
-      productName: 'This is not a name'
+      productName: 'This is not a name',
+      isAddNewQuestionClicked: false
     };
+
     this.showMoreQuestions = this.showMoreQuestions.bind(this);
     this.search = this.search.bind(this);
     this.updateQuestionList = this.updateQuestionList.bind(this);
@@ -25,6 +27,7 @@ class QnA extends React.Component {
     this.reportAnswer = this.reportAnswer.bind(this);
     this.addNewAnswer = this.addNewAnswer.bind(this);
     this.addNewQuestion = this.addNewQuestion.bind(this);
+    this.checkAddingNewQuestion = this.checkAddingNewQuestion.bind(this);
   }
   componentWillUnmount() {
     this._isMounted = false;
@@ -246,8 +249,23 @@ class QnA extends React.Component {
       });
   }
 
+  checkAddingNewQuestion() {
+    console.log('click on add question');
+    this.setState({
+      isAddNewQuestionClicked: !this.state.isAddNewQuestionClicked
+    });
+  }
+
   render() {
-    let moreAnsweredQuestions;
+    let moreAnsweredQuestions,
+      qnaScreen;
+
+    if (this.state.isAddNewQuestionClicked) {
+      qnaScreen = 'qna-screen-not-transparent';
+    } else {
+      qnaScreen = 'qna-screen-transparent';
+    }
+
     if (this.state.isMoreQuestionsButtonShown) {
       moreAnsweredQuestions = <MoreAnsweredQuestions click={this.showMoreQuestions}/>;
     } else {
@@ -255,6 +273,7 @@ class QnA extends React.Component {
     }
     return (
       <div className='qna-main-component'>
+        <div className={qnaScreen}></div>
 
         <div className='qna-component-name'>QUESTIONS AND ANSWERS</div>
         <SearchQuestions search={this.search}/>
@@ -271,7 +290,9 @@ class QnA extends React.Component {
           {moreAnsweredQuestions}
           <AddQuestion name={this.state.productName}
             productId={this.props.productId}
-            addQuestion={this.addNewQuestion}/>
+            addQuestion={this.addNewQuestion}
+            checkForm={this.checkAddingNewQuestion}
+          />
         </div>
       </div>
 
