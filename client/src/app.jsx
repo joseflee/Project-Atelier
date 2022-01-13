@@ -21,16 +21,20 @@ class App extends React.Component {
       currentProductStyle: null,
       relatedProducts: null,
       questionsNAnswers: null,
-      productReview: null
+      productReview: null,
+      totalReviews: 0
     };
 
     this.updateProduct = this.updateProduct.bind(this);
+    this.handleReviews = this.handleReviews.bind(this);
   }
 
   componentDidMount() {
     this.updateProduct(this.state.productId);
   }
-
+  handleReviews (reviews) {
+    this.setState({totalReviews: reviews});
+  }
   async updateProduct(productId) {
     const [productInfo, productStyleInfo, relProductInfo, questionsList, reviewInfo] = await Promise.all([
       getProductInfo(productId),
@@ -64,11 +68,11 @@ class App extends React.Component {
     } else {
       return (
         <div>
-          <TopSearchBar />
+          <TopSearchBar/>
           <ProductOverview productId={this.state.productId} currentProduct={this.state.currentProduct} currentProductStyle={this.state.currentProductStyle} currentReview={this.state.productReview} />
           <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts} handleClick={this.updateProduct} />
           <QnA productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
-          <RatingsNReviews productId={this.state.productId} currentProduct={this.state.currentProduct} />
+          <RatingsNReviews handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} />
         </div>
       );
     }
