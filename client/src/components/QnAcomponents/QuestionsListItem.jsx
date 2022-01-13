@@ -72,7 +72,7 @@ class QuestionsListItem extends React.Component {
     //console.log('before triggering closing', this.state);
 
     this.setState((prevState) => {
-      console.log(prevState);
+      //console.log(prevState);
       return {
         isAddAnswerClicked: false
       };
