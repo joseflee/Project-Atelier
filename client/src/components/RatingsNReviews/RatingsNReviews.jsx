@@ -1,10 +1,10 @@
 import React from 'react';
 import ReviewList from './ReviewList.jsx';
 import NewReview from './NewReview.jsx';
-const RatingsNReviews = ( {productId, currentProduct}) =>{
+const RatingsNReviews = ( {handleReviews, productId, currentProduct}) =>{
   return (
     <div className= "RatingsNReviewsSection">
-      <ReviewList currentProduct={currentProduct} productId= {productId}/>
+      <ReviewList handleReviews={handleReviews} currentProduct={currentProduct} productId= {productId}/>
     </div>
   );
 };
