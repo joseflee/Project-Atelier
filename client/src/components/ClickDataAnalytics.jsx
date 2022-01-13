@@ -22,14 +22,10 @@ const ClickedData = (WrappedComponent, widgetName) => {
       console.log(clickedData);
 
       var sentInteractions = await sendInteractions(clickedData);
-
-      // Executes any click handlers already present.
-      if (this.props.onClick !== undefined || this.props.onClick !== null) {
-        this.props.onClick(e);
-      }
     }
 
     render() {
+      console.log(this.props);
       return <WrappedComponent onClick={this.handleClick} {...this.props}/>;
     }
   }
