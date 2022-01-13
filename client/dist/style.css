@@ -391,7 +391,11 @@
   transform: scale(1.5) translateX(15%);
 }
 
-<<<<<<< HEAD
+.POReadReviewButton {
+  border: none;
+  outline: none;
+  background: none;
+}
 
 
 
@@ -855,11 +859,9 @@ display: none;
 
 
 
-=======
 .POReadReviewButton {
   background: none;
   border: none;
   font-size: 10px;
   text-decoration: underline;
 }
->>>>>>> d8f206b (Added some more tests, and added a Add to outfit feature)

@@ -56,7 +56,8 @@ class ProductOverview extends React.Component {
             ratings={this.props.currentReview.ratings} />
           <StyleSelector styles={this.props.currentProductStyle} displayedStyle={this.state.displayStyle}
             changeStyle={this.updateStyle.bind(this)} />
-          <AddToCart displayedStyle={this.state.displayStyle} />
+          <AddToCart displayedStyle={this.state.displayStyle} toggleFavorite={this.props.toggleFavorite.bind(this)}
+            addToFavorites={this.props.addToFavorites} currentStyleId={this.props.currentStyleId} />
         </div>
         <DefaultGallery fakePhotos={sampleData.style.results[0].photos} photos={this.state.displayStyle.photos}
           selectedIndex={this.state.selectedIndex} switchImageModal={this.switchImageModal.bind(this)}
