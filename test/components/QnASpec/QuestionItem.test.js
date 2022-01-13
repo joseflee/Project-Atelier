@@ -75,7 +75,7 @@ describe('Rendering one question item', function() {
 
   });
 
-  it('should change state property if clicking on \'show more answers\' ', () => {
+  xit('should change state property if clicking on \'show more answers\' ', () => {
 
     const component = mount(<QuestionItem
       question={exampleQuestions.questions.results[1]} />);
@@ -99,5 +99,27 @@ describe('Rendering one question item', function() {
     expect(component.state().answers.length).toEqual(1);
     expect(component.state().isMoreAnswersShown).toEqual(false);
   });
+
+
+  it('should correctly change button text and number of showing answers', () => {
+
+    const component = mount(<QuestionItem
+      question={exampleQuestions.questions.results[1]} />);
+    //console.log(component.debug());
+    const spy1 = jest.spyOn(component.instance(), 'clickOnMoreAnswers');
+
+    let button = component.find('#qna-more-answers-button');
+    expect (button.text()).toEqual('SHOW MORE ANSWERS');
+    expect (component.state().answers.length).toEqual(2);
+    component.find('#qna-more-answers-button').simulate('click');
+    expect (button.text()).toEqual('COLLAPSE ANSWERS');
+    expect (component.state().answers.length).toEqual(3);
+    //clicking again - now state and button should be by default
+    component.find('#qna-more-answers-button').simulate('click');
+    expect (button.text()).toEqual('SHOW MORE ANSWERS');
+    expect (component.state().answers.length).toEqual(2);
+
+  });
+
 
 });
