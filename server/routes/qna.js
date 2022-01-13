@@ -37,7 +37,7 @@ qnaRouter.put('/updateQuestionHelp', (req, res) => {
     .then(data => {
       qnaController.receiveQuestionList(productId)
         .then(result => {
-          console.log('questions', result);
+          //console.log('questions', result);
           res.send(result);
         });
     })
@@ -91,7 +91,7 @@ qnaRouter.post('/addNewAnswer', (req, res) => {
   let name = req.body.params.name;
   let email = req.body.params.email;
   let photos = req.body.params.photos;
-
+  console.log('server is adding new answer');
   qnaController.addAnswerToServer(questionId, body, name, email, photos)
     .then(data =>{
       qnaController.receiveQuestionList(productId)
