@@ -25,7 +25,6 @@ var MyOutfitCards = (props) => {
                 <h4 className="name-myOutfits">{outfit.name}</h4>
                 <h4 className="price-myOutfits">{outfit.default_price}</h4>
               </div>
-
             </div>
           );
         })}

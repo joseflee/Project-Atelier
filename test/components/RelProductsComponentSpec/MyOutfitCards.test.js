@@ -17,7 +17,7 @@ describe('My Outfits Card Rendering', function() {
     expect(render(<MyOutfitCards myOutfitCards={products} />).text()).toEqual(text);
   });
 
-  it('should trigger the passed function on click', function() {
+  it('should trigger a mock function upon click', function() {
     const click = jest.fn();
     const wrapper = mount(<MyOutfitCards myOutfitCards={products} handleAddOutfitClick={click}/>);
     wrapper.find('.add-outfit').simulate('click');
