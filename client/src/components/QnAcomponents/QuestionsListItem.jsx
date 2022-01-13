@@ -48,7 +48,7 @@ class QuestionsListItem extends React.Component {
         answers: answersToShow,
         buttonText: 'COLLAPSE ANSWERS'
       }, ()=>{
-        console.log('should show 3 answers', this.state.answers);
+        //console.log('should show 3 answers', this.state.answers);
       });
     } else {
       let answersToShow = Object.values(this.props.question.answers).slice(0, 2);
@@ -68,7 +68,7 @@ class QuestionsListItem extends React.Component {
   }
 
   closeAnswerForm() {
-    console.log('triggered close answer');
+    //console.log('triggered close answer');
     //console.log('before triggering closing', this.state);
 
     this.setState((prevState) => {
@@ -77,7 +77,7 @@ class QuestionsListItem extends React.Component {
         isAddAnswerClicked: false
       };
     }, () => {
-      console.log('updated', this.state);
+      //console.log('updated', this.state);
     });
   }
 
