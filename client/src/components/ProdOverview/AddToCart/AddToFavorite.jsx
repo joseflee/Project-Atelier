@@ -2,15 +2,19 @@ import React from 'react';
 
 const AddToFavorite = (props) => {
 
-  const sendToMyOutfit = () => {
-    console.log('click!');
-  };
-
-  return (
-    <div className='POATOC'>
-      <button onClick={sendToMyOutfit} className='POAddToFavorte'>&#9734;</button>
-    </div>
-  );
+  if (props.addToFavorites.includes(props.currentStyleId)) {
+    return (
+      <div className='POATOC'>
+        <button onClick={props.toggleFavorite} className='POAddToFavorte'>&#9733;</button>
+      </div>
+    );
+  } else {
+    return (
+      <div className='POATOC'>
+        <button onClick={props.toggleFavorite} className='POAddToFavorte'>&#9734;</button>
+      </div>
+    );
+  }
 };
 
 export default AddToFavorite;

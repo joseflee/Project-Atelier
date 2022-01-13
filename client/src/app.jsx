@@ -21,7 +21,9 @@ class App extends React.Component {
       currentProductStyle: null,
       relatedProducts: null,
       questionsNAnswers: null,
-      productReview: null
+      productReview: null,
+      outFitStyleId: null,
+      addToFavorites: [],
     };
 
     this.updateProduct = this.updateProduct.bind(this);
@@ -46,7 +48,29 @@ class App extends React.Component {
       relatedProducts: relProductInfo,
       questionsNAnswers: questionsList,
       productReview: reviewInfo,
+      outFitStyleId: productInfo.results[0].style_id,
     });
+  }
+
+  addToOutfit (id) {
+    this.setState({
+      outFitStyleId: id,
+    });
+  }
+
+  toggleAddToFavorite () {
+    if (!this.state.addToFavorites.includes(this.state.outFitStyleId)) {
+      this.setState({
+        addToFavorites: [...this.state.addToFavorites, this.state.outFitStyleId],
+      });
+    } else {
+      const newArr = [...this.state.addToFavorites];
+      var index = newArr.indexOf(this.state.outFitStyleId);
+      newArr.splice(index, 1);
+      this.setState({
+        addToFavorites: newArr,
+      });
+    }
   }
 
   render() {
@@ -65,7 +89,10 @@ class App extends React.Component {
       return (
         <div>
           <TopSearchBar />
-          <ProductOverview productId={this.state.productId} currentProduct={this.state.currentProduct} currentProductStyle={this.state.currentProductStyle} currentReview={this.state.productReview} />
+          <ProductOverview productId={this.state.productId} currentProduct={this.state.currentProduct}
+            currentProductStyle={this.state.currentProductStyle} currentReview={this.state.productReview}
+            addToOutfit={this.addToOutfit.bind(this)} toggleFavorite={this.toggleAddToFavorite.bind(this)}
+            addToFavorites={this.state.addToFavorites} currentStyleId={this.state.outFitStyleId} />
           <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts} handleClick={this.updateProduct} />
           <QnA productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
           <RatingsNReviews productId={this.state.productId} currentProduct={this.state.currentProduct} />

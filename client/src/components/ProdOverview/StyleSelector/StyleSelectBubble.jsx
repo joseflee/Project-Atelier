@@ -4,7 +4,7 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 const StyleBubble = (props) => {
   const update = () => {
-    props.updater(props.style);
+    props.updater(props.style, props.styleId);
   };
 
   if (props.usecheck) {

@@ -1,9 +1,13 @@
 import React from 'react';
 import {render, waitFor, screen} from '@testing-library/react';
+import Enzyme from 'enzyme';
+import { shallow, mount, ShallowWrapper, instance } from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import ProductOverview from '../../../client/src/components/ProdOverview/OverView.jsx';
 import DefaultGallery from '../../../client/src/components/ProdOverview/ImageGallery/DefaultGallery.jsx';
+import ExpandedModal from '../../../client/src/components/ProdOverview/ImageGallery/ExpandedModal.jsx';
 import AddToCart from '../../../client/src/components/ProdOverview/AddToCart/AddToCart.jsx';
 import SizeDropdown from '../../../client/src/components/ProdOverview/AddToCart/SizeDropDown.jsx';
 import QuantityDropdown from '../../../client/src/components/ProdOverview/AddToCart/QuantityDropdown.jsx';
@@ -12,6 +16,7 @@ import StyleBubble from '../../../client/src/components/ProdOverview/StyleSelect
 import ProductInfo from '../../../client/src/components/ProdOverview/ProductInfo/ProductInfo.jsx';
 import StarRating from '../../../client/src/components/ProdOverview/ProductInfo/StarRating.jsx';
 
+Enzyme.configure({ adapter: new Adapter() });
 
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
@@ -32,6 +37,27 @@ describe ('Product Overview Component Testing', () => {
     render(<ProductOverview currentProduct={specificProduct} currentProductStyle={style} currentReview={dummyReviews.meta} />);
     expect(screen.getByTestId('Overview')).toBeInTheDocument();
   });
+
+  test('It should Update useModal in state when switchImageModal function is ran', () => {
+    const overview = shallow(<ProductOverview currentProduct={specificProduct} currentProductStyle={style} currentReview={dummyReviews.meta} />);
+    expect(overview.state().useModal).toEqual(false);
+    overview.instance().switchImageModal();
+    expect(overview.state().useModal).toEqual(true);
+  });
+
+  test('It should Update displayStyle in state when updateStyle function is ran', () => {
+    const overview = shallow(<ProductOverview currentProduct={specificProduct} currentProductStyle={style} currentReview={dummyReviews.meta} />);
+    overview.instance().updateStyle('test');
+    expect(overview.state().displayStyle).toEqual('test');
+  });
+
+  test('It should Update selectedIndex in state when updateSelectedIndex function is ran', () => {
+    const overview = shallow(<ProductOverview currentProduct={specificProduct} currentProductStyle={style} currentReview={dummyReviews.meta} />);
+    expect(overview.state().selectedIndex).toEqual(0);
+    overview.instance().updateStyle(1);
+    expect(overview.state().displayStyle).toEqual(1);
+  });
+
 });
 
 describe ('Add To Cart Component Testing', () => {
@@ -49,12 +75,27 @@ describe ('Add To Cart Component Testing', () => {
     render(<QuantityDropdown selectedQuantity={10} />);
     expect(screen.getByRole('option', {name: '1'})).toBeInTheDocument();
   });
+
+  test('Should select correct size', () => {
+    const sizeDropdown = mount(<SizeDropdown displayedSkus={style.results[0].skus} />);
+    expect(sizeDropdown.find('#sizeSelector').at(0).instance().value = 'S');
+  });
 });
 
 describe('Image Gallery Component Testing', () => {
   test('Loads and displays Default Gallery Component', () => {
     render(<DefaultGallery photos={style.results[0].photos} />);
     expect(screen.getByTestId('ImageGallery')).toBeInTheDocument();
+  });
+
+  test('Runs two functions when Default Gallery display image is clicked', () => {
+    const spy = jest.fn();
+    const spy2 = jest.fn();
+    const defaultGal = shallow(<DefaultGallery photos={style.results[0].photos} switchImageModal={spy} updateIndex={spy2} />);
+
+    defaultGal.find('.PODisplayImg').simulate('click');
+    expect(spy).toBeCalledTimes(1);
+    expect(spy2).toBeCalledTimes(1);
   });
 });
 

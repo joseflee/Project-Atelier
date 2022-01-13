@@ -34,15 +34,15 @@ class AddToCart extends React.Component {
     });
   }
   render () {
-    // console.log('state', this.state);
     return (
       <div className='POAddToCart'>
         <SizeDropdown displayedSkus={this.props.displayedStyle.skus} changeSku={this.changeSku.bind(this)} />
         <QuantityDropdown selectedQuantity={this.state.skuQuantity} />
         <div >
-          <button onClick={this.updateQuantity.bind(this)} className='POAddToCartbutton'>Add To Cart</button>
+          <button className='POAddToCartbutton'>Add To Cart</button>
         </div>
-        <AddToFavorite />
+        <AddToFavorite toggleFavorite={this.props.toggleFavorite.bind(this)} addToFavorites={this.props.addToFavorites}
+          currentStyleId={this.props.currentStyleId} />
       </div>
     );
   }
