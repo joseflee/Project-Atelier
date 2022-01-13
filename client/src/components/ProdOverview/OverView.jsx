@@ -22,10 +22,11 @@ class ProductOverview extends React.Component {
     this.updateStyle = this.updateStyle.bind(this);
   }
 
-  updateStyle(selectedStyle) {
+  updateStyle(selectedStyle, styleId) {
     this.setState({
       displayStyle: selectedStyle,
     });
+    this.props.addToOutfit(styleId);
   }
   updateSelectedIndex(index) {
     this.setState({
@@ -46,21 +47,21 @@ class ProductOverview extends React.Component {
   }
 
   render () {
-    // console.log('sample', sampleData);
-    // console.log('displayed style', this.state.displayStyle);
-    console.log('state', this.state);
     return (
       <div className='POOverview' data-testid="Overview">
-        {/* <h1 className='POTitle'>Product Overview</h1> */}
         <ProductDescription product={this.props.currentProduct} />
         <FillerComponent />
         <div className='Infocontainer'>
-          <ProductInfo product={this.props.currentProduct} style={this.props.currentProductStyle.results[0]} ratings={this.props.currentReview.ratings} />
+          <ProductInfo product={this.props.currentProduct} style={this.props.currentProductStyle.results[0]}
+            ratings={this.props.currentReview.ratings} />
           <StyleSelector styles={this.props.currentProductStyle} displayedStyle={this.state.displayStyle}
             changeStyle={this.updateStyle.bind(this)} />
-          <AddToCart displayedStyle={this.state.displayStyle} />
+          <AddToCart displayedStyle={this.state.displayStyle} toggleFavorite={this.props.toggleFavorite.bind(this)}
+            addToFavorites={this.props.addToFavorites} currentStyleId={this.props.currentStyleId} />
         </div>
-        <DefaultGallery fakePhotos={sampleData.style.results[0].photos} photos={this.state.displayStyle.photos} selectedIndex={this.state.selectedIndex} switchImageModal={this.switchImageModal.bind(this)} updateIndex={this.updateSelectedIndex.bind(this)} />
+        <DefaultGallery fakePhotos={sampleData.style.results[0].photos} photos={this.state.displayStyle.photos}
+          selectedIndex={this.state.selectedIndex} switchImageModal={this.switchImageModal.bind(this)}
+          updateIndex={this.updateSelectedIndex.bind(this)} />
         {this.state.useModal ? <ExpandedModal photos={this.state.displayStyle.photos} selectedIndex={this.state.selectedIndex} switchModal={this.switchImageModal.bind(this)} /> : null}
       </div>
     );
