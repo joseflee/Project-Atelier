@@ -24,7 +24,7 @@ describe('Rendering one question item', function() {
   });
 
   it('should render to static HTML', function() {
-    var text = 'Q: Why is this product cheaper here than other sites?Helpful?Yes(4)|Add answerA:We are selling it here without any markup from the middleman!By user SellerAugust 17, 2018;Helpful?Yes(4)Report';
+    var text = 'Q: Why is this product cheaper here than other sites?Helpful?Yes(4)|Add answerSubmit your answer: Why is this product cheaper here than other sites?Your answer*What\'s your nickname?*For privacy reasons, do not use your full name or email addressYour email?*For authentication reasons, you will not be emailedClose without adding;A:We are selling it here without any markup from the middleman!By user SellerAugust 17, 2018;Helpful?Yes(4)Report';
     expect(render(<QuestionItem question={exampleQuestions.questions.results[0]}/>).text()).toEqual(text);
   });
 
@@ -67,9 +67,9 @@ describe('Rendering one question item', function() {
     const component = mount(<QuestionItem
       question={exampleQuestions.questions.results[0]} />);
     const spy1 = jest.spyOn(component.instance(), 'addAnswerHandleClick');
-
+    //console.log(component.debug());
     expect(component.state().isAddAnswerClicked).toEqual(false);
-    component.find('.question-item-add-answer-link').simulate('click');
+    component.find('.qna-add-answer-link').simulate('click');
     expect(spy1).toHaveBeenCalled();
     expect(component.state().isAddAnswerClicked).toEqual(true);
 

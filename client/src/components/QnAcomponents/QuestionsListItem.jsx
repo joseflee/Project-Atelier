@@ -11,7 +11,8 @@ class QuestionsListItem extends React.Component {
       isAddAnswerClicked: false,
       answers: {},
       isMoreAnswersShown: false,
-      isHelpful: false
+      isHelpful: false,
+      buttonText: 'SHOW MORE ANSWERS'
     };
     this.clickOnMoreAnswers = this.clickOnMoreAnswers.bind(this);
     this.addAnswerHandleClick = this.addAnswerHandleClick.bind(this);
@@ -33,16 +34,34 @@ class QuestionsListItem extends React.Component {
   }
 
   clickOnMoreAnswers() {
-    let answersToShow = Object.values(this.props.question.answers);
-    this.setState({
-      answers: answersToShow,
-      isMoreAnswersShown: false
-    });
+    // let answersToShow = Object.values(this.props.question.answers);
+    // this.setState({
+    //   answers: answersToShow,
+    //   isMoreAnswersShown: true,
+    //   buttonText: 'COLLAPSE ANSWERS'
+    // });
+    if (this.state.answers.length <= 2) {
+      let answersToShow = Object.values(this.props.question.answers);
+      //console.log('answer to show in button is not clicked', answersToShow);
+
+      this.setState({
+        answers: answersToShow,
+        buttonText: 'COLLAPSE ANSWERS'
+      }, ()=>{
+        console.log('should show 3 answers', this.state.answers);
+      });
+    } else {
+      let answersToShow = Object.values(this.props.question.answers).slice(0, 2);
+      this.setState({
+        answers: answersToShow,
+        buttonText: 'SHOW MORE ANSWERS'
+      });
+    }
   }
 
   addAnswerHandleClick(event) {
     //event.stopPropagation();
-    console.log('should be triggered once');
+    //console.log('should be triggered once');
     this.setState({
       isAddAnswerClicked: true
     });
@@ -79,8 +98,8 @@ class QuestionsListItem extends React.Component {
 
     let moreAnswers,
       addAnswer,
-      answersList;
-    let qnaAddAnswerModal;
+      answersList,
+      qnaAddAnswerModal;
 
     if (this.state.isAddAnswerClicked) {
       qnaAddAnswerModal = 'qna-add-answer-modal-shown';
@@ -89,8 +108,8 @@ class QuestionsListItem extends React.Component {
     }
 
     if (this.state.isMoreAnswersShown) {
-      moreAnswers = <button id='qna-more-answers-button' onClick={()=>{ this.clickOnMoreAnswers(); }}>LOAD MORE ANSWERS</button>;
-      answersList = <AnswersList list={Object.values(this.props.question.answers).slice(0, 2)}
+      moreAnswers = <button id='qna-more-answers-button' onClick={()=>{ this.clickOnMoreAnswers(); }}>{this.state.buttonText}</button>;
+      answersList = <AnswersList list={this.state.answers}
         questionId={this.props.question.question_id}
         productId={this.props.productId}
         clickOnHelpfulAnswer={this.props.clickOnHelpfulAnswer}
