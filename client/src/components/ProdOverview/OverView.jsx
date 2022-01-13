@@ -7,7 +7,7 @@ import ProductDescription from './ProductInfo/ProductDescription.jsx';
 import ExpandedModal from './ImageGallery/ExpandedModal.jsx';
 import FillerComponent from './FillerComponent.jsx';
 import sampleData from '../../../../example/products.js';
-import axios from 'axios';
+import ClickedData from '../ClickDataAnalytics.jsx';
 
 class ProductOverview extends React.Component {
   constructor(props) {
@@ -48,7 +48,7 @@ class ProductOverview extends React.Component {
 
   render () {
     return (
-      <div className='POOverview' data-testid="Overview">
+      <div className='POOverview' data-testid="Overview" onClick={this.props.onClick}>
         <ProductDescription product={this.props.currentProduct} />
         <FillerComponent />
         <div className='Infocontainer'>
@@ -68,4 +68,6 @@ class ProductOverview extends React.Component {
   }
 }
 
-export default ProductOverview;
+const ProductOverviewWithClickData = ClickedData(ProductOverview, 'Related Products');
+
+export default ProductOverviewWithClickData;

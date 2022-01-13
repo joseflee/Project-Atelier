@@ -19,13 +19,13 @@ const ClickedData = (WrappedComponent, widgetName) => {
         time: date.toString()
       };
 
-      console.log(clickedData);
+      console.log('clicked data', clickedData);
 
       var sentInteractions = await sendInteractions(clickedData);
     }
 
     render() {
-      console.log(this.props);
+      // console.log(this.props);
       return <WrappedComponent onClick={this.handleClick} {...this.props}/>;
     }
   }
