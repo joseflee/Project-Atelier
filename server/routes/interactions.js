@@ -5,7 +5,7 @@ interactionsRouter.post('/postData', (req, res) => {
   let postData = req.body;
 
   postInteractions(postData)
-    .then(response => console.log(response))
+    .then(response => res.status(201).end())
     .catch(err => console.log(err));
 });
 
