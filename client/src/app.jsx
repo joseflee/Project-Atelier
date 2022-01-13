@@ -92,13 +92,8 @@ class App extends React.Component {
     } else {
       return (
         <div>
-<<<<<<< HEAD
-          <TopSearchBar/>
-          <ProductOverview productId={this.state.productId} currentProduct={this.state.currentProduct}
-=======
           <TopSearchBar />
           <ProductOverviewWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct}
->>>>>>> e1ec87f (implemented the higher order component to work with productoverview component)
             currentProductStyle={this.state.currentProductStyle} currentReview={this.state.productReview}
             addToOutfit={this.addToOutfit.bind(this)} toggleFavorite={this.toggleAddToFavorite.bind(this)}
             addToFavorites={this.state.addToFavorites} currentStyleId={this.state.outFitStyleId} />
