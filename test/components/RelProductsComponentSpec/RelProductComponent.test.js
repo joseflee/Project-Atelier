@@ -42,12 +42,11 @@ afterAll(() => server.close());
 
 // MOCK SERVER SETUP - END ------------------>
 
-xdescribe('Related Products Component Testing', () => {
+describe('Related Products Component Testing', () => {
   test('Loads and displays a Related Products Component', async () => {
     // Renders a Component for this specific test
     // await render(<App />);
-    await render(<RelProducts productId='59553' />);
-    screen.debug();
+    await render(<RelProducts relatedProducts={exampleProducts} />);
 
     await waitFor(async () => {
       expect(await screen.getByText('Related Products and My Outfits')).toBeInTheDocument();
@@ -56,14 +55,6 @@ xdescribe('Related Products Component Testing', () => {
     // Shows the HTML that has been rendered so far
     // This is utilized to check what has rendered so far, not exactly for the actual testing part
     // screen.debug();
-  });
-
-  test('Loads Related Products Component with API call', async () => {
-    await render(<RelProducts productId='' />);
-
-    await waitFor(async () => {
-      expect(await screen.getByText('Jackets')).toBeInTheDocument();
-    });
   });
 });
 
@@ -121,6 +112,8 @@ describe('My Outfits Card Component Testing', () => {
     expect(screen.getByRole('heading', { name: 'Jackets' })).toHaveTextContent('Jackets');
     // screen.debug();
   });
+
+
 
 });
 
