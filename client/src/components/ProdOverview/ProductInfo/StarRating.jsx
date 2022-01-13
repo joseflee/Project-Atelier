@@ -20,11 +20,18 @@ const avgRating = (ratingsObj) => {
   return totalValue / totalVotes;
 };
 
+const gotoReviews = () => {
+  const reviewElem = document.querySelector('.RatingsNReviewsSection');
+  reviewElem.scrollIntoView({behavior: 'smooth'});
+};
+
 const StarRating = (props) => {
+  // console.log('props', props);
   return (
     <div className='POStarRating' data-testid="starRating">
       <Rating start={0} stop={5} initialRating={avgRating(props.ratings)} emptySymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#808080
 ' />} fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#f8ce0b' />} readonly />
+      <button className='POReadReviewButton' onClick={gotoReviews}>Read All Reviews</button>
     </div>
   );
 };

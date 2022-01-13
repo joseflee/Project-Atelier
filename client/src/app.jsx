@@ -21,7 +21,8 @@ class App extends React.Component {
       currentProductStyle: null,
       relatedProducts: null,
       questionsNAnswers: null,
-      productReview: null
+      productReview: null,
+      addToOutFitStyleId: null,
     };
 
     this.updateProduct = this.updateProduct.bind(this);
@@ -49,6 +50,12 @@ class App extends React.Component {
     });
   }
 
+  addToOutfit (id) {
+    this.setState({
+      addToOutFitStyleId: id,
+    });
+  }
+
   render() {
     const {
       currentProduct,
@@ -65,7 +72,9 @@ class App extends React.Component {
       return (
         <div>
           <TopSearchBar />
-          <ProductOverview productId={this.state.productId} currentProduct={this.state.currentProduct} currentProductStyle={this.state.currentProductStyle} currentReview={this.state.productReview} />
+          <ProductOverview productId={this.state.productId} currentProduct={this.state.currentProduct}
+            currentProductStyle={this.state.currentProductStyle} currentReview={this.state.productReview}
+            addToOutfit={this.addToOutfit.bind(this)} />
           <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts} handleClick={this.updateProduct} />
           <QnA productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
           <RatingsNReviews productId={this.state.productId} currentProduct={this.state.currentProduct} />

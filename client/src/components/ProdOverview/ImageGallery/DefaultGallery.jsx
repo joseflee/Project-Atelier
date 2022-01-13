@@ -12,7 +12,6 @@ class DefaultGallery extends React.Component {
     this.state = {
       selectedIndex: 0,
       startIndex: 0,
-      // maxThumbnails: (props.photos.length < 7) ? props.photos.length : 7
     };
 
   }
@@ -24,8 +23,6 @@ class DefaultGallery extends React.Component {
       });
     }
   }
-
-
 
   rotateRight () {
     if (this.state.selectedIndex < this.props.photos.length - 1) {

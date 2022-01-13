@@ -142,8 +142,6 @@
   grid-column: 1/8;
   grid-row: 1;
   display: grid;
-  /* width: 500px; */
-  border: 1px solid black;
   background-color: rgba(225, 225, 225, .5);
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
@@ -346,10 +344,10 @@
 }
 
 .POAddToCart {
-  grid-template-columns: repeat(3, 1fr);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   grid-column: 1/-1;
   grid-row: 3;
-  display: flex;
   flex-wrap: wrap;
 }
 
@@ -389,11 +387,11 @@
 }
 
 .POAddToCartbutton {
-  /* margin-left: auto; */
   width: 150px;
   transform: scale(1.5) translateX(15%);
 }
 
+<<<<<<< HEAD
 
 
 
@@ -857,3 +855,11 @@ display: none;
 
 
 
+=======
+.POReadReviewButton {
+  background: none;
+  border: none;
+  font-size: 10px;
+  text-decoration: underline;
+}
+>>>>>>> d8f206b (Added some more tests, and added a Add to outfit feature)

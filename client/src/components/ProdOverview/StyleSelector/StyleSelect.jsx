@@ -11,11 +11,11 @@ const StyleSelector = (props) => {
       {row.map((element, index) => {
         if (element.style_id === props.displayedStyle.style_id) {
           return <div className='POStyleContainer' key={index}>
-            <StyleBubble style={element} updater={props.changeStyle} usecheck={true} />
+            <StyleBubble style={element} updater={props.changeStyle} usecheck={true} styleId={element.style_id} />
           </div>;
         } else {
           return <div className='POStyleContainer' key={index}>
-            <StyleBubble style={element} updater={props.changeStyle} usecheck={false} />
+            <StyleBubble style={element} updater={props.changeStyle} usecheck={false} styleId={element.style_id} />
           </div>;
         }
       })}
