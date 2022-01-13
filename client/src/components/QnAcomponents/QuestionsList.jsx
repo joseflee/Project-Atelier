@@ -7,10 +7,17 @@ class QuestionsList extends React.Component {
   }
 
   render() {
+
+    var data = [];
+    data = [...this.props.data];
+    data.sort(((a, b) => {
+      return b.helpfulness - a.helpfulness;
+    }));
+
     return (
       <div>
         {/* {console.log('questions', this.props.data)} */}
-        {this.props.data.map((question, key) =>{
+        {data.map((question, key) =>{
           return <QuestionsListItem
             question={question}
             key={key}
