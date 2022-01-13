@@ -9,6 +9,8 @@ import { shallow, mount, render, ShallowWrapper } from 'enzyme';
 import exampleQuestions from '../../../example/questions.js';
 
 import QuestionItem from '../../../client/src/components/QnAcomponents/QuestionsListItem.jsx';
+import AddAnswerForm from '../../../client/src/components/QnAcomponents/AddAnswerForm.jsx';
+
 
 describe('Rendering one question item', function() {
   it('should render without throwing an error', function() {
@@ -119,6 +121,24 @@ describe('Rendering one question item', function() {
     expect (button.text()).toEqual('SHOW MORE ANSWERS');
     expect (component.state().answers.length).toEqual(2);
 
+  });
+
+  it('correctly changes state if add answer form is being open and closed', () => {
+
+    const parent = mount(<QuestionItem
+      question={exampleQuestions.questions.results[1]} />);
+    const spy1 = jest.spyOn(parent.instance(), 'closeAnswerForm');
+    const child = mount(<AddAnswerForm closeAnswer={spy1}/>);
+    expect(parent.state().isAddAnswerClicked).toEqual(false);
+    let hiddenModal = parent.find('.qna-add-answer-modal-hidden');
+    expect(hiddenModal.length).toEqual(1);
+
+    //opening answer form
+    parent.find('.qna-add-answer-link').simulate('click');
+    expect(parent.state().isAddAnswerClicked).toEqual(true);
+    //closing form
+    child.find('.qna-add-answer-form-close').simulate('click');
+    expect(parent.state().isAddAnswerClicked).toEqual(false);
   });
 
 
