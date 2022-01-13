@@ -42,7 +42,7 @@ class QuestionsListItem extends React.Component {
 
   addAnswerHandleClick(event) {
     //event.stopPropagation();
-    console.log('should be triggered once');
+    //console.log('should be triggered once');
     this.setState({
       isAddAnswerClicked: true
     });

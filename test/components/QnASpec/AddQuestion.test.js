@@ -208,7 +208,7 @@ describe('Add new question form', function() {
   });
 
   it('should render to static HTML', function() {
-    var text = 'Ask a question about the Your question*What\'s your nickname?*For privacy reasons, do not use your full name or email addressYour email?*For authentication reasons, you will not be emailed';
+    var text = 'Ask a question about the Your question*What\'s your nickname?*For privacy reasons, do not use your full name or email addressYour email?*For authentication reasons, you will not be emailedClose without submitting';
     expect(render(<AddQuestionForm />).text()).toEqual(text);
   });
 
