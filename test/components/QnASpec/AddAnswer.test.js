@@ -73,19 +73,20 @@ describe('Add new answer form', function() {
   });
 
   it('should render without throwing an error', function() {
-    expect(shallow(<AddAnswerForm />).contains(<div className='qna-submit-answer'>Submit your answer</div>)).toBe(true);
+    expect(shallow(<AddAnswerForm />).contains( <div className="qna-add-answer-form-subtitle">Submit your answer</div>)).toBe(true);
   });
 
   it('should be selectable by class', function() {
-    expect(shallow(<AddAnswerForm />).is('.qna-add-answer')).toBe(true);
+    expect(shallow(<AddAnswerForm />).is('.qna-add-answer-form')).toBe(true);
   });
 
   it('should mount in a full DOM', function() {
-    expect(mount(<AddAnswerForm />).find('.qna-add-answer').length).toBe(1);
+    //console.log(shallow(<AddAnswerForm />).debug());
+    expect(shallow(<AddAnswerForm />).find('.qna-add-answer-form').length).toBe(1);
   });
 
   it('should render to static HTML', function() {
-    var text = 'Submit your answer: Your answer*What\'s your nickname?*For privacy reasons, do not use your full name or email addressYour email?*For authentication reasons, you will not be emailed';
+    var text = 'Submit your answer: Your answer*What\'s your nickname?*For privacy reasons, do not use your full name or email addressYour email?*For authentication reasons, you will not be emailedClose without adding';
     expect(render(<AddAnswerForm />).text()).toEqual(text);
   });
 

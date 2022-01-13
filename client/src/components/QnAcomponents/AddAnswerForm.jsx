@@ -128,7 +128,7 @@ class AddAnswerForm extends React.Component {
               <AnswerPhotoUpload handlePhotos={this.handlePhotos} />
             </label>
             <input type="submit" className='qna-add-answer-form-submit' value="Submit" onClick = {this.handleSubmit} />
-            <button className='qna-add-answer-form-close' onClick={this.props.closeAnswer}>Close without adding</button>
+            <button type='button' className='qna-add-answer-form-close' onClick={this.props.closeAnswer}>Close without adding</button>
           </form>
         </div>
       </div>
