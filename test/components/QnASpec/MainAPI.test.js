@@ -157,10 +157,49 @@ describe('API calls in Main component', () => {
 
     expect(parentSpy).toHaveBeenCalled();
     expect(axios.put).toHaveBeenCalled();
-    expect(axios.put).toHaveBeenCalledWith('http://localhost:3000/qna/updateAnswerHelp', {"params": {"answerId": undefined, "productId": undefined}});
+    expect(axios.put).toHaveBeenCalledWith('http://localhost:3000/qna/updateAnswerHelp', {'params': {'answerId': undefined, 'productId': undefined}});
 
 
   });
+
+  it('mocks put API call for clicking on report answer', async () => {
+
+    //parent component
+    const getResponse1 = { data: { name: 'mocked name' } };
+    const getResponse2 = example;
+
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
+      .mockResolvedValueOnce(getResponse2);
+    const putResponse = 'bla';
+
+
+    jest.spyOn(axios, 'put'). mockResolvedValueOnce(putResponse);
+
+
+    const wrapper = mount(<MainQnA productId={42}/>);
+    const parentSpy = jest.spyOn(wrapper.instance(), 'reportAnswer');
+
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+
+    //child component
+
+    const component = mount(<Answer reportAnswer={parentSpy}
+      answer={exampleQuestions.answers.results[0]} />);
+
+    component.find('.qna-answer-item-report-button').simulate('click');
+
+
+    expect(parentSpy).toHaveBeenCalled();
+    expect(axios.put).toHaveBeenCalled();
+    expect(axios.put).toHaveBeenCalledWith('http://localhost:3000/qna/reportAnswer', {'params': {'answerId': undefined, 'productId': undefined}});
+
+
+  });
+
 
 
 
