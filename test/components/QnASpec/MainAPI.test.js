@@ -6,12 +6,14 @@ Enzyme.configure({ adapter: new Adapter() });
 
 
 import MainQnA from '../../../client/src/components/QnAcomponents/mainQnA.jsx';
-import { mount } from 'enzyme';
+import QuestionItem from '../../../client/src/components/QnAcomponents/QuestionsListItem.jsx';
+
+import { mount, shallow } from 'enzyme';
 import axios from 'axios';
 import { act } from 'react-dom/test-utils';
 
 import exampleQuestions from '../../../example/questions.js';
-import MockAdapter from 'axios-mock-adapter';
+//import MockAdapter from 'axios-mock-adapter';
 
 
 let example = {
@@ -48,8 +50,14 @@ describe('API calls in Main component', () => {
     expect (wrapper.state().productName).toEqual('mocked name');
     expect(axios.get).toHaveBeenCalled();
 
-    console.log(wrapper.state());
+    // axios.get.mockImplementation((url) => {
+    //   if (url === 'www.example.com') {
+    //       return Promise.resolve({ data: {...} });
+    //   } else {
+    //       //...
+    //   }
   });
+
 
   it('mocks all get API call', async () => {
 
@@ -60,7 +68,7 @@ describe('API calls in Main component', () => {
       .mockResolvedValueOnce(response2);
 
 
-    const wrapper = mount(<MainQnA />);
+    const wrapper = mount(<MainQnA productId={42}/>);
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
@@ -68,11 +76,80 @@ describe('API calls in Main component', () => {
     expect (wrapper.state().productName).toEqual('mocked name');
     expect (wrapper.state().questions.length).toEqual(1);
     expect (wrapper.state().questions[0].question_id).toEqual(37);
-    expect(axios.get).toHaveBeenCalled();
+    //expect(axios.get).toHaveBeenCalledWith('bla');
+    expect(wrapper.state().isMoreQuestionsButtonShown).toEqual(false);
 
   });
 
+  it('mocks put API call for clicking on helpful question', async () => {
+
+    //parent component
+    const getResponse1 = { data: { name: 'mocked name' } };
+    const getResponse2 = example;
+
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
+      .mockResolvedValueOnce(getResponse2);
+    const putResponse = 'bla';
+
+
+    jest.spyOn(axios, 'put'). mockResolvedValueOnce(putResponse);
+
+
+    const wrapper = mount(<MainQnA productId={42}/>);
+    const parentSpy = jest.spyOn(wrapper.instance(), 'clickOnHelpfulQuestion');
+
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+
+    //child component
+    let spy = jest.fn();
+
+    const component = mount(<QuestionItem clickOnHelpful={parentSpy}
+      question={exampleQuestions.questions.results[0]} />);
+
+    component.find('.qna-question-item-yes-button').simulate('click');
+
+    expect(parentSpy).toHaveBeenCalled();
+    expect(axios.put).toHaveBeenCalled();
+    expect(axios.put).toHaveBeenCalledWith('http://localhost:3000/qna/updateQuestionHelp', {'params': {'productId': undefined, 'questionId': 37}});
+
+
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
