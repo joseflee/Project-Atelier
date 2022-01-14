@@ -53,7 +53,7 @@ class ProductOverview extends React.Component {
         <FillerComponent />
         <div className='Infocontainer'>
           <ProductInfo product={this.props.currentProduct} style={this.props.currentProductStyle.results[0]}
-            ratings={this.props.currentReview.ratings} />
+            ratings={this.props.currentReview.ratings} totalReviews={this.props.totalReviews} />
           <StyleSelector styles={this.props.currentProductStyle} displayedStyle={this.state.displayStyle}
             changeStyle={this.updateStyle.bind(this)} />
           <AddToCart displayedStyle={this.state.displayStyle} toggleFavorite={this.props.toggleFavorite.bind(this)}
