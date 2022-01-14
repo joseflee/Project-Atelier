@@ -43,9 +43,9 @@ class PhotoUpload extends React.Component {
             return (
               <div key={item}>
                 <img src={item} alt="" width={'350px'}/>
-                <button type="button" onClick={() => deleteFile(index)}>
+                {/* <button type="button" onClick={() => deleteFile(index)}>
                   delete
-                </button>
+                </button> */}
               </div>
             );
           })}

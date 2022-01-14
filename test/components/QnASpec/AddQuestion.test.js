@@ -32,9 +32,9 @@ describe('Rendering add question parent component', function() {
     expect(render(<AddQuestion />).text()).toEqual(text);
   });
 
-  xtest('invokes clickOnAddQuestion() and correctly changing state if clicking on button \'Add question\' ', () => {
-
-    const wrapper = shallow(<AddQuestion/>);
+  test('invokes clickOnAddQuestion() and correctly changing state if clicking on button \'Add question\' ', () => {
+    const mockCheckForm = jest.fn();
+    const wrapper = shallow(<AddQuestion checkForm={mockCheckForm} />);
     const spy = jest.spyOn(wrapper.instance(), 'clickOnAddQuestion');
     wrapper.find('.qna-add-question-button').simulate('click');
     expect(spy).toHaveBeenCalled();
@@ -43,6 +43,8 @@ describe('Rendering add question parent component', function() {
     expect(wrapper.state().isAddButtonShown).toEqual(false);
 
   });
+
+
 
   xtest('child component correctly changes state of  parent component ', () => {
     const parent = shallow(<AddQuestion />);
@@ -221,5 +223,13 @@ describe('Add new question form', function() {
     expect(wrapper.state().email).toEqual('');
   });
 
+  it('allows to close form without submitting', () => {
+    const mock = jest.fn();
+    const wrapper = mount(<AddQuestionForm closeForm={mock}
+    />);
+    wrapper.find('.qna-add-question-form-close').simulate('click');
+    expect(mock).toHaveBeenCalled();
+
+  });
 
 });

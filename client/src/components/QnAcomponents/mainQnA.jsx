@@ -260,11 +260,11 @@ class QnA extends React.Component {
     let moreAnsweredQuestions,
       qnaScreen;
 
-    if (this.state.isAddNewQuestionClicked) {
-      qnaScreen = 'qna-screen-not-transparent';
-    } else {
-      qnaScreen = 'qna-screen-transparent';
-    }
+    // if (this.state.isAddNewQuestionClicked) {
+    //   qnaScreen = 'qna-screen-not-transparent';
+    // } else {
+    //   qnaScreen = 'qna-screen-transparent';
+    // }
 
     if (this.state.isMoreQuestionsButtonShown) {
       moreAnsweredQuestions = <MoreAnsweredQuestions click={this.showMoreQuestions}/>;
