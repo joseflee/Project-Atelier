@@ -96,7 +96,7 @@ class App extends React.Component {
           <ProductOverviewWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct}
             currentProductStyle={this.state.currentProductStyle} currentReview={this.state.productReview}
             addToOutfit={this.addToOutfit.bind(this)} toggleFavorite={this.toggleAddToFavorite.bind(this)}
-            addToFavorites={this.state.addToFavorites} currentStyleId={this.state.outFitStyleId} />
+            addToFavorites={this.state.addToFavorites} currentStyleId={this.state.outFitStyleId} totalReviews={this.state.totalReviews} />
           <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts} handleClick={this.updateProduct} />
           <QnA productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
           <RatingsNReviews handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} />
