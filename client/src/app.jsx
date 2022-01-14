@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TopSearchBar from './components/TopSearchBar/TopSearchBar.jsx';
-import ProductOverview from './components/ProdOverview/OverView.jsx';
+import ProductOverviewWithClickData from './components/ProdOverview/OverView.jsx';
 import RelProductsWithClickData from './components/RelProductsComponents/RelProducts.jsx';
 import QnA from './components/QnAcomponents/mainQnA.jsx';
 import RatingsNReviews from './components/RatingsNReviews/RatingsNReviews.jsx';
@@ -92,8 +92,8 @@ class App extends React.Component {
     } else {
       return (
         <div>
-          <TopSearchBar/>
-          <ProductOverview productId={this.state.productId} currentProduct={this.state.currentProduct}
+          <TopSearchBar />
+          <ProductOverviewWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct}
             currentProductStyle={this.state.currentProductStyle} currentReview={this.state.productReview}
             addToOutfit={this.addToOutfit.bind(this)} toggleFavorite={this.toggleAddToFavorite.bind(this)}
             addToFavorites={this.state.addToFavorites} currentStyleId={this.state.outFitStyleId} />
