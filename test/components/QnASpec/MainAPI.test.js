@@ -47,31 +47,27 @@ describe('API calls in Main component', () => {
     jest.restoreAllMocks();
     jest.resetAllMocks();
   });
-  xit('mocks get API call', async () => {
+  it('mocks get API call', async () => {
 
     const response = { data: { name: 'mocked name' } };
 
     jest.spyOn(axios, 'get').mockResolvedValueOnce(response);
 
-    const wrapper = mount(<MainQnA />);
+    const wrapper = mount(<MainQnA productId={42}/>);
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
     expect (wrapper.state().productName).toEqual('mocked name');
-    expect(axios.get).toHaveBeenCalled();
-
-    // axios.get.mockImplementation((url) => {
-    //   if (url === 'www.example.com') {
-    //       return Promise.resolve({ data: {...} });
-    //   } else {
-    //       //...
-    //   }
+    expect(axios.get).toHaveBeenCalledTimes(2);
+    // expect(mockFn.mock.calls).toEqual([
+    //   [arg1, arg2, ...], // First call
+    //   [arg1, arg2, ...]  // Second call
+    // ]);
   });
 
 
-  xit('mocks all get API call', async () => {
-
+  it('mocks all get API call', async () => {
     const response1 = { data: { name: 'mocked name' } };
     const response2 = example;
 
@@ -88,12 +84,12 @@ describe('API calls in Main component', () => {
     expect (wrapper.state().questions.length).toEqual(1);
     expect (wrapper.state().questions[0].question_id).toEqual(37);
     //expect(axios.get).toHaveBeenCalledWith('bla');
+    expect(wrapper.instance()._isMounted).toEqual(true);
     expect(wrapper.state().isMoreQuestionsButtonShown).toEqual(false);
 
   });
 
   it('mocks put API call for clicking on helpful question', async () => {
-
     //parent component
     const getResponse1 = { data: { name: 'mocked name' } };
     const getResponse2 = example;
@@ -102,9 +98,7 @@ describe('API calls in Main component', () => {
       .mockResolvedValueOnce(getResponse2);
     const putResponse = example;
 
-
     jest.spyOn(axios, 'put'). mockResolvedValueOnce(putResponse);
-
 
     const wrapper = mount(<MainQnA productId={42}/>);
     const parentSpy = jest.spyOn(wrapper.instance(), 'clickOnHelpfulQuestion');
@@ -113,7 +107,6 @@ describe('API calls in Main component', () => {
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
-
 
     //child component
     let spy = jest.fn();
@@ -125,13 +118,12 @@ describe('API calls in Main component', () => {
 
     expect(parentSpy).toHaveBeenCalled();
     expect(axios.put).toHaveBeenCalled();
-    expect(axios.put).toHaveBeenCalledWith('http://localhost:3000/qna/updateQuestionHelp', {'params': {'productId': undefined, 'questionId': 37}});
-
+    expect(wrapper.instance()._isMounted).toEqual(true);
+    expect(axios.put).toHaveBeenCalledWith('/qna/updateQuestionHelp', {'params': {'productId': undefined, 'questionId': 37}});
 
   });
 
   it('mocks put API call for clicking on helpful answer', async () => {
-
     //parent component
     const getResponse1 = { data: { name: 'mocked name' } };
     const getResponse2 = example;
@@ -140,19 +132,14 @@ describe('API calls in Main component', () => {
       .mockResolvedValueOnce(getResponse2);
     const putResponse = example;
 
-
     jest.spyOn(axios, 'put'). mockResolvedValueOnce(putResponse);
-
 
     const wrapper = mount(<MainQnA productId={42}/>);
     const parentSpy = jest.spyOn(wrapper.instance(), 'clickOnHelpfulAnswer');
 
-
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
-
-
     //child component
     let spy = jest.fn();
 
@@ -161,13 +148,10 @@ describe('API calls in Main component', () => {
 
     component.find('.qna-answer-item-yes-button').simulate('click');
 
-
-
-
     expect(parentSpy).toHaveBeenCalled();
     expect(axios.put).toHaveBeenCalled();
-    expect(axios.put).toHaveBeenCalledWith('http://localhost:3000/qna/updateAnswerHelp', {'params': {'answerId': undefined, 'productId': undefined}});
-
+    expect(wrapper.instance()._isMounted).toEqual(true);
+    expect(axios.put).toHaveBeenCalledWith('/qna/updateAnswerHelp', {'params': {'answerId': undefined, 'productId': undefined}});
 
   });
 
@@ -181,9 +165,7 @@ describe('API calls in Main component', () => {
       .mockResolvedValueOnce(getResponse2);
     const putResponse = example;
 
-
     jest.spyOn(axios, 'put'). mockResolvedValueOnce(putResponse);
-
 
     const wrapper = mount(<MainQnA productId={42}/>);
     const parentSpy = jest.spyOn(wrapper.instance(), 'reportAnswer');
@@ -192,7 +174,6 @@ describe('API calls in Main component', () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
-
     //child component
 
     const component = mount(<Answer reportAnswer={parentSpy}
@@ -200,14 +181,13 @@ describe('API calls in Main component', () => {
 
     component.find('.qna-answer-item-report-button').simulate('click');
 
-
     expect(parentSpy).toHaveBeenCalled();
     expect(axios.put).toHaveBeenCalled();
-    expect(axios.put).toHaveBeenCalledWith('http://localhost:3000/qna/reportAnswer', {'params': {'answerId': undefined, 'productId': undefined}});
+    expect(wrapper.instance()._isMounted).toEqual(true);
+    expect(axios.put).toHaveBeenCalledWith('/qna/reportAnswer', {'params': {'answerId': undefined, 'productId': undefined}});
   });
 
   it('mocks post API call for adding a new answer', async () => {
-
     //parent component
     const getResponse1 = { data: { name: 'mocked name' } };
     const getResponse2 = example;
@@ -216,9 +196,7 @@ describe('API calls in Main component', () => {
       .mockResolvedValueOnce(getResponse2);
     const postResponse = example;
 
-
     jest.spyOn(axios, 'post'). mockResolvedValueOnce(postResponse);
-
 
     const parent = mount(<MainQnA productId={42}/>);
     const parentSpy = jest.spyOn(parent.instance(), 'addNewAnswer');
@@ -226,7 +204,6 @@ describe('API calls in Main component', () => {
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
-
     //child component
 
     const formEventMocked = { preventDefault: jest.fn() };
@@ -244,14 +221,14 @@ describe('API calls in Main component', () => {
       email: 'example@email.com'
     };
     wrapper.setState(state);
-    //expect(wrapper).toMatchSnapshot();
 
     wrapper.find('[type="submit"]').simulate('click', formEventMocked);
     expect(spy3).toBeCalledTimes(1);
     //expect(passedMock1).toBeCalledTimes(1);
     expect(passedMock2).toBeCalledTimes(1);
     expect(parentSpy).toHaveBeenCalled();
-    //expect(axios.post).toHaveBeenCalled();
+    expect(axios.post).toHaveBeenCalled();
+    expect(parent.instance()._isMounted).toEqual(true);
 
   });
 
@@ -269,13 +246,13 @@ describe('API calls in Main component', () => {
 
     const parent = mount(<MainQnA productId={42}/>);
     const parentSpy = jest.spyOn(parent.instance(), 'addNewQuestion');
+    const parentSpy2 = jest.spyOn(parent.instance(), 'updateQuestionList');
 
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
 
     //child component
-
     const formEventMocked = { preventDefault: jest.fn() };
 
     const passedMock1 = jest.fn();
@@ -298,6 +275,7 @@ describe('API calls in Main component', () => {
     expect(spy3).toBeCalledTimes(1);
     expect(passedMock2).toBeCalledTimes(1);
     expect(parentSpy).toHaveBeenCalled();
+    expect(parent.instance()._isMounted).toEqual(true);
     expect(axios.post).toHaveBeenCalled();
 
   });
@@ -333,6 +311,7 @@ describe('API calls in Main component', () => {
     expect(axios.get).toHaveBeenCalledTimes(3);
     expect(parentSpy).toHaveBeenCalledWith('bla', true);
     console.log(parent.state());
+    expect(parent.instance()._isMounted).toEqual(true);
     expect(parent.state().isMoreQuestionsButtonShown).toEqual(false);
 
   });
@@ -340,7 +319,6 @@ describe('API calls in Main component', () => {
   xit('deals with error during search', async () => {
 
     //parent component
-
 
     const error = new Error('error');
     jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
@@ -355,7 +333,6 @@ describe('API calls in Main component', () => {
     });
 
   });
-
 
 
   it('doesn\'t trigger API calls if the query length is less than 3 chars ', async () => {
@@ -388,6 +365,8 @@ describe('API calls in Main component', () => {
     expect(parentSpy).toHaveBeenCalled();
     expect(parentSpy).toHaveBeenCalledWith('42', false);
     expect(axios.get).toHaveBeenCalledTimes(2);
+    expect(parent.instance()._isMounted).toEqual(true);
+    //console.log('is mounted', parent.instance()._isMounted);
     expect(parent.state().isMoreQuestionsButtonShown).toEqual(true);
     //expect(parent.state().questions.length()).toEqual(1);
   });
