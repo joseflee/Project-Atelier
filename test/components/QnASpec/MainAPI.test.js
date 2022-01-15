@@ -12,6 +12,8 @@ import AddAnswerForm from '../../../client/src/components/QnAcomponents/AddAnswe
 import AddQuestionForm from '../../../client/src/components/QnAcomponents/AddQuestionForm.jsx';
 import Search from '../../../client/src/components/QnAcomponents/SearchQuestions.jsx';
 import exampleQuestions from '../../../example/questions.js';
+import AddQuestion from '../../../client/src/components/QnAcomponents/AddQuestion.jsx';
+
 
 
 
@@ -263,9 +265,7 @@ describe('API calls in Main component', () => {
       .mockResolvedValueOnce(getResponse2);
     const postResponse = example;
 
-
     jest.spyOn(axios, 'post'). mockResolvedValueOnce(postResponse);
-
 
     const parent = mount(<MainQnA productId={42}/>);
     const parentSpy = jest.spyOn(parent.instance(), 'addNewQuestion');
@@ -311,19 +311,12 @@ describe('API calls in Main component', () => {
       .mockResolvedValueOnce(getResponse2).
       mockResolvedValueOnce(getResponse2);
 
-
-
-
-
-
     const parent = mount(<MainQnA productId={42}/>);
     const parentSpy = jest.spyOn(parent.instance(), 'search');
 
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
-
-
 
     //child component
 
@@ -339,10 +332,33 @@ describe('API calls in Main component', () => {
     expect(parentSpy).toHaveBeenCalled();
     expect(axios.get).toHaveBeenCalledTimes(3);
     expect(parentSpy).toHaveBeenCalledWith('bla', true);
+    console.log(parent.state());
+    expect(parent.state().isMoreQuestionsButtonShown).toEqual(false);
 
   });
 
-  it('send false ', async () => {
+  xit('deals with error during search', async () => {
+
+    //parent component
+
+
+    const error = new Error('error');
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
+      .mockResolvedValueOnce(getResponse2)
+      .mockRejectedValue(error);
+
+    const parent = mount(<MainQnA productId={42}/>);
+    const parentSpy = jest.spyOn(parent.instance(), 'search');
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+  });
+
+
+
+  it('doesn\'t trigger API calls if the query length is less than 3 chars ', async () => {
 
     //parent component
     const getResponse1 = { data: { name: 'mocked name' } };
@@ -352,15 +368,12 @@ describe('API calls in Main component', () => {
       .mockResolvedValueOnce(getResponse2);
 
 
-
     const parent = mount(<MainQnA productId={42}/>);
     const parentSpy = jest.spyOn(parent.instance(), 'search');
 
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
-
-
 
     //child component
 
@@ -371,13 +384,45 @@ describe('API calls in Main component', () => {
       target: { value: '42' }
     };
     component.find('input').simulate('change', event);
-    // expect(onSearchMock).toHaveBeenCalled();
-    // expect(onSearchMock).toBeCalledWith('bla', true);
+
     expect(parentSpy).toHaveBeenCalled();
     expect(parentSpy).toHaveBeenCalledWith('42', false);
-    expect(axios.get).toHaveBeenCalledTimes(3);
+    expect(axios.get).toHaveBeenCalledTimes(2);
     expect(parent.state().isMoreQuestionsButtonShown).toEqual(true);
     //expect(parent.state().questions.length()).toEqual(1);
+  });
+
+  it('correctly changes state of main if add new question form is clicked ', async () => {
+    //parent component
+    const getResponse1 = { data: { name: 'mocked name' } };
+    const getResponse2 = example;
+
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
+      .mockResolvedValueOnce(getResponse2);
+    const postResponse = example;
+
+    jest.spyOn(axios, 'post'). mockResolvedValueOnce(postResponse);
+
+    const parent = mount(<MainQnA productId={42}/>);
+    const parentSpy = jest.spyOn(parent.instance(), 'checkAddingNewQuestion');
+
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+    expect(parent.state().isAddNewQuestionClicked).toEqual(false);
+    //child component
+
+    const mockCheckForm = jest.fn();
+    const wrapper = shallow(<AddQuestion checkForm={parentSpy} />);
+    const spy = jest.spyOn(wrapper.instance(), 'clickOnAddQuestion');
+    wrapper.find('.qna-add-question-button').simulate('click');
+    expect(spy).toHaveBeenCalled();
+    expect(parentSpy).toHaveBeenCalledTimes(1);
+    expect(parent.state().isAddNewQuestionClicked).toEqual(true);
+
+
+
   });
 
 
