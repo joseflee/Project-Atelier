@@ -208,12 +208,13 @@ class QnA extends React.Component {
 
   search(query, isSearchTriggered) {
     let productId = this.props.productId;
-
+     console.log('query=', query);
+     console.log('isSearchTriggered=', isSearchTriggered);
     //GET LIST OF ALL QUESTIONS BY PRODUCT ID
     var url = 'http://localhost:3000/qna/getQuestionsList';
     axios.get(url, {params: {id: productId}})
       .then((response) => {
-        if (isSearchTriggered) {
+        if (isSearchTriggered === true) {
           query = query.toLowerCase();
           console.log('received query', query);
           let questions = response.data.results;
