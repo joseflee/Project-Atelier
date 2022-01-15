@@ -36,7 +36,7 @@ class QnA extends React.Component {
     this._isMounted = true;
     let productId = this.props.productId;
     //GET PRODUCT NAME BY ITS ID
-    var url = 'http://localhost:3000/qna/getProductById';
+    var url = 'qna/getProductById';
     axios.get(url, {params: {id: productId}})
       .then((response) => {
         if (this._isMounted) {
@@ -50,7 +50,7 @@ class QnA extends React.Component {
         console.log(error);
       });
     //GET QUESTIONS LIST BY PRODUCT ID
-    var url = 'http://localhost:3000/qna/getQuestionsList';
+    var url = '/qna/getQuestionsList';
     axios.get(url, {params: {id: productId}})
       .then((response) => {
         var questionsToShow = response.data.results;
@@ -75,7 +75,7 @@ class QnA extends React.Component {
 
   clickOnHelpfulQuestion(productId, questionId) {
     console.log('clicked on helpful question');
-    var url = 'http://localhost:3000/qna/updateQuestionHelp';
+    var url = '/qna/updateQuestionHelp';
     axios.put(url, {params: {questionId: questionId, productId: productId}})
       .then((response) => {
         if (this._isMounted) {
@@ -93,7 +93,7 @@ class QnA extends React.Component {
   addNewQuestion(productId, body, nickname, email) {
     console.log('clicked on submit new question');
     //SEND REQUEST TO SERVER TO ADD A NEW QUESTION
-    var url = 'http://localhost:3000/qna/addNewQuestion';
+    var url = '/qna/addNewQuestion';
     axios.post(url, {params: {id: productId, body: body, name: nickname, email: email}})
       .then((response) => {
         this.updateQuestionList (response.data.results);
@@ -106,7 +106,7 @@ class QnA extends React.Component {
   showMoreQuestions() {
     console.log('click');
     //GET ALL QUESTIONS BY PRODUCT ID
-    var url = 'http://localhost:3000/qna/getQuestionsList';
+    var url = '/qna/getQuestionsList';
     axios.get(url, {params: {id: this.props.productId}})
       .then((response) => {
         if (this._isMounted) {
@@ -122,7 +122,7 @@ class QnA extends React.Component {
   }
 
   clickOnHelpfulAnswer(answerId, productId) {
-    var url = 'http://localhost:3000/qna/updateAnswerHelp';
+    var url = '/qna/updateAnswerHelp';
     axios.put(url, {params: {answerId: answerId, productId: productId}})
       .then((response) => {
         this.updateQuestionList(response.data.results);
@@ -135,7 +135,7 @@ class QnA extends React.Component {
   reportAnswer(answerId, productId) {
     console.log('clicked on report answer');
     //SEND REQUEST TO REPORT ANSWER
-    var url = 'http://localhost:3000/qna/reportAnswer';
+    var url = '/qna/reportAnswer';
     axios.put(url, {params: {answerId: answerId, productId: productId}})
       .then((response) => {
         console.log('sent response to client', response);
@@ -173,7 +173,7 @@ class QnA extends React.Component {
       .then(result => {
         console.log('promises resolved');
         //SEND REQUEST TO SERVER TO ADD A NEW ANSWER
-        var url = 'http://localhost:3000/qna/addNewAnswer';
+        var url = '/qna/addNewAnswer';
         axios.post(url, {params: {id: questionId, productId: productId, body: body, name: nickname, email: email, photos: photosToSend}})
           .then((response) => {
             console.log('added new answer', response.data.results);
@@ -210,7 +210,7 @@ class QnA extends React.Component {
     let productId = this.props.productId;
 
     //GET LIST OF ALL QUESTIONS BY PRODUCT ID
-    var url = 'http://localhost:3000/qna/getQuestionsList';
+    var url = '/qna/getQuestionsList';
     axios.get(url, {params: {id: productId}})
       .then((response) => {
         if (isSearchTriggered) {
