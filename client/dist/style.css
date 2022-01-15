@@ -130,6 +130,8 @@
 
 .POProductInfoContainer {
   grid-column: 1/8;
+  display: grid;
+  grid-row: repeat(1, 4fr);
 }
 
 .POProductDescription {

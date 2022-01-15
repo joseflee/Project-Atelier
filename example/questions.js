@@ -11,7 +11,7 @@ Status: 200 OK
 */
 
 let questions = {
-  'product_id': '5',
+  'product_id': '42',
   'results': [{
     'question_id': 37,
     'question_body': 'Why is this product cheaper here than other sites?',

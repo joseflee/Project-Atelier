@@ -7,7 +7,7 @@ import NewReview from './NewReview.jsx';
 import SearchBar from './SearchBar.jsx';
 import ClickedData from '../ClickDataAnalytics.jsx';
 
-const ReviewList = ( { onClick, productId, currentProduct } )=>{
+const ReviewList = ( { handleReviews, onClick, productId, currentProduct } )=>{
   const [selectedArray, setSelectedArray] = useState('totalReviewArray');
   const [isOpen, setIsOpen] = useState(false);
   const [isTruncated, setIsTruncated] = useState(true);
@@ -88,6 +88,7 @@ const ReviewList = ( { onClick, productId, currentProduct } )=>{
             }
             setIsLoading(false);
           }
+          handleReviews(sortByRevelant.length);
           setTotalReviewArray(sortByRevelant);
           setNewestReviewArray(response.data.slice(0).sort((x, y)=>{ return y.review_id - x.review_id; }));
           setHelpfulReviewArray(response.data.slice(0).sort((x, y)=>{ return y.helpfulness - x.helpfulness; }));

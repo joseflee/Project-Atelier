@@ -21,7 +21,7 @@ class SearchQuestions extends React.Component {
   render() {
     return (
       <div className='qna-search-wrapper'>
-        <img className='qna-search-icon' src='https://www.clipartmax.com/png/full/213-2137376_search-vector-art-icon-small-search-icon-png.png'/>
+        {/* <img className='qna-search-icon' src='https://www.clipartmax.com/png/full/213-2137376_search-vector-art-icon-small-search-icon-png.png'/> */}
         <form>
           <input
             className='qna-search-input'
