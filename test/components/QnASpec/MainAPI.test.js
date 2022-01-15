@@ -8,6 +8,10 @@ Enzyme.configure({ adapter: new Adapter() });
 import MainQnA from '../../../client/src/components/QnAcomponents/mainQnA.jsx';
 import QuestionItem from '../../../client/src/components/QnAcomponents/QuestionsListItem.jsx';
 import Answer from '../../../client/src/components/QnAcomponents/QuestionsListItemAnswer.jsx';
+import AddAnswerForm from '../../../client/src/components/QnAcomponents/AddAnswerForm.jsx';
+import AddQuestionForm from '../../../client/src/components/QnAcomponents/AddQuestionForm.jsx';
+
+
 
 
 import { mount, shallow } from 'enzyme';
@@ -91,7 +95,7 @@ describe('API calls in Main component', () => {
 
     jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
       .mockResolvedValueOnce(getResponse2);
-    const putResponse = 'bla';
+    const putResponse = example;
 
 
     jest.spyOn(axios, 'put'). mockResolvedValueOnce(putResponse);
@@ -129,7 +133,7 @@ describe('API calls in Main component', () => {
 
     jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
       .mockResolvedValueOnce(getResponse2);
-    const putResponse = 'bla';
+    const putResponse = example;
 
 
     jest.spyOn(axios, 'put'). mockResolvedValueOnce(putResponse);
@@ -170,7 +174,7 @@ describe('API calls in Main component', () => {
 
     jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
       .mockResolvedValueOnce(getResponse2);
-    const putResponse = 'bla';
+    const putResponse = example;
 
 
     jest.spyOn(axios, 'put'). mockResolvedValueOnce(putResponse);
@@ -178,7 +182,6 @@ describe('API calls in Main component', () => {
 
     const wrapper = mount(<MainQnA productId={42}/>);
     const parentSpy = jest.spyOn(wrapper.instance(), 'reportAnswer');
-
 
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
@@ -196,9 +199,106 @@ describe('API calls in Main component', () => {
     expect(parentSpy).toHaveBeenCalled();
     expect(axios.put).toHaveBeenCalled();
     expect(axios.put).toHaveBeenCalledWith('http://localhost:3000/qna/reportAnswer', {'params': {'answerId': undefined, 'productId': undefined}});
+  });
 
+  it('mocks post API call for adding a new answer', async () => {
+
+    //parent component
+    const getResponse1 = { data: { name: 'mocked name' } };
+    const getResponse2 = example;
+
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
+      .mockResolvedValueOnce(getResponse2);
+    const postResponse = example;
+
+
+    jest.spyOn(axios, 'post'). mockResolvedValueOnce(postResponse);
+
+
+    const parent = mount(<MainQnA productId={42}/>);
+    const parentSpy = jest.spyOn(parent.instance(), 'addNewAnswer');
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+    //child component
+
+    const formEventMocked = { preventDefault: jest.fn() };
+
+    const passedMock1 = jest.fn();
+    const passedMock2 = jest.fn();
+    const wrapper = shallow(<AddAnswerForm addNewAnswer={parentSpy} closeAnswer={passedMock2} />);
+    const spy1 = jest.spyOn(wrapper.instance(), 'handleInputChange');
+    const spy2 = jest.spyOn(wrapper.instance(), 'handleSubmit');
+    const spy3 = jest.spyOn(wrapper.instance(), 'handleValidation');
+
+    const state = {
+      answerBody: 'This is a answer from tests',
+      nickname: 'gandalf',
+      email: 'example@email.com'
+    };
+    wrapper.setState(state);
+    //expect(wrapper).toMatchSnapshot();
+
+    wrapper.find('[type="submit"]').simulate('click', formEventMocked);
+    expect(spy3).toBeCalledTimes(1);
+    //expect(passedMock1).toBeCalledTimes(1);
+    expect(passedMock2).toBeCalledTimes(1);
+    expect(parentSpy).toHaveBeenCalled();
+    //expect(axios.post).toHaveBeenCalled();
 
   });
+
+  it('mocks post API call for adding a new question', async () => {
+
+    //parent component
+    const getResponse1 = { data: { name: 'mocked name' } };
+    const getResponse2 = example;
+
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
+      .mockResolvedValueOnce(getResponse2);
+    const postResponse = example;
+
+
+    jest.spyOn(axios, 'post'). mockResolvedValueOnce(postResponse);
+
+
+    const parent = mount(<MainQnA productId={42}/>);
+    const parentSpy = jest.spyOn(parent.instance(), 'addNewQuestion');
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+    //child component
+
+    const formEventMocked = { preventDefault: jest.fn() };
+
+    const passedMock1 = jest.fn();
+    const passedMock2 = jest.fn();
+    const wrapper = shallow(<AddQuestionForm addQuestion={parentSpy} closeForm={passedMock2} />);
+    const spy1 = jest.spyOn(wrapper.instance(), 'handleInputChange');
+    const spy2 = jest.spyOn(wrapper.instance(), 'handleSubmit');
+    const spy3 = jest.spyOn(wrapper.instance(), 'handleValidation');
+
+    const state = {
+      questionBody: 'This is a question from tests',
+      nickname: 'gandalf',
+      email: 'example@email.com'
+    };
+    wrapper.setState(state);
+    expect(wrapper).toMatchSnapshot();
+
+    wrapper.find('[type="submit"]').simulate('click', formEventMocked);
+    expect(wrapper.state().isValid).toEqual(true);
+    expect(spy3).toBeCalledTimes(1);
+    expect(passedMock2).toBeCalledTimes(1);
+    expect(parentSpy).toHaveBeenCalled();
+    expect(axios.post).toHaveBeenCalled();
+
+  });
+
 
 
 
