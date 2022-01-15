@@ -12,9 +12,7 @@ const relProductsRouter = require('./routes/relProduct.js');
 const interactionsRouter = require('./routes/interactions.js');
 
 app.use(express.static(__dirname + '/../client/dist'));
-app.get('*', (req, res) => {
-  res.sendFile(__dirname + '/../client/dist/index.html');
-});
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
