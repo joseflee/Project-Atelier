@@ -147,7 +147,7 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
   };
   const postReview = function () {
     if (validation()) {
-      axios.post('http://localhost:3000/ratings/postReview', {
+      axios.post('/ratings/postReview', {
         productId: productId,
         rating: rating.val,
         reviewSummary: reviewSummary,
