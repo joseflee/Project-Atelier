@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export var getProductInfo = async (productId) => {
-  const productUrl = 'http://localhost:3000/product/productInfo';
+  const productUrl = '/product/productInfo';
   return await axios.get(productUrl, { params: { id: productId } })
     .then((response) => {
       return response.data;
@@ -12,7 +12,7 @@ export var getProductInfo = async (productId) => {
 };
 
 export var getStyleInfo = async (productId) => {
-  const styleUrl = 'http://localhost:3000/product/styleInfo';
+  const styleUrl = '/product/styleInfo';
   return await axios.get(styleUrl, { params: { id: productId } })
     .then((response) => {
       return response.data;
@@ -31,7 +31,7 @@ export var getRelatedProductInfo = async (productId) => {
 };
 
 export var getQuestionsListInfo = async (productId) => {
-  var url = 'http://localhost:3000/qna/getQuestionsList';
+  var url = '/qna/getQuestionsList';
   return await axios.get(url, {params: { id: productId} })
     .then((response) => {
       return response.data.results;
@@ -42,7 +42,7 @@ export var getQuestionsListInfo = async (productId) => {
 };
 
 export var getReviewInfo = async (productId) => {
-  const styleUrl = 'http://localhost:3000/product/reviewInfo';
+  const styleUrl = '/product/reviewInfo';
   return await axios.get(styleUrl, { params: { id: productId } })
     .then((response) => {
       return response.data;
@@ -55,6 +55,5 @@ export var getReviewInfo = async (productId) => {
 export var sendInteractions = async (data) => {
   const interactionsUrl = '/interactions/postData';
   return await axios.post(interactionsUrl, data)
-    .then(response => console.log(response))
     .catch(error => console.log(error));
 };
