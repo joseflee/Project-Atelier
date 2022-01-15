@@ -208,13 +208,13 @@ class QnA extends React.Component {
 
   search(query, isSearchTriggered) {
     let productId = this.props.productId;
-     console.log('query=', query);
-     console.log('isSearchTriggered=', isSearchTriggered);
+    //console.log('query=', query);
+    //console.log('isSearchTriggered=', isSearchTriggered);
+    if (isSearchTriggered === true) {
     //GET LIST OF ALL QUESTIONS BY PRODUCT ID
-    var url = 'http://localhost:3000/qna/getQuestionsList';
-    axios.get(url, {params: {id: productId}})
-      .then((response) => {
-        if (isSearchTriggered === true) {
+      var url = 'http://localhost:3000/qna/getQuestionsList';
+      axios.get(url, {params: {id: productId}})
+        .then((response) => {
           query = query.toLowerCase();
           console.log('received query', query);
           let questions = response.data.results;
@@ -226,29 +226,31 @@ class QnA extends React.Component {
               questions: filtered
             });
           }
-        } else {
-          console.log('search stopped');
-          //render all the questions and hide the rest if more than 2
-          var questionsToShow = response.data.results;
-          if (questionsToShow.length > 2) {
-            if (this._isMounted) {
-              this.setState({
-                isMoreQuestionsButtonShown: true
-              });
-            }
-          }
-          questionsToShow = questionsToShow.slice(0, 2);
-          if (this._isMounted) {
-            this.setState({
-              questions: questionsToShow
-            });
-          }
+        }).catch(error => {
+          console.log(error);
+        });
+    } else {
+      console.log('search stopped');
+      //render all the questions and hide the rest if more than 2
+      //var questionsToShow = response.data.results;
+      var questionsToShow = [...this.state.questions];
+      if (questionsToShow.length > 2) {
+        if (this._isMounted) {
+          this.setState({
+            isMoreQuestionsButtonShown: true
+          });
         }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      }
+      questionsToShow = questionsToShow.slice(0, 2);
+      if (this._isMounted) {
+        this.setState({
+          questions: questionsToShow
+        });
+      }
+    }
   }
+
+
 
   checkAddingNewQuestion() {
     console.log('click on add question');
