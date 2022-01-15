@@ -11,6 +11,7 @@ import Answer from '../../../client/src/components/QnAcomponents/QuestionsListIt
 import AddAnswerForm from '../../../client/src/components/QnAcomponents/AddAnswerForm.jsx';
 import AddQuestionForm from '../../../client/src/components/QnAcomponents/AddQuestionForm.jsx';
 import Search from '../../../client/src/components/QnAcomponents/SearchQuestions.jsx';
+import exampleQuestions from '../../../example/questions.js';
 
 
 
@@ -20,7 +21,7 @@ import { mount, shallow } from 'enzyme';
 import axios from 'axios';
 import { act } from 'react-dom/test-utils';
 
-import exampleQuestions from '../../../example/questions.js';
+import dummydata from './dummydata.js';
 //import MockAdapter from 'axios-mock-adapter';
 
 
@@ -341,11 +342,11 @@ describe('API calls in Main component', () => {
 
   });
 
-  xit('not triggering API call for search if query is less than 3 chars', async () => {
+  it('send false ', async () => {
 
     //parent component
     const getResponse1 = { data: { name: 'mocked name' } };
-    const getResponse2 = example;
+    const getResponse2 = dummydata.questions;
 
     jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
       .mockResolvedValueOnce(getResponse2);
@@ -373,9 +374,10 @@ describe('API calls in Main component', () => {
     // expect(onSearchMock).toHaveBeenCalled();
     // expect(onSearchMock).toBeCalledWith('bla', true);
     expect(parentSpy).toHaveBeenCalled();
-    expect(axios.get).toHaveBeenCalledTimes(2);
     expect(parentSpy).toHaveBeenCalledWith('42', false);
-
+    expect(axios.get).toHaveBeenCalledTimes(3);
+    expect(parent.state().isMoreQuestionsButtonShown).toEqual(true);
+    //expect(parent.state().questions.length()).toEqual(1);
   });
 
 
@@ -388,28 +390,4 @@ describe('API calls in Main component', () => {
 
 
 
-
-
-
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
