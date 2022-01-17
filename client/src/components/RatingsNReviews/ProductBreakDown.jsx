@@ -47,7 +47,7 @@ const ProductBreakDown = ({ characteristics })=>{
       {characteristics ? Object.keys(characteristics).map((key, index) => {
         return (
           <div key={index}>
-            <span style={{fontSize: '14px', fontWeight: '500', color: '#7d7d7d'}}>{key}</span>
+            <span style={{fontSize: '14px', fontWeight: 'bold', color: '#7d7d7d'}}>{key}</span>
             <div className='review-productTrack'>
               <span className='review-productTrack-bar'></span> <span className='review-productTrack-bar'></span> <span className='review-productTrack-bar'></span>
               <span className='review-productTrack-text' id='review-productTrack-text-1'>{sizeChart[key]['sm']}</span>

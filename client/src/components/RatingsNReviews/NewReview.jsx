@@ -555,7 +555,7 @@ const NewReview = ({ characteristics, currentProduct, productId, setIsPost, setO
             {fileTypeErr ? <p style={{ color: 'red' }}>The images selected are invalid or unable to be uploaded</p> : null}
             <label htmlFor="img-uploader">Upload img:</label>
             <input multiple data-testid='img-uploader' id="img-uploader" type='file' onChange={(e) => { setImgSelected(e.target.files[0]); }} />
-            <button data-testid='upload-button' disabled={imgUrl.length >= 5 ? true : false} onClick={uploadImg}>Upload Image</button>
+            <button className = 'review-general-button' data-testid='upload-button' disabled={imgUrl.length >= 5 ? true : false} onClick={uploadImg}>Upload Image</button>
             {imgUrl.length > 0 ?
               <div className="review-ImageSection">
                 {imgUrl.map((url, index) => {

@@ -33,6 +33,13 @@ const HelpfulButton = ({ onClick, reviewId, helpfulness, markClicked, clickedLis
       return;
     }
   };
+  const reportOnClicked = function (e) {
+    e.target.className += ' review-report-onClicked';
+    axios.post('/ratings/updateReported', {Id: Id})
+      .catch((err) => {
+        console.log('This is updatehelReported err:', err);
+      });
+  };
   return (
     <div data-testid="review-helpful" className='review-helpful' onClick = {onClick}>
       {clicked ?
@@ -41,7 +48,7 @@ const HelpfulButton = ({ onClick, reviewId, helpfulness, markClicked, clickedLis
           <span data-testid="review-helpful-2-button" className= { 'review-helpful-1 helpfulness-onClicked ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
           <span id={reviewId}>({helpfulnessCount})</span>
           <span>|</span>
-          <span>Report</span>
+          <span className='review-report' onClick= {reportOnClicked }>Report</span>
         </div>
         :
         <div data-testid="review-helpful-1">
@@ -49,7 +56,7 @@ const HelpfulButton = ({ onClick, reviewId, helpfulness, markClicked, clickedLis
           <span data-testid="review-helpful-1-button" id={reviewId} className= { 'review-helpful-1 ' + reviewId} onClick ={ helpfulnessonClicked }>Yes </span>
           <span data-testid="review-helpful-1-count" id={reviewId}>({helpfulnessCount})</span>
           <span>|</span>
-          <span>Report</span>
+          <span className='review-report' onClick= {reportOnClicked }>Report</span>
         </div>}
     </div>
   );
