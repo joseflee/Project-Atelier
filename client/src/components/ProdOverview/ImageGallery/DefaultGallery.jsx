@@ -17,7 +17,7 @@ class DefaultGallery extends React.Component {
   }
 
   componentDidUpdate({photos}) {
-    if (this.state.index > photos.length - 1) {
+    if (this.state.selectedIndex > photos.length - 1) {
       this.setState({
         selectedIndex: photos.length - 1,
       });
@@ -81,6 +81,7 @@ class DefaultGallery extends React.Component {
   }
 
   render () {
+    // console.log('props', this.props);
     return (
       <div className='POImageGallery' data-testid="ImageGallery">
         <div className='POThumbContainer'>
