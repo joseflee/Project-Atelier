@@ -22,12 +22,26 @@ class ProductOverview extends React.Component {
     this.updateStyle = this.updateStyle.bind(this);
   }
 
+  // componentWillReceiveProps(nextProps) {
+  //   console.log('next', nextProps);
+  // }
+  static getDerivedStateFromProps(props, state) {
+    if (state.displayStyle !== props.currentProductStyle.results[0]) {
+      const id = props.currentProductStyle.results.findIndex(ele => ele.style_id === props.currentStyleId);
+      return {
+        displayStyle: props.currentProductStyle.results[id],
+      };
+    }
+    return null;
+  }
+
   updateStyle(selectedStyle, styleId) {
     this.setState({
       displayStyle: selectedStyle,
     });
     this.props.addToOutfit(styleId);
   }
+
   updateSelectedIndex(index) {
     this.setState({
       selectedIndex: index,
@@ -59,7 +73,7 @@ class ProductOverview extends React.Component {
           <AddToCart displayedStyle={this.state.displayStyle} toggleFavorite={this.props.toggleFavorite.bind(this)}
             addToFavorites={this.props.addToFavorites} currentStyleId={this.props.currentStyleId} />
         </div>
-        <DefaultGallery fakePhotos={sampleData.style.results[0].photos} photos={this.state.displayStyle.photos}
+        <DefaultGallery photos={this.state.displayStyle.photos}
           selectedIndex={this.state.selectedIndex} switchImageModal={this.switchImageModal.bind(this)}
           updateIndex={this.updateSelectedIndex.bind(this)} />
         {this.state.useModal ? <ExpandedModal photos={this.state.displayStyle.photos} selectedIndex={this.state.selectedIndex} switchModal={this.switchImageModal.bind(this)} /> : null}

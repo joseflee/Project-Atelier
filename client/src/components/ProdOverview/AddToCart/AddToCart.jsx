@@ -27,9 +27,12 @@ class AddToCart extends React.Component {
     });
   }
 
+<<<<<<< HEAD
   updateButtonText () {
     alert('Added to Cart!');
   }
+=======
+>>>>>>> 15a865b (Implemented more tests, and fixed a feature bug)
   render () {
     return (
       <div className='POAddToCart'>
