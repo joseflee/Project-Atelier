@@ -5,7 +5,7 @@ import { rest } from 'msw';
 
 export const handlers = [
 
-  rest.get('http://localhost:3000/qna/getProductById', (req, res, ctx) => {
+  rest.get('/qna/getProductById', (req, res, ctx) => {
     return res(
       ctx.json({'id': 1,
         'name': 'Camo Onesie',
@@ -15,7 +15,7 @@ export const handlers = [
         'default_price': '140'}),
     );
   }),
-  rest.get('http://localhost:3000/qna/getQuestionsList', (req, res, ctx) => {
+  rest.get('/qna/getQuestionsList', (req, res, ctx) => {
     return res(
       ctx.json(exampleQuestions.questions));
   }),

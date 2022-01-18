@@ -31,6 +31,21 @@ const updateHelpfulness = (reviewId) => {
     });
 };
 
+const updateReported = (reviewId) => {
+  let options = {
+    method: 'PUT',
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-rpp/reviews/${reviewId}/report`,
+    headers: { Authorization: gitToken.Token },
+  };
+  return axios(options)
+    .then(response => {
+      return response;
+    })
+    .catch((err) => {
+      console.log('This is the updateReported error: ', err);
+    });
+};
+
 const ratingOverview = (productId) => {
   let options = {
     method: 'GET',
@@ -78,6 +93,7 @@ const postReview = async (body) => {
 module.exports = {
   getTotalReviews,
   updateHelpfulness,
+  updateReported,
   ratingOverview,
   postReview
 };

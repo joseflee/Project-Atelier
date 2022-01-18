@@ -1,6 +1,7 @@
 node_modules
 config.js
 coverage
+*.pem
 
 client/dist/bundle.js
 client/dist/bundle.js.map

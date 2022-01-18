@@ -27,11 +27,8 @@ class AddToCart extends React.Component {
     });
   }
 
-  updateQuantity () {
-    var quantity = document.getElementById('QuantitySelector').value;
-    this.setState({
-      desiredQuantity: quantity
-    });
+  updateButtonText () {
+    alert('Added to Cart!');
   }
   render () {
     return (
@@ -39,7 +36,7 @@ class AddToCart extends React.Component {
         <SizeDropdown displayedSkus={this.props.displayedStyle.skus} changeSku={this.changeSku.bind(this)} />
         <QuantityDropdown selectedQuantity={this.state.skuQuantity} />
         <div >
-          <button className='POAddToCartbutton'>Add To Cart</button>
+          <button className='POAddToCartbutton' id='POAddToCartbutton' onClick={this.updateButtonText}>Add To Cart</button>
         </div>
         <AddToFavorite toggleFavorite={this.props.toggleFavorite.bind(this)} addToFavorites={this.props.addToFavorites}
           currentStyleId={this.props.currentStyleId} />

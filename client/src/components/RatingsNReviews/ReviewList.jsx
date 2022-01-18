@@ -394,7 +394,7 @@ const ReviewList = ( { handleReviews, onClick, productId, currentProduct } )=>{
                 <div data-testid="review-body" className="review-Body"> {user.summary.length > 60 ?
                   <div data-testid="review-Extended-Summary" className="extended-Summary">{user.summary.slice(60)}</div> : null} <br></br>{user.body.length > 250 ?
                   <div>{isTruncated ? <div >{user.body.substring(0, 250)}.........................</div> : <div >{user.body}</div>}
-                    <div><button onClick = {()=>{ toggleIsTruncated(); }}>{isExtended}</button></div> </div> : <div>{user.body}</div>}
+                    <div><button className = 'review-general-button' onClick = {()=>{ toggleIsTruncated(); }}>{isExtended}</button></div> </div> : <div>{user.body}</div>}
                 </div>
                 {user.photos.length > 0 ?
                   <div data-testid="review-ImageSection" className="review-ImageSection">
