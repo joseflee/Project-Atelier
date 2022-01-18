@@ -6,7 +6,7 @@ interactionsRouter.post('/postData', (req, res) => {
 
   postInteractions(postData)
     .then(response => res.status(201).end())
-    .catch(err => console.log(err));
+    .catch(err => console.error(err));
 });
 
 module.exports = interactionsRouter;

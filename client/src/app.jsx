@@ -34,9 +34,11 @@ class App extends React.Component {
   componentDidMount() {
     this.updateProduct(this.state.productId);
   }
-  handleReviews (reviews) {
+
+  handleReviews(reviews) {
     this.setState({totalReviews: reviews});
   }
+
   async updateProduct(productId) {
     const [productInfo, productStyleInfo, relProductInfo, questionsList, reviewInfo] = await Promise.all([
       getProductInfo(productId),
@@ -56,13 +58,13 @@ class App extends React.Component {
     });
   }
 
-  addToOutfit (id) {
+  addToOutfit(id) {
     this.setState({
       outFitStyleId: id,
     });
   }
 
-  toggleAddToFavorite () {
+  toggleAddToFavorite() {
     if (!this.state.addToFavorites.includes(this.state.outFitStyleId)) {
       this.setState({
         addToFavorites: [...this.state.addToFavorites, this.state.outFitStyleId],

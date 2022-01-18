@@ -54,7 +54,6 @@ class RelProducts extends React.Component {
   render() {
     return (
       <div className="rel-prod-container">
-        <h2>Related Products and My Outfits</h2>
         <div className='rel-products product-card-container' onClick={this.props.onClick}>
           <ProductCards productCards={this.props.relatedProducts} handleClick={this.handleCardClick} />
         </div>

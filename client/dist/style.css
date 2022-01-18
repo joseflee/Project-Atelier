@@ -11,7 +11,6 @@
 /* top search bar Start -----------------------------------------------------------------------------------------------*/
 
 .top-Search-Section {
-  width: 1650px;
   height: 80px;
   background-color: #525252;
   margin-bottom: 10px;
@@ -61,6 +60,14 @@
   padding: 15px;
 }
 
+.rel-products {
+  text-align: center;
+}
+
+.my-outfits {
+  text-align: center;
+}
+
 .product-card-container {
   height: 100%;
   display: grid;
@@ -69,17 +76,22 @@
 }
 
 .product-cards {
-  overflow-x: scroll;
-  overflow-y: hidden;
+  overflow: hidden;
   white-space: nowrap;
+}
+
+.product-cards div {
+  margin-top: 30px;
 }
 
 .product-card {
   display: inline-block;
   max-width: 200px;
-  max-height: 500px;
+  max-height: 400px;
   margin: auto;
   padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
   text-align: center;
   font-family: arial;
 }
@@ -104,11 +116,26 @@
 
 .card-scroll-right {
   display: inline-block;
+  vertical-align: 200px;
   left: 425px;
   border: solid black;
   border-width: 0 3px 3px 0;
   padding: 10px;
   transform: rotate(-45deg);
+}
+
+.product-description * {
+  padding: 5px;
+}
+
+.add-outfit {
+  border: solid black 1px;
+  border-radius: 15px;
+}
+
+.remove-outfit {
+  text-align: end;
+  margin-bottom: 5px;
 }
 
 

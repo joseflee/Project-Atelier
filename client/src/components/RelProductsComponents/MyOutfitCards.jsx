@@ -8,16 +8,17 @@ import { DisplayImg } from '../ProdOverview/ImageGallery/Gallery.styles.js';
 var MyOutfitCards = (props) => {
   return (
     <div>
-      <h3>My Outfits Cards</h3>
+      <h3>My Outfits</h3>
       {/* Is a clickable element that adds current item as a card */}
-      <div className="product-card add-outfit" onClick={props.handleAddOutfitClick}>
-        <div>+</div>
-        <div>Add to Outfit</div>
-      </div>
       <div className="product-cards">
+        <div className="product-card add-outfit" onClick={props.handleAddOutfitClick}>
+          <div>+</div>
+          <div>Add to Outfit</div>
+        </div>
         {props.myOutfitCards.map(outfit => {
           return (
-            <div className="product-card" key={outfit.id} onClick={props.handleClick}>
+            <div className="product-card" key={outfit.id} onClick={() => { props.handleClick(outfit.id); }}>
+              <div className="remove-outfit">X</div>
               <DisplayImg src={outfit.results[0].photos[0].thumbnail_url} />
               <StarRating ratings={outfit.ratings} />
               <div className="product-description">
