@@ -139,9 +139,9 @@ export class ExpandedModal extends React.Component {
 
   render () {
     // console.log('props', this.props);
-    console.log('state', this.state);
+    // console.log('state', this.state);
     return (
-      <div className='POModal' id='POModal'>
+      <div className='POModal' id='POModal' data-testid="ModalGallery">
         <button className='POCloseModal' onClick={this.props.switchModal}>x</button>
         <div id='POModalArrowContainer'>
           <FontAwesomeIcon icon={faArrowLeft} size='lg' className='ModalArrow' onClick={this.rotateLeft.bind(this)} />

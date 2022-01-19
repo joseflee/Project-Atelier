@@ -34,35 +34,24 @@ afterAll(() => server.close());
 
 describe ('Product Overview Component Testing', () => {
   test('Loads and displays a Product Overview Component', () => {
-    render(<ProductOverview currentProduct={specificProduct} currentProductStyle={style} currentReview={dummyReviews.meta} />);
+    render(<ProductOverview currentProduct={specificProduct} currentProductStyle={style} currentReview={dummyReviews.meta}
+      toggleFavorite={jest.fn()} currentStyleId={style.results[0].style_id} addToFavorites={[]} />);
     expect(screen.getByTestId('Overview')).toBeInTheDocument();
   });
 
   test('It should Update useModal in state when switchImageModal function is ran', () => {
-    const overview = shallow(<ProductOverview currentProduct={specificProduct} currentProductStyle={style} currentReview={dummyReviews.meta} />);
-    expect(overview.state().useModal).toEqual(false);
+    const overview = shallow(<ProductOverview currentProduct={specificProduct} currentProductStyle={style} currentReview={dummyReviews.meta}
+      toggleFavorite={jest.fn()} currentStyleId={style.results[0].style_id} addToFavorites={[]} />).dive();
+    expect(overview.state('useModal')).toBe(false);
     overview.instance().switchImageModal();
-    expect(overview.state().useModal).toEqual(true);
-  });
-
-  test('It should Update displayStyle in state when updateStyle function is ran', () => {
-    const overview = shallow(<ProductOverview currentProduct={specificProduct} currentProductStyle={style} currentReview={dummyReviews.meta} />);
-    overview.instance().updateStyle('test');
-    expect(overview.state().displayStyle).toEqual('test');
-  });
-
-  test('It should Update selectedIndex in state when updateSelectedIndex function is ran', () => {
-    const overview = shallow(<ProductOverview currentProduct={specificProduct} currentProductStyle={style} currentReview={dummyReviews.meta} />);
-    expect(overview.state().selectedIndex).toEqual(0);
-    overview.instance().updateStyle(1);
-    expect(overview.state().displayStyle).toEqual(1);
+    expect(overview.state().useModal).toBe(true);
   });
 
 });
 
 describe ('Add To Cart Component Testing', () => {
   test('Loads and displays Add to Cart Parent Component', () => {
-    render(<AddToCart displayedStyle={style.results[0]} />);
+    render(<AddToCart displayedStyle={style.results[0]} toggleFavorite={jest.fn()} addToFavorites={[]} />);
     expect(screen.getByRole('button', {name: 'Add To Cart'})).toBeInTheDocument();
   });
 
@@ -88,6 +77,16 @@ describe('Image Gallery Component Testing', () => {
     expect(screen.getByTestId('ImageGallery')).toBeInTheDocument();
   });
 
+  test('Default Thumb Gallery includes 7 or less images', () => {
+    const wrapper = shallow(<DefaultGallery photos={style.results[0].photos} />);
+    expect(wrapper.find('.POThumbImg')).toHaveLength(7);
+  });
+
+  test('Loads and displays Modal Gallery Component', () => {
+    render(<ExpandedModal photos={style.results[0].photos} selectedIndex={0}/>);
+    expect(screen.getByTestId('ModalGallery')).toBeInTheDocument();
+  });
+
   test('Runs two functions when Default Gallery display image is clicked', () => {
     const spy = jest.fn();
     const spy2 = jest.fn();
@@ -96,6 +95,16 @@ describe('Image Gallery Component Testing', () => {
     defaultGal.find('.PODisplayImg').simulate('click');
     expect(spy).toBeCalledTimes(1);
     expect(spy2).toBeCalledTimes(1);
+  });
+
+  test('Runs a function when right or left arrow is clicked', () => {
+    const defaultGal = shallow(<DefaultGallery photos={style.results[0].photos} />);
+
+    defaultGal.find('.PORight').simulate('click');
+    expect(defaultGal.state('selectedIndex')).toBe(1);
+
+    defaultGal.find('.POLeft').simulate('click');
+    expect(defaultGal.state('selectedIndex')).toBe(0);
   });
 });
 
