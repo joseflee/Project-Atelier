@@ -23,7 +23,7 @@ class App extends React.Component {
       questionsNAnswers: null,
       productReview: null,
       outFitStyleId: null,
-      addToFavorites: [],
+      favoriteOutfits: [],
       totalReviews: 0
     };
 
@@ -65,18 +65,26 @@ class App extends React.Component {
   }
 
   toggleAddToFavorite() {
-    if (!this.state.addToFavorites.includes(this.state.outFitStyleId)) {
+    if (!this.state.favoriteOutfits.includes(this.state.outFitStyleId)) {
       this.setState({
-        addToFavorites: [...this.state.addToFavorites, this.state.outFitStyleId],
+        favoriteOutfits: [...this.state.favoriteOutfits, this.state.outFitStyleId],
       });
     } else {
-      const newArr = [...this.state.addToFavorites];
+      const newArr = [...this.state.favoriteOutfits];
       var index = newArr.indexOf(this.state.outFitStyleId);
       newArr.splice(index, 1);
       this.setState({
-        addToFavorites: newArr,
+        favoriteOutfits: newArr,
       });
     }
+    console.log(this.state.favoriteOutfits, this.state.currentProduct);
+  }
+
+  // Removing and Adding to favoriteOutfits array will affect the Product Overview as well.
+  // Add a Remove from favoriteOutfits to setState in removing that outfit.
+
+  removeOutfit(id) {
+    // this.state.favoriteOutfits.indexOf(id);
   }
 
   render() {
@@ -98,8 +106,11 @@ class App extends React.Component {
           <ProductOverviewWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct}
             currentProductStyle={this.state.currentProductStyle} currentReview={this.state.productReview}
             addToOutfit={this.addToOutfit.bind(this)} toggleFavorite={this.toggleAddToFavorite.bind(this)}
-            addToFavorites={this.state.addToFavorites} currentStyleId={this.state.outFitStyleId} totalReviews={this.state.totalReviews} />
-          <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts} handleClick={this.updateProduct} />
+            addToFavorites={this.state.favoriteOutfits} currentStyleId={this.state.outFitStyleId} totalReviews={this.state.totalReviews} />
+          <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts}
+            currentStyleId={this.state.outFitStyleId}
+            handleClick={this.updateProduct} addOutfit={this.addToOutfit} removeOutfit={this.removeOutfit}
+            toggleFavorite={this.toggleAddToFavorite} favorites={this.state.favoriteOutfits} />
           <QnA productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
           <RatingsNReviews handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} />
         </div>
