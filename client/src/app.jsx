@@ -49,7 +49,6 @@ class App extends React.Component {
       getStyleInfo(productId),
       getRelatedProductInfo(productId),
       getQuestionsListInfo(productId),
-      getReviewInfo(productId)
     ]);
 
     this.setState({
@@ -57,7 +56,6 @@ class App extends React.Component {
       currentProductStyle: productStyleInfo,
       relatedProducts: relProductInfo,
       questionsNAnswers: questionsList,
-      productReview: reviewInfo,
       outFitStyleId: productInfo.results[0].style_id,
     });
   }
@@ -92,23 +90,23 @@ class App extends React.Component {
   }
 
   render() {
+    console.log('average', this.state.averageRate);
     const {
       currentProduct,
       currentProductStyle,
       relatedProducts,
       questionsNAnswers,
-      productReview,
     } = this.state;
 
     if (currentProduct === null || currentProductStyle === null || relatedProducts === null ||
-      questionsNAnswers === null || productReview === null) {
+      questionsNAnswers === null) {
       return null;
     } else {
       return (
         <div>
           <TopSearchBar />
           <ProductOverviewWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct}
-            currentProductStyle={this.state.currentProductStyle} currentReview={this.state.productReview}
+            currentProductStyle={this.state.currentProductStyle} currentRatings={this.state.averageRate}
             addToOutfit={this.addToOutfit.bind(this)} toggleFavorite={this.toggleAddToFavorite.bind(this)}
             addToFavorites={this.state.favoriteOutfits} currentStyleId={this.state.outFitStyleId} totalReviews={this.state.totalReviews} />
           <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts}
