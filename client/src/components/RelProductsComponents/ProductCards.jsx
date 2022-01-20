@@ -34,7 +34,7 @@ class ProductCards extends React.Component {
 
       if (target.className === 'card-scroll-left') {
         // if current state of start - 4 is less than 0, add the absolute value of current state of start - 4 ----> Same goes for current state of end
-        if (this.state.currentShownProducts.start - 4 < 0 && this.state.currentShownProducts.end !== 0) {
+        if (this.state.currentShownProducts.start <= 4 && this.state.currentShownProducts.end !== 0) {
           this.setState({
             currentShownProducts: { start: 0, end: this.state.currentShownProducts.end - 4}
           });

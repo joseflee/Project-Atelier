@@ -26,10 +26,10 @@ const gotoReviews = () => {
 };
 
 const StarRating = (props) => {
-  // console.log('props', props);
+  console.log('props', avgRating(props.ratings));
   return (
     <div className='POStarRating' data-testid="starRating">
-      <Rating start={0} stop={5} initialRating={avgRating(props.ratings)} emptySymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#808080
+      <Rating start={0} stop={5} initialRating={props.ratings} emptySymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#808080
 ' />} fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#f8ce0b' />} readonly />
       <button className='POReadReviewButton' onClick={gotoReviews}>Read All {props.totalReviews} Reviews</button>
     </div>

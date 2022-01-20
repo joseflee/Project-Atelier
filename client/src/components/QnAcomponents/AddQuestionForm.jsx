@@ -8,7 +8,9 @@ class AddQuestionForm extends React.Component {
       isValid: false,
       questionBody: '',
       nickname: '',
-      email: ''
+      email: '',
+      isWarningShown: false
+
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,13 +36,16 @@ class AddQuestionForm extends React.Component {
 
     if (validationResult) {
       this.setState({
-        isValid: true
+        isValid: true,
+        isWarningShown: false
       });
       this.props.addQuestion(productId, body, nickname, email);
       this.props.closeForm();
 
     } else {
-      alert('not submitted');
+      this.setState({
+        isWarningShown: true
+      });
     }
   }
   handleValidation(question, nick, email) {
@@ -57,6 +62,12 @@ class AddQuestionForm extends React.Component {
 
 
   render() {
+    let warning;
+    if (this.state.isWarningShown) {
+      warning = <div className='qna-add-question-form-warning-message'>You didn't properly filled all the fields</div>;
+    } else {
+      warning = <div></div>;
+    }
     return (
       <div className='qna-add-new-question-form'>
         <div className='qna-add-question-form-wrapper'>
@@ -112,7 +123,7 @@ class AddQuestionForm extends React.Component {
               </div>
             </label>
             <br />
-
+            {warning}
             <input type="submit" className="qna-add-question-form-submit" value="Submit" onClick = {(e)=>this.handleSubmit(e)} />
             <button className='qna-add-question-form-close' onClick={()=> this.props.closeForm()}>Close without submitting</button>
           </form>

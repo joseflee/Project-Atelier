@@ -3,15 +3,15 @@ import RatingBreakDown from './RatingBreakDown.jsx';
 import ProductBreakDown from './ProductBreakDown.jsx';
 import axios from 'axios';
 import HelpfulButton from './HelpfulButton.jsx';
+import ReviewBody from './ReviewBody.jsx';
+
 import NewReview from './NewReview.jsx';
 import SearchBar from './SearchBar.jsx';
 import ClickedData from '../ClickDataAnalytics.jsx';
 
-const ReviewList = ( { handleReviews, onClick, productId, currentProduct } )=>{
+const ReviewList = ( { handleAverageRate, handleReviews, onClick, productId, currentProduct } )=>{
   const [selectedArray, setSelectedArray] = useState('totalReviewArray');
   const [isOpen, setIsOpen] = useState(false);
-  const [isTruncated, setIsTruncated] = useState(true);
-  const [isExtended, setExtended] = useState('Show More');
   const [totalReviewArray, setTotalReviewArray] = useState([]);
   const [helpfulReviewArray, setHelpfulReviewArray] = useState([]);
   const [newestReviewArray, setNewestReviewArray] = useState([]);
@@ -96,6 +96,7 @@ const ReviewList = ( { handleReviews, onClick, productId, currentProduct } )=>{
             .then((response)=>{
               if (mounted) {
                 setAverageRate(response.data.ratings.average);
+                handleAverageRate(response.data.ratings.average);
                 setRecommended(response.data.recommended);
                 setOneStar(response.data.ratings['1']);
                 setTwoStar(response.data.ratings['2']);
@@ -295,10 +296,7 @@ const ReviewList = ( { handleReviews, onClick, productId, currentProduct } )=>{
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
-  const toggleIsTruncated = function () {
-    setIsTruncated(isTruncated === true ? false : true);
-    setExtended (isExtended === 'Show Less' ? 'Show More' : 'Show Less');
-  };
+
   const loadReviews = function (selectedArray) {
     selectedArray = (sortedArray.length ? sortedArray : arrayMap[selectedArray]);
     let startIndex = onScreenReviewArray.length;
@@ -358,7 +356,7 @@ const ReviewList = ( { handleReviews, onClick, productId, currentProduct } )=>{
 
   };
   return (
-    <div>
+    <div className= "RatingsNReviewsSection">
       <div className= 'review-starSection'>
         <RatingBreakDown onClick={onClick} resetFilter={resetFilter} filter={filter} filterOnClicked={filterOnClicked} oneStar={oneStar} twoStar={twoStar} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} recommended={recommended} starWidth={starWidth} averageRate={averageRate} productId= {productId}/>
         <ProductBreakDown onClick={onClick} characteristics={characteristics}/>
@@ -390,12 +388,7 @@ const ReviewList = ( { handleReviews, onClick, productId, currentProduct } )=>{
                   </div>
                   <span data-testid="review-nameNDate" >{user.reviewer_name}, {convertDate(user.date)}</span>
                 </div>
-                <h3 data-testid="review-summary">{user.summary.slice(0, 60)}</h3>
-                <div data-testid="review-body" className="review-Body"> {user.summary.length > 60 ?
-                  <div data-testid="review-Extended-Summary" className="extended-Summary">{user.summary.slice(60)}</div> : null} <br></br>{user.body.length > 250 ?
-                  <div>{isTruncated ? <div >{user.body.substring(0, 250)}.........................</div> : <div >{user.body}</div>}
-                    <div><button className = 'review-general-button' onClick = {()=>{ toggleIsTruncated(); }}>{isExtended}</button></div> </div> : <div>{user.body}</div>}
-                </div>
+                <ReviewBody body={user.body} summary={user.summary}/>
                 {user.photos.length > 0 ?
                   <div data-testid="review-ImageSection" className="review-ImageSection">
                     {user.photos.map((img, index)=>{
