@@ -7,6 +7,8 @@ import sampleData from '../../../../example/questions.js';
 import axios from 'axios';
 import FormData from 'form-data';
 import config from '../../../../config.js';
+import ClickedData from '../ClickDataAnalytics.jsx';
+
 
 class QnA extends React.Component {
   constructor(props) {
@@ -246,7 +248,7 @@ class QnA extends React.Component {
       moreAnsweredQuestions = <div></div>;
     }
     return (
-      <div className='qna-main-component'>
+      <div className='qna-main-component' onClick={this.props.onClick}>
         <div className={qnaScreen}></div>
 
         <div className='qna-component-name'>QUESTIONS AND ANSWERS</div>
@@ -275,4 +277,8 @@ class QnA extends React.Component {
   }
 }
 
-export default QnA;
+//export default QnA;
+
+const QnAwithClickData = ClickedData(QnA, 'Questions and Answers');
+
+export default QnAwithClickData;

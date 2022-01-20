@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import TopSearchBar from './components/TopSearchBar/TopSearchBar.jsx';
 import ProductOverviewWithClickData from './components/ProdOverview/OverView.jsx';
 import RelProductsWithClickData from './components/RelProductsComponents/RelProducts.jsx';
-import QnA from './components/QnAcomponents/mainQnA.jsx';
+import QnAwithClickData from './components/QnAcomponents/mainQnA.jsx';
 import RatingsNReviews from './components/RatingsNReviews/RatingsNReviews.jsx';
 import axios from 'axios';
 
@@ -113,7 +113,7 @@ class App extends React.Component {
             currentStyleId={this.state.outFitStyleId}
             handleClick={this.updateProduct} addOutfit={this.addToOutfit} removeOutfit={this.removeOutfit}
             toggleFavorite={this.toggleAddToFavorite} favorites={this.state.favoriteOutfits} />
-          <QnA productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
+          <QnAwithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
           <RatingsNReviews handleAverageRate={this.handleAverageRate} handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} />
         </div>
       );
