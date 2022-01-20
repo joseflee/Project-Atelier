@@ -14,7 +14,7 @@ const postInteractions = (data) => {
     .then((response) => {
       return response;
     })
-    .catch(err => console.log('ERROR: ', err));
+    .catch(err => console.error(err));
 };
 
 module.exports = postInteractions;

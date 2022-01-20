@@ -6,9 +6,17 @@ import { DisplayImg } from '../ProdOverview/ImageGallery/Gallery.styles.js';
 class ProductCards extends React.Component {
   constructor(props) {
     super(props);
+
+    var endOfShownProducts = this.props.productCards.length;
+    if (endOfShownProducts > 3) {
+      endOfShownProducts = 4;
+    }
+
+    console.log(endOfShownProducts);
+
     this.state = {
       allRelatedProducts: this.props.productCards,
-      currentShownProducts: this.props.productCards,
+      currentShownProducts: { start: 0, end: endOfShownProducts },
       leftArrowDisplay: true,
       rightArrowDisplay: true
     };
@@ -24,31 +32,41 @@ class ProductCards extends React.Component {
     if (e) {
       var target = e.target;
       console.log(target.className);
+
+      var startOfRelProducts = 0;
+      var endOfRelProducts = this.state.allRelatedProducts.length;
+
       if (target.className === 'card-scroll-left') {
-        var endOfList = this.state.currentShownProducts.length;
-        var startOfList = this.state.currentShownProducts.length - 3;
         this.setState({
-          currentShownProducts: this.state.allRelatedProducts.slice()
+          currentShownProducts: { start: 0, end: 0 }
         });
       } else if (target.className === 'card-scroll-right') {
         this.setState({
-          currentShownProducts: this.state.allRelatedProducts.slice()
+          currentShownProducts: { start: 0, end: 0 }
         });
       }
     }
 
     if (this.state.allRelatedProducts.length <= 4) {
       this.setState({
+        currentShownProducts: { start: 0, end: this.state.allRelatedProducts.length + 1 },
         leftArrowDisplay: false,
         rightArrowDisplay: false
       });
     } else {
-      if (this.state.currentShownProducts[this.state.currentShownProducts.length] === this.state.allRelatedProducts[this.state.allRelatedProducts.length]) {
-        this.setState({
-          leftArrowDisplay: true,
-          rightArrowDisplay: false
-        });
-      } else if (this.state.currentShownProducts[0] === this.state.allRelatedProducts[0]) {
+      if (this.state.allRelatedProducts[0] !== this.state.allRelatedProducts[this.state.currentShownProducts.start]) {
+        if (this.state.currentShownProducts.end + 1 === this.state.allRelatedProducts.length) {
+          this.setState({
+            leftArrowDisplay: true,
+            rightArrowDisplay: false
+          });
+        } else {
+          this.setState({
+            leftArrowDisplay: true,
+            rightArrowDisplay: true
+          });
+        }
+      } else if (this.state.currentShownProducts.start === 0 && this.state.currentShownProducts.end !== this.state.allRelatedProducts.length) {
         this.setState({
           leftArrowDisplay: false,
           rightArrowDisplay: true
@@ -69,8 +87,8 @@ class ProductCards extends React.Component {
         <div>
           <h3>Related Products</h3>
           <div className="product-cards">
-            <div className="card-scroll-left product-card arrow-button" onClick={this.updateStatus} style={{display: this.state.leftArrowDisplay ? 'inline-block' : 'none' }}></div>
-            {this.state.currentShownProducts.map(product => {
+            <div className="card-scroll-left arrow-button" onClick={this.updateStatus} style={{display: this.state.leftArrowDisplay ? 'inline-block' : 'none' }}></div>
+            {this.state.allRelatedProducts.slice(this.state.currentShownProducts.start, this.state.currentShownProducts.end).map(product => {
               var price = <h5 className="price-relProd"><span>{product.results[0].original_price}</span></h5>;
 
               if (product.results[0].sale_price !== null && product.results[0].sale_price !== undefined) {
@@ -78,9 +96,7 @@ class ProductCards extends React.Component {
               }
 
               return (
-                <div className="product-card" key={product.id} onClick={() => {
-                  this.props.handleClick(product.id);
-                }}>
+                <div className="product-card" key={product.id} onClick={() => { this.props.handleClick(product.id); }}>
                   <DisplayImg src={product.results[0].photos[0].thumbnail_url} alt={product.name}/>
                   <StarRating ratings={product.ratings} />
                   <div className="product-description">
@@ -91,7 +107,7 @@ class ProductCards extends React.Component {
                 </div>
               );
             })}
-            <div className="card-scroll-right product-card arrow-button" onClick={this.updateStatus} style={{display: this.state.rightArrowDisplay ? 'inline-block' : 'none' }}></div>
+            <div className="card-scroll-right arrow-button" onClick={this.updateStatus} style={{display: this.state.rightArrowDisplay ? 'inline-block' : 'none' }}></div>
           </div>
         </div>
       );
