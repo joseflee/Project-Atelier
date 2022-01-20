@@ -9,7 +9,8 @@ class AddAnswerForm extends React.Component {
       answerBody: '',
       nickname: '',
       email: '',
-      photos: []
+      photos: [],
+      isWarningShown: false
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,12 +44,17 @@ class AddAnswerForm extends React.Component {
     var productId = this.props.productId;
 
     if (validationResult) {
+      this.setState({
+        isWarningShown: false
+      });
       this.props.addNewAnswer(questionId, body, nickname, email, photos, productId);
       this.props.closeAnswer();
 
 
     } else {
-      alert('Not all fields filled');
+      this.setState({
+        isWarningShown: true
+      });
     }
   }
 
@@ -65,6 +71,12 @@ class AddAnswerForm extends React.Component {
   }
 
   render() {
+    let warning;
+    if (this.state.isWarningShown) {
+      warning = <div className='qna-add-answer-form-warning-message'>You didn't filled all the fields properly</div>;
+    } else {
+      warning = <div></div>;
+    }
     return (
       <div className='qna-add-answer-form'>
         <div className='qna-add-answer-form-wrapper'>
@@ -127,6 +139,7 @@ class AddAnswerForm extends React.Component {
               <br />
               <AnswerPhotoUpload handlePhotos={this.handlePhotos} />
             </label>
+            {warning}
             <input type="submit" className='qna-add-answer-form-submit' value="Submit" onClick = {this.handleSubmit} />
             <button type='button' className='qna-add-answer-form-close' onClick={this.props.closeAnswer}>Close without adding</button>
           </form>

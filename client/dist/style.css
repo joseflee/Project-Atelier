@@ -912,6 +912,15 @@ display: none;
 }
 
 
+.qna-add-answer-form-warning-message,
+.qna-add-question-form-warning-message{
+  font-size: 14px;
+  color: red;
+}
+
+
+
+
 
 
 
