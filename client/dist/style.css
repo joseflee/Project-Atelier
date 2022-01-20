@@ -5,6 +5,7 @@
 #app {
   margin-left: 200px;
   margin-right: 200px;
+  user-select: none;
   -webkit-user-select: none;
 }
 
@@ -16,6 +17,7 @@
   margin-bottom: 10px;
   position: relative;
 }
+
 .top-Search-Logo {
   color: white;
   font-size: 30px;
@@ -24,27 +26,32 @@
   left: 25px;
   top: 25px;
 }
+
 .top-Search-Logo span:nth-child(1),
 .top-Search-Logo span:nth-child(3) {
   text-decoration: underline;
 }
+
 .top-Search-Container {
   color: white;
   position: absolute;
   right: 25px;
   top: 25px;
 }
+
 .top-Search-Container i {
   padding-left: 15px;
   font-size: 20px;
   cursor: pointer;
 }
+
 .top-Search-Text {
     background: transparent;
     border: none;
     border-bottom: 2px solid white;
     color: white;
 }
+
 .top-Search-Text:focus {
   outline: none;
 }
@@ -54,11 +61,6 @@
 
 
 /* Related Products and My Outfits --------------------------------------------------------------------------------------------------- Start */
-
-.rel-prod-container {
-  border: 1px solid black;
-  padding: 15px;
-}
 
 .rel-products {
   text-align: center;
@@ -70,14 +72,15 @@
 
 .product-card-container {
   height: 100%;
+  width: 80%;
   display: grid;
   clear: both;
   margin: auto;
 }
 
 .product-cards {
-  overflow: hidden;
   white-space: nowrap;
+  width: 100%;
 }
 
 .product-cards div {
@@ -88,8 +91,7 @@
   display: inline-block;
   max-width: 200px;
   max-height: 400px;
-  margin: auto;
-  padding: 10px;
+  /* margin: auto; */
   padding-left: 20px;
   padding-right: 20px;
   text-align: center;
@@ -136,6 +138,11 @@
 .remove-outfit {
   text-align: end;
   margin-bottom: 5px;
+}
+
+.card-imgs {
+  max-height: 100%;
+  max-width: 100%;
 }
 
 
@@ -384,9 +391,9 @@
   flex: 1 1 50%;
 }
 
-.POQuantitySelector {
-  /* grid-column: 2/3 */
-}
+/* .POQuantitySelector {
+  grid-column: 2/3
+} */
 
 #sizeSelector {
   width: 210px;
@@ -757,9 +764,9 @@
   font-weight:bold
 }
 
-.qna-add-question-form-your-question{
+/* .qna-add-question-form-your-question{
 
-}
+} */
 
 .qna-add-question-input-questionbody{
   height:30px;
