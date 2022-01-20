@@ -96,6 +96,7 @@ $ npm start
 ### Scripts
 
 `npm run build` = Runs Webpack with a watch flag to continuously be watching for any changes in the files
+
 `npm start` = Runs Nodemon for our server index.js file
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
