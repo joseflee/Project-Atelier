@@ -7,7 +7,7 @@ import NewReview from './NewReview.jsx';
 import SearchBar from './SearchBar.jsx';
 import ClickedData from '../ClickDataAnalytics.jsx';
 
-const ReviewList = ( { handleReviews, onClick, productId, currentProduct } )=>{
+const ReviewList = ( { handleAverageRate, handleReviews, onClick, productId, currentProduct } )=>{
   const [selectedArray, setSelectedArray] = useState('totalReviewArray');
   const [isOpen, setIsOpen] = useState(false);
   const [isTruncated, setIsTruncated] = useState(true);
@@ -96,6 +96,7 @@ const ReviewList = ( { handleReviews, onClick, productId, currentProduct } )=>{
             .then((response)=>{
               if (mounted) {
                 setAverageRate(response.data.ratings.average);
+                handleAverageRate(response.data.ratings.average);
                 setRecommended(response.data.recommended);
                 setOneStar(response.data.ratings['1']);
                 setTwoStar(response.data.ratings['2']);

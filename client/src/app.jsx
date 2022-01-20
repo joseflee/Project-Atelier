@@ -24,9 +24,10 @@ class App extends React.Component {
       productReview: null,
       outFitStyleId: null,
       favoriteOutfits: [],
-      totalReviews: 0
+      totalReviews: 0,
+      averageRate: 0,
     };
-
+    this.handleAverageRate = this.handleAverageRate.bind(this);
     this.updateProduct = this.updateProduct.bind(this);
     this.handleReviews = this.handleReviews.bind(this);
   }
@@ -37,6 +38,9 @@ class App extends React.Component {
 
   handleReviews(reviews) {
     this.setState({totalReviews: reviews});
+  }
+  handleAverageRate(rate) {
+    this.setState({averageRate: rate});
   }
 
   async updateProduct(productId) {
@@ -49,6 +53,7 @@ class App extends React.Component {
     ]);
 
     this.setState({
+      productId: productId,
       currentProduct: productInfo,
       currentProductStyle: productStyleInfo,
       relatedProducts: relProductInfo,
@@ -112,7 +117,7 @@ class App extends React.Component {
             handleClick={this.updateProduct} addOutfit={this.addToOutfit} removeOutfit={this.removeOutfit}
             toggleFavorite={this.toggleAddToFavorite} favorites={this.state.favoriteOutfits} />
           <QnA productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
-          <RatingsNReviews handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} />
+          <RatingsNReviews handleAverageRate={this.handleAverageRate} handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} />
         </div>
       );
     }
