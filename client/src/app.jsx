@@ -53,7 +53,6 @@ class App extends React.Component {
     ]);
 
     this.setState({
-      productId: productId,
       currentProduct: productInfo,
       currentProductStyle: productStyleInfo,
       relatedProducts: relProductInfo,
