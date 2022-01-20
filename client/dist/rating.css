@@ -527,6 +527,7 @@
 }
 .review-productTrack {
   position: relative;
+  color: black;
 }
 .review-productTrack-bar {
   display: inline-block;
@@ -543,6 +544,7 @@
   position: absolute;
   top:16px;
   left:0;
+  color: #7d7d7d;
 }
 #review-productTrack-text-2 {
   position: absolute;
@@ -553,11 +555,13 @@
   text-align: center;
   text-align: center;
   transform: translate(-50%) translateY(-50%);
+  color: #7d7d7d;
 }
 #review-productTrack-text-3 {
   position: absolute;
   top:16px;
   right:0;
+  color: #7d7d7d;
 }
 .review-productTrack i {
   position: absolute;
