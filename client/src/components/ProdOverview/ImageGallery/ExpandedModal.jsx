@@ -151,16 +151,16 @@ export class ExpandedModal extends React.Component {
           <div id='POModalZoomImage'></div>
           <div id='POModaImageWrapper'>
             <div id='POModalLens' onMouseMove={this.imageZoom.bind(this)} onClick={this.activateZoom.bind(this)}></div>
-            <img className='POModalImage' id='PONormalImage' onClick={() => { this.activateZoom.bind(this)(); }} src={this.props.photos[this.state.index].url}
+            <img alt={'Modal Image'} className='POModalImage' id='PONormalImage' onClick={() => { this.activateZoom.bind(this)(); }} src={this.props.photos[this.state.index].url}
               onMouseMove={this.imageZoom.bind(this)}/>
           </div>
         </div>
         <div id='POModalThumbDisplayer'>
           {this.props.photos.map((element, index) => {
             if (this.state.index === index) {
-              return <img className='POModalDisplayThumbImg POModalThumbImg' key={index} src={element.thumbnail_url} onClick={() => { this.thumbToDisp(index); }} />;
+              return <img alt={'Modal Thumb Display'} className='POModalDisplayThumbImg POModalThumbImg' key={index} src={element.thumbnail_url} onClick={() => { this.thumbToDisp(index); }} />;
             } else {
-              return <img className='POModalThumbImg' key={index} src={element.thumbnail_url} onClick={() => { this.thumbToDisplay.bind(this)(index); }} />;
+              return <img alt={'Modal Thumb Images'} className='POModalThumbImg' key={index} src={element.thumbnail_url} onClick={() => { this.thumbToDisplay.bind(this)(index); }} />;
             }
           })}
         </div>
