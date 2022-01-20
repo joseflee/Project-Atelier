@@ -5,3 +5,12 @@ coverage
 
 client/dist/bundle.js
 client/dist/bundle.js.map
+client/dist/bundle.js.br
+client/dist/bundle.js.gz
+client/dist/bundle.js.map.br
+client/dist/bundle.js.map.gz
+client/dist/bundle.js.LICENSE.text
+client/dist/bundle.js.LICENSE.text.br
+client/dist/bundle.js.LICENSE.text.gz
+
+

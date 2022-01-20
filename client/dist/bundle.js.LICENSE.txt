@@ -23,8 +23,6 @@ object-assign
 
 /*! ../ClickDataAnalytics.jsx */
 
-/*! ../ProdOverview/ImageGallery/Gallery.styles.js */
-
 /*! ../ProdOverview/ProductInfo/StarRating.jsx */
 
 /*! ../cancel/Cancel */
@@ -249,19 +247,9 @@ object-assign
 
 /*! @babel/runtime/helpers/slicedToArray */
 
-/*! @babel/runtime/helpers/taggedTemplateLiteral */
-
 /*! @babel/runtime/helpers/toConsumableArray */
 
 /*! @babel/runtime/regenerator */
-
-/*! @emotion/is-prop-valid */
-
-/*! @emotion/memoize */
-
-/*! @emotion/stylis */
-
-/*! @emotion/unitless */
 
 /*! @fortawesome/fontawesome-svg-core */
 
@@ -274,8 +262,6 @@ object-assign
 /*! axios */
 
 /*! form-data */
-
-/*! hoist-non-react-statics */
 
 /*! moment */
 
@@ -296,10 +282,6 @@ object-assign
 /*! scheduler */
 
 /*! scheduler/tracing */
-
-/*! shallowequal */
-
-/*! styled-components */
 
 /*!*******************!*\
   !*** ./config.js ***!
@@ -336,10 +318,6 @@ object-assign
 /*!***************************************!*\
   !*** ./node_modules/moment/moment.js ***!
   \***************************************/
-
-/*!****************************************!*\
-  !*** ./node_modules/react-is/index.js ***!
-  \****************************************/
 
 /*!*****************************************!*\
   !*** ./node_modules/axios/lib/axios.js ***!
@@ -753,10 +731,6 @@ object-assign
   !*** ./node_modules/prop-types/lib/has.js ***!
   \********************************************/
 
-/*!********************************************!*\
-  !*** ./node_modules/shallowequal/index.js ***!
-  \********************************************/
-
 /*!*********************************************!*\
   !*** ./node_modules/moment/locale/ar-dz.js ***!
   \*********************************************/
@@ -1058,10 +1032,6 @@ object-assign
   \***********************************************************/
 
 /*!***********************************************************!*\
-  !*** ./node_modules/react-is/cjs/react-is.development.js ***!
-  \***********************************************************/
-
-/*!***********************************************************!*\
   !*** ./node_modules/react-rating/lib/react-rating.esm.js ***!
   \***********************************************************/
 
@@ -1154,10 +1124,6 @@ object-assign
   \*****************************************************************/
 
 /*!*****************************************************************!*\
-  !*** ./node_modules/@emotion/stylis/dist/stylis.browser.esm.js ***!
-  \*****************************************************************/
-
-/*!*****************************************************************!*\
   !*** ./node_modules/@fortawesome/react-fontawesome/index.es.js ***!
   \*****************************************************************/
 
@@ -1201,10 +1167,6 @@ object-assign
   !*** ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js ***!
   \*******************************************************************/
 
-/*!*******************************************************************!*\
-  !*** ./node_modules/@emotion/memoize/dist/memoize.browser.esm.js ***!
-  \*******************************************************************/
-
 /*!********************************************************************!*\
   !*** ./client/src/components/ProdOverview/AddToCart/AddToCart.jsx ***!
   \********************************************************************/
@@ -1239,10 +1201,6 @@ object-assign
 
 /*!*********************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js ***!
-  \*********************************************************************/
-
-/*!*********************************************************************!*\
-  !*** ./node_modules/@emotion/unitless/dist/unitless.browser.esm.js ***!
   \*********************************************************************/
 
 /*!*********************************************************************!*\
@@ -1309,10 +1267,6 @@ object-assign
   !*** ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js ***!
   \**************************************************************************/
 
-/*!**************************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/esm/taggedTemplateLiteral.js ***!
-  \**************************************************************************/
-
 /*!***************************************************************************!*\
   !*** ./client/src/components/ProdOverview/AddToCart/QuantityDropdown.jsx ***!
   \***************************************************************************/
@@ -1321,24 +1275,12 @@ object-assign
   !*** ./client/src/components/ProdOverview/ImageGallery/ExpandedModal.jsx ***!
   \***************************************************************************/
 
-/*!***************************************************************************!*\
-  !*** ./client/src/components/ProdOverview/ImageGallery/Gallery.styles.js ***!
-  \***************************************************************************/
-
 /*!****************************************************************************!*\
   !*** ./client/src/components/ProdOverview/ImageGallery/DefaultGallery.jsx ***!
   \****************************************************************************/
 
-/*!*****************************************************************************!*\
-  !*** ./node_modules/hoist-non-react-statics/node_modules/react-is/index.js ***!
-  \*****************************************************************************/
-
 /*!******************************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js ***!
-  \******************************************************************************/
-
-/*!******************************************************************************!*\
-  !*** ./node_modules/styled-components/dist/styled-components.browser.esm.js ***!
   \******************************************************************************/
 
 /*!*******************************************************************************!*\
@@ -1349,25 +1291,13 @@ object-assign
   !*** ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js ***!
   \*******************************************************************************/
 
-/*!*******************************************************************************!*\
-  !*** ./node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js ***!
-  \*******************************************************************************/
-
 /*!********************************************************************************!*\
   !*** ./client/src/components/ProdOverview/StyleSelector/StyleSelectBubble.jsx ***!
   \********************************************************************************/
 
-/*!**********************************************************************************!*\
-  !*** ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
-  \**********************************************************************************/
-
 /*!***********************************************************************************!*\
   !*** ./node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js ***!
   \***********************************************************************************/
-
-/*!************************************************************************************************!*\
-  !*** ./node_modules/hoist-non-react-statics/node_modules/react-is/cjs/react-is.development.js ***!
-  \************************************************************************************************/
 
 /**
  * Checks if an event is supported in the current execution environment.
@@ -1412,15 +1342,6 @@ object-assign
 
 /** @license React v17.0.2
  * react-dom.development.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-/** @license React v17.0.2
- * react-is.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
