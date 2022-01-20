@@ -16,7 +16,9 @@ class QnA extends React.Component {
       questions: [],
       isMoreQuestionsButtonShown: false,
       productName: 'This is not a name',
-      isAddNewQuestionClicked: false
+      isAddNewQuestionClicked: false,
+      productId: this.props.productId,
+
     };
 
     this.showMoreQuestions = this.showMoreQuestions.bind(this);
@@ -32,45 +34,17 @@ class QnA extends React.Component {
   componentWillUnmount() {
     this._isMounted = false;
   }
-  componentDidMount() {
-    this._isMounted = true;
-    let productId = this.props.productId;
-    //GET PRODUCT NAME BY ITS ID
-    var url = '/qna/getProductById';
-    axios.get(url, {params: {id: productId}})
-      .then((response) => {
-        if (this._isMounted) {
-          this.setState({
-            productName: response.data.name
-          });
-        }
 
-      })
-      .catch(function (error) {
-        console.log(error);
+
+  componentDidMount() {
+    //console.log('this is props', this.props);
+    this._isMounted = true;
+    if (this._isMounted) {
+      this.setState({
+        productName: this.props.currentProduct.name,
+        questions: this.props.questionsList
       });
-    //GET QUESTIONS LIST BY PRODUCT ID
-    var url = '/qna/getQuestionsList';
-    axios.get(url, {params: {id: productId}})
-      .then((response) => {
-        var questionsToShow = response.data.results;
-        if (questionsToShow.length > 2) {
-          if (this._isMounted) {
-            this.setState({
-              isMoreQuestionsButtonShown: true
-            });
-          }
-        }
-        questionsToShow = questionsToShow.slice(0, 2);
-        if (this._isMounted) {
-          this.setState({
-            questions: questionsToShow
-          });
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    }
   }
 
   clickOnHelpfulQuestion(productId, questionId) {
@@ -200,8 +174,6 @@ class QnA extends React.Component {
         });
     }
 
-
-
   }
 
   updateQuestionList(questions) {
@@ -257,8 +229,6 @@ class QnA extends React.Component {
     }
   }
 
-
-
   checkAddingNewQuestion() {
     console.log('click on add question');
     this.setState({
@@ -269,12 +239,6 @@ class QnA extends React.Component {
   render() {
     let moreAnsweredQuestions,
       qnaScreen;
-
-    // if (this.state.isAddNewQuestionClicked) {
-    //   qnaScreen = 'qna-screen-not-transparent';
-    // } else {
-    //   qnaScreen = 'qna-screen-transparent';
-    // }
 
     if (this.state.isMoreQuestionsButtonShown) {
       moreAnsweredQuestions = <MoreAnsweredQuestions click={this.showMoreQuestions}/>;
@@ -288,18 +252,18 @@ class QnA extends React.Component {
         <div className='qna-component-name'>QUESTIONS AND ANSWERS</div>
         <SearchQuestions search={this.search}/>
         <QuestionsList
-          data={this.state.questions}
+          data={this.props.questionsList}
           productId={this.props.productId}
           clickOnHelpful={this.clickOnHelpfulQuestion}
           clickOnHelpfulAnswer={this.clickOnHelpfulAnswer}
           reportAnswer={this.reportAnswer}
           addNewAnswer={this.addNewAnswer}
-          productName={this.state.productName}
+          productName={this.props.currentProduct.name}
         />
         <br />
         <div className='qna-button-wrapper'>
           {moreAnsweredQuestions}
-          <AddQuestion name={this.state.productName}
+          <AddQuestion name={this.props.currentProduct.name}
             productId={this.props.productId}
             addQuestion={this.addNewQuestion}
             checkForm={this.checkAddingNewQuestion}

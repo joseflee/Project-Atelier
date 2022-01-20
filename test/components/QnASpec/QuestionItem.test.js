@@ -128,8 +128,11 @@ describe('Rendering one question item', function() {
     const parent = mount(<QuestionItem
       question={exampleQuestions.questions.results[1]} />);
     const spy1 = jest.spyOn(parent.instance(), 'closeAnswerForm');
+
     const child = mount(<AddAnswerForm closeAnswer={spy1}/>);
+
     expect(parent.state().isAddAnswerClicked).toEqual(false);
+    
     let hiddenModal = parent.find('.qna-add-answer-modal-hidden');
     expect(hiddenModal.length).toEqual(1);
 
