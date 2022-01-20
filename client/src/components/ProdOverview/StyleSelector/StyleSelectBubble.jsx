@@ -10,14 +10,14 @@ const StyleBubble = (props) => {
   if (props.usecheck) {
     return (
       <div className='POStyleCircleContainer' onClick={update}>
-        <img className='POStyleSmallImg' alt={props.style.name} src={props.style.photos[0].thumbnail_url} />
+        <img alt={'Selected Style'} className='POStyleSmallImg' alt={props.style.name} src={props.style.photos[0].thumbnail_url} />
         <FontAwesomeIcon icon={faCheckCircle} className='POStyleCheck'/>
       </div>
     );
   } else {
     return (
       <div className='POStyleCircleContainer' onClick={update}>
-        <img className='POStyleSmallImg' alt={props.style.name} src={props.style.photos[0].thumbnail_url} />
+        <img alt={'Other Styles'} className='POStyleSmallImg' alt={props.style.name} src={props.style.photos[0].thumbnail_url} />
       </div>
     );
   }
