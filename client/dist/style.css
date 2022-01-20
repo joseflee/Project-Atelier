@@ -61,11 +61,6 @@
 
 /* Related Products and My Outfits --------------------------------------------------------------------------------------------------- Start */
 
-.rel-prod-container {
-  border: 1px solid black;
-  padding: 15px;
-}
-
 .rel-products {
   text-align: center;
 }
@@ -76,14 +71,15 @@
 
 .product-card-container {
   height: 100%;
+  width: 80%;
   display: grid;
   clear: both;
   margin: auto;
 }
 
 .product-cards {
-  overflow: hidden;
   white-space: nowrap;
+  width: 100%;
 }
 
 .product-cards div {
@@ -94,8 +90,7 @@
   display: inline-block;
   max-width: 200px;
   max-height: 400px;
-  margin: auto;
-  padding: 10px;
+  /* margin: auto; */
   padding-left: 20px;
   padding-right: 20px;
   text-align: center;
@@ -142,6 +137,11 @@
 .remove-outfit {
   text-align: end;
   margin-bottom: 5px;
+}
+
+.card-imgs {
+  max-height: 100%;
+  max-width: 100%;
 }
 
 

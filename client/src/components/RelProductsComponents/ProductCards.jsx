@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import StarRating from '../ProdOverview/ProductInfo/StarRating.jsx';
-import { DisplayImg } from '../ProdOverview/ImageGallery/Gallery.styles.js';
 
 class ProductCards extends React.Component {
   constructor(props) {
@@ -35,17 +34,26 @@ class ProductCards extends React.Component {
 
       if (target.className === 'card-scroll-left') {
         // if current state of start - 4 is less than 0, add the absolute value of current state of start - 4 ----> Same goes for current state of end
-
+        if (this.state.currentShownProducts.start - 4 < 0 && this.state.currentShownProducts.end !== 0) {
+          this.setState({
+            currentShownProducts: { start: 0, end: this.state.currentShownProducts.end - 4}
+          });
+        }
         // start becomes this.state.currentShownProducts.start - 4, and end becomes this.state.currentShownProducts.end - 4
 
         this.setState({
           currentShownProducts: { start: 0, end: 0 }
         });
       } else if (target.className === 'card-scroll-right') {
-        // if current state of start + 4 is less than length of current state of all related products
-        // if current state of end + 4 is greater than or equal to length of current state of all related products
-        // add 4 to current state of start and set current state of end to length of current state of all related products
-        // else add 4 to current state of start and current state of end
+        if (this.state.currentShownProducts.start + 4 < this.state.allRelatedProducts.length && this.state.currentShownProducts.end >= this.state.allRelatedProducts.length) {
+          this.setState({
+            currentShownProducts: { start: this.state.currentShownProducts.start + 4, end: this.state.allRelatedProducts.length }
+          });
+        } else {
+          this.setState({
+            currentShownProducts: { start: this.state.currentShownProducts.start + 4, end: this.state.currentShownProducts.end + 4 }
+          });
+        }
         this.setState({
           currentShownProducts: { start: 0, end: 0 }
         });
@@ -102,7 +110,7 @@ class ProductCards extends React.Component {
 
               return (
                 <div className="product-card" key={product.id} onClick={() => { this.props.handleClick(product.id); }}>
-                  <DisplayImg src={product.results[0].photos[0].thumbnail_url} alt={product.name}/>
+                  <img className="card-imgs" src={product.results[0].photos[0].thumbnail_url} alt={product.name} />
                   <StarRating ratings={product.ratings} />
                   <div className="product-description">
                     <h5 className="category-relProd">{product.category}</h5>

@@ -1,84 +1,117 @@
 # Project-Atelier
 
-Overview:
+## Overview
 
 Project Atelier comprises a complete redesign of the retail portal designed to modernize the site and improve sale numbers.
 
------------------------------------------------------------------------------------------------------------------------------
+## Table of Contents
 
-New Brand / Name
-New Color Scheme
+- [ProductOverview] (#productoverview)
+    - [Modules] (#modules)
+    - [Description] (#description)
+        - [ProductOverview] (#productoverview)
+        - [Ratings&Reviews] (#ratings&reviews)
+        - [Questions&Answers] (#questions&answers)
+        - [RelatedItems&Comparison] (#relateditems&comparison)
+- [Installation] (#installation)
+    - [Scripts] (#scripts)
+- [Contributors] (#contributors)
 
-Page Performance:
-- Time to First Paint: 0.8 sec
-- Time to First Meaningful Paint: 2.0 sec
-- Time to Interactive: 2.5 sec
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
-Modules:
+## Product Overview
+
+### Modules
 - Product Overview
 - Ratings & Reviews
 - Questions & Answers
 - Related Items & Outfit Creation
+### Description
 
-Product Overview:
-- Image Gallery
-    - Largest piece of the module
-    - Shows images of the product and the corresponding style that is selected currently
-    - Selecting a new style renders new images for that style
-    - Allows browsing and zooming in to the photos
-    - Gallery is to be viewable in two states:
-        - Default: Collapsed view
-            - Single main image, overlaid by list of thumbnail images
-            - First image is default as the main image
-            - If new style is selected, index of image currently selected show be same when gallery updates
-            - Thumbnail of main image is to highlighted to indicate selection
-            - Clicking on currently selected has no effect
-            - Max 7 thumbnail images will be displayed at a given time
-            - If more than 7, user should be able to scroll forward and backward through the thumbnails.
-                - Arrow button allows scrolling
-            - Arrow buttons on the main image changes the currently selected as well and updates accordingly
-            - If reaching end of 7 images, clicking on the arrows in the main image scrolls the thumbnail images as well as updating the main image.
-            - Hovering over the main image changes the cursor to a magnifying glass. Clicking at this stage changes to the expanded view.
-            - No left arrow when main image is first image, and no right arrow when main image is last image of the list.
-        - Expanded view
-            - Overlays the rest of the item detail page.
-            - Consists of a main image and spans the entire screen.
-            - Offers the left and right arrows if applicable and has the same functions.
-            - Icons are shown instead of thumbnails
-            - Clicking on main image zooms the image by 2.5 times.
-            - Hovering over the main image (excluding the arrows) changes cursor to a “+”
-            - Zoomed image should correspond to where the cursor has clicked. Moving the cursor pans the zoomed image to the corresponding direction.
-            - While zoomed, no arrows or thumbnail selection icons are displayed. Mouse should become a “-“ symbol. Clicking the image at this state will zoom the image out back to the default expanded image gallery view.
-- Product Info
-    - Star Rating 
-        - Average rating based on reviews
-        - By every quarter of a star
-        - “Read All Reviews” Anchor to the R&R Module with no. of reviews
-    - Product Category
-    - Product Title
-    - Price
-        - Updates dynamically with style selected with a default style selected
-    - Product Overview
-    - A Star to indicate a “My Outfit” item
-- Style Selector
-    - No limit to no. of styles
-    - Rows of 4
-    - Default is first in the list
-    - Thumbnails are shown and clicked to be changed to specific style
-    - Product always has more than one style
-    - One style at a time, and a style must be selected at all times
-- Add to Cart
-    - Two dropdowns:
-        - Size
-            - Shows sizes that are in stock and if the product itself is in stock
-            - If no stock for current product, displays “OUT OF STOCK”
-            - Default: “Select Size”
-        - Quantity
-            - Options range from 1 to maximum
-            - Max is capped at 15, but decreases depending on how many is in stock.
-            - When size is selected, dropdown defaults to 1.
-        - Add to Cart
-            - Places style, size, and quantity of product into the user’s cart.
-            - If “Select Size” is selected, opens the size dropdown and message above dropdown states “Please select size.”
-            - If no stock, button is hidden.
-            - If valid size and quantity are selected, adds the product to cart.
+#### Product Overview
+
+The Overview module will be the top-most module on the Product Detail page.  The functionality contained within this module can be divided into several pieces:
+- Image gallery
+- Product information
+- Style selector
+- Add to cart
+
+This component will guide the customer through selecting a specific style and size to add to their cart.   As such, portions of the Overview module, such as the image gallery and cart selection, will be specific to a SKU chosen as opposed to the overarching product.
+
+#### Ratings & Reviews
+
+The Ratings & Reviews module will allow viewing and submission of reviews for the product selected.  The functionality contained within this module can be divided into several pieces:
+- Write new review
+- Reviews List
+- Sorting
+- Rating Breakdown
+- Product Breakdown
+
+This component will extend the ability to write, read, and browse through reviews for the current product.
+
+All reviews will be saved per product.  Specific styles will not be accounted for within the review module.
+
+#### Questions & Answers
+
+The Questions & Answers module will allow asking and answering of questions for the product selected.  The functionality contained within this module can be divided into several pieces:
+- View questions
+- Search for a question
+- Asking a question
+- Answering a question
+
+This component will extend the ability to view and search questions, ask questions, answer questions and provide feedback on questions about the current product.
+
+All questions will be asked and answered per product.  Specific styles will not be accounted for within the Questions & Answers module.
+
+#### Related Items & Comparison
+
+The Related Items & Comparison module will display two sets of related products.  The first set will be a list of products, determined internally, that are related to the product currently being viewed.  The second set will be a list, custom created by the user, of products which the user has grouped with the current product into an ‘outfit’.
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+## Installation
+
+You will need Git and Node.js installed to continue.
+
+```bash
+# Clone this repository
+$ git clone https://github.com/rpp32-fec-morel/Project-Atelier.git
+
+# Go into the repository
+$ cd project-atelier
+
+# Install dependencies
+$ npm install
+
+# Run webpack
+$ npm run build
+
+# Run App
+$ npm start
+
+# Access a local copy
+// Head to your browser -> localhost:3000
+```
+
+### Scripts
+
+`npm run build` = Runs Webpack with a watch flag to continuously be watching for any changes in the files
+`npm start` = Runs Nodemon for our server index.js file
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+### Contributors (in Alphabetical Order)
+
+<p>
+  :boy: <b>Ash Tsai</b> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GitHub: <a href="https://github.com/ashtsai14">@divyabhagavathiappan</a> <br>
+
+  :woman: <b>Jenya Rusinova</b> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GitHub: <a href="https://github.com/jenrusinova">@divyabhagavathiappan</a> <br>
+
+  :boy: <b>Peter Park</b> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GitHub: <a href="https://github.com/ppark051191">@divyabhagavathiappan</a> <br>
+
+  :boy: <b>Yanlin Ye</b> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GitHub: <a href="https://github.com/a244629128">@divyabhagavathiappan</a> <br>
+</p>
