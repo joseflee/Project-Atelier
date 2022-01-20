@@ -27,7 +27,7 @@ class RelProducts extends React.Component {
 
   handleAddOutfitClick(e) {
     var element = e.target;
-    var currentStyleIndex = this.props.currentProduct.results.map( result => result.style_id ).indexOf(this.props.currentStyleId);
+    var currentStyleIndex = this.props.currentProduct.results.map(result => result.style_id).indexOf(this.props.currentStyleId);
     var myOutfit = { ...this.props.currentProduct, results: this.props.currentProduct.results[currentStyleIndex] };
 
     if (this.state.listOfMyOutfits.length === 0) {

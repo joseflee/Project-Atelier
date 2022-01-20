@@ -12,8 +12,6 @@ class ProductCards extends React.Component {
       endOfShownProducts = 4;
     }
 
-    console.log(endOfShownProducts);
-
     this.state = {
       allRelatedProducts: this.props.productCards,
       currentShownProducts: { start: 0, end: endOfShownProducts },
@@ -31,16 +29,23 @@ class ProductCards extends React.Component {
   updateStatus(e) {
     if (e) {
       var target = e.target;
-      console.log(target.className);
 
       var startOfRelProducts = 0;
       var endOfRelProducts = this.state.allRelatedProducts.length;
 
       if (target.className === 'card-scroll-left') {
+        // if current state of start - 4 is less than 0, add the absolute value of current state of start - 4 ----> Same goes for current state of end
+
+        // start becomes this.state.currentShownProducts.start - 4, and end becomes this.state.currentShownProducts.end - 4
+
         this.setState({
           currentShownProducts: { start: 0, end: 0 }
         });
       } else if (target.className === 'card-scroll-right') {
+        // if current state of start + 4 is less than length of current state of all related products
+        // if current state of end + 4 is greater than or equal to length of current state of all related products
+        // add 4 to current state of start and set current state of end to length of current state of all related products
+        // else add 4 to current state of start and current state of end
         this.setState({
           currentShownProducts: { start: 0, end: 0 }
         });

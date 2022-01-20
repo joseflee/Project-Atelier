@@ -16,6 +16,7 @@
   margin-bottom: 10px;
   position: relative;
 }
+
 .top-Search-Logo {
   color: white;
   font-size: 30px;
@@ -24,27 +25,32 @@
   left: 25px;
   top: 25px;
 }
+
 .top-Search-Logo span:nth-child(1),
 .top-Search-Logo span:nth-child(3) {
   text-decoration: underline;
 }
+
 .top-Search-Container {
   color: white;
   position: absolute;
   right: 25px;
   top: 25px;
 }
+
 .top-Search-Container i {
   padding-left: 15px;
   font-size: 20px;
   cursor: pointer;
 }
+
 .top-Search-Text {
     background: transparent;
     border: none;
     border-bottom: 2px solid white;
     color: white;
 }
+
 .top-Search-Text:focus {
   outline: none;
 }
