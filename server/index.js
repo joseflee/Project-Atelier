@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 const port = 3000;
+const compression = require('compression');
 
 const productRouter = require('./routes/product.js');
 const ratingsRouter = require('./routes/ratings.js');
@@ -11,6 +12,7 @@ const cartRouter = require('./routes/cart.js');
 const relProductsRouter = require('./routes/relProduct.js');
 const interactionsRouter = require('./routes/interactions.js');
 
+app.use(compression());
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(cors());
 app.use(express.json());
