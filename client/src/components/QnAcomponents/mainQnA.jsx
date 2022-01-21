@@ -70,7 +70,7 @@ class QnA extends React.Component {
   }
 
   clickOnHelpfulQuestion(productId, questionId) {
-    console.log('clicked on helpful question');
+    //console.log('clicked on helpful question');
     var url = '/qna/updateQuestionHelp';
     axios.put(url, {params: {questionId: questionId, productId: productId}})
       .then((response) => {
@@ -87,7 +87,7 @@ class QnA extends React.Component {
   }
 
   addNewQuestion(productId, body, nickname, email) {
-    console.log('clicked on submit new question');
+    //console.log('clicked on submit new question');
     //SEND REQUEST TO SERVER TO ADD A NEW QUESTION
     var url = '/qna/addNewQuestion';
     axios.post(url, {params: {id: productId, body: body, name: nickname, email: email}})
@@ -129,12 +129,12 @@ class QnA extends React.Component {
   }
 
   reportAnswer(answerId, productId) {
-    console.log('clicked on report answer');
+    //console.log('clicked on report answer');
     //SEND REQUEST TO REPORT ANSWER
     var url = '/qna/reportAnswer';
     axios.put(url, {params: {answerId: answerId, productId: productId}})
       .then((response) => {
-        console.log('sent response to client', response);
+        //console.log('sent response to client', response);
         this.updateQuestionList(response.data.results);
       })
       .catch(function (error) {
@@ -143,7 +143,7 @@ class QnA extends React.Component {
   }
 
   addNewAnswer(questionId, body, nickname, email, photos, productId) {
-    console.log('144 main', photos);
+    //console.log('144 main', photos);
     var photosToSend = [];
     var allPromises = [];
     if (photos.length > 0) {
@@ -187,7 +187,7 @@ class QnA extends React.Component {
       var url = '/qna/addNewAnswer';
       axios.post(url, {params: {id: questionId, productId: productId, body: body, name: nickname, email: email, photos: []}})
         .then((response) => {
-          console.log('added new answer', response.data.results);
+          //console.log('added new answer', response.data.results);
           //render new answer in the parent component
           this.updateQuestionList(response.data.results);
         })
@@ -220,10 +220,10 @@ class QnA extends React.Component {
       axios.get(url, {params: {id: productId}})
         .then((response) => {
           query = query.toLowerCase();
-          console.log('received query', query);
+          //console.log('received query', query);
           let questions = response.data.results;
           const filtered = questions.filter(item => item.question_body.toLowerCase().includes(query));
-          console.log('filtered', filtered);
+          //console.log('filtered', filtered);
           //do not hiding questions if more than 2
           if (this._isMounted) {
             this.setState({
@@ -258,7 +258,7 @@ class QnA extends React.Component {
   }
 
   checkAddingNewQuestion() {
-    console.log('click on add question');
+    //console.log('click on add question');
     this.setState({
       isAddNewQuestionClicked: !this.state.isAddNewQuestionClicked
     });
