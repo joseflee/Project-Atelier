@@ -381,13 +381,6 @@
   flex: 1 1 50%;
 }
 
-<<<<<<< HEAD
-/* .POQuantitySelector {
-  grid-column: 2/3
-} */
-
-=======
->>>>>>> ef67279 (Cleaned up code by removing comments and console logs)
 #sizeSelector {
   width: 210px;
   transform: translateY(30%);
