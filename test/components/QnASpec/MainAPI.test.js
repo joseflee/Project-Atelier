@@ -254,7 +254,7 @@ describe('API calls in Main component', () => {
     jest.spyOn(axios, 'get').mockResolvedValueOnce(response);
 
 
-    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
+    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions.results}/>).dive();
     const parentSpy = jest.spyOn(parent.instance(), 'search');
 
     await act(async () => {
@@ -275,9 +275,10 @@ describe('API calls in Main component', () => {
     //expect(parentSpy).toHaveBeenCalled();
     expect(axios.get).toHaveBeenCalledTimes(1);
     expect(parentSpy).toHaveBeenCalledWith('bla', true);
-    console.log(parent.state());
+    //console.log('278', parent.state());
     expect(parent.instance()._isMounted).toEqual(true);
-    expect(parent.state().isMoreQuestionsButtonShown).toEqual(false);
+    expect(parent.state().isSearchActive).toEqual(true);
+    expect(parent.state().isMoreQuestionsButtonShown).toEqual(true);
 
   });
 
@@ -300,13 +301,16 @@ describe('API calls in Main component', () => {
   });
 
 
-  xit('doesn\'t trigger API calls if the query length is less than 3 chars ', async () => {
+  it('doesn\'t trigger search API calls if the query length is less than 3 chars ', async () => {
 
     //parent component
 
+    const response = example;
+
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(response);
 
 
-    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
+    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions.results}/>).dive();
     const parentSpy = jest.spyOn(parent.instance(), 'search');
 
     await act(async () => {
@@ -325,11 +329,11 @@ describe('API calls in Main component', () => {
 
     expect(parentSpy).toHaveBeenCalled();
     expect(parentSpy).toHaveBeenCalledWith('42', false);
-    expect(axios.get).toHaveBeenCalledTimes(2);
+    expect(axios.get).toHaveBeenCalledTimes(0);
     expect(parent.instance()._isMounted).toEqual(true);
-    //console.log('is mounted', parent.instance()._isMounted);
+    expect(parent.state().isSearchActive).toEqual(false);
     expect(parent.state().isMoreQuestionsButtonShown).toEqual(true);
-    //expect(parent.state().questions.length()).toEqual(1);
+
   });
 
   it('correctly changes state of main if add new question form is clicked ', async () => {
