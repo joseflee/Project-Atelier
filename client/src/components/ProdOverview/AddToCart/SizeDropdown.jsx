@@ -1,7 +1,6 @@
 import React from 'react';
 
 const SizeDropdown = (props) => {
-  // console.log('styleDropdown props', props);
   var sizes = Object.values(props.displayedSkus);
 
   const setSku = (e) => {

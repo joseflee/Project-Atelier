@@ -26,7 +26,6 @@ const gotoReviews = () => {
 };
 
 const StarRating = (props) => {
-  console.log('props', avgRating(props.ratings));
   return (
     <div className='POStarRating' data-testid="starRating">
       <Rating start={0} stop={5} initialRating={props.ratings} emptySymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#808080

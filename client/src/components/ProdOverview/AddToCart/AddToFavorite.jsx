@@ -1,7 +1,6 @@
 import React from 'react';
 
 const AddToFavorite = (props) => {
-
   if (props.addToFavorites.includes(props.currentStyleId)) {
     return (
       <div className='POATOC'>
