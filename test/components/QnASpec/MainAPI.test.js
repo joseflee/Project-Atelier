@@ -12,10 +12,9 @@ import AddAnswerForm from '../../../client/src/components/QnAcomponents/AddAnswe
 import AddQuestionForm from '../../../client/src/components/QnAcomponents/AddQuestionForm.jsx';
 import Search from '../../../client/src/components/QnAcomponents/SearchQuestions.jsx';
 import exampleQuestions from '../../../example/questions.js';
+import exampleProducts from '../../../example/products.js';
 import AddQuestion from '../../../client/src/components/QnAcomponents/AddQuestion.jsx';
-
-
-
+import ClickData from '../../../client/src/components/ClickDataAnalytics.jsx';
 
 
 
@@ -42,12 +41,12 @@ let example = {
 };
 
 
-xdescribe('API calls in Main component', () => {
+describe('API calls in Main component', () => {
   afterEach(() => {
     jest.restoreAllMocks();
     jest.resetAllMocks();
   });
-  it('mocks get API call', async () => {
+  xit('mocks get API call', async () => {
 
     const response = { data: { name: 'mocked name' } };
 
@@ -60,14 +59,11 @@ xdescribe('API calls in Main component', () => {
 
     expect (wrapper.state().productName).toEqual('mocked name');
     expect(axios.get).toHaveBeenCalledTimes(2);
-    // expect(mockFn.mock.calls).toEqual([
-    //   [arg1, arg2, ...], // First call
-    //   [arg1, arg2, ...]  // Second call
-    // ]);
+
   });
 
 
-  it('mocks all get API call', async () => {
+  xit('mocks all get API call', async () => {
     const response1 = { data: { name: 'mocked name' } };
     const response2 = example;
 
@@ -88,26 +84,26 @@ xdescribe('API calls in Main component', () => {
     expect(wrapper.state().isMoreQuestionsButtonShown).toEqual(false);
 
   });
+  xit('changes state then component is mounted', async () => {
+
+    const wrapper = shallow(<MainQnA productId={42}
+      productName={exampleProducts.products[0].name}/>);
+
+    console.log(wrapper.instance());
+    expect(wrapper.state().productName).toEqual('Camo Onesie');
+    expect (wrapper.state().productId).toEqual(42);
+  });
 
   it('mocks put API call for clicking on helpful question', async () => {
     //parent component
-    const getResponse1 = { data: { name: 'mocked name' } };
-    const getResponse2 = example;
 
-    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
-      .mockResolvedValueOnce(getResponse2);
     const putResponse = example;
 
     jest.spyOn(axios, 'put'). mockResolvedValueOnce(putResponse);
 
-    const wrapper = mount(<MainQnA productId={42}/>);
+    const wrapper = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
+
     const parentSpy = jest.spyOn(wrapper.instance(), 'clickOnHelpfulQuestion');
-
-
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
-
     //child component
     let spy = jest.fn();
 
@@ -125,21 +121,14 @@ xdescribe('API calls in Main component', () => {
 
   it('mocks put API call for clicking on helpful answer', async () => {
     //parent component
-    const getResponse1 = { data: { name: 'mocked name' } };
-    const getResponse2 = example;
 
-    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
-      .mockResolvedValueOnce(getResponse2);
     const putResponse = example;
 
     jest.spyOn(axios, 'put'). mockResolvedValueOnce(putResponse);
 
-    const wrapper = mount(<MainQnA productId={42}/>);
+    const wrapper = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
     const parentSpy = jest.spyOn(wrapper.instance(), 'clickOnHelpfulAnswer');
 
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
     //child component
     let spy = jest.fn();
 
@@ -158,21 +147,13 @@ xdescribe('API calls in Main component', () => {
   it('mocks put API call for clicking on report answer', async () => {
 
     //parent component
-    const getResponse1 = { data: { name: 'mocked name' } };
-    const getResponse2 = example;
-
-    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
-      .mockResolvedValueOnce(getResponse2);
     const putResponse = example;
 
     jest.spyOn(axios, 'put'). mockResolvedValueOnce(putResponse);
 
-    const wrapper = mount(<MainQnA productId={42}/>);
-    const parentSpy = jest.spyOn(wrapper.instance(), 'reportAnswer');
+    const wrapper = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
 
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
+    const parentSpy = jest.spyOn(wrapper.instance(), 'reportAnswer');
 
     //child component
 
@@ -189,21 +170,14 @@ xdescribe('API calls in Main component', () => {
 
   it('mocks post API call for adding a new answer', async () => {
     //parent component
-    const getResponse1 = { data: { name: 'mocked name' } };
-    const getResponse2 = example;
 
-    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
-      .mockResolvedValueOnce(getResponse2);
     const postResponse = example;
 
     jest.spyOn(axios, 'post'). mockResolvedValueOnce(postResponse);
 
-    const parent = mount(<MainQnA productId={42}/>);
+    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
     const parentSpy = jest.spyOn(parent.instance(), 'addNewAnswer');
 
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
     //child component
 
     const formEventMocked = { preventDefault: jest.fn() };
@@ -235,22 +209,14 @@ xdescribe('API calls in Main component', () => {
   it('mocks post API call for adding a new question', async () => {
 
     //parent component
-    const getResponse1 = { data: { name: 'mocked name' } };
-    const getResponse2 = example;
 
-    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
-      .mockResolvedValueOnce(getResponse2);
     const postResponse = example;
 
     jest.spyOn(axios, 'post'). mockResolvedValueOnce(postResponse);
 
-    const parent = mount(<MainQnA productId={42}/>);
+    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
     const parentSpy = jest.spyOn(parent.instance(), 'addNewQuestion');
     const parentSpy2 = jest.spyOn(parent.instance(), 'updateQuestionList');
-
-    await act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-    });
 
     //child component
     const formEventMocked = { preventDefault: jest.fn() };
@@ -279,17 +245,16 @@ xdescribe('API calls in Main component', () => {
     expect(axios.post).toHaveBeenCalled();
 
   });
+
   it('mocks get API call for search', async () => {
 
     //parent component
-    const getResponse1 = { data: { name: 'mocked name' } };
-    const getResponse2 = example;
+    const response = example;
 
-    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
-      .mockResolvedValueOnce(getResponse2).
-      mockResolvedValueOnce(getResponse2);
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(response);
 
-    const parent = mount(<MainQnA productId={42}/>);
+
+    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
     const parentSpy = jest.spyOn(parent.instance(), 'search');
 
     await act(async () => {
@@ -307,8 +272,8 @@ xdescribe('API calls in Main component', () => {
     component.find('input').simulate('change', event);
     // expect(onSearchMock).toHaveBeenCalled();
     // expect(onSearchMock).toBeCalledWith('bla', true);
-    expect(parentSpy).toHaveBeenCalled();
-    expect(axios.get).toHaveBeenCalledTimes(3);
+    //expect(parentSpy).toHaveBeenCalled();
+    expect(axios.get).toHaveBeenCalledTimes(1);
     expect(parentSpy).toHaveBeenCalledWith('bla', true);
     console.log(parent.state());
     expect(parent.instance()._isMounted).toEqual(true);
@@ -335,17 +300,13 @@ xdescribe('API calls in Main component', () => {
   });
 
 
-  it('doesn\'t trigger API calls if the query length is less than 3 chars ', async () => {
+  xit('doesn\'t trigger API calls if the query length is less than 3 chars ', async () => {
 
     //parent component
-    const getResponse1 = { data: { name: 'mocked name' } };
-    const getResponse2 = dummydata.questions;
-
-    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
-      .mockResolvedValueOnce(getResponse2);
 
 
-    const parent = mount(<MainQnA productId={42}/>);
+
+    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
     const parentSpy = jest.spyOn(parent.instance(), 'search');
 
     await act(async () => {
@@ -373,16 +334,12 @@ xdescribe('API calls in Main component', () => {
 
   it('correctly changes state of main if add new question form is clicked ', async () => {
     //parent component
-    const getResponse1 = { data: { name: 'mocked name' } };
-    const getResponse2 = example;
 
-    jest.spyOn(axios, 'get').mockResolvedValueOnce(getResponse1)
-      .mockResolvedValueOnce(getResponse2);
     const postResponse = example;
 
     jest.spyOn(axios, 'post'). mockResolvedValueOnce(postResponse);
 
-    const parent = mount(<MainQnA productId={42}/>);
+    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
     const parentSpy = jest.spyOn(parent.instance(), 'checkAddingNewQuestion');
 
 
