@@ -8,6 +8,7 @@ Project Atelier comprises a complete redesign of the retail portal designed to m
 
 - [Setup and Installation](#setup-and-installation)
 - [Product Description](#product-description)
+- [License](#license)
 - [Contributors](#contributors)
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
@@ -116,6 +117,12 @@ All questions will be asked and answered per product.  Specific styles will not 
 #### Related Items and Comparison
 
 The Related Items & Comparison module will display two sets of related products.  The first set will be a list of products, determined internally, that are related to the product currently being viewed.  The second set will be a list, custom created by the user, of products which the user has grouped with the current product into an ‘outfit’.
+
+![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+### License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
