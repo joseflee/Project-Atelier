@@ -34,25 +34,14 @@ describe('Main Questions and Answers form', function() {
     expect(qna.find('.qna-main-component').length).toBe(1);
   });
 
+  it('should mount and unmount', function() {
 
+    const wrapper = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
 
-
-  xit('should render without throwing an error', function() {
-    //expect(shallow(<MainQnA productId={59553}/>).contains( <div className='qna-component-name'>QUESTIONS AND ANSWERS</div>)).toBe(true);
-    //const component = shallow(<ClickData />);
-    const mock = jest.fn();
-    let Click = ClickData(mock);
-    console.log(Click);
-    let wrapper = shallow(<Click />);
-    console.log(wrapper.instance());
-  });
-
-  xit('should be selectable by class', function() {
-    expect(shallow(<MainQnA productId={59553} />).is('.qna-main-component')).toBe(true);
-  });
-
-  xit('should mount in a full DOM', function() {
-    expect(shallow(<MainQnA productId={59553}/>).find('.qna-main-component').length).toBe(1);
+    const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
+    expect(wrapper.instance()._isMounted).toEqual(true);
+    wrapper.unmount();
+    expect(componentWillUnmount).toHaveBeenCalled();
   });
 
   xit('should render to static HTML', function() {
@@ -60,17 +49,19 @@ describe('Main Questions and Answers form', function() {
     expect(render(<MainQnA productId={59553}/>).text()).toEqual(text);
   });
 
-  xit('correctly shows More Answered Question button', function() {
-    var component = shallow(<MainQnA productId={59553} />);
+  it('correctly shows More Answered Question button', function() {
+    const component = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
     let state = {
       isMoreQuestionsButtonShown: true
     };
     component.setState(state);
-    let button = component.find('.qna-more-answered-questions-wrapper');
-    expect(button.text()).toEqual(' <MoreAnsweredQuestions />');
+    let button = component.find('.qna-button-wrapper');
+    expect(button.text()).toEqual('<MoreAnsweredQuestions /><AddQuestion />');
 
   });
 
+
+  
 
 
 });
