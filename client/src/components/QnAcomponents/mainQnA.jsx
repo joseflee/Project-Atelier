@@ -20,7 +20,7 @@ class QnA extends React.Component {
       productName: 'This is not a name',
       isAddNewQuestionClicked: false,
       productId: this.props.productId,
-
+      isSearchActive: false
     };
 
     this.showMoreQuestions = this.showMoreQuestions.bind(this);
@@ -70,7 +70,7 @@ class QnA extends React.Component {
   }
 
   clickOnHelpfulQuestion(productId, questionId) {
-    console.log('clicked on helpful question');
+    //console.log('clicked on helpful question');
     var url = '/qna/updateQuestionHelp';
     axios.put(url, {params: {questionId: questionId, productId: productId}})
       .then((response) => {
@@ -87,7 +87,7 @@ class QnA extends React.Component {
   }
 
   addNewQuestion(productId, body, nickname, email) {
-    console.log('clicked on submit new question');
+    //console.log('clicked on submit new question');
     //SEND REQUEST TO SERVER TO ADD A NEW QUESTION
     var url = '/qna/addNewQuestion';
     axios.post(url, {params: {id: productId, body: body, name: nickname, email: email}})
@@ -129,12 +129,12 @@ class QnA extends React.Component {
   }
 
   reportAnswer(answerId, productId) {
-    console.log('clicked on report answer');
+    //console.log('clicked on report answer');
     //SEND REQUEST TO REPORT ANSWER
     var url = '/qna/reportAnswer';
     axios.put(url, {params: {answerId: answerId, productId: productId}})
       .then((response) => {
-        console.log('sent response to client', response);
+        //console.log('sent response to client', response);
         this.updateQuestionList(response.data.results);
       })
       .catch(function (error) {
@@ -143,7 +143,7 @@ class QnA extends React.Component {
   }
 
   addNewAnswer(questionId, body, nickname, email, photos, productId) {
-    console.log('144 main', photos);
+    //console.log('144 main', photos);
     var photosToSend = [];
     var allPromises = [];
     if (photos.length > 0) {
@@ -187,7 +187,7 @@ class QnA extends React.Component {
       var url = '/qna/addNewAnswer';
       axios.post(url, {params: {id: questionId, productId: productId, body: body, name: nickname, email: email, photos: []}})
         .then((response) => {
-          console.log('added new answer', response.data.results);
+          //console.log('added new answer', response.data.results);
           //render new answer in the parent component
           this.updateQuestionList(response.data.results);
         })
@@ -212,15 +212,18 @@ class QnA extends React.Component {
     //console.log('query=', query);
     //console.log('isSearchTriggered=', isSearchTriggered);
     if (isSearchTriggered === true) {
-    //GET LIST OF ALL QUESTIONS BY PRODUCT ID
+      this.setState({
+        isSearchActive: true
+      });
+      //GET LIST OF ALL QUESTIONS BY PRODUCT ID
       var url = 'http://localhost:3000/qna/getQuestionsList';
       axios.get(url, {params: {id: productId}})
         .then((response) => {
           query = query.toLowerCase();
-          console.log('received query', query);
+          //console.log('received query', query);
           let questions = response.data.results;
           const filtered = questions.filter(item => item.question_body.toLowerCase().includes(query));
-          console.log('filtered', filtered);
+          //console.log('filtered', filtered);
           //do not hiding questions if more than 2
           if (this._isMounted) {
             this.setState({
@@ -232,27 +235,30 @@ class QnA extends React.Component {
         });
     } else {
       console.log('search stopped');
+      this.setState({
+        isSearchActive: false
+      });
       //render all the questions and hide the rest if more than 2
       //var questionsToShow = response.data.results;
-      var questionsToShow = [...this.props.questions];
-      if (questionsToShow.length > 2) {
-        if (this._isMounted) {
-          this.setState({
-            isMoreQuestionsButtonShown: true
-          });
-        }
-      }
-      questionsToShow = questionsToShow.slice(0, 2);
-      if (this._isMounted) {
-        this.setState({
-          questions: questionsToShow
-        });
-      }
+      // var questionsToShow = [...this.props.questions];
+      // if (questionsToShow.length > 2) {
+      //   if (this._isMounted) {
+      //     this.setState({
+      //       isMoreQuestionsButtonShown: true
+      //     });
+      //   }
+      // }
+      // questionsToShow = questionsToShow.slice(0, 2);
+      // if (this._isMounted) {
+      //   this.setState({
+      //     questions: questionsToShow
+      //   });
+      // }
     }
   }
 
   checkAddingNewQuestion() {
-    console.log('click on add question');
+    //console.log('click on add question');
     this.setState({
       isAddNewQuestionClicked: !this.state.isAddNewQuestionClicked
     });
@@ -262,16 +268,20 @@ class QnA extends React.Component {
     let moreAnsweredQuestions,
       qnaScreen,
       data;
-
-    if (this.state.isMoreQuestionsButtonShown) {
-
-      data = this.props.questionsList.slice(0, 2);
-      moreAnsweredQuestions = <MoreAnsweredQuestions click={this.showMoreQuestions}/>;
+    if (this.state.isSearchActive) {
+      data = this.state.questions;
     } else {
-      data = this.props.questionsList;
+      if (this.state.isMoreQuestionsButtonShown) {
 
-      moreAnsweredQuestions = <div></div>;
+        data = this.props.questionsList.slice(0, 2);
+        moreAnsweredQuestions = <MoreAnsweredQuestions click={this.showMoreQuestions}/>;
+      } else {
+        data = this.props.questionsList;
+
+        moreAnsweredQuestions = <div></div>;
+      }
     }
+
     return (
       <div className='qna-main-component' onClick={this.props.onClick}>
         <div className={qnaScreen}></div>
