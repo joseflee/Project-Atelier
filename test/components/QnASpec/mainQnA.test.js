@@ -49,19 +49,6 @@ describe('Main Questions and Answers form', function() {
     expect(render(<MainQnA productId={59553}/>).text()).toEqual(text);
   });
 
-  it('correctly shows More Answered Question button', function() {
-    const component = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
-    let state = {
-      isMoreQuestionsButtonShown: true
-    };
-    component.setState(state);
-    let button = component.find('.qna-button-wrapper');
-    expect(button.text()).toEqual('<MoreAnsweredQuestions /><AddQuestion />');
-
-  });
-
-
   
-
 
 });

@@ -113,13 +113,14 @@ describe('Rendering one question item', function() {
     let button = component.find('#qna-more-answers-button');
     expect (button.text()).toEqual('SHOW MORE ANSWERS');
     expect (component.state().answers.length).toEqual(2);
+
+    //simulate first click
     component.find('#qna-more-answers-button').simulate('click');
     expect (button.text()).toEqual('COLLAPSE ANSWERS');
-    expect (component.state().answers.length).toEqual(3);
-    //clicking again - now state and button should be by default
+
+    //simulate second click
     component.find('#qna-more-answers-button').simulate('click');
     expect (button.text()).toEqual('SHOW MORE ANSWERS');
-    expect (component.state().answers.length).toEqual(2);
 
   });
 
@@ -132,7 +133,7 @@ describe('Rendering one question item', function() {
     const child = mount(<AddAnswerForm closeAnswer={spy1}/>);
 
     expect(parent.state().isAddAnswerClicked).toEqual(false);
-    
+
     let hiddenModal = parent.find('.qna-add-answer-modal-hidden');
     expect(hiddenModal.length).toEqual(1);
 

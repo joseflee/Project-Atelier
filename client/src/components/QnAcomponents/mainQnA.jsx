@@ -47,6 +47,26 @@ class QnA extends React.Component {
         questions: this.props.questionsList
       });
     }
+    if (this.props.questionsList.length > 2) {
+      this.setState({
+        isMoreQuestionsButtonShown: true
+      });
+    }
+    // var questionsToShow = this.props.questionsList;
+    // if (questionsToShow.length > 2) {
+    //   if (this._isMounted) {
+    //     this.setState({
+    //       isMoreQuestionsButtonShown: true
+    //     });
+    //   }
+    // }
+    // questionsToShow = questionsToShow.slice(0, 2);
+    // if (this._isMounted) {
+    //   this.setState({
+    //     questions: questionsToShow
+    //   });
+    // }
+
   }
 
   clickOnHelpfulQuestion(productId, questionId) {
@@ -214,7 +234,7 @@ class QnA extends React.Component {
       console.log('search stopped');
       //render all the questions and hide the rest if more than 2
       //var questionsToShow = response.data.results;
-      var questionsToShow = [...this.state.questions];
+      var questionsToShow = [...this.props.questions];
       if (questionsToShow.length > 2) {
         if (this._isMounted) {
           this.setState({
@@ -240,11 +260,16 @@ class QnA extends React.Component {
 
   render() {
     let moreAnsweredQuestions,
-      qnaScreen;
+      qnaScreen,
+      data;
 
     if (this.state.isMoreQuestionsButtonShown) {
+
+      data = this.props.questionsList.slice(0, 2);
       moreAnsweredQuestions = <MoreAnsweredQuestions click={this.showMoreQuestions}/>;
     } else {
+      data = this.props.questionsList;
+
       moreAnsweredQuestions = <div></div>;
     }
     return (
@@ -254,7 +279,7 @@ class QnA extends React.Component {
         <div className='qna-component-name'>QUESTIONS AND ANSWERS</div>
         <SearchQuestions search={this.search}/>
         <QuestionsList
-          data={this.props.questionsList}
+          data={data}
           productId={this.props.productId}
           clickOnHelpful={this.clickOnHelpfulQuestion}
           clickOnHelpfulAnswer={this.clickOnHelpfulAnswer}
