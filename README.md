@@ -76,15 +76,15 @@ The Overview located at the top-most position of the page.  The functionality co
     - Size Selector
         - Displays all available sizes of the current product. Disabled if no sizes are available.
     - Quantity Selector
-        - Selector is disabled until a size is selected
+        - Displays a selectable quantity up to a max of 15. Selector is disabled until a size is selected
     - Add to "My Outfit" button
         - Consister of a button with a outlined star
         - Clicking the button will add current product to my outfit carousel below. Star will change from outline to solid.
         - Clicking the button again will remove the current product from the outfit carousel. Star will change from solid to outlined.
     - Selectable Styles
-        - All style options will be displayed in rows of 4. 
-        - Clicking each style will update the image gallery with photos of the corresponding style.
-        - A description of the selected style will be displayed above the style images.
+        - All style options are displayed in rows of 4. 
+        - Clicking each style updates the image gallery with photos of the corresponding style.
+        - The selected style name is displayed above the style images.
 - Add to cart
     - Add To Cart Button
         - Alerts the user that product has been "Added to Cart"
