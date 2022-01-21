@@ -123,14 +123,14 @@ The Related Items & Comparison module will display two sets of related products.
 
 <p>
   :boy: <b>Ash Tsai</b> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GitHub: <a href="https://github.com/ashtsai14">@divyabhagavathiappan</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GitHub: <a href="https://github.com/ashtsai14">@ashtsai14</a> <br>
 
   :woman: <b>Jenya Rusinova</b> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GitHub: <a href="https://github.com/jenrusinova">@divyabhagavathiappan</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GitHub: <a href="https://github.com/jenrusinova">@jenrusinova</a> <br>
 
   :boy: <b>Peter Park</b> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GitHub: <a href="https://github.com/ppark051191">@divyabhagavathiappan</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GitHub: <a href="https://github.com/ppark051191">@ppark051191</a> <br>
 
   :boy: <b>Yanlin Ye</b> <br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GitHub: <a href="https://github.com/a244629128">@divyabhagavathiappan</a> <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GitHub: <a href="https://github.com/a244629128">@a244629128</a> <br>
 </p>
