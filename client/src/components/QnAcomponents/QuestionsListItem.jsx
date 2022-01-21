@@ -46,34 +46,6 @@ class QuestionsListItem extends React.Component {
     }
   }
 
-  // clickOnMoreAnswers() {
-  //   // let answersToShow = Object.values(this.props.question.answers);
-  //   // this.setState({
-  //   //   answers: answersToShow,
-  //   //   isMoreAnswersShown: true,
-  //   //   buttonText: 'COLLAPSE ANSWERS'
-  //   // });
-  //   if (Object.values(this.props.question.answers).length > 2) {
-  //     //let answersToShow = Object.values(this.props.question.answers);
-  //     //console.log('answer to show in button is not clicked', answersToShow);
-
-  //     this.setState({
-  //       //answers: answersToShow,
-
-  //       buttonText: 'COLLAPSE ANSWERS'
-  //     }, ()=>{
-  //       //console.log('should show 3 answers', this.state.answers);
-  //     });
-  //   } else {
-  //     //let answersToShow = Object.values(this.props.question.answers).slice(0, 2);
-  //     this.setState({
-  //       //answers: answersToShow,
-
-  //       buttonText: 'SHOW MORE ANSWERS'
-  //     });
-  //   }
-  // }
-
   addAnswerHandleClick(event) {
     //event.stopPropagation();
     //console.log('should be triggered once');
@@ -117,11 +89,7 @@ class QuestionsListItem extends React.Component {
       qnaAddAnswerModal,
       answerItems;
 
-    // if (Object.values(this.props.question.answers).length > 2) {
-    //   answerItems = Object.values(this.props.question.answers).slice(0, 2);
-    // } else {
-    //   answerItems = Object.values(this.props.question.answers);
-    // }
+
     if (this.state.buttonText === 'COLLAPSE ANSWERS') {
       answerItems = Object.values(this.props.question.answers);
 
