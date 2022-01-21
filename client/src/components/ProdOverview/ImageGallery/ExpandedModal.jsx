@@ -3,10 +3,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
-// library.add(faArrowRight);
-// library.add(faArrowLeft);
-
-
 export class ExpandedModal extends React.Component {
   constructor(props) {
     super(props);
@@ -62,22 +58,6 @@ export class ExpandedModal extends React.Component {
     }
   }
 
-  changeImageSize () {
-    if (!this.state.enlargeImage) {
-      document.getElementById('PONormalImage').setAttribute('id', 'POModalEnglarge');
-      document.getElementById('POModaImageWrapper').style.display = 'block';
-      this.setState({
-        enlargeImage: true,
-      });
-    } else {
-      document.getElementById('POModalEnglarge').setAttribute('id', 'PONormalImage');
-      document.getElementById('POModaImageWrapper').style.display = 'flex';
-      this.setState({
-        enlargeImage: false,
-      });
-    }
-  }
-
   imageZoom (e) {
     const ratio = 2.5;
     this.lens.style.backgroundImage = `url('${this.img.src})`;
@@ -122,7 +102,6 @@ export class ExpandedModal extends React.Component {
       this.lens.style.display = 'block';
       document.getElementById('POModalThumbDisplayer').style.display = 'none';
       document.getElementById('POModalArrowContainer').style.display = 'none';
-      // document.getElementById('POModalImageDisplayer').style.gridRow = '2/ span 10';
       this.setState({
         zoomActivated: true,
       });
@@ -130,7 +109,6 @@ export class ExpandedModal extends React.Component {
       this.lens.style.display = 'none';
       document.getElementById('POModalThumbDisplayer').style.display = 'flex';
       document.getElementById('POModalArrowContainer').style.display = 'flex';
-      // document.getElementById('POModalImageDisplayer').style.gridRow = '1/ span 9';
       this.setState({
         zoomActivated: false,
       });
@@ -138,14 +116,12 @@ export class ExpandedModal extends React.Component {
   }
 
   render () {
-    // console.log('props', this.props);
-    // console.log('state', this.state);
     return (
       <div className='POModal' id='POModal' data-testid="ModalGallery">
         <button className='POCloseModal' onClick={this.props.switchModal}>x</button>
         <div id='POModalArrowContainer'>
-          <FontAwesomeIcon icon={faArrowLeft} size='lg' className='ModalArrow' onClick={this.rotateLeft.bind(this)} />
-          <FontAwesomeIcon icon={faArrowRight} size='lg' className='ModalArrow' onClick={this.rotateRight.bind(this)}/>
+          <FontAwesomeIcon icon={faArrowLeft} size='lg' id='ModalArrowLeft' className='ModalArrow' onClick={this.rotateLeft.bind(this)} />
+          <FontAwesomeIcon icon={faArrowRight} size='lg' id='ModalArrowRight' className='ModalArrow' onClick={this.rotateRight.bind(this)}/>
         </div>
         <div id='POModalImageDisplayer'>
           <div id='POModalZoomImage'></div>

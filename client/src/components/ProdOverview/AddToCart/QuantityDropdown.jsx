@@ -1,7 +1,6 @@
 import React from 'react';
 
 const QuantityDropdown = (props) => {
-  // console.log('props', props);
   if (!props.selectedQuantity) {
     return (
       <div>

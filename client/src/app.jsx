@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TopSearchBar from './components/TopSearchBar/TopSearchBar.jsx';
+import SiteWideMessage from './components/SiteWideMessage/SiteWideMessage.jsx';
 import ProductOverviewWithClickData from './components/ProdOverview/OverView.jsx';
 import RelProductsWithClickData from './components/RelProductsComponents/RelProducts.jsx';
 import QnAwithClickData from './components/QnAcomponents/mainQnA.jsx';
@@ -17,7 +18,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      productId: 59555,
+      productId: 59553,
       currentProduct: null,
       currentProductStyle: null,
       relatedProducts: null,
@@ -109,7 +110,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log('at render: ', this.state.favoriteOutfits, this.state.currentProduct);
     const {
       currentProduct,
       currentProductStyle,
@@ -124,7 +124,8 @@ class App extends React.Component {
       return (
         <div>
           <TopSearchBar />
-          <ProductOverviewWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct}
+          <SiteWideMessage />
+          <ProductOverviewWithClickData currentProduct={this.state.currentProduct}
             currentProductStyle={this.state.currentProductStyle} currentRatings={this.state.averageRate}
             addToOutfit={this.addToOutfit.bind(this)} toggleFavorite={this.toggleAddToFavorite.bind(this)}
             addToFavorites={this.state.favoriteOutfits} currentStyleId={this.state.outFitStyleId} totalReviews={this.state.totalReviews} />

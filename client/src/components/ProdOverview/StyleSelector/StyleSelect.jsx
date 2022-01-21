@@ -24,7 +24,7 @@ const StyleSelector = (props) => {
   return (
     <div className='styleSelector'>
       <div>
-        <p><strong>{'Style >'}</strong> {props.displayedStyle.name}</p>
+        <p className='POStyleName'><strong>{'Style >'}</strong> {props.displayedStyle.name}</p>
       </div>
       {styleRows}
     </div>

@@ -7,21 +7,41 @@ import React from 'react';
 import { shallow, mount, render, ShallowWrapper } from 'enzyme';
 
 import exampleQuestions from '../../../example/questions.js';
+import exampleProducts from '../../../example/products.js';
+
 import MainQnA from '../../../client/src/components/QnAcomponents/mainQnA.jsx';
+import ClickedData from '../../../client/src/components/ClickDataAnalytics.jsx';
+
+
+// jest.mock('ClickedData', () => {
+//   return {
+//     QnAwithClickData: () => {
+//       return (Component) => {
+//         return (props) => {
+//           return <Component newProp={jest.fn} {...props} />;
+//         };
+//       };
+//     },
+//   };
+// });
 
 
 
-xdescribe('Main Questions and Answers form', function() {
-  it('should render without throwing an error', function() {
-    expect(shallow(<MainQnA productId={59553}/>).contains( <div className='qna-component-name'>QUESTIONS AND ANSWERS</div>)).toBe(true);
-  });
-
-  it('should be selectable by class', function() {
-    expect(shallow(<MainQnA productId={59553} />).is('.qna-main-component')).toBe(true);
-  });
+describe('Main Questions and Answers form', function() {
 
   it('should mount in a full DOM', function() {
-    expect(shallow(<MainQnA productId={59553}/>).find('.qna-main-component').length).toBe(1);
+    const qna = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
+    expect(qna.find('.qna-main-component').length).toBe(1);
+  });
+
+  it('should mount and unmount', function() {
+
+    const wrapper = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
+
+    const componentWillUnmount = jest.spyOn(wrapper.instance(), 'componentWillUnmount');
+    expect(wrapper.instance()._isMounted).toEqual(true);
+    wrapper.unmount();
+    expect(componentWillUnmount).toHaveBeenCalled();
   });
 
   xit('should render to static HTML', function() {
@@ -29,17 +49,6 @@ xdescribe('Main Questions and Answers form', function() {
     expect(render(<MainQnA productId={59553}/>).text()).toEqual(text);
   });
 
-  xit('correctly shows More Answered Question button', function() {
-    var component = shallow(<MainQnA productId={59553} />);
-    let state = {
-      isMoreQuestionsButtonShown: true
-    };
-    component.setState(state);
-    let button = component.find('.qna-more-answered-questions-wrapper');
-    expect(button.text()).toEqual(' <MoreAnsweredQuestions />');
-
-  });
-
-
+  
 
 });
