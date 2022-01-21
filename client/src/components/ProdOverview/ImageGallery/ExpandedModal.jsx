@@ -3,10 +3,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
-// library.add(faArrowRight);
-// library.add(faArrowLeft);
-
-
 export class ExpandedModal extends React.Component {
   constructor(props) {
     super(props);
@@ -122,7 +118,6 @@ export class ExpandedModal extends React.Component {
       this.lens.style.display = 'block';
       document.getElementById('POModalThumbDisplayer').style.display = 'none';
       document.getElementById('POModalArrowContainer').style.display = 'none';
-      // document.getElementById('POModalImageDisplayer').style.gridRow = '2/ span 10';
       this.setState({
         zoomActivated: true,
       });
@@ -130,7 +125,6 @@ export class ExpandedModal extends React.Component {
       this.lens.style.display = 'none';
       document.getElementById('POModalThumbDisplayer').style.display = 'flex';
       document.getElementById('POModalArrowContainer').style.display = 'flex';
-      // document.getElementById('POModalImageDisplayer').style.gridRow = '1/ span 9';
       this.setState({
         zoomActivated: false,
       });
@@ -138,8 +132,6 @@ export class ExpandedModal extends React.Component {
   }
 
   render () {
-    // console.log('props', this.props);
-    // console.log('state', this.state);
     return (
       <div className='POModal' id='POModal' data-testid="ModalGallery">
         <button className='POCloseModal' onClick={this.props.switchModal}>x</button>

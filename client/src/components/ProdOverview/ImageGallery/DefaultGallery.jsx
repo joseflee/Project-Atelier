@@ -81,7 +81,6 @@ class DefaultGallery extends React.Component {
   }
 
   render () {
-    // console.log('props', this.props);
     return (
       <div className='POImageGallery' data-testid="ImageGallery">
         <div className='POThumbContainer'>
@@ -89,7 +88,6 @@ class DefaultGallery extends React.Component {
           {new Array(Math.min(MAX_THUMBNAILS, this.props.photos.length)).fill(0).map((_, index) => {
             const photoIndex = this.state.startIndex + index;
             if (this.state.selectedIndex === photoIndex) {
-              console.log('here', this.props);
               return <img alt={photoIndex} className='PODisplayThumbImg POThumbImg' key={index} src={this.props.photos[photoIndex].thumbnail_url} onClick={() => { this.thumbToDisp(photoIndex); }} />;
             } else {
               return <img alt={photoIndex} className='POThumbImg' key={index} src={this.props.photos[photoIndex].thumbnail_url} onClick={() => { this.thumbToDisp(photoIndex); }} />;

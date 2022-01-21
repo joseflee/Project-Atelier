@@ -91,7 +91,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log('average', this.state.averageRate);
     const {
       currentProduct,
       currentProductStyle,
@@ -106,7 +105,7 @@ class App extends React.Component {
       return (
         <div>
           <TopSearchBar />
-          <ProductOverviewWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct}
+          <ProductOverviewWithClickData currentProduct={this.state.currentProduct}
             currentProductStyle={this.state.currentProductStyle} currentRatings={this.state.averageRate}
             addToOutfit={this.addToOutfit.bind(this)} toggleFavorite={this.toggleAddToFavorite.bind(this)}
             addToFavorites={this.state.favoriteOutfits} currentStyleId={this.state.outFitStyleId} totalReviews={this.state.totalReviews} />

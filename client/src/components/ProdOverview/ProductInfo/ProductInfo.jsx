@@ -2,7 +2,6 @@ import React from 'react';
 import StarRating from './StarRating.jsx';
 
 const ProductInfo = (props) => {
-  // console.log('props', props);
   let price = null;
   if (props.style.sale_price) {
     price =

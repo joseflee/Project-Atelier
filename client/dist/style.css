@@ -184,7 +184,6 @@
 .POImgContainer {
   padding: 10px;
   height: 500px;
-  /* width: 100%; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -221,8 +220,6 @@
 }
 
 .POThumbImgContainer {
-  /* position: absolute; */
-  /* right: 0px; */
   align-items: left;
   justify-content: left;
 }
@@ -307,12 +304,10 @@
 }
 
 .POModalDisplayThumbImg {
-  /* display: block; */
   border: 3px solid #000000;
 }
 
 .POModalThumbImg {
-  /* display: block; */
   max-height: 50%;
   max-width: 50%;
   margin-right: 5px;
@@ -329,7 +324,6 @@
 
 #POModalEnglarge {
   z-index: 1;
-  /* transform: scale(2) translateY(25%); */
   height: auto;
   width: 200%;
 }
@@ -344,20 +338,16 @@
 
 #POModaImageWrapper {
   display: flex;
-  /* align-content: center; */
   position: relative;
-  /* overflow: auto; */
 }
 
 #POModalLens {
   display: none;
   z-index: 2;
   position: absolute;
-  /* border: 2px solid black; */
   cursor: zoom-out;
   width: 300px;
   height: 300px;
-  /* background-image: 'none' !important; */
   background-repeat: no-repeat;
 }
 
@@ -391,10 +381,13 @@
   flex: 1 1 50%;
 }
 
+<<<<<<< HEAD
 /* .POQuantitySelector {
   grid-column: 2/3
 } */
 
+=======
+>>>>>>> ef67279 (Cleaned up code by removing comments and console logs)
 #sizeSelector {
   width: 210px;
   transform: translateY(30%);
@@ -462,48 +455,7 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Questions and answers section */
+/* Questions and answers section---------------------------------------------------------------------------------- */
 
 /* Main */
 
