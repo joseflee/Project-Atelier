@@ -15,6 +15,7 @@ import { getProductInfo, getStyleInfo, getRelatedProductInfo, getQuestionsListIn
 class App extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       productId: 59555,
       currentProduct: null,
@@ -27,9 +28,12 @@ class App extends React.Component {
       totalReviews: 0,
       averageRate: 0,
     };
+
     this.handleAverageRate = this.handleAverageRate.bind(this);
     this.updateProduct = this.updateProduct.bind(this);
     this.handleReviews = this.handleReviews.bind(this);
+    this.removeOutfit = this.removeOutfit.bind(this);
+    this.toggleAddToFavorite = this.toggleAddToFavorite.bind(this);
   }
 
   componentDidMount() {
@@ -59,6 +63,8 @@ class App extends React.Component {
       questionsNAnswers: questionsList,
       outFitStyleId: productInfo.results[0].style_id,
     });
+
+    console.log('related products: ', this.state.relatedProducts);
   }
 
   addToOutfit(id) {
@@ -68,30 +74,42 @@ class App extends React.Component {
   }
 
   toggleAddToFavorite() {
-    if (!this.state.favoriteOutfits.includes(this.state.outFitStyleId)) {
-      this.setState({
-        favoriteOutfits: [...this.state.favoriteOutfits, this.state.outFitStyleId],
-      });
+    if (this.state.favoriteOutfits.length > 0) {
+      if (!this.state.favoriteOutfits.includes(this.state.outFitStyleId)) {
+        this.setState({
+          favoriteOutfits: [...this.state.favoriteOutfits, this.state.outFitStyleId],
+        });
+      } else {
+        const newArr = [...this.state.favoriteOutfits];
+        var index = newArr.indexOf(this.state.outFitStyleId);
+        newArr.splice(index, 1);
+        this.setState({
+          favoriteOutfits: newArr,
+        });
+      }
     } else {
-      const newArr = [...this.state.favoriteOutfits];
-      var index = newArr.indexOf(this.state.outFitStyleId);
-      newArr.splice(index, 1);
       this.setState({
-        favoriteOutfits: newArr,
+        favoriteOutfits: [ this.state.outFitStyleId ]
       });
     }
-    console.log(this.state.favoriteOutfits, this.state.currentProduct);
   }
 
-  // Removing and Adding to favoriteOutfits array will affect the Product Overview as well.
-  // Add a Remove from favoriteOutfits to setState in removing that outfit.
-
   removeOutfit(id) {
-    // this.state.favoriteOutfits.indexOf(id);
+    var currentOutfitIndex = this.state.favoriteOutfits.indexOf(id);
+
+    for (var i = 0; i < this.state.favoriteOutfits.length; i++) {
+      if (this.state.favoriteOutfits[i] === id) {
+        var newFavOutfits = this.state.favoriteOutfits;
+        newFavOutfits.splice(i, 1);
+        this.setState({
+          favoriteOutfits: newFavOutfits
+        });
+      }
+    }
   }
 
   render() {
-    console.log('average', this.state.averageRate);
+    console.log('at render: ', this.state.favoriteOutfits, this.state.currentProduct);
     const {
       currentProduct,
       currentProductStyle,

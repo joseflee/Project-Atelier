@@ -16,6 +16,8 @@ class RelProducts extends React.Component {
       currentProduct: this.props.currentProduct
     };
 
+    console.log(this.props.relatedProducts);
+
     this.handleCardClick = this.handleCardClick.bind(this);
     this.handleAddOutfitClick = this.handleAddOutfitClick.bind(this);
     this.removeOutfit = this.removeOutfit.bind(this);
@@ -29,6 +31,8 @@ class RelProducts extends React.Component {
     var element = e.target;
     var currentStyleIndex = this.props.currentProduct.results.map(result => result.style_id).indexOf(this.props.currentStyleId);
     var myOutfit = { ...this.props.currentProduct, results: this.props.currentProduct.results[currentStyleIndex] };
+
+    this.props.toggleFavorite();
 
     if (this.state.listOfMyOutfits.length === 0) {
       this.setState({

@@ -12,7 +12,6 @@ class ProductCards extends React.Component {
     }
 
     this.state = {
-      allRelatedProducts: this.props.productCards,
       currentShownProducts: { start: 0, end: endOfShownProducts },
       leftArrowDisplay: true,
       rightArrowDisplay: true
@@ -26,49 +25,63 @@ class ProductCards extends React.Component {
   }
 
   updateStatus(e) {
+    var start = this.state.currentShownProducts.start;
+    var end = this.state.currentShownProducts.end;
+
     if (e) {
       var target = e.target;
 
       var startOfRelProducts = 0;
-      var endOfRelProducts = this.state.allRelatedProducts.length;
+      var endOfRelProducts = this.props.productCards.length;
 
-      if (target.className === 'card-scroll-left') {
-        // if current state of start - 4 is less than 0, add the absolute value of current state of start - 4 ----> Same goes for current state of end
-        if (this.state.currentShownProducts.start <= 4 && this.state.currentShownProducts.end !== 0) {
-          this.setState({
-            currentShownProducts: { start: 0, end: this.state.currentShownProducts.end - 4}
-          });
-        }
-        // start becomes this.state.currentShownProducts.start - 4, and end becomes this.state.currentShownProducts.end - 4
+      var cardClassName = target.className.split(' ')[0];
 
-        this.setState({
-          currentShownProducts: { start: 0, end: 0 }
-        });
-      } else if (target.className === 'card-scroll-right') {
-        if (this.state.currentShownProducts.start + 4 < this.state.allRelatedProducts.length && this.state.currentShownProducts.end >= this.state.allRelatedProducts.length) {
-          this.setState({
-            currentShownProducts: { start: this.state.currentShownProducts.start + 4, end: this.state.allRelatedProducts.length }
-          });
-        } else {
-          this.setState({
-            currentShownProducts: { start: this.state.currentShownProducts.start + 4, end: this.state.currentShownProducts.end + 4 }
-          });
+      if (cardClassName === 'card-scroll-left') {
+        console.log('LEFT: ', start, end, this.props.productCards.length);
+        if (start <= 4 && end - 4 >= 0) {
+          if (end - 4 < start + 4) {
+            this.setState({
+              currentShownProducts: { start: 0, end: start + 3}
+            });
+            start = 0;
+            end = start + 3;
+          } else {
+            this.setState({
+              currentShownProducts: { start: 0, end: end - 4}
+            });
+            start = 0;
+            end -= 4;
+          }
         }
-        this.setState({
-          currentShownProducts: { start: 0, end: 0 }
-        });
+      } else if (cardClassName === 'card-scroll-right') {
+        console.log('RIGHT: ', start, end, this.props.productCards.length);
+        if (start + 4 < this.props.productCards.length) {
+          if (end + 4 >= this.props.productCards.length) {
+            this.setState({
+              currentShownProducts: { start: start + 4, end: this.props.productCards.length }
+            });
+            start += 4;
+            end = this.props.productCards.length;
+          } else if (end + 4 <= this.props.productCards.length) {
+            this.setState({
+              currentShownProducts: { start: start + 4, end: end + 4 }
+            });
+            start += 4;
+            end += 4;
+          }
+        }
       }
     }
 
-    if (this.state.allRelatedProducts.length <= 4) {
+    if (this.props.productCards.length <= 4 && this.props.productCards.length !== 0) {
       this.setState({
-        currentShownProducts: { start: 0, end: this.state.allRelatedProducts.length + 1 },
+        currentShownProducts: { start: 0, end: this.props.productCards.length + 1 },
         leftArrowDisplay: false,
         rightArrowDisplay: false
       });
     } else {
-      if (this.state.allRelatedProducts[0] !== this.state.allRelatedProducts[this.state.currentShownProducts.start]) {
-        if (this.state.currentShownProducts.end + 1 === this.state.allRelatedProducts.length) {
+      if (start !== 0) {
+        if (end === this.props.productCards.length) {
           this.setState({
             leftArrowDisplay: true,
             rightArrowDisplay: false
@@ -79,7 +92,7 @@ class ProductCards extends React.Component {
             rightArrowDisplay: true
           });
         }
-      } else if (this.state.currentShownProducts.start === 0 && this.state.currentShownProducts.end !== this.state.allRelatedProducts.length) {
+      } else if (start === 0 && this.state.currentShownProducts.end !== this.props.productCards.length) {
         this.setState({
           leftArrowDisplay: false,
           rightArrowDisplay: true
@@ -89,7 +102,7 @@ class ProductCards extends React.Component {
   }
 
   render() {
-    if (this.state.allRelatedProducts.length === 0) {
+    if (this.props.productCards.length === 0) {
       return (
         <div>
           <h3>Related Products</h3>
@@ -101,7 +114,7 @@ class ProductCards extends React.Component {
           <h3>Related Products</h3>
           <div className="product-cards">
             <div className="card-scroll-left arrow-button" onClick={this.updateStatus} style={{display: this.state.leftArrowDisplay ? 'inline-block' : 'none' }}></div>
-            {this.state.allRelatedProducts.slice(this.state.currentShownProducts.start, this.state.currentShownProducts.end).map(product => {
+            {this.props.productCards.slice(this.state.currentShownProducts.start, this.state.currentShownProducts.end).map(product => {
               var price = <h5 className="price-relProd"><span>{product.results[0].original_price}</span></h5>;
 
               if (product.results[0].sale_price !== null && product.results[0].sale_price !== undefined) {
