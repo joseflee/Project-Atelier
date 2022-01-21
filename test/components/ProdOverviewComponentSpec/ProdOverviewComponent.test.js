@@ -46,7 +46,6 @@ describe ('Product Overview Component Testing', () => {
     overview.instance().switchImageModal();
     expect(overview.state().useModal).toBe(true);
   });
-
 });
 
 describe ('Add To Cart Component Testing', () => {
@@ -105,6 +104,78 @@ describe('Image Gallery Component Testing', () => {
 
     defaultGal.find('.POLeft').simulate('click');
     expect(defaultGal.state('selectedIndex')).toBe(0);
+  });
+
+  test('Expanded Modal should run componentDidMount to disable scrolling when Modal is loaded', () => {
+    const expandedGal = shallow(<ExpandedModal photos={style.results[0].photos} selectedIndex={0}/>).instance();
+    const componentDidMount = jest.spyOn(expandedGal, 'componentDidMount');
+    expandedGal.componentDidMount();
+    expect(componentDidMount).toHaveBeenCalled();
+  });
+
+  test('Expanded Modal should initial state index to *', () => {
+    const expandedGal = shallow(<ExpandedModal photos={style.results[0].photos} selectedIndex={0}/>);
+    expect(expandedGal.state('index')).toEqual(0);
+  });
+
+  test('Expanded Modal should run rotateRight function when right arrow is clicked', () => {
+    const expandedGal = shallow(<ExpandedModal photos={style.results[0].photos} selectedIndex={0}/>);
+    const spy = jest.spyOn(expandedGal.instance(), 'rotateRight');
+    expandedGal.instance().forceUpdate();
+    expandedGal.find('#ModalArrowRight').simulate('click');
+    expect(spy).toHaveBeenCalled();
+  });
+
+  test('Expanded Modal should run rotateLeft function when left arrow is clicked', () => {
+    const expandedGal = shallow(<ExpandedModal photos={style.results[0].photos} selectedIndex={0}/>);
+    const spy = jest.spyOn(expandedGal.instance(), 'rotateLeft');
+    expandedGal.instance().forceUpdate();
+    expandedGal.find('#ModalArrowLeft').simulate('click');
+    expect(spy).toHaveBeenCalled();
+  });
+
+  test('Expanded Modal index state should increase by 1 when rotateRight function is called', () => {
+    const expandedGal = shallow(<ExpandedModal photos={style.results[0].photos} selectedIndex={0}/>);
+    expect(expandedGal.state('index')).toEqual(0);
+    expandedGal.find('#ModalArrowRight').simulate('click');
+    expect(expandedGal.state('index')).toEqual(1);
+  });
+
+  test('Expanded Modal index state should decrease by 1 when rotateLeft function is called', () => {
+    const expandedGal = shallow(<ExpandedModal photos={style.results[0].photos} selectedIndex={0}/>);
+    expect(expandedGal.state('index')).toEqual(0);
+    expandedGal.find('#ModalArrowRight').simulate('click');
+    expect(expandedGal.state('index')).toEqual(1);
+    expandedGal.find('#ModalArrowLeft').simulate('click');
+    expect(expandedGal.state('index')).toEqual(0);
+  });
+
+  test('Expect activateZoom to be called when Expanded Modal gray space is clicked', ()=> {
+    const expandedGal = mount(<ExpandedModal photos={style.results[0].photos} selectedIndex={0}/>, { attachTo: document.body });
+    const spy = jest.spyOn(expandedGal.instance(), 'activateZoom');
+    expandedGal.instance().forceUpdate();
+    expandedGal.find('#POModalLens').simulate('click');
+    expect(spy).toHaveBeenCalled();
+    expandedGal.unmount();
+  });
+
+  test('Expect activateZoom to be called when Expanded Modal display image is clicked', ()=> {
+    const expandedGal = mount(<ExpandedModal photos={style.results[0].photos} selectedIndex={0}/>, { attachTo: document.body });
+    const spy = jest.spyOn(expandedGal.instance(), 'activateZoom');
+    expandedGal.instance().forceUpdate();
+    expandedGal.find('#PONormalImage').simulate('click');
+    expect(spy).toHaveBeenCalled();
+    expandedGal.unmount();
+  });
+
+  test('Expect calling activateZoom to toggle zoomActivated state', () => {
+    const expandedGal = mount(<ExpandedModal photos={style.results[0].photos} selectedIndex={0}/>, { attachTo: document.body });
+    expect(expandedGal.state('zoomActivated')).toEqual(false);
+    expandedGal.find('#PONormalImage').simulate('click');
+    expect(expandedGal.state('zoomActivated')).toEqual(true);
+    expandedGal.find('#PONormalImage').simulate('click');
+    expect(expandedGal.state('zoomActivated')).toEqual(false);
+    expandedGal.unmount();
   });
 });
 

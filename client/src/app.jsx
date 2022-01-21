@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TopSearchBar from './components/TopSearchBar/TopSearchBar.jsx';
+import SiteWideMessage from './components/SiteWideMessage/SiteWideMessage.jsx';
 import ProductOverviewWithClickData from './components/ProdOverview/OverView.jsx';
 import RelProductsWithClickData from './components/RelProductsComponents/RelProducts.jsx';
 import QnAwithClickData from './components/QnAcomponents/mainQnA.jsx';
@@ -105,6 +106,7 @@ class App extends React.Component {
       return (
         <div>
           <TopSearchBar />
+          <SiteWideMessage />
           <ProductOverviewWithClickData currentProduct={this.state.currentProduct}
             currentProductStyle={this.state.currentProductStyle} currentRatings={this.state.averageRate}
             addToOutfit={this.addToOutfit.bind(this)} toggleFavorite={this.toggleAddToFavorite.bind(this)}

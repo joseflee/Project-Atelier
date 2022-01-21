@@ -9,6 +9,13 @@
   -webkit-user-select: none;
 }
 
+.SiteWideMessage {
+  font-size: 12px;
+  margin-bottom: 10px;
+  text-align: center;;
+}
+
+
 /* top search bar Start -----------------------------------------------------------------------------------------------*/
 
 .top-Search-Section {
@@ -151,6 +158,7 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 5px;
+  margin-bottom: 20px;
 }
 
 .Infocontainer{
@@ -170,6 +178,8 @@
 
 .POProductDescription {
   grid-column: 2/8;
+  margin-left: 8%;
+  margin-top: 10px;
 }
 
 .POImageGallery {
@@ -261,6 +271,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.POStyleName {
+  padding-bottom: 10px;
+  font-size: 16px;
 }
 
 .POModal {
@@ -356,6 +371,7 @@
   font-size: 12px;
   border-left: 3px solid;
   padding-left: 50px;
+  margin-top: 10px;
 }
 
 .POStyleCheck {
