@@ -112,7 +112,7 @@ The Related Items & Comparison module will display two sets of related products.
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
-### Contributors (in Alphabetical Order)
+### <a name="Contributors"></a> Contributors (in Alphabetical Order)
 
 <p>
   :boy: <b>Ash Tsai</b> <br>
