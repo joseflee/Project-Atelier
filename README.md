@@ -8,6 +8,7 @@ Project Atelier comprises a complete redesign of the retail portal designed to m
 
 - [Setup and Installation](#setup-and-installation)
 - [Product Description](#product-description)
+- [Contributors](#contributors)
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
