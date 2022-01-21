@@ -14,6 +14,8 @@ class QuestionsList extends React.Component {
       return b.helpfulness - a.helpfulness;
     }));
 
+  
+
     return (
       <div>
         {/* {console.log('questions', this.props.data)} */}
