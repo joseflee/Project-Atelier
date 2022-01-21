@@ -171,6 +171,8 @@ object-assign
 
 /*! ./components/RelProductsComponents/RelProducts.jsx */
 
+/*! ./components/SiteWideMessage/SiteWideMessage.jsx */
+
 /*! ./components/TopSearchBar/TopSearchBar.jsx */
 
 /*! ./core/Axios */
@@ -1145,6 +1147,10 @@ object-assign
 
 /*!*******************************************************************!*\
   !*** ./client/src/components/RatingsNReviews/RatingsNReviews.jsx ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./client/src/components/SiteWideMessage/SiteWideMessage.jsx ***!
   \*******************************************************************/
 
 /*!*******************************************************************!*\
