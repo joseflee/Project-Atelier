@@ -67,7 +67,10 @@ The Overview located at the top-most position of the page.  The functionality co
         - Clicking main image will put all focus on the main image and hide everything else. Click the image again will bring up a magnifyer to view the displayed picture at 2.5x the zoom. Clicking again will bring the user back to the main view of the expanded gallery.
         - The left and right arrows will displayed the previous/next image. A indicator in the thumbnail gallery will reflect which image is displayed.
 - Product information
-    - Displays product info and slogan
+    - Displays product info and slogan below the main display image.
+    - The type of product, product name, and pricing is located to the right of the display image.
+        - If product is on sale, the original price will be crossed out with a sale price displayed right next to it.
+    - A clickable anchor for Reading reviews is located at the top left of the page.
 - Style selector consists of the following:
     - Size Selector
         - Displays all available sizes of the current product. Disabled if no sizes are available.
@@ -77,6 +80,10 @@ The Overview located at the top-most position of the page.  The functionality co
         - Consister of a button with a outlined star
         - Clicking the button will add current product to my outfit carousel below. Star will change from outline to solid.
         - Clicking the button again will remove the current product from the outfit carousel. Star will change from solid to outlined.
+    - Selectable Styles
+        - All style options will be displayed in rows of 4. 
+        - Clicking each style will update the image gallery with photos of the corresponding style.
+        - A description of the selected style will be displayed above the style images.
 - Add to cart
     - Add To Cart Button
         - Alerts the user that product has been "Added to Cart"
