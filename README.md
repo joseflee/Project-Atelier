@@ -11,12 +11,14 @@ Project Atelier comprises a complete redesign of the retail portal designed to m
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
-## Setup and Installation
+# Setup and Installation
 
 You will need Git and Node.js installed to continue.
 
 Additional information needed:
 - Personal Access token with github
+
+
 
 ```bash
 # Clone this repository
@@ -42,14 +44,14 @@ $ npm start
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
-## Product Description
+# Product Description
 
 ### Product consists of the following modules
 - [Product Overview](#product-overview)
 - [Ratings & Reviews](#ratings-and-reviews)
 - [Questions & Answers](#questions-and-answers)
 - [Related Items and Comparison](#related-items-and-comparison)
-### Description
+## Description
 
 #### Product Overview
 
