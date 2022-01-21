@@ -20,7 +20,7 @@ class QnA extends React.Component {
       productName: 'This is not a name',
       isAddNewQuestionClicked: false,
       productId: this.props.productId,
-
+      isSearchActive: false
     };
 
     this.showMoreQuestions = this.showMoreQuestions.bind(this);
@@ -212,7 +212,10 @@ class QnA extends React.Component {
     //console.log('query=', query);
     //console.log('isSearchTriggered=', isSearchTriggered);
     if (isSearchTriggered === true) {
-    //GET LIST OF ALL QUESTIONS BY PRODUCT ID
+      this.setState({
+        isSearchActive: true
+      });
+      //GET LIST OF ALL QUESTIONS BY PRODUCT ID
       var url = 'http://localhost:3000/qna/getQuestionsList';
       axios.get(url, {params: {id: productId}})
         .then((response) => {
@@ -232,22 +235,25 @@ class QnA extends React.Component {
         });
     } else {
       console.log('search stopped');
+      this.setState({
+        isSearchActive: false
+      });
       //render all the questions and hide the rest if more than 2
       //var questionsToShow = response.data.results;
-      var questionsToShow = [...this.props.questions];
-      if (questionsToShow.length > 2) {
-        if (this._isMounted) {
-          this.setState({
-            isMoreQuestionsButtonShown: true
-          });
-        }
-      }
-      questionsToShow = questionsToShow.slice(0, 2);
-      if (this._isMounted) {
-        this.setState({
-          questions: questionsToShow
-        });
-      }
+      // var questionsToShow = [...this.props.questions];
+      // if (questionsToShow.length > 2) {
+      //   if (this._isMounted) {
+      //     this.setState({
+      //       isMoreQuestionsButtonShown: true
+      //     });
+      //   }
+      // }
+      // questionsToShow = questionsToShow.slice(0, 2);
+      // if (this._isMounted) {
+      //   this.setState({
+      //     questions: questionsToShow
+      //   });
+      // }
     }
   }
 
@@ -262,16 +268,20 @@ class QnA extends React.Component {
     let moreAnsweredQuestions,
       qnaScreen,
       data;
-
-    if (this.state.isMoreQuestionsButtonShown) {
-
-      data = this.props.questionsList.slice(0, 2);
-      moreAnsweredQuestions = <MoreAnsweredQuestions click={this.showMoreQuestions}/>;
+    if (this.state.isSearchActive) {
+      data = this.state.questions;
     } else {
-      data = this.props.questionsList;
+      if (this.state.isMoreQuestionsButtonShown) {
 
-      moreAnsweredQuestions = <div></div>;
+        data = this.props.questionsList.slice(0, 2);
+        moreAnsweredQuestions = <MoreAnsweredQuestions click={this.showMoreQuestions}/>;
+      } else {
+        data = this.props.questionsList;
+
+        moreAnsweredQuestions = <div></div>;
+      }
     }
+
     return (
       <div className='qna-main-component' onClick={this.props.onClick}>
         <div className={qnaScreen}></div>
