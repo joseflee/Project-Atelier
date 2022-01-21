@@ -58,22 +58,6 @@ export class ExpandedModal extends React.Component {
     }
   }
 
-  changeImageSize () {
-    if (!this.state.enlargeImage) {
-      document.getElementById('PONormalImage').setAttribute('id', 'POModalEnglarge');
-      document.getElementById('POModaImageWrapper').style.display = 'block';
-      this.setState({
-        enlargeImage: true,
-      });
-    } else {
-      document.getElementById('POModalEnglarge').setAttribute('id', 'PONormalImage');
-      document.getElementById('POModaImageWrapper').style.display = 'flex';
-      this.setState({
-        enlargeImage: false,
-      });
-    }
-  }
-
   imageZoom (e) {
     const ratio = 2.5;
     this.lens.style.backgroundImage = `url('${this.img.src})`;
@@ -136,8 +120,8 @@ export class ExpandedModal extends React.Component {
       <div className='POModal' id='POModal' data-testid="ModalGallery">
         <button className='POCloseModal' onClick={this.props.switchModal}>x</button>
         <div id='POModalArrowContainer'>
-          <FontAwesomeIcon icon={faArrowLeft} size='lg' className='ModalArrow' onClick={this.rotateLeft.bind(this)} />
-          <FontAwesomeIcon icon={faArrowRight} size='lg' className='ModalArrow' onClick={this.rotateRight.bind(this)}/>
+          <FontAwesomeIcon icon={faArrowLeft} size='lg' id='ModalArrowLeft' className='ModalArrow' onClick={this.rotateLeft.bind(this)} />
+          <FontAwesomeIcon icon={faArrowRight} size='lg' id='ModalArrowRight' className='ModalArrow' onClick={this.rotateRight.bind(this)}/>
         </div>
         <div id='POModalImageDisplayer'>
           <div id='POModalZoomImage'></div>
