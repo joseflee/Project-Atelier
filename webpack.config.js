@@ -33,8 +33,18 @@ module.exports = {
     new ImageminPlugin(),
     new CompressionPlugin({
       algorithm: 'gzip',
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8
     }),
-    new BrotliPlugin()
+    new BrotliPlugin({
+      asset: '[file].br[query]',
+      algorithm: 'brotli',
+      test: /\.(js|css|html|svg)$/,
+      threshold: 10240,
+      minRatio: 0.8,
+      quality: 11,
+    })
   ],
   output: {
     filename: 'bundle.js',
