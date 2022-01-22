@@ -134,7 +134,7 @@ class ProductCards extends React.Component {
           <div className="product-cards">
             <div className="card-scroll-left arrow-button" onClick={this.updateStatus} style={{display: this.state.leftArrowDisplay ? 'inline-block' : 'none' }}></div>
             {this.props.productCards.slice(this.state.currentShownProducts.start, this.state.currentShownProducts.end).map(product => {
-              var price = <h5 className="price-relProd"><span>{product.results[0].original_price}</span></h5>;
+              var price = <h5 className="price-relProd"><span className="price-relProd">{product.results[0].original_price}</span></h5>;
 
               if (product.results[0].sale_price !== null && product.results[0].sale_price !== undefined) {
                 price = <h5 className="price-relProd"><span className="sale_price">{product.results[0].sale_price}</span><span className="original_price">{product.results[0].original_price}</span></h5>;
@@ -151,7 +151,7 @@ class ProductCards extends React.Component {
                     </div>
                     <div className="product-ratings">
                       <div className='POStarRating' data-testid="starRating">
-                        <Rating start={0} stop={5} initialRating={product.ratings} emptySymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#808080' />} fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#f8ce0b' />} readonly />
+                        <Rating start={0} stop={5} initialRating={product.ratings.average} emptySymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#808080' />} fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#f8ce0b' />} readonly />
                       </div>
                     </div>
                   </div>
@@ -170,13 +170,3 @@ export default ProductCards;
 
 // Display Category, Name, Price, Star Rating
 // Price: Sale prices should be reflected. Sale price in red, and then original price has been stuckthrough.
-
-const StarRating = (props) => {
-  return (
-    <div className='POStarRating' data-testid="starRating">
-      <Rating start={0} stop={5} initialRating={props.ratings} emptySymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#808080
-' />} fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#f8ce0b' />} readonly />
-      <button className='POReadReviewButton' onClick={gotoReviews}>Read All {props.totalReviews} Reviews</button>
-    </div>
-  );
-};
