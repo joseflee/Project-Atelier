@@ -41,20 +41,21 @@ class ProductCards extends React.Component {
 
       if (cardClassName === 'card-scroll-left') {
         console.log('LEFT: ', start, end, lengthOfRelProducts);
+
         if (start - 4 <= 0) {
           if (end - 4 <= 4 && end - 4 >= 0) {
             if (end - 4 < start) {
               this.setState({
-                currentShownProducts: { start: 0, end: start + 3 }
+                currentShownProducts: { start: 0, end: start }
               });
               start = 0;
-              end = start + 3;
+              end = start + 4;
             } else {
               this.setState({
-                currentShownProducts: { start: 0, end: end - 4 }
+                currentShownProducts: { start: 0, end: end - 3 }
               });
               start = 0;
-              end += 4;
+              end -= 3;
             }
           } else if (end - 4 < 0) {
             this.setState({
@@ -63,23 +64,23 @@ class ProductCards extends React.Component {
             start = 0;
             end = 0;
           }
-        } else if (start - 4 >= 0 && end - 4 >= 0) {
+        } else if (start - 4 > 0 && end - 4 > 0) {
           this.setState({
-            currentShownProducts: { start: start - 4, end: end - 4}
+            currentShownProducts: { start: start - 4, end: end - 3}
           });
           start -= 4;
-          end -= 4;
+          end -= 3;
         }
       } else if (cardClassName === 'card-scroll-right') {
         console.log('RIGHT: ', start, end, lengthOfRelProducts);
-        if (start + 4 < lengthOfRelProducts) {
+        if (start + 4 <= lengthOfRelProducts) {
           if (end + 4 >= lengthOfRelProducts) {
             this.setState({
               currentShownProducts: { start: start + 4, end: lengthOfRelProducts }
             });
             start += 4;
             end = lengthOfRelProducts;
-          } else if (end + 4 <= lengthOfRelProducts) {
+          } else if (end + 4 < lengthOfRelProducts) {
             this.setState({
               currentShownProducts: { start: start + 4, end: end + 4 }
             });
@@ -90,11 +91,11 @@ class ProductCards extends React.Component {
       }
     }
 
-    // console.log('updatestatus: ', start, end, lengthOfRelProducts);
+    console.log('updatestatus: ', start, end, lengthOfRelProducts);
+    console.log('state: ', this.state.currentShownProducts.start, this.state.currentShownProducts.end);
 
     if (lengthOfRelProducts <= 4 && lengthOfRelProducts !== 0) {
       this.setState({
-        currentShownProducts: { start: 0, end: lengthOfRelProducts },
         leftArrowDisplay: false,
         rightArrowDisplay: false
       });
@@ -111,7 +112,7 @@ class ProductCards extends React.Component {
             rightArrowDisplay: true
           });
         }
-      } else if (start === 0 && this.state.currentShownProducts.end !== lengthOfRelProducts) {
+      } else if (start === 0 && end !== lengthOfRelProducts) {
         this.setState({
           leftArrowDisplay: false,
           rightArrowDisplay: true
@@ -134,7 +135,7 @@ class ProductCards extends React.Component {
           <div className="product-cards">
             <div className="card-scroll-left arrow-button" onClick={this.updateStatus} style={{display: this.state.leftArrowDisplay ? 'inline-block' : 'none' }}></div>
             {this.props.productCards.slice(this.state.currentShownProducts.start, this.state.currentShownProducts.end).map(product => {
-              var price = <h5 className="price-relProd"><span>{product.results[0].original_price}</span></h5>;
+              var price = <h5 className="price-relProd"><span className="price-relProd">{product.results[0].original_price}</span></h5>;
 
               if (product.results[0].sale_price !== null && product.results[0].sale_price !== undefined) {
                 price = <h5 className="price-relProd"><span className="sale_price">{product.results[0].sale_price}</span><span className="original_price">{product.results[0].original_price}</span></h5>;
@@ -151,7 +152,7 @@ class ProductCards extends React.Component {
                     </div>
                     <div className="product-ratings">
                       <div className='POStarRating' data-testid="starRating">
-                        <Rating start={0} stop={5} initialRating={product.ratings} emptySymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#808080' />} fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#f8ce0b' />} readonly />
+                        <Rating start={0} stop={5} initialRating={product.ratings.average} emptySymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#808080' />} fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#f8ce0b' />} readonly />
                       </div>
                     </div>
                   </div>
@@ -170,13 +171,3 @@ export default ProductCards;
 
 // Display Category, Name, Price, Star Rating
 // Price: Sale prices should be reflected. Sale price in red, and then original price has been stuckthrough.
-
-const StarRating = (props) => {
-  return (
-    <div className='POStarRating' data-testid="starRating">
-      <Rating start={0} stop={5} initialRating={props.ratings} emptySymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#808080
-' />} fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#f8ce0b' />} readonly />
-      <button className='POReadReviewButton' onClick={gotoReviews}>Read All {props.totalReviews} Reviews</button>
-    </div>
-  );
-};
