@@ -12,8 +12,8 @@ class QuestionsListItem extends React.Component {
       answers: {},
       isMoreAnswersShown: false,
       isHelpful: false,
-      buttonText: 'SHOW MORE ANSWERS'
-
+      buttonText: 'SHOW MORE ANSWERS',
+      questionId: 0
     };
     this.clickOnMoreAnswers = this.clickOnMoreAnswers.bind(this);
     this.addAnswerHandleClick = this.addAnswerHandleClick.bind(this);
@@ -21,11 +21,28 @@ class QuestionsListItem extends React.Component {
     this.closeAnswerForm = this.closeAnswerForm.bind(this);
   }
 
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevProps.question.question_id !== this.props.question.question_id) {
+  //     console.log('question item updated');
+  //     let answersToShow = Object.values(this.props.question.answers);
+  //     if (answersToShow.length > 2) {
+  //       this.setState({
+  //         isMoreAnswersShown: true
+  //       });
+  //     }
+  //     answersToShow = answersToShow.slice(0, 2);
+  //     this.setState({
+  //       answers: answersToShow
+  //     });
+  //   }
+  // }
+
   componentDidMount() {
+
     let answersToShow = Object.values(this.props.question.answers);
     if (answersToShow.length > 2) {
       this.setState({
-        isMoreAnswersShown: true,
+        isMoreAnswersShown: true
       });
     }
     answersToShow = answersToShow.slice(0, 2);
@@ -89,7 +106,6 @@ class QuestionsListItem extends React.Component {
       qnaAddAnswerModal,
       answerItems;
 
-
     if (this.state.buttonText === 'COLLAPSE ANSWERS') {
       answerItems = Object.values(this.props.question.answers);
 
@@ -104,7 +120,7 @@ class QuestionsListItem extends React.Component {
       qnaAddAnswerModal = 'qna-add-answer-modal-hidden';
     }
 
-    if (this.state.isMoreAnswersShown) {
+    if (Object.values(this.props.question.answers).length > 2) {
       moreAnswers = <button id='qna-more-answers-button' onClick={()=>{ this.clickOnMoreAnswers(); }}>{this.state.buttonText}</button>;
       answersList = <AnswersList list={answerItems}
         questionId={this.props.question.question_id}

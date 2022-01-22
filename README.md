@@ -60,7 +60,7 @@ $ npm start
 The Overview located at the top-most position of the page.  The functionality contained within this module can be divided into several pieces:
 - Image gallery which displays the following:
     - Default Gallery
-        - Displays main image as well as thumbnail images. 
+        - Displays main image as well as thumbnail images.
         - Thumbnail images display at most 7 images or less. Up and Down arrows only appear if there are additional pictures to display.
         - Left and right arrows next to the main display image will displayed the previous/next image when clicked. A indicator in the thumbnail gallery will reflect which image is displayed.
     - Expanded Gallery
@@ -82,7 +82,7 @@ The Overview located at the top-most position of the page.  The functionality co
         - Clicking the button will add current product to my outfit carousel below. Star will change from outline to solid.
         - Clicking the button again will remove the current product from the outfit carousel. Star will change from solid to outlined.
     - Selectable Styles
-        - All style options are displayed in rows of 4. 
+        - All style options are displayed in rows of 4.
         - Clicking each style updates the image gallery with photos of the corresponding style.
         - The selected style name is displayed above the style images.
 - Add to cart
@@ -113,6 +113,38 @@ The Questions & Answers module will allow asking and answering of questions for 
 This component will extend the ability to view and search questions, ask questions, answer questions and provide feedback on questions about the current product.
 
 All questions will be asked and answered per product.  Specific styles will not be accounted for within the Questions & Answers module.
+
+Each question can have unlimited number of answers. Also each question has a "helpful?" link and a "yes" link. Next to the link there is a helpfullness counter. By pressing this button you confirm the question as helpful by increasing the counter. Double-clicking is prohibited - second click on the button does not affect the counter, and an error message is logged to the console.
+
+Same as question, each answer has a helpful link and a helpfullness counter, and the double-clicking is prohibited in the same manner.
+
+Additionally every answer has a Report link (unlike the questions, which do not have such link). If a user considers the answer inappropriate one can click the link, changing the link text from "report" to "reported" and the question is being hidden. The answer is not deleted from the server, but it is no longer shown.
+
+The component supports the search functionality. The search triggers automatically when the visitor inputs 3 or more characters into the search string. After the search action is fired, the user sees the questions filtered against the search substring (case-insensitive).
+
+The user can add a new question by invoking the "Add new question" form. It has 3 input fields:
+ - the question body
+ - the user's nickname
+ - the user's email
+The new question form has a "submit" button. When it is pressed an API request is generated and send if all fields have been properly filled and checked against the validation procedure (e.g. an email should be in appropriate format).
+If the validation procedure fails the request is not sent, but the user sees a red error message next to the buttons.
+
+Also the form has a button "close without submitting", which lets the user to close the form unconditionally without submitting any data.
+
+Each question has the "add new answer" link. It has 3 input fields:
+ - the answer body
+ - the user's nickname
+ - the user's email
+And a button "upload photos", which permits attaching up to 5 photos to the answer.
+
+The new answer form has a "submit" button. When it is pressed an API request is generated and send if all fields have been properly filled and checked against the validation procedure (e.g. an email should be in appropriate format).
+If the validation procedure fails the request is not sent, but the user sees a red error message next to the buttons.
+
+Also the form has a button "close without submitting", which lets the user to close the form unconditionally without submitting any data.
+
+If a question has more than 2 answers, only 2 answers are shown. Under the second answer a "show more answers" button is shown. When it is pressed its text morphs to "collapse answers", and the answers' list is shown in full.
+
+If the component has more than 2 questions, only 2 questions are shown. Under the second question a "show more questions" button is shown. When it is pressed the button completely disappears, and the questions' list is shown in full.
 
 #### Related Items and Comparison
 

@@ -21,6 +21,9 @@ class RelProducts extends React.Component {
     this.removeOutfit = this.removeOutfit.bind(this);
   }
 
+  // this.props.favorites;
+  // need to use this.props.favorites and setState
+
   handleCardClick(id) {
     this.props.handleClick(id);
   }
@@ -31,6 +34,7 @@ class RelProducts extends React.Component {
     var myOutfit = { ...this.props.currentProduct, results: this.props.currentProduct.results[currentStyleIndex] };
 
     if (this.state.listOfMyOutfits.length === 0) {
+      this.props.toggleFavorite();
       this.setState({
         listOfMyOutfits: [ myOutfit ]
       });
@@ -47,6 +51,7 @@ class RelProducts extends React.Component {
       }
 
       if (isPresent === false) {
+        this.props.toggleFavorite();
         this.setState({
           listOfMyOutfits: [myOutfit, ...this.state.listOfMyOutfits]
         });
