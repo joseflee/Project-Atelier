@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 const port = 3000;
 const compression = require('compression');
-var expressStaticGzip = require("express-static-gzip");
+var expressStaticGzip = require('express-static-gzip');
 
 const productRouter = require('./routes/product.js');
 const ratingsRouter = require('./routes/ratings.js');

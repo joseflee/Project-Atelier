@@ -1,6 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
-import StarRating from '../ProdOverview/ProductInfo/StarRating.jsx';
+import Rating from 'react-rating';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar as emptyStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar as fullStar} from '@fortawesome/free-solid-svg-icons';
+
+library.add(emptyStar);
+library.add(fullStar);
 
 class ProductCards extends React.Component {
   constructor(props) {
@@ -21,48 +27,59 @@ class ProductCards extends React.Component {
   }
 
   componentDidMount() {
+    // console.log('productcards', this.props.productCards[0]);
     this.updateStatus();
   }
 
   updateStatus(e) {
     var start = this.state.currentShownProducts.start;
     var end = this.state.currentShownProducts.end;
+    var lengthOfRelProducts = this.props.productCards.length;
 
     if (e) {
-      var target = e.target;
-
-      var startOfRelProducts = 0;
-      var endOfRelProducts = this.props.productCards.length;
-
-      var cardClassName = target.className.split(' ')[0];
+      var cardClassName = e.target.className.split(' ')[0];
 
       if (cardClassName === 'card-scroll-left') {
-        console.log('LEFT: ', start, end, this.props.productCards.length);
-        if (start <= 4 && end - 4 >= 0) {
-          if (end - 4 < start + 4) {
+        console.log('LEFT: ', start, end, lengthOfRelProducts);
+        if (start - 4 <= 0) {
+          if (end - 4 <= 4 && end - 4 >= 0) {
+            if (end - 4 < start) {
+              this.setState({
+                currentShownProducts: { start: 0, end: start + 3 }
+              });
+              start = 0;
+              end = start + 3;
+            } else {
+              this.setState({
+                currentShownProducts: { start: 0, end: end - 4 }
+              });
+              start = 0;
+              end += 4;
+            }
+          } else if (end - 4 < 0) {
             this.setState({
-              currentShownProducts: { start: 0, end: start + 3}
+              currentShownProducts: { start: 0, end: 0 }
             });
             start = 0;
-            end = start + 3;
-          } else {
-            this.setState({
-              currentShownProducts: { start: 0, end: end - 4}
-            });
-            start = 0;
-            end -= 4;
+            end = 0;
           }
+        } else if (start - 4 >= 0 && end - 4 >= 0) {
+          this.setState({
+            currentShownProducts: { start: start - 4, end: end - 4}
+          });
+          start -= 4;
+          end -= 4;
         }
       } else if (cardClassName === 'card-scroll-right') {
-        console.log('RIGHT: ', start, end, this.props.productCards.length);
-        if (start + 4 < this.props.productCards.length) {
-          if (end + 4 >= this.props.productCards.length) {
+        console.log('RIGHT: ', start, end, lengthOfRelProducts);
+        if (start + 4 < lengthOfRelProducts) {
+          if (end + 4 >= lengthOfRelProducts) {
             this.setState({
-              currentShownProducts: { start: start + 4, end: this.props.productCards.length }
+              currentShownProducts: { start: start + 4, end: lengthOfRelProducts }
             });
             start += 4;
-            end = this.props.productCards.length;
-          } else if (end + 4 <= this.props.productCards.length) {
+            end = lengthOfRelProducts;
+          } else if (end + 4 <= lengthOfRelProducts) {
             this.setState({
               currentShownProducts: { start: start + 4, end: end + 4 }
             });
@@ -73,15 +90,17 @@ class ProductCards extends React.Component {
       }
     }
 
-    if (this.props.productCards.length <= 4 && this.props.productCards.length !== 0) {
+    // console.log('updatestatus: ', start, end, lengthOfRelProducts);
+
+    if (lengthOfRelProducts <= 4 && lengthOfRelProducts !== 0) {
       this.setState({
-        currentShownProducts: { start: 0, end: this.props.productCards.length + 1 },
+        currentShownProducts: { start: 0, end: lengthOfRelProducts },
         leftArrowDisplay: false,
         rightArrowDisplay: false
       });
     } else {
       if (start !== 0) {
-        if (end === this.props.productCards.length) {
+        if (end === lengthOfRelProducts) {
           this.setState({
             leftArrowDisplay: true,
             rightArrowDisplay: false
@@ -92,7 +111,7 @@ class ProductCards extends React.Component {
             rightArrowDisplay: true
           });
         }
-      } else if (start === 0 && this.state.currentShownProducts.end !== this.props.productCards.length) {
+      } else if (start === 0 && this.state.currentShownProducts.end !== lengthOfRelProducts) {
         this.setState({
           leftArrowDisplay: false,
           rightArrowDisplay: true
@@ -110,7 +129,7 @@ class ProductCards extends React.Component {
       );
     } else {
       return (
-        <div>
+        <div className="related-products-container-div">
           <h3>Related Products</h3>
           <div className="product-cards">
             <div className="card-scroll-left arrow-button" onClick={this.updateStatus} style={{display: this.state.leftArrowDisplay ? 'inline-block' : 'none' }}></div>
@@ -122,13 +141,19 @@ class ProductCards extends React.Component {
               }
 
               return (
-                <div className="product-card" key={product.id} onClick={() => { this.props.handleClick(product.id); }}>
+                <div className="product-card" key={product.id} onClick={() => { this.props.handleClick(product.id); this.updateStatus(); }}>
                   <img className="card-imgs" src={product.results[0].photos[0].thumbnail_url} alt={product.name} />
-                  <StarRating ratings={product.ratings} />
                   <div className="product-description">
-                    <h5 className="category-relProd">{product.category}</h5>
-                    <h4 className="name-relProd">{product.name}</h4>
-                    {price}
+                    <div className="overview-relProd">
+                      <h5 className="category-relProd">{product.category}</h5>
+                      <h4 className="name-relProd">{product.name}</h4>
+                      {price}
+                    </div>
+                    <div className="product-ratings">
+                      <div className='POStarRating' data-testid="starRating">
+                        <Rating start={0} stop={5} initialRating={product.ratings} emptySymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#808080' />} fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#f8ce0b' />} readonly />
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
@@ -145,3 +170,13 @@ export default ProductCards;
 
 // Display Category, Name, Price, Star Rating
 // Price: Sale prices should be reflected. Sale price in red, and then original price has been stuckthrough.
+
+const StarRating = (props) => {
+  return (
+    <div className='POStarRating' data-testid="starRating">
+      <Rating start={0} stop={5} initialRating={props.ratings} emptySymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#808080
+' />} fullSymbol={<FontAwesomeIcon icon={['fas', 'star']} color='#f8ce0b' />} readonly />
+      <button className='POReadReviewButton' onClick={gotoReviews}>Read All {props.totalReviews} Reviews</button>
+    </div>
+  );
+};

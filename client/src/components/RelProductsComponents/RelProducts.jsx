@@ -16,12 +16,13 @@ class RelProducts extends React.Component {
       currentProduct: this.props.currentProduct
     };
 
-    console.log(this.props.relatedProducts);
-
     this.handleCardClick = this.handleCardClick.bind(this);
     this.handleAddOutfitClick = this.handleAddOutfitClick.bind(this);
     this.removeOutfit = this.removeOutfit.bind(this);
   }
+
+  // this.props.favorites;
+  // need to use this.props.favorites and setState
 
   handleCardClick(id) {
     this.props.handleClick(id);
@@ -32,9 +33,8 @@ class RelProducts extends React.Component {
     var currentStyleIndex = this.props.currentProduct.results.map(result => result.style_id).indexOf(this.props.currentStyleId);
     var myOutfit = { ...this.props.currentProduct, results: this.props.currentProduct.results[currentStyleIndex] };
 
-    this.props.toggleFavorite();
-
     if (this.state.listOfMyOutfits.length === 0) {
+      this.props.toggleFavorite();
       this.setState({
         listOfMyOutfits: [ myOutfit ]
       });
@@ -51,6 +51,7 @@ class RelProducts extends React.Component {
       }
 
       if (isPresent === false) {
+        this.props.toggleFavorite();
         this.setState({
           listOfMyOutfits: [myOutfit, ...this.state.listOfMyOutfits]
         });

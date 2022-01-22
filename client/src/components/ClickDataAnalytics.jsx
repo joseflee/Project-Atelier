@@ -4,7 +4,6 @@ import { sendInteractions } from '../helpers.js';
 
 const ClickedData = (WrappedComponent, widgetName) => {
   class ClickDataAnalytics extends React.Component {
-    // define a state for widgetName
 
     async handleClick(e) {
       var target = e.target;
@@ -14,7 +13,7 @@ const ClickedData = (WrappedComponent, widgetName) => {
       // widget: string -> name of the widget/module in which the click occurred
       // time: string -> time the interaction occurred
       var clickedData = {
-        element: `${target.tagName.toLowerCase()} ${target.className} ${target.innerHTML}`,
+        element: `${target.tagName.toLowerCase()} ${target.className}`,
         widget: widgetName,
         time: date.toString()
       };
@@ -25,7 +24,6 @@ const ClickedData = (WrappedComponent, widgetName) => {
     }
 
     render() {
-      // console.log(this.props);
       return <WrappedComponent onClick={this.handleClick} {...this.props}/>;
     }
   }

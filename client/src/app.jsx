@@ -34,7 +34,6 @@ class App extends React.Component {
     this.updateProduct = this.updateProduct.bind(this);
     this.handleReviews = this.handleReviews.bind(this);
     this.removeOutfit = this.removeOutfit.bind(this);
-    this.toggleAddToFavorite = this.toggleAddToFavorite.bind(this);
   }
 
   componentDidMount() {
@@ -64,8 +63,6 @@ class App extends React.Component {
       questionsNAnswers: questionsList,
       outFitStyleId: productInfo.results[0].style_id,
     });
-
-    console.log('related products: ', this.state.relatedProducts);
   }
 
   addToOutfit(id) {
@@ -88,10 +85,12 @@ class App extends React.Component {
           favoriteOutfits: newArr,
         });
       }
+      console.log('favoriteOutfits length is greater than 0: ', this.state.favoriteOutfits);
     } else {
       this.setState({
         favoriteOutfits: [ this.state.outFitStyleId ]
       });
+      console.log('favoriteOutfits is 0: ', this.state.favoriteOutfits);
     }
   }
 
@@ -132,7 +131,7 @@ class App extends React.Component {
           <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts}
             currentStyleId={this.state.outFitStyleId}
             handleClick={this.updateProduct} addOutfit={this.addToOutfit} removeOutfit={this.removeOutfit}
-            toggleFavorite={this.toggleAddToFavorite} favorites={this.state.favoriteOutfits} />
+            toggleFavorite={this.toggleAddToFavorite.bind(this)} favorites={this.state.favoriteOutfits} />
           <QnAwithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
           <RatingsNReviews handleAverageRate={this.handleAverageRate} handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} />
         </div>
