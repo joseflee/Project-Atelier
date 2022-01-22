@@ -23,8 +23,6 @@ object-assign
 
 /*! ../ClickDataAnalytics.jsx */
 
-/*! ../ProdOverview/ProductInfo/StarRating.jsx */
-
 /*! ../cancel/Cancel */
 
 /*! ../cancel/isCancel */
@@ -170,6 +168,8 @@ object-assign
 /*! ./components/RatingsNReviews/RatingsNReviews.jsx */
 
 /*! ./components/RelProductsComponents/RelProducts.jsx */
+
+/*! ./components/SiteWideMessage/SiteWideMessage.jsx */
 
 /*! ./components/TopSearchBar/TopSearchBar.jsx */
 
@@ -1145,6 +1145,10 @@ object-assign
 
 /*!*******************************************************************!*\
   !*** ./client/src/components/RatingsNReviews/RatingsNReviews.jsx ***!
+  \*******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./client/src/components/SiteWideMessage/SiteWideMessage.jsx ***!
   \*******************************************************************/
 
 /*!*******************************************************************!*\
