@@ -27,14 +27,14 @@ import ClickedData from '../../../client/src/components/ClickDataAnalytics.jsx';
 
 
 
-describe('Main Questions and Answers form', function() {
+xdescribe('Main Questions and Answers form', function() {
 
-  it('should mount in a full DOM', function() {
+  xit('should mount in a full DOM', function() {
     const qna = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
     expect(qna.find('.qna-main-component').length).toBe(1);
   });
 
-  it('should mount and unmount', function() {
+  xit('should mount and unmount', function() {
 
     const wrapper = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
 
@@ -49,6 +49,6 @@ describe('Main Questions and Answers form', function() {
     expect(render(<MainQnA productId={59553}/>).text()).toEqual(text);
   });
 
-  
+
 
 });
