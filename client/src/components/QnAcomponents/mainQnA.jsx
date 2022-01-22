@@ -7,6 +7,7 @@ import sampleData from '../../../../example/questions.js';
 import axios from 'axios';
 import FormData from 'form-data';
 import config from '../../../../config.js';
+import ClickedData from '../ClickDataAnalytics.jsx';
 
 class QnA extends React.Component {
   constructor(props) {
@@ -119,8 +120,8 @@ class QnA extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-      //console.log(this.props);
-      console.log('main 81', this.props.currentProduct.id);
+    //console.log(this.props);
+    console.log('main 81', this.props.currentProduct.id);
   }
 
   clickOnHelpfulQuestion(productId, questionId) {
@@ -148,6 +149,8 @@ class QnA extends React.Component {
     var url = '/qna/addNewQuestion';
     axios.post(url, {params: {id: productId, body: body, name: nickname, email: email}})
       .then((response) => {
+        console.log('received question list after adding question');
+        console.log(response.data.results);
         this.updateQuestionList (response.data.results);
       })
       .catch(function (error) {
@@ -189,7 +192,7 @@ class QnA extends React.Component {
 
   reportAnswer(answerId, productId) {
     console.log('clicked on report answer');
-    productId = this.props.currentProduct.id
+    productId = this.props.currentProduct.id;
     //SEND REQUEST TO REPORT ANSWER
     var url = '/qna/reportAnswer';
     axios.put(url, {params: {answerId: answerId, productId: productId}})
@@ -341,7 +344,7 @@ class QnA extends React.Component {
       moreAnsweredQuestions = <div></div>;
     }
     return (
-      <div className='qna-main-component'>
+      <div className='qna-main-component' onClick={this.props.onClick}>
         <div className={qnaScreen}></div>
 
         <div className='qna-component-name'>QUESTIONS AND ANSWERS</div>
@@ -370,4 +373,6 @@ class QnA extends React.Component {
   }
 }
 
-export default QnA;
+const QnAWithClickData = ClickedData(QnA, 'Questions and Answers');
+
+export default QnAWithClickData;

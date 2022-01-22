@@ -32,7 +32,14 @@ describe('More answered questions button', function() {
 
   it('should be shown if there are more than 2 questions', function() {
 
-    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions.results}/>).dive();
+    //const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions.results}/>).dive();
+    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
+   const state = {
+     questions: exampleQuestions.questions.results
+   };
+   parent.setState(state);
+   console.log('button 37', parent.state());
+
     expect(parent.state().questions.length).toEqual(3);
     expect(parent.state().isMoreQuestionsButtonShown).toEqual(true);
     let button = parent.find('.qna-button-wrapper');
@@ -43,7 +50,7 @@ describe('More answered questions button', function() {
   it('should not be shown if there are less than 2 questions', function() {
 
     const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questionsShort.results}/>).dive();
-    expect(parent.state().questions.length).toEqual(1);
+    expect(parent.state().questions.length).toEqual(0);
     expect(parent.state().isMoreQuestionsButtonShown).toEqual(false);
 
     let button = parent.find('.qna-button-wrapper');
