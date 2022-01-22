@@ -206,15 +206,17 @@
 }
 
 .category-relProd {
+  font-size: 10px;
   color:rgba(68, 68, 68, 0.74);
 }
 
 .name-relProd {
-  font-size: medium;
+  font-size: 14px;
   word-wrap: break-word;
 }
 
 .price-relProd {
+  font-size: 12px;
   padding: 3px;
   padding-bottom: 5px;
 }
