@@ -148,6 +148,20 @@ If the component has more than 2 questions, only 2 questions are shown. Under th
 
 #### Related Items and Comparison
 
+The Related Items and Comparison Widget comprises of two modules:
+- Related Products
+- My Outfits
+
+The Related Products module allows the user to be able to see any products that are related to the current product that is shown on the overall product page. The category, price, name, and rating of the products are shown, as well as an image of the main style of the product.
+
+Clicking on one of the Related Products will alter the main data to show the product data for the product that has been clicked on.
+
+Sets of 4 Related Products are shown at a time, and if the total of related products for the main product is more than 4, a right arrow is displayed at the end of the module. Clicking on the arrow will display the next set of related products (up to a maximum of 4 products). The same concept is handled by a left arrow button that is displayed after clicking on the right arrow button. The left arrow button allows the user to click and display the previous set of related products.
+
+The My Outfits module allows the user to be able to add the current product shown on the overall product page to be added to a personal "My Outfits" list. The "X" button allows the user to remove the outfit/item. The "Favorites" Star button in the Product Overview Module is linked to this, and any outfit that is added or removed is also reflected via the triggering of the "Favorites" Star button in the Product Overview Module.
+
+Clicking on one of the My Outfits will alter the main data to show the product data for the product that has been clicked on.
+
 The Related Items & Comparison module will display two sets of related products.  The first set will be a list of products, determined internally, that are related to the product currently being viewed.  The second set will be a list, custom created by the user, of products which the user has grouped with the current product into an ‘outfit’.
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)

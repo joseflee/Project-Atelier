@@ -41,20 +41,21 @@ class ProductCards extends React.Component {
 
       if (cardClassName === 'card-scroll-left') {
         console.log('LEFT: ', start, end, lengthOfRelProducts);
+
         if (start - 4 <= 0) {
           if (end - 4 <= 4 && end - 4 >= 0) {
             if (end - 4 < start) {
               this.setState({
-                currentShownProducts: { start: 0, end: start + 3 }
+                currentShownProducts: { start: 0, end: start }
               });
               start = 0;
-              end = start + 3;
+              end = start + 4;
             } else {
               this.setState({
-                currentShownProducts: { start: 0, end: end - 4 }
+                currentShownProducts: { start: 0, end: end - 3 }
               });
               start = 0;
-              end += 4;
+              end -= 3;
             }
           } else if (end - 4 < 0) {
             this.setState({
@@ -63,23 +64,23 @@ class ProductCards extends React.Component {
             start = 0;
             end = 0;
           }
-        } else if (start - 4 >= 0 && end - 4 >= 0) {
+        } else if (start - 4 > 0 && end - 4 > 0) {
           this.setState({
-            currentShownProducts: { start: start - 4, end: end - 4}
+            currentShownProducts: { start: start - 4, end: end - 3}
           });
           start -= 4;
-          end -= 4;
+          end -= 3;
         }
       } else if (cardClassName === 'card-scroll-right') {
         console.log('RIGHT: ', start, end, lengthOfRelProducts);
-        if (start + 4 < lengthOfRelProducts) {
+        if (start + 4 <= lengthOfRelProducts) {
           if (end + 4 >= lengthOfRelProducts) {
             this.setState({
               currentShownProducts: { start: start + 4, end: lengthOfRelProducts }
             });
             start += 4;
             end = lengthOfRelProducts;
-          } else if (end + 4 <= lengthOfRelProducts) {
+          } else if (end + 4 < lengthOfRelProducts) {
             this.setState({
               currentShownProducts: { start: start + 4, end: end + 4 }
             });
@@ -90,11 +91,11 @@ class ProductCards extends React.Component {
       }
     }
 
-    // console.log('updatestatus: ', start, end, lengthOfRelProducts);
+    console.log('updatestatus: ', start, end, lengthOfRelProducts);
+    console.log('state: ', this.state.currentShownProducts.start, this.state.currentShownProducts.end);
 
     if (lengthOfRelProducts <= 4 && lengthOfRelProducts !== 0) {
       this.setState({
-        currentShownProducts: { start: 0, end: lengthOfRelProducts },
         leftArrowDisplay: false,
         rightArrowDisplay: false
       });
@@ -111,7 +112,7 @@ class ProductCards extends React.Component {
             rightArrowDisplay: true
           });
         }
-      } else if (start === 0 && this.state.currentShownProducts.end !== lengthOfRelProducts) {
+      } else if (start === 0 && end !== lengthOfRelProducts) {
         this.setState({
           leftArrowDisplay: false,
           rightArrowDisplay: true

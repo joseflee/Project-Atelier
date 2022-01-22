@@ -188,7 +188,7 @@
 .add-outfit {
   position: absolute;
   border: solid rgb(19,25,33) 1px;
-  height: 321px;
+  height: 338px;
   font-size: large;
   display: inline-grid;
   align-content: center;
@@ -207,6 +207,11 @@
 
 .category-relProd {
   color:rgba(68, 68, 68, 0.74);
+}
+
+.name-relProd {
+  font-size: medium;
+  word-wrap: break-word;
 }
 
 .price-relProd {
