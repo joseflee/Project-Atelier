@@ -21,6 +21,27 @@ class RelProducts extends React.Component {
     this.removeOutfit = this.removeOutfit.bind(this);
   }
 
+  componentDidUpdate() {
+    var myOutfitsStyleIdList = this.state.listOfMyOutfits.map(outfit => outfit.results.style_id);
+
+    if (this.props.favorites.includes(this.props.currentStyleId) && !myOutfitsStyleIdList.includes(this.props.currentStyleId)) {
+      var currentStyleIndex = this.props.currentProduct.results.map(result => result.style_id).indexOf(this.props.currentStyleId);
+      var myOutfit = { ...this.props.currentProduct, results: this.props.currentProduct.results[currentStyleIndex] };
+      this.setState({
+        listOfMyOutfits: [ myOutfit, ...this.state.listOfMyOutfits ]
+      });
+    } else if (this.props.favorites.length !== myOutfitsStyleIdList.length) {
+      if (myOutfitsStyleIdList.includes(this.props.currentStyleId) && !this.props.favorites.includes(this.props.currentStyleId)) {
+        var currentOutfitIndex = myOutfitsStyleIdList.indexOf(this.props.currentStyleId);
+        var newOutfitList = this.state.listOfMyOutfits;
+        newOutfitList.splice(currentOutfitIndex, 1);
+        this.setState({
+          listOfMyOutfits: newOutfitList
+        });
+      }
+    }
+  }
+
   handleCardClick(id) {
     this.props.handleClick(id);
   }
@@ -31,6 +52,7 @@ class RelProducts extends React.Component {
     var myOutfit = { ...this.props.currentProduct, results: this.props.currentProduct.results[currentStyleIndex] };
 
     if (this.state.listOfMyOutfits.length === 0) {
+      this.props.toggleFavorite();
       this.setState({
         listOfMyOutfits: [ myOutfit ]
       });
@@ -47,8 +69,9 @@ class RelProducts extends React.Component {
       }
 
       if (isPresent === false) {
+        this.props.toggleFavorite();
         this.setState({
-          listOfMyOutfits: [myOutfit, ...this.state.listOfMyOutfits]
+          listOfMyOutfits: [ myOutfit, ...this.state.listOfMyOutfits ]
         });
       }
     }

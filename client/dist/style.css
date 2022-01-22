@@ -7,12 +7,17 @@
   margin-right: 200px;
   user-select: none;
   -webkit-user-select: none;
+  background-color: #e6e6e61f;
 }
 
 .SiteWideMessage {
   font-size: 12px;
+  color: 333333;
+  padding-bottom: 10px;
+  padding-top: 10px;
   margin-bottom: 10px;
   text-align: center;;
+  background-color: #FEBD68;
 }
 
 
@@ -20,8 +25,8 @@
 
 .top-Search-Section {
   height: 80px;
-  background-color: #525252;
-  margin-bottom: 10px;
+  background-color: rgb(19,25,33);
+  margin-bottom: 2px;
   position: relative;
 }
 
@@ -77,32 +82,65 @@
   text-align: center;
 }
 
+.rel-prod-container {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+
+.related-products-container-div {
+  white-space: nowrap;
+  max-height: 500px;
+  height: 410px;
+  width: 850px;
+}
+
+.my-outfit-container-div {
+  white-space: nowrap;
+  max-height: 500px;
+  height: 410px;
+  width: 850px;
+}
+
 .product-card-container {
   height: 100%;
-  width: 80%;
+  width: 100%;
   display: grid;
   clear: both;
-  margin: auto;
+  justify-items: center;
+}
+
+.product-description {
+  text-align: left;
+  padding: 5px;
 }
 
 .product-cards {
   white-space: nowrap;
   width: 100%;
-}
-
-.product-cards div {
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .product-card {
   display: inline-block;
+  width: 200px;
   max-width: 200px;
   max-height: 400px;
-  /* margin: auto; */
-  padding-left: 20px;
-  padding-right: 20px;
+  margin: auto;
+  margin-left: 20px;
+  margin-right: 20px;
   text-align: center;
   font-family: arial;
+  border: rgb(19,25,33) 1px solid;
+}
+
+.card-imgs {
+  display: block;
+  width: 200px;
+  height: 200px;
+  object-fit: scale-down;
+  background-color: #cacaca3b;
 }
 
 .original_price {
@@ -116,6 +154,7 @@
 
 .card-scroll-left {
   display: inline-block;
+  vertical-align: 200px;
   left: 20px;
   border: solid black;
   border-width: 0 3px 3px 0;
@@ -133,23 +172,53 @@
   transform: rotate(-45deg);
 }
 
-.product-description * {
+.product-ratings {
   padding: 5px;
+  margin-bottom: 10px;
+}
+
+.overview-relProd {
+  margin-top: 10px;
+}
+
+.overview-relProd * {
+  padding: 6px;
 }
 
 .add-outfit {
-  border: solid black 1px;
-  border-radius: 15px;
+  position: absolute;
+  border: solid rgb(19,25,33) 1px;
+  height: 338px;
+  font-size: large;
+  display: inline-grid;
+  align-content: center;
 }
 
 .remove-outfit {
+  position: absolute;
   text-align: end;
-  margin-bottom: 5px;
+  padding-left: 5px;
 }
 
 .card-imgs {
   max-height: 100%;
   max-width: 100%;
+}
+
+.category-relProd {
+  font-size: 10px;
+  color:rgba(68, 68, 68, 0.74);
+}
+
+.name-relProd {
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+.price-relProd {
+  font-size: 12px;
+  padding: 3px;
+  padding-bottom: 5px;
 }
 
 

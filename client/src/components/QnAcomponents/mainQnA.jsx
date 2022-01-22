@@ -9,7 +9,6 @@ import FormData from 'form-data';
 import config from '../../../../config.js';
 import ClickedData from '../ClickDataAnalytics.jsx';
 
-
 class QnA extends React.Component {
   constructor(props) {
     super(props);
@@ -18,9 +17,7 @@ class QnA extends React.Component {
       questions: [],
       isMoreQuestionsButtonShown: false,
       productName: 'This is not a name',
-      isAddNewQuestionClicked: false,
-      productId: this.props.productId,
-
+      isAddNewQuestionClicked: false
     };
 
     this.showMoreQuestions = this.showMoreQuestions.bind(this);
@@ -37,39 +34,98 @@ class QnA extends React.Component {
     this._isMounted = false;
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.currentProduct.id !== this.props.currentProduct.id) {
+      console.log('should be updated with ', this.props.currentProduct.id);
+      let productId = this.props.currentProduct.id;
+      //GET PRODUCT NAME BY ITS ID
+      var url = '/qna/getProductById';
+      axios.get(url, {params: {id: productId}})
+        .then((response) => {
+          if (this._isMounted) {
+            console.log('got product id main 45');
+            this.setState({
+              productName: response.data.name
+            });
+          }
 
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      //GET QUESTIONS LIST BY PRODUCT ID
+      var url = '/qna/getQuestionsList';
+      axios.get(url, {params: {id: productId}})
+        .then((response) => {
+          console.log('got question list main 59');
+
+          var questionsToShow = response.data.results;
+          if (questionsToShow.length > 2) {
+            if (this._isMounted) {
+              this.setState({
+                isMoreQuestionsButtonShown: true
+              });
+            }
+          }
+          questionsToShow = questionsToShow.slice(0, 2);
+          if (this._isMounted) {
+            this.setState({
+              questions: questionsToShow
+            });
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  }
   componentDidMount() {
-    //console.log('this is props', this.props);
     this._isMounted = true;
-    if (this._isMounted) {
-      this.setState({
-        productName: this.props.currentProduct.name,
-        questions: this.props.questionsList
-      });
-    }
-    if (this.props.questionsList.length > 2) {
-      this.setState({
-        isMoreQuestionsButtonShown: true
-      });
-    }
-    // var questionsToShow = this.props.questionsList;
-    // if (questionsToShow.length > 2) {
-    //   if (this._isMounted) {
-    //     this.setState({
-    //       isMoreQuestionsButtonShown: true
-    //     });
-    //   }
-    // }
-    // questionsToShow = questionsToShow.slice(0, 2);
-    // if (this._isMounted) {
-    //   this.setState({
-    //     questions: questionsToShow
-    //   });
-    // }
+    //console.log(this.props);
 
+    let productId = this.props.productId;
+    //GET PRODUCT NAME BY ITS ID
+    var url = '/qna/getProductById';
+    axios.get(url, {params: {id: productId}})
+      .then((response) => {
+        if (this._isMounted) {
+          this.setState({
+            productName: response.data.name
+          });
+        }
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    //GET QUESTIONS LIST BY PRODUCT ID
+    var url = '/qna/getQuestionsList';
+    axios.get(url, {params: {id: productId}})
+      .then((response) => {
+        var questionsToShow = response.data.results;
+        if (questionsToShow.length > 2) {
+          if (this._isMounted) {
+            this.setState({
+              isMoreQuestionsButtonShown: true
+            });
+          }
+        }
+        questionsToShow = questionsToShow.slice(0, 2);
+        if (this._isMounted) {
+          this.setState({
+            questions: questionsToShow
+          });
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    //console.log(this.props);
+    console.log('main 81', this.props.currentProduct.id);
   }
 
   clickOnHelpfulQuestion(productId, questionId) {
+    productId = this.props.currentProduct.id;
     console.log('clicked on helpful question');
     var url = '/qna/updateQuestionHelp';
     axios.put(url, {params: {questionId: questionId, productId: productId}})
@@ -87,11 +143,14 @@ class QnA extends React.Component {
   }
 
   addNewQuestion(productId, body, nickname, email) {
+    productId = this.props.currentProduct.id;
     console.log('clicked on submit new question');
     //SEND REQUEST TO SERVER TO ADD A NEW QUESTION
     var url = '/qna/addNewQuestion';
     axios.post(url, {params: {id: productId, body: body, name: nickname, email: email}})
       .then((response) => {
+        console.log('received question list after adding question');
+        console.log(response.data.results);
         this.updateQuestionList (response.data.results);
       })
       .catch(function (error) {
@@ -100,10 +159,12 @@ class QnA extends React.Component {
   }
 
   showMoreQuestions() {
+    //let productId = this.props.currentProduct.id;
+
     console.log('click');
     //GET ALL QUESTIONS BY PRODUCT ID
     var url = '/qna/getQuestionsList';
-    axios.get(url, {params: {id: this.props.productId}})
+    axios.get(url, {params: {id: this.props.currentProduct.id}})
       .then((response) => {
         if (this._isMounted) {
           this.setState({
@@ -118,6 +179,7 @@ class QnA extends React.Component {
   }
 
   clickOnHelpfulAnswer(answerId, productId) {
+    productId = this.props.currentProduct.id;
     var url = '/qna/updateAnswerHelp';
     axios.put(url, {params: {answerId: answerId, productId: productId}})
       .then((response) => {
@@ -130,6 +192,7 @@ class QnA extends React.Component {
 
   reportAnswer(answerId, productId) {
     console.log('clicked on report answer');
+    productId = this.props.currentProduct.id;
     //SEND REQUEST TO REPORT ANSWER
     var url = '/qna/reportAnswer';
     axios.put(url, {params: {answerId: answerId, productId: productId}})
@@ -143,7 +206,9 @@ class QnA extends React.Component {
   }
 
   addNewAnswer(questionId, body, nickname, email, photos, productId) {
-    console.log('144 main', photos);
+    productId = this.props.currentProduct.id;
+
+    //console.log('144 main', photos);
     var photosToSend = [];
     var allPromises = [];
     if (photos.length > 0) {
@@ -196,9 +261,12 @@ class QnA extends React.Component {
         });
     }
 
+
+
   }
 
   updateQuestionList(questions) {
+    console.log('main 256 - state is updating');
     if (this._isMounted) {
       this.setState({
         questions: questions
@@ -234,7 +302,7 @@ class QnA extends React.Component {
       console.log('search stopped');
       //render all the questions and hide the rest if more than 2
       //var questionsToShow = response.data.results;
-      var questionsToShow = [...this.props.questions];
+      var questionsToShow = [...this.state.questions];
       if (questionsToShow.length > 2) {
         if (this._isMounted) {
           this.setState({
@@ -251,6 +319,8 @@ class QnA extends React.Component {
     }
   }
 
+
+
   checkAddingNewQuestion() {
     console.log('click on add question');
     this.setState({
@@ -260,16 +330,17 @@ class QnA extends React.Component {
 
   render() {
     let moreAnsweredQuestions,
-      qnaScreen,
-      data;
+      qnaScreen;
+
+    // if (this.state.isAddNewQuestionClicked) {
+    //   qnaScreen = 'qna-screen-not-transparent';
+    // } else {
+    //   qnaScreen = 'qna-screen-transparent';
+    // }
 
     if (this.state.isMoreQuestionsButtonShown) {
-
-      data = this.props.questionsList.slice(0, 2);
       moreAnsweredQuestions = <MoreAnsweredQuestions click={this.showMoreQuestions}/>;
     } else {
-      data = this.props.questionsList;
-
       moreAnsweredQuestions = <div></div>;
     }
     return (
@@ -279,18 +350,18 @@ class QnA extends React.Component {
         <div className='qna-component-name'>QUESTIONS AND ANSWERS</div>
         <SearchQuestions search={this.search}/>
         <QuestionsList
-          data={data}
+          data={this.state.questions}
           productId={this.props.productId}
           clickOnHelpful={this.clickOnHelpfulQuestion}
           clickOnHelpfulAnswer={this.clickOnHelpfulAnswer}
           reportAnswer={this.reportAnswer}
           addNewAnswer={this.addNewAnswer}
-          productName={this.props.currentProduct.name}
+          productName={this.state.productName}
         />
         <br />
         <div className='qna-button-wrapper'>
           {moreAnsweredQuestions}
-          <AddQuestion name={this.props.currentProduct.name}
+          <AddQuestion name={this.state.productName}
             productId={this.props.productId}
             addQuestion={this.addNewQuestion}
             checkForm={this.checkAddingNewQuestion}
@@ -302,8 +373,6 @@ class QnA extends React.Component {
   }
 }
 
-//export default QnA;
+const QnAWithClickData = ClickedData(QnA, 'Questions and Answers');
 
-const QnAwithClickData = ClickedData(QnA, 'Questions and Answers');
-
-export default QnAwithClickData;
+export default QnAWithClickData;

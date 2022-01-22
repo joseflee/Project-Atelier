@@ -25,7 +25,6 @@ import { act } from 'react-dom/test-utils';
 import dummydata from './dummydata.js';
 //import MockAdapter from 'axios-mock-adapter';
 
-
 let example = {
   data: {
     results: [{
@@ -46,24 +45,24 @@ describe('API calls in Main component', () => {
     jest.restoreAllMocks();
     jest.resetAllMocks();
   });
-  xit('mocks get API call', async () => {
+  it('mocks get API call', async () => {
 
     const response = { data: { name: 'mocked name' } };
 
     jest.spyOn(axios, 'get').mockResolvedValueOnce(response);
 
-    const wrapper = mount(<MainQnA productId={42}/>);
+    const wrapper = shallow(<MainQnA currentProduct={exampleProducts.products[0]} productId={42} questionList={exampleQuestions.results}/>).dive();
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
-
+    console.log(wrapper.state());
     expect (wrapper.state().productName).toEqual('mocked name');
     expect(axios.get).toHaveBeenCalledTimes(2);
 
   });
 
 
-  xit('mocks all get API call', async () => {
+  it('mocks all get API call', async () => {
     const response1 = { data: { name: 'mocked name' } };
     const response2 = example;
 
@@ -71,7 +70,8 @@ describe('API calls in Main component', () => {
       .mockResolvedValueOnce(response2);
 
 
-    const wrapper = mount(<MainQnA productId={42}/>);
+    const wrapper = shallow(<MainQnA currentProduct={exampleProducts.products[0]} productId={42} questionList={exampleQuestions.results}/>).dive();
+
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
@@ -84,18 +84,35 @@ describe('API calls in Main component', () => {
     expect(wrapper.state().isMoreQuestionsButtonShown).toEqual(false);
 
   });
-  xit('changes state then component is mounted', async () => {
+  it('changes state then component is mounted', async () => {
+    const response1 = { data: { name: 'mocked name' } };
+    const response2 = example;
 
-    const wrapper = shallow(<MainQnA productId={42}
-      productName={exampleProducts.products[0].name}/>);
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(response1)
+      .mockResolvedValueOnce(response2);
 
-    console.log(wrapper.instance());
-    expect(wrapper.state().productName).toEqual('Camo Onesie');
-    expect (wrapper.state().productId).toEqual(42);
+    const wrapper = shallow(<MainQnA currentProduct={exampleProducts.products[0]} productId={42} questionList={exampleQuestions.results}/>).dive();
+
+
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+    //
+    console.log(wrapper.state());
+    expect(wrapper.state().productName).toEqual('mocked name');
+
   });
 
   it('mocks put API call for clicking on helpful question', async () => {
     //parent component
+    const response1 = { data: { name: 'mocked name' } };
+    const response2 = example;
+
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(response1)
+      .mockResolvedValueOnce(response2);
+
+    //const wrapper = shallow(<MainQnA currentProduct={exampleProducts.products[0]} productId={42} questionList={exampleQuestions.results}/>).dive();
 
     const putResponse = example;
 
@@ -115,13 +132,17 @@ describe('API calls in Main component', () => {
     expect(parentSpy).toHaveBeenCalled();
     expect(axios.put).toHaveBeenCalled();
     expect(wrapper.instance()._isMounted).toEqual(true);
-    expect(axios.put).toHaveBeenCalledWith('/qna/updateQuestionHelp', {'params': {'productId': undefined, 'questionId': 37}});
+    expect(axios.put).toHaveBeenCalledWith('/qna/updateQuestionHelp', {'params': {'productId': 1, 'questionId': 37}});
 
   });
 
   it('mocks put API call for clicking on helpful answer', async () => {
     //parent component
+    const response1 = { data: { name: 'mocked name' } };
+    const response2 = example;
 
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(response1)
+      .mockResolvedValueOnce(response2);
     const putResponse = example;
 
     jest.spyOn(axios, 'put'). mockResolvedValueOnce(putResponse);
@@ -140,13 +161,19 @@ describe('API calls in Main component', () => {
     expect(parentSpy).toHaveBeenCalled();
     expect(axios.put).toHaveBeenCalled();
     expect(wrapper.instance()._isMounted).toEqual(true);
-    expect(axios.put).toHaveBeenCalledWith('/qna/updateAnswerHelp', {'params': {'answerId': undefined, 'productId': undefined}});
+    expect(axios.put).toHaveBeenCalledWith('/qna/updateAnswerHelp', {'params': {'answerId': undefined, 'productId': 1}});
 
   });
 
   it('mocks put API call for clicking on report answer', async () => {
 
     //parent component
+    const response1 = { data: { name: 'mocked name' } };
+    const response2 = example;
+
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(response1)
+      .mockResolvedValueOnce(response2);
+
     const putResponse = example;
 
     jest.spyOn(axios, 'put'). mockResolvedValueOnce(putResponse);
@@ -165,11 +192,16 @@ describe('API calls in Main component', () => {
     expect(parentSpy).toHaveBeenCalled();
     expect(axios.put).toHaveBeenCalled();
     expect(wrapper.instance()._isMounted).toEqual(true);
-    expect(axios.put).toHaveBeenCalledWith('/qna/reportAnswer', {'params': {'answerId': undefined, 'productId': undefined}});
+    expect(axios.put).toHaveBeenCalledWith('/qna/reportAnswer', {'params': {'answerId': undefined, 'productId': 1}});
   });
 
   it('mocks post API call for adding a new answer', async () => {
     //parent component
+    const response1 = { data: { name: 'mocked name' } };
+    const response2 = example;
+
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(response1)
+      .mockResolvedValueOnce(response2);
 
     const postResponse = example;
 
@@ -207,6 +239,11 @@ describe('API calls in Main component', () => {
   });
 
   it('mocks post API call for adding a new question', async () => {
+    const response1 = { data: { name: 'mocked name' } };
+    const response2 = example;
+
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(response1)
+      .mockResolvedValueOnce(response2);
 
     //parent component
 
@@ -247,6 +284,11 @@ describe('API calls in Main component', () => {
   });
 
   it('mocks get API call for search', async () => {
+    const response1 = { data: { name: 'mocked name' } };
+    const response2 = example;
+
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(response1)
+      .mockResolvedValueOnce(response2);
 
     //parent component
     const response = example;
@@ -254,7 +296,7 @@ describe('API calls in Main component', () => {
     jest.spyOn(axios, 'get').mockResolvedValueOnce(response);
 
 
-    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
+    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions.results}/>).dive();
     const parentSpy = jest.spyOn(parent.instance(), 'search');
 
     await act(async () => {
@@ -273,15 +315,22 @@ describe('API calls in Main component', () => {
     // expect(onSearchMock).toHaveBeenCalled();
     // expect(onSearchMock).toBeCalledWith('bla', true);
     //expect(parentSpy).toHaveBeenCalled();
-    expect(axios.get).toHaveBeenCalledTimes(1);
+    expect(axios.get).toHaveBeenCalledTimes(3);
     expect(parentSpy).toHaveBeenCalledWith('bla', true);
-    console.log(parent.state());
+    //console.log('278', parent.state());
     expect(parent.instance()._isMounted).toEqual(true);
-    expect(parent.state().isMoreQuestionsButtonShown).toEqual(false);
+
+    //expect(parent.state().isMoreQuestionsButtonShown).toEqual(true);
 
   });
 
   xit('deals with error during search', async () => {
+
+     const getResponse1 = { data: { name: 'mocked name' } };
+    const getResponse2 = example;
+
+    // jest.spyOn(axios, 'get').mockResolvedValueOnce(response1)
+    //   .mockResolvedValueOnce(response2);
 
     //parent component
 
@@ -300,13 +349,20 @@ describe('API calls in Main component', () => {
   });
 
 
-  xit('doesn\'t trigger API calls if the query length is less than 3 chars ', async () => {
+  it('doesn\'t trigger search API calls if the query length is less than 3 chars ', async () => {
 
     //parent component
+    const response1 = { data: { name: 'mocked name' } };
+    const response2 = example;
+
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(response1)
+      .mockResolvedValueOnce(response2);
+    const response = example;
+
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(response);
 
 
-
-    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions}/>).dive();
+    const parent = shallow(<MainQnA productId={42} currentProduct={exampleProducts.products[0]} questionsList={exampleQuestions.questions.results}/>).dive();
     const parentSpy = jest.spyOn(parent.instance(), 'search');
 
     await act(async () => {
@@ -327,14 +383,17 @@ describe('API calls in Main component', () => {
     expect(parentSpy).toHaveBeenCalledWith('42', false);
     expect(axios.get).toHaveBeenCalledTimes(2);
     expect(parent.instance()._isMounted).toEqual(true);
-    //console.log('is mounted', parent.instance()._isMounted);
-    expect(parent.state().isMoreQuestionsButtonShown).toEqual(true);
-    //expect(parent.state().questions.length()).toEqual(1);
+
+
   });
 
   it('correctly changes state of main if add new question form is clicked ', async () => {
     //parent component
+    const response1 = { data: { name: 'mocked name' } };
+    const response2 = example;
 
+    jest.spyOn(axios, 'get').mockResolvedValueOnce(response1)
+      .mockResolvedValueOnce(response2);
     const postResponse = example;
 
     jest.spyOn(axios, 'post'). mockResolvedValueOnce(postResponse);

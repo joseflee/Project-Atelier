@@ -16,6 +16,7 @@ import { getProductInfo, getStyleInfo, getRelatedProductInfo, getQuestionsListIn
 class App extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       productId: 59553,
       currentProduct: null,
@@ -28,9 +29,11 @@ class App extends React.Component {
       totalReviews: 0,
       averageRate: 0,
     };
+
     this.handleAverageRate = this.handleAverageRate.bind(this);
     this.updateProduct = this.updateProduct.bind(this);
     this.handleReviews = this.handleReviews.bind(this);
+    this.removeOutfit = this.removeOutfit.bind(this);
   }
 
   componentDidMount() {
@@ -69,26 +72,40 @@ class App extends React.Component {
   }
 
   toggleAddToFavorite() {
-    if (!this.state.favoriteOutfits.includes(this.state.outFitStyleId)) {
-      this.setState({
-        favoriteOutfits: [...this.state.favoriteOutfits, this.state.outFitStyleId],
-      });
+    if (this.state.favoriteOutfits.length > 0) {
+      if (!this.state.favoriteOutfits.includes(this.state.outFitStyleId)) {
+        this.setState({
+          favoriteOutfits: [...this.state.favoriteOutfits, this.state.outFitStyleId],
+        });
+      } else {
+        const newArr = [...this.state.favoriteOutfits];
+        var index = newArr.indexOf(this.state.outFitStyleId);
+        newArr.splice(index, 1);
+        this.setState({
+          favoriteOutfits: newArr,
+        });
+      }
+      console.log('favoriteOutfits length is greater than 0: ', this.state.favoriteOutfits);
     } else {
-      const newArr = [...this.state.favoriteOutfits];
-      var index = newArr.indexOf(this.state.outFitStyleId);
-      newArr.splice(index, 1);
       this.setState({
-        favoriteOutfits: newArr,
+        favoriteOutfits: [ this.state.outFitStyleId ]
       });
+      console.log('favoriteOutfits is 0: ', this.state.favoriteOutfits);
     }
-    console.log(this.state.favoriteOutfits, this.state.currentProduct);
   }
 
-  // Removing and Adding to favoriteOutfits array will affect the Product Overview as well.
-  // Add a Remove from favoriteOutfits to setState in removing that outfit.
-
   removeOutfit(id) {
-    // this.state.favoriteOutfits.indexOf(id);
+    var currentOutfitIndex = this.state.favoriteOutfits.indexOf(id);
+
+    for (var i = 0; i < this.state.favoriteOutfits.length; i++) {
+      if (this.state.favoriteOutfits[i] === id) {
+        var newFavOutfits = this.state.favoriteOutfits;
+        newFavOutfits.splice(i, 1);
+        this.setState({
+          favoriteOutfits: newFavOutfits
+        });
+      }
+    }
   }
 
   render() {
@@ -114,7 +131,7 @@ class App extends React.Component {
           <RelProductsWithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} relatedProducts={this.state.relatedProducts}
             currentStyleId={this.state.outFitStyleId}
             handleClick={this.updateProduct} addOutfit={this.addToOutfit} removeOutfit={this.removeOutfit}
-            toggleFavorite={this.toggleAddToFavorite} favorites={this.state.favoriteOutfits} />
+            toggleFavorite={this.toggleAddToFavorite.bind(this)} favorites={this.state.favoriteOutfits} />
           <QnAwithClickData productId={this.state.productId} currentProduct={this.state.currentProduct} questionsList={this.state.questionsNAnswers}/>
           <RatingsNReviews handleAverageRate={this.handleAverageRate} handleReviews={this.handleReviews} productId={this.state.productId} currentProduct={this.state.currentProduct} />
         </div>
