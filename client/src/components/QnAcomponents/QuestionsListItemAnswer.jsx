@@ -27,7 +27,7 @@ class QuestionsListItemAnswer extends React.Component {
       });
 
     } else {
-      alert ('you\'ve alredy clicked on helpful link');
+      console.log ('you\'ve alredy clicked on helpful link');
     }
   }
 
