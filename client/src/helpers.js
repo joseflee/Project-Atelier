@@ -1,5 +1,17 @@
 import axios from 'axios';
 
+export var getAllProducts = async () => {
+  const productUrl = '/product/allProducts';
+  return await axios.get(productUrl)
+    .then((response) => {
+      console.log('totalproducts:', response.data[0].id);
+      return response.data[0].id;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
 export var getProductInfo = async (productId) => {
   const productUrl = '/product/productInfo';
   return await axios.get(productUrl, { params: { id: productId } })

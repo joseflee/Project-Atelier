@@ -11,14 +11,14 @@ import axios from 'axios';
 import ClickedData from './components/ClickDataAnalytics.jsx';
 // const RelProductsWithClickData = ClickedData(RelProducts);
 
-import { getProductInfo, getStyleInfo, getRelatedProductInfo, getQuestionsListInfo, getReviewInfo } from './helpers.js';
+import { getAllProducts, getProductInfo, getStyleInfo, getRelatedProductInfo, getQuestionsListInfo, getReviewInfo } from './helpers.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      productId: 59553,
+      productId: null,
       currentProduct: null,
       currentProductStyle: null,
       relatedProducts: null,
@@ -36,8 +36,12 @@ class App extends React.Component {
     this.removeOutfit = this.removeOutfit.bind(this);
   }
 
-  componentDidMount() {
-    this.updateProduct(this.state.productId);
+  async componentDidMount() {
+    let id = await getAllProducts();
+    await this.setState({
+      productId: id,
+    });
+    await this.updateProduct(this.state.productId);
   }
 
   handleReviews(reviews) {
@@ -48,7 +52,7 @@ class App extends React.Component {
   }
 
   async updateProduct(productId) {
-    const [productInfo, productStyleInfo, relProductInfo, questionsList, reviewInfo] = await Promise.all([
+    const [productInfo, productStyleInfo, relProductInfo, questionsList] = await Promise.all([
       getProductInfo(productId),
       getStyleInfo(productId),
       getRelatedProductInfo(productId),

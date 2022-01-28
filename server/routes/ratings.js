@@ -67,18 +67,24 @@ const averageRate = function(ratings, recommended) {
       totalRatePoint += a[i] * b[i];
     }
   }
-
-  const totalRatings = Object.values(ratings).reduce((a, b) => Number(a) + Number(b));
+  let totalRatings = 0;
+  if (Object.values(ratings).length) {
+    totalRatings = Object.values(ratings).reduce((a, b) => Number(a) + Number(b));
+  }
   const fiveStar = Math.round((b[4] / totalRatings) * 100);
   const fourStar = Math.round((b[3] / totalRatings) * 100);
   const threeStar = Math.round((b[2] / totalRatings) * 100);
   const twoStar = Math.round((b[1] / totalRatings) * 100);
   const oneStar = Math.round((b[0] / totalRatings) * 100);
-  const averageValues = totalRatePoint / totalRatings;
+  let averageValues = totalRatePoint / totalRatings;
+  if (Number(totalRatings) === 0 && Number(totalRatePoint) === 0) {
+    console.log('trigger');
+    averageValues = 0;
+  }
   let numOfFalse = Number(recommended.false) || 0;
   let numOfTrue = Number(recommended.true) || 0;
   let percentageOfRecommended = ((numOfTrue) ? Math.round((numOfTrue / (numOfTrue + numOfFalse)) * 100) : 0);
-  return [averageValues.toFixed(1), percentageOfRecommended, oneStar, twoStar, threeStar, fourStar, fiveStar];
+  return [averageValues === 0 ? averageValues : averageValues.toFixed(1), percentageOfRecommended, oneStar, twoStar, threeStar, fourStar, fiveStar];
 };
 
 module.exports = ratingsRouter;
