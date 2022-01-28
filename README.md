@@ -31,6 +31,7 @@ $ cd project-atelier
 
 # Install dependencies
 $ npm install
+$ create config.js on root path, define const Token = 'github_token'. Then module.exports.Token = Token;
 
 #Add Personal Access token to config.js file
 
